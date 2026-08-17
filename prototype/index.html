@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <title>FAVOUR — Portfolio</title>
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.css">
+    <link rel="stylesheet" href="./styles.css">
+  </head>
+  <body>
+    <main class="desktop is-entry-pending" id="desktop" aria-label="Favour interactive portfolio desktop">
+      <h1 class="sr-only">Favour interactive portfolio</h1>
+
+      <div class="favour-background" aria-hidden="true">
+        <div class="favour-brand">FAVOUR</div>
+      </div>
+
+      <div class="ambient-project-tunnel" id="ambient-project-tunnel" aria-hidden="true">
+        <div class="ambient-tunnel-stage"></div>
+        <div class="ambient-tunnel-vignette"></div>
+      </div>
+
+      <p class="availability-status" role="status">
+        <span class="availability-dot" aria-hidden="true"></span>
+        <span>Available to work</span>
+      </p>
+
+      <button class="reset-shortcut-layout" id="reset-shortcut-layout" type="button" disabled>
+        Reset icon arrangement
+      </button>
+
+      <p class="interaction-hint" id="interaction-hint" role="status" aria-live="polite">
+        <span>Drag apps to rearrange</span><span aria-hidden="true">·</span><span>Click to open</span>
+      </p>
+
+      <div class="desktop-shortcuts" id="desktop-shortcuts" aria-label="Projects">
+        <button class="shortcut shortcut--champ" type="button" data-project="champ" aria-label="Open Monierave">
+          <span class="shortcut-visual" aria-hidden="true">
+            <img class="shortcut-thumbnail" src="./assets/icons/apps/monierave.svg" alt="">
+            <span class="shortcut-label">Monierave</span>
+          </span>
+          <span class="shortcut-selection" aria-hidden="true"></span>
+          <span class="shortcut-selected-label">Monierave</span>
+        </button>
+        <button class="shortcut shortcut--silences" type="button" data-project="silences" aria-label="Open BucketFlow">
+          <span class="shortcut-visual" aria-hidden="true">
+            <img class="shortcut-thumbnail" src="./assets/icons/apps/bucketflow.svg" alt="">
+            <span class="shortcut-label">BucketFlow</span>
+          </span>
+          <span class="shortcut-selection" aria-hidden="true"></span>
+          <span class="shortcut-selected-label">BucketFlow</span>
+        </button>
+        <button class="shortcut shortcut--revolte" type="button" data-project="revolte" aria-label="Open Blockexplorer">
+          <span class="shortcut-visual" aria-hidden="true">
+            <img class="shortcut-thumbnail" src="./assets/icons/apps/blockexplorer.svg" alt="">
+            <span class="shortcut-label">Blockexplorer</span>
+          </span>
+          <span class="shortcut-selection" aria-hidden="true"></span>
+          <span class="shortcut-selected-label">Blockexplorer</span>
+        </button>
+        <button class="shortcut shortcut--lisiere" type="button" data-project="lisiere" aria-label="Open Cleanup">
+          <span class="shortcut-visual" aria-hidden="true">
+            <img class="shortcut-thumbnail" src="./assets/icons/apps/cleanup.svg" alt="">
+            <span class="shortcut-label">Cleanup</span>
+          </span>
+          <span class="shortcut-selection" aria-hidden="true"></span>
+          <span class="shortcut-selected-label">Cleanup</span>
+        </button>
+        <button class="shortcut shortcut--elan" type="button" data-project="elan" aria-label="Open Escrow">
+          <span class="shortcut-visual" aria-hidden="true">
+            <img class="shortcut-thumbnail" src="./assets/icons/apps/escrow.svg" alt="">
+            <span class="shortcut-label">Escrow</span>
+          </span>
+          <span class="shortcut-selection" aria-hidden="true"></span>
+          <span class="shortcut-selected-label">Escrow</span>
+        </button>
+        <button class="shortcut shortcut--eau" type="button" data-project="eau" aria-label="Open Policy">
+          <span class="shortcut-visual" aria-hidden="true">
+            <img class="shortcut-thumbnail" src="./assets/icons/apps/policy.svg" alt="">
+            <span class="shortcut-label">Policy</span>
+          </span>
+          <span class="shortcut-selection" aria-hidden="true"></span>
+          <span class="shortcut-selected-label">Policy</span>
+        </button>
+      </div>
+
+      <aside class="project-hover-info" id="project-hover-info" aria-live="polite" aria-hidden="true">
+        <div class="project-hover-copy">
+          <p class="project-hover-name"></p>
+          <p class="project-hover-description"></p>
+          <p class="project-hover-stack"></p>
+        </div>
+      </aside>
+
+      <section class="window-layer" id="window-layer" aria-live="polite"></section>
+
+      <nav class="dock-hit-area" aria-label="Applications and social links">
+        <button class="dock-hit dock-hit--avatar" type="button" data-app="about" aria-label="About me">
+          <span class="dock-visual">
+            <span class="dock-icon dock-icon--avatar" aria-hidden="true">🧔🏾</span>
+            <span class="dock-badge" id="about-update-badge" aria-hidden="true">1</span>
+          </span>
+          <span class="dock-tooltip">About me</span>
+        </button>
+        <button class="dock-hit dock-hit--notes" type="button" data-app="notes" aria-label="Notes">
+          <span class="dock-visual">
+            <span class="dock-icon dock-icon--notes" aria-hidden="true"></span>
+          </span>
+          <span class="dock-tooltip">Notes</span>
+        </button>
+        <span class="dock-divider" aria-hidden="true"></span>
+        <a class="dock-hit dock-hit--instagram" href="#" aria-label="Instagram" data-social>
+          <span class="dock-visual">
+            <span class="dock-icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64" focusable="false">
+                <defs>
+                  <radialGradient id="instagram-glow" cx="30%" cy="96%" r="92%">
+                    <stop offset="0" stop-color="#ffd600"></stop>
+                    <stop offset="0.48" stop-color="#ff165d"></stop>
+                    <stop offset="1" stop-color="#9a13e8"></stop>
+                  </radialGradient>
+                </defs>
+                <rect width="64" height="64" rx="14" fill="url(#instagram-glow)"></rect>
+                <rect x="15" y="15" width="34" height="34" rx="11" fill="none" stroke="#fff" stroke-width="4.5"></rect>
+                <circle cx="32" cy="32" r="8.5" fill="none" stroke="#fff" stroke-width="4.5"></circle>
+                <circle cx="44" cy="20" r="3" fill="#fff"></circle>
+              </svg>
+            </span>
+          </span>
+          <span class="dock-tooltip">Instagram</span>
+        </a>
+        <a class="dock-hit dock-hit--x" href="#" aria-label="X" data-social>
+          <span class="dock-visual">
+            <span class="dock-icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64" focusable="false">
+                <rect width="64" height="64" rx="14" fill="#050505"></rect>
+                <path d="M14 13h10.4l9.5 12.8L44.7 13H50L36.4 29.8 51 51H40.6L30 36.8 18.5 51H13l14.4-18.2L14 13Zm8.2 4.2 20.6 29.6h3L25.2 17.2h-3Z" fill="#fff"></path>
+              </svg>
+            </span>
+          </span>
+          <span class="dock-tooltip">X</span>
+        </a>
+        <a class="dock-hit dock-hit--linkedin" href="#" aria-label="LinkedIn" data-social>
+          <span class="dock-visual">
+            <span class="dock-icon" aria-hidden="true">
+              <svg viewBox="0 0 64 64" focusable="false">
+                <rect width="64" height="64" rx="14" fill="#0a66c2"></rect>
+                <circle cx="18" cy="19" r="4.5" fill="#fff"></circle>
+                <path d="M14 27h8v24h-8V27Zm14 0h7.7v3.3h.1c2.1-3.1 5.2-4.4 8.9-4.4 8.2 0 10.3 5.3 10.3 13V51h-8V40c0-4.6-.7-7.8-5.2-7.8-5 0-5.8 3.8-5.8 7.5V51h-8V27Z" fill="#fff"></path>
+              </svg>
+            </span>
+          </span>
+          <span class="dock-tooltip">LinkedIn</span>
+        </a>
+      </nav>
+    </main>
+
+    <script src="https://unpkg.com/maplibre-gl@5.24.0/dist/maplibre-gl.js"></script>
+    <script src="./script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Policy</title>
+  <desc id="desc">A structured document carrying a verified policy seal.</desc>
+  <defs>
+    <linearGradient id="bg" x1="128" y1="62" x2="900" y2="962" gradientUnits="userSpaceOnUse"><stop stop-color="#55A875"/><stop offset=".44" stop-color="#17633E"/><stop offset="1" stop-color="#06331F"/></linearGradient>
+    <linearGradient id="paper" x1="341" y1="244" x2="670" y2="783" gradientUnits="userSpaceOnUse"><stop stop-color="#FFFDF7"/><stop offset=".55" stop-color="#F4F2E8"/><stop offset="1" stop-color="#D7DDCF"/></linearGradient>
+    <filter id="shadow" x="-35%" y="-30%" width="170%" height="180%"><feDropShadow dx="0" dy="28" stdDeviation="28" flood-color="#042718" flood-opacity=".68"/></filter>
+  </defs>
+  <rect x="20" y="20" width="984" height="984" rx="226" fill="url(#bg)"/>
+  <circle cx="508" cy="508" r="342" fill="#E7F4E9" fill-opacity=".08"/>
+  <path d="M318 225h292l126 127v413c0 30-24 54-54 54H318c-30 0-54-24-54-54V279c0-30 24-54 54-54Z" fill="url(#paper)" filter="url(#shadow)"/>
+  <path d="M610 225v102c0 28 23 51 51 51h75L610 225Z" fill="#B9C7B3"/>
+  <path d="M362 407h190M362 499h258M362 591h180" fill="none" stroke="#2B714B" stroke-width="35" stroke-linecap="round"/>
+  <circle cx="650" cy="665" r="133" fill="#0C5634" stroke="#E7F1E3" stroke-width="24"/>
+  <path d="m589 666 43 45 82-91" fill="none" stroke="#fff" stroke-width="35" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M176 88c202-97 522-60 695 44" fill="none" stroke="#fff" stroke-opacity=".17" stroke-width="18" stroke-linecap="round"/>
+  <rect x="29" y="29" width="966" height="966" rx="217" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="18"/>
+</svg>
