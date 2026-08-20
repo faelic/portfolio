@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
+  <title id="title">Monierave</title>
+  <desc id="desc">An illuminated abstract M rising like two mountain peaks.</desc>
+  <defs>
+    <linearGradient id="bg" x1="135" y1="70" x2="880" y2="950" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8C80FF"/><stop offset=".45" stop-color="#5540DC"/><stop offset="1" stop-color="#24166B"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="324" y1="282" x2="702" y2="724" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/><stop offset=".48" stop-color="#E8E5FF"/><stop offset="1" stop-color="#A99EFF"/>
+    </linearGradient>
+    <radialGradient id="aura" cx="0" cy="0" r="1" gradientTransform="translate(512 540) rotate(90) scale(388)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#BDB4FF" stop-opacity=".44"/><stop offset="1" stop-color="#BDB4FF" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="170%"><feDropShadow dx="0" dy="28" stdDeviation="28" flood-color="#160E45" flood-opacity=".68"/></filter>
+  </defs>
+  <rect x="20" y="20" width="984" height="984" rx="226" fill="url(#bg)"/>
+  <ellipse cx="512" cy="548" rx="390" ry="390" fill="url(#aura)"/>
+  <path d="M254 699 368 322c9-30 47-38 68-15l76 87 76-87c21-23 59-15 68 15l114 377h-118l-72-250-68 77-68-77-72 250H254Z" fill="url(#mark)" filter="url(#shadow)"/>
+  <path d="m512 394 68 77-68 83-68-83 68-77Z" fill="#D5D0FF" fill-opacity=".48"/>
+  <path d="M174 82c132-64 477-81 690 54" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="18" stroke-linecap="round"/>
+  <rect x="29" y="29" width="966" height="966" rx="217" fill="none" stroke="#fff" stroke-opacity=".16" stroke-width="18"/>
+</svg>

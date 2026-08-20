@@ -1,0 +1,231 @@
+.pendant-lamp {
+  --lamp-size: clamp(175px, 13.5vw, 300px);
+  --lamp-bulb-y: clamp(178px, 13.74vw, 305px);
+  --lamp-top: clamp(-104px, -8.5vh, -66px);
+  --lamp-source-y: calc(var(--lamp-bulb-y) + var(--lamp-top));
+  --lamp-bulb-size: clamp(28px, 2.16vw, 48px);
+  --lamp-bulb-radius: clamp(14px, 1.08vw, 24px);
+  --lamp-hit-top: clamp(86px, 6.62vw, 147px);
+  --lamp-hit-width: clamp(182px, 14.04vw, 312px);
+  --lamp-hit-height: clamp(108px, 8.37vw, 186px);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.pendant-lamp__ambient,
+.pendant-lamp__source-glow,
+.pendant-lamp__beam,
+.pendant-lamp__pool,
+.pendant-lamp__fixture,
+.pendant-lamp__source-anchor,
+.pendant-lamp__control {
+  position: absolute;
+  left: 50%;
+}
+
+.pendant-lamp__ambient,
+.pendant-lamp__source-glow,
+.pendant-lamp__beam,
+.pendant-lamp__pool,
+.pendant-lamp__fixture,
+.pendant-lamp__source-anchor {
+  pointer-events: none;
+}
+
+.pendant-lamp__ambient {
+  z-index: 1;
+  top: var(--lamp-top);
+  width: min(68vw, 1240px);
+  height: min(66vh, 790px);
+  background: radial-gradient(ellipse at 50% 23%, rgba(216, 223, 231, 0.068) 0%, rgba(194, 204, 216, 0.032) 31%, rgba(169, 181, 195, 0.01) 58%, transparent 78%);
+  opacity: 0.58;
+  transform: translateX(-50%);
+  transition: opacity 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pendant-lamp__source-glow {
+  z-index: 3;
+  top: calc(var(--lamp-source-y) - 3px);
+  width: clamp(68px, 5vw, 108px);
+  height: clamp(82px, 6.5vw, 138px);
+  background: radial-gradient(ellipse at 50% 0%, rgba(255, 252, 238, 0.22) 0%, rgba(230, 233, 232, 0.085) 26%, rgba(201, 210, 220, 0.022) 53%, transparent 76%);
+  filter: blur(clamp(12px, 0.9vw, 19px));
+  opacity: 0.62;
+  transform: translateX(-50%);
+  transform-origin: 50% 0;
+  transition: opacity 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pendant-lamp__beam {
+  z-index: 2;
+  top: var(--lamp-source-y);
+  transform: translateX(-50%);
+  transform-origin: 50% 0;
+  mix-blend-mode: screen;
+  transition: opacity 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pendant-lamp__beam--outer {
+  width: min(38vw, 800px);
+  height: min(55vh, 690px);
+  background: conic-gradient(from 0deg at 50% 0%, transparent 0deg 150deg, rgba(184, 196, 210, 0.006) 158deg, rgba(200, 210, 220, 0.034) 168deg, rgba(224, 229, 234, 0.09) 180deg, rgba(200, 210, 220, 0.034) 192deg, rgba(184, 196, 210, 0.006) 202deg, transparent 210deg 360deg);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.9) 36%, rgba(0, 0, 0, 0.34) 65%, transparent 92%);
+  mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.9) 36%, rgba(0, 0, 0, 0.34) 65%, transparent 92%);
+  filter: blur(clamp(52px, 4.7vw, 112px));
+  opacity: 0.42;
+}
+
+.pendant-lamp__beam--inner {
+  width: min(22vw, 455px);
+  height: min(46vh, 570px);
+  background: conic-gradient(from 0deg at 50% 0%, transparent 0deg 158deg, rgba(205, 214, 222, 0.009) 165deg, rgba(226, 231, 234, 0.055) 173deg, rgba(248, 246, 235, 0.145) 180deg, rgba(226, 231, 234, 0.055) 187deg, rgba(205, 214, 222, 0.009) 195deg, transparent 202deg 360deg);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.94) 30%, rgba(0, 0, 0, 0.4) 62%, transparent 94%);
+  mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.94) 30%, rgba(0, 0, 0, 0.4) 62%, transparent 94%);
+  filter: blur(clamp(34px, 3.2vw, 76px));
+  opacity: 0.46;
+}
+
+.pendant-lamp__pool {
+  z-index: 1;
+  top: calc(var(--lamp-source-y) + min(13vh, 150px));
+  width: min(48vw, 940px);
+  height: min(42vh, 520px);
+  background: radial-gradient(ellipse at 50% 34%, rgba(193, 204, 218, 0.035) 0%, rgba(165, 178, 195, 0.013) 46%, transparent 76%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 20%, rgba(0, 0, 0, 0.76) 64%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 20%, rgba(0, 0, 0, 0.76) 64%, transparent 100%);
+  opacity: 0.5;
+  transform: translateX(-50%);
+  transition: opacity 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pendant-lamp__fixture {
+  z-index: 4;
+  top: var(--lamp-top);
+  display: block;
+  width: var(--lamp-size);
+  height: auto;
+  object-fit: contain;
+  -webkit-user-drag: none;
+  transform: translate3d(-50%, 0, 0);
+  transform-origin: 50% 0;
+  transition: opacity 280ms ease, transform 440ms cubic-bezier(0.16, 1, 0.3, 1), filter 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pendant-lamp__control {
+  z-index: 9;
+  top: calc(var(--lamp-top) + var(--lamp-hit-top));
+  width: var(--lamp-hit-width);
+  height: var(--lamp-hit-height);
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  border: 0;
+  border-radius: 50% 50% 38% 38%;
+  outline: 0;
+  background: transparent;
+  transform: translateX(-50%);
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.pendant-lamp__control:focus-visible {
+  outline: none;
+  box-shadow: none;
+}
+
+.pendant-lamp__control::after {
+  position: absolute;
+  left: 50%;
+  bottom: 4%;
+  width: calc(var(--lamp-bulb-size) + 10px);
+  height: calc(var(--lamp-bulb-size) + 10px);
+  content: "";
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  border-radius: 50%;
+  opacity: 0;
+  transform: translateX(-50%);
+  transition: opacity 140ms ease;
+}
+
+.pendant-lamp__control:focus-visible::after {
+  opacity: 1;
+}
+
+.pendant-lamp__source-anchor {
+  z-index: 0;
+  top: var(--lamp-source-y);
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  transform: translateX(-50%);
+}
+
+.pendant-lamp.is-on .pendant-lamp__control:hover ~ .pendant-lamp__source-glow { opacity: 0.65; }
+
+.pendant-lamp.is-off .pendant-lamp__ambient,
+.pendant-lamp.is-off .pendant-lamp__source-glow,
+.pendant-lamp.is-off .pendant-lamp__beam,
+.pendant-lamp.is-off .pendant-lamp__pool { opacity: 0; }
+.pendant-lamp.is-off .pendant-lamp__fixture { filter: brightness(0.98) saturate(0.96) contrast(1.01); }
+
+.pendant-lamp.is-subdued:not(.is-off) .pendant-lamp__ambient,
+.pendant-lamp.is-subdued:not(.is-off) .pendant-lamp__source-glow,
+.pendant-lamp.is-subdued:not(.is-off) .pendant-lamp__pool { opacity: 0.14; }
+.pendant-lamp.is-subdued:not(.is-off) .pendant-lamp__beam { opacity: 0.09; }
+.pendant-lamp.is-subdued .pendant-lamp__fixture { filter: brightness(0.56); opacity: 0.64; }
+.pendant-lamp.is-subdued.is-off .pendant-lamp__ambient,
+.pendant-lamp.is-subdued.is-off .pendant-lamp__source-glow,
+.pendant-lamp.is-subdued.is-off .pendant-lamp__pool { opacity: 0.06; }
+.pendant-lamp.is-subdued.is-off .pendant-lamp__beam { opacity: 0.035; }
+.pendant-lamp.is-subdued.is-off .pendant-lamp__fixture { filter: brightness(0.58) saturate(0.86) contrast(1.02); }
+
+.desktop.is-entry-pending .pendant-lamp__fixture,
+.desktop.is-entry-pending .pendant-lamp__source-anchor { opacity: 0; transform: translate3d(-50%, -12px, 0); }
+.desktop.is-entry-pending .pendant-lamp__ambient,
+.desktop.is-entry-pending .pendant-lamp__source-glow,
+.desktop.is-entry-pending .pendant-lamp__beam,
+.desktop.is-entry-pending .pendant-lamp__pool { opacity: 0; }
+.desktop.is-entry-ready .pendant-lamp__ambient,
+.desktop.is-entry-ready .pendant-lamp__source-glow,
+.desktop.is-entry-ready .pendant-lamp__beam,
+.desktop.is-entry-ready .pendant-lamp__pool { transition-delay: 130ms; }
+
+@media (max-width: 767px) {
+  .pendant-lamp {
+    --lamp-size: 150px;
+    --lamp-bulb-y: 153px;
+    --lamp-top: -44px;
+    --lamp-bulb-size: 24px;
+    --lamp-bulb-radius: 12px;
+    --lamp-hit-top: 74px;
+    --lamp-hit-width: 156px;
+    --lamp-hit-height: 93px;
+  }
+  .pendant-lamp__ambient { width: 132vw; height: 68vh; opacity: 0.52; }
+  .pendant-lamp__beam--outer { width: 104vw; height: 56vh; filter: blur(32px); opacity: 0.24; }
+  .pendant-lamp__beam--inner { width: 64vw; height: 47vh; filter: blur(23px); opacity: 0.28; }
+  .pendant-lamp__pool { top: 29vh; width: 112vw; height: 49vh; }
+}
+
+@media (max-height: 620px) and (min-width: 768px) {
+  .pendant-lamp {
+    --lamp-size: clamp(164px, 12.6vw, 218px);
+    --lamp-bulb-y: clamp(167px, 12.83vw, 222px);
+    --lamp-top: clamp(-82px, -10vh, -58px);
+    --lamp-bulb-size: clamp(26px, 2.02vw, 35px);
+    --lamp-bulb-radius: clamp(13px, 1.01vw, 17.5px);
+    --lamp-hit-top: clamp(80px, 6.18vw, 107px);
+    --lamp-hit-width: clamp(171px, 13.1vw, 227px);
+    --lamp-hit-height: clamp(102px, 7.8vw, 135px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pendant-lamp__ambient,
+  .pendant-lamp__source-glow,
+  .pendant-lamp__beam,
+  .pendant-lamp__pool,
+  .pendant-lamp__fixture,
+  .pendant-lamp__source-anchor { transition-duration: 80ms; transition-delay: 0ms; }
+}
