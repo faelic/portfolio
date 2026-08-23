@@ -65,6 +65,10 @@ function MobileProjectCarousel({ project }: { project: Project }) {
             <span className="project-carousel-mobile-media">
               <img className="project-carousel-mobile-backdrop" src={item.src} alt="" aria-hidden="true" draggable={false} />
               <img className="project-carousel-mobile-image" src={item.src} alt={index === activeIndex ? item.alt : ""} draggable={false} />
+              <span className="project-carousel-mobile-caption">
+                <strong>{item.action}</strong>
+                <span>{item.caption}</span>
+              </span>
             </span>
           );
           return project.liveUrl ? (
@@ -101,6 +105,7 @@ function MobileProjectCarousel({ project }: { project: Project }) {
           />
         ))}
       </div>
+      <p className="project-carousel-mobile-current">{project.images[activeIndex]?.caption}</p>
       <p className="project-carousel-mobile-status" aria-live="polite">Preview {activeIndex + 1} of {count}</p>
     </div>
   );
@@ -154,7 +159,7 @@ function DesktopProjectCarousel({ project }: { project: Project }) {
     };
     const observer = new ResizeObserver(() => {
       width = root.clientWidth;
-      const cardWidth = Math.min(560, Math.max(180, width * 0.29));
+      const cardWidth = Math.min(720, Math.max(220, width * 0.44));
       root.style.setProperty("--carousel-card-width", `${cardWidth}px`);
       root.style.setProperty("--carousel-height", `${cardWidth / 1.5 + Math.min(72, Math.max(36, width * 0.045))}px`);
       render();
@@ -171,7 +176,15 @@ function DesktopProjectCarousel({ project }: { project: Project }) {
     <div ref={rootRef} className="project-carousel" tabIndex={0} role="region" aria-roledescription="carousel" aria-label={`${project.title} project previews`}>
       <div className="project-carousel-stage">
         {cards.map((item, index) => {
-          const content = <img className="project-carousel-image" src={item.src} alt={index < project.images.length ? item.alt : ""} draggable={false} />;
+          const content = (
+            <>
+              <img className="project-carousel-image" src={item.src} alt={index < project.images.length ? item.alt : ""} draggable={false} />
+              <span className="project-carousel-card-caption">
+                <strong>{item.action}</strong>
+                <span>{item.caption}</span>
+              </span>
+            </>
+          );
           return project.liveUrl ? (
             <a key={index} className="project-carousel-card" href={project.liveUrl} target="_blank" rel="noreferrer" tabIndex={index < project.images.length ? 0 : -1} aria-hidden={index >= project.images.length}>{content}</a>
           ) : <div key={index} className="project-carousel-card" aria-hidden={index >= project.images.length}>{content}</div>;

@@ -9,6 +9,7 @@ interface Props {
   active: boolean;
   accent?: string;
   mobile?: boolean;
+  githubAccent?: string;
   children: ReactNode;
   onClose: () => void;
   onFocus: () => void;
@@ -16,7 +17,7 @@ interface Props {
   onToggleExpanded: () => void;
 }
 
-export function WindowFrame({ window: model, title, icon, kind, active, accent, mobile = false, children, onClose, onFocus, onMove, onToggleExpanded }: Props) {
+export function WindowFrame({ window: model, title, icon, kind, active, accent, mobile = false, githubAccent, children, onClose, onFocus, onMove, onToggleExpanded }: Props) {
   const rootRef = useRef<HTMLElement>(null);
   const dragRef = useRef<{ id: number; x: number; y: number; left: number; top: number } | undefined>(undefined);
   const [closing, setClosing] = useState(false);
@@ -24,6 +25,8 @@ export function WindowFrame({ window: model, title, icon, kind, active, accent, 
     zIndex: model.zIndex,
     ...(model.position && !model.expanded ? { left: model.position.x, top: model.position.y } : {}),
     ...(accent ? { "--project-accent": accent } : {}),
+    ...(githubAccent ? { "--project-github-accent": githubAccent } : {}),
+    ...(githubAccent ? { "--project-title-accent": githubAccent } : {}),
   } as React.CSSProperties;
 
   const beginDrag = (event: ReactPointerEvent<HTMLDivElement>) => {

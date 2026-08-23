@@ -7,6 +7,35 @@ export interface ProjectImage {
   alt: string;
   treatment: "interface" | "interface-policy";
   action: string;
+  caption: string;
+}
+
+export type CapabilityVisualKey =
+  | "ledger"
+  | "sessions"
+  | "operations"
+  | "split"
+  | "chain-sync"
+  | "guardrails"
+  | "chain-data"
+  | "navigation"
+  | "learning"
+  | "approval-scan"
+  | "risk-review"
+  | "revoke"
+  | "roles"
+  | "lifecycle"
+  | "wallet-sync"
+  | "frontend-system"
+  | "information"
+  | "collaboration";
+
+export interface ProjectCapability {
+  id: string;
+  title: string;
+  description: string;
+  proof: string;
+  visual: CapabilityVisualKey;
 }
 
 export interface Project {
@@ -15,13 +44,34 @@ export interface Project {
   desktopLabel: string;
   icon: string;
   accent: string;
+  githubAccent?: string;
   desktopSummary: string;
   desktopStack: string;
+  techStack: string[];
+  featuredImageIndex?: number;
   description: string;
+  windowStory: {
+    learned: string;
+    howItWorks: string;
+  };
+  thesis: {
+    number: string;
+    title: string;
+    body: string;
+    rotation: number;
+  };
+  primaryActionLabel?: string;
+  sourceActionLabel?: string;
   liveUrl?: string;
   repoUrl?: string;
   previewNote?: string;
-  highlights: string[];
+  capabilities: ProjectCapability[];
+  artifact?: {
+    eyebrow: string;
+    title: string;
+    body: string;
+    steps: string[];
+  };
   meta: Array<[string, string]>;
   images: ProjectImage[];
 }

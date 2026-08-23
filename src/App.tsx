@@ -13,12 +13,20 @@ import { useMediaQuery } from "./hooks/useMediaQuery";
 import { useWindowManager } from "./hooks/useWindowManager";
 import type { ProjectKey } from "./types/portfolio";
 
+const LAMP_STORAGE_KEY = "favour.pendant-lamp-on.v1";
+
 export function App() {
   useInterfaceSounds();
   const manager = useWindowManager();
   const mobile = useMediaQuery("(max-width: 767px)");
   const desktopLayout = useDesktopLayout(mobile ? "mobile" : "desktop");
-  const [lampOn, setLampOn] = useState(true);
+  const [lampOn, setLampOn] = useState(() => {
+    try {
+      return sessionStorage.getItem(LAMP_STORAGE_KEY) !== "false";
+    } catch {
+      return true;
+    }
+  });
   const [entered, setEntered] = useState(false);
   const [hoveredProject, setHoveredProject] = useState<ProjectKey>();
   const [hintVisible, setHintVisible] = useState(false);
@@ -43,12 +51,23 @@ export function App() {
   }, []);
 
   const hoverProject = useMemo(() => hoveredProject ? projects[hoveredProject] : undefined, [hoveredProject]);
+  const toggleLamp = () => {
+    setLampOn((current) => {
+      const next = !current;
+      try {
+        sessionStorage.setItem(LAMP_STORAGE_KEY, next ? "true" : "false");
+      } catch {
+        // Session storage can be unavailable in private contexts; the UI still toggles safely.
+      }
+      return next;
+    });
+  };
 
   return (
     <main className={`desktop${entered ? " is-entry-ready" : " is-entry-pending"}${lampOn ? " lamp-is-on" : " lamp-is-off"}${projectFocused ? " has-focused-project" : ""}${hasOpenWindow ? " has-open-window" : ""}${hoverProject ? " has-project-hover" : ""}${mobileArranging ? " is-arranging" : ""}`} aria-label="Favour interactive portfolio desktop">
       <h1 className="sr-only">Favour interactive portfolio</h1>
       <div className="favour-background" aria-hidden="true"><div className="favour-brand">FAVOUR</div></div>
-      <PendantLamp lightOn={lampOn} subdued={manager.windows.length > 0} onToggle={() => setLampOn((current) => !current)} />
+      <PendantLamp lightOn={lampOn} subdued={manager.windows.length > 0} onToggle={toggleLamp} />
       <p className="availability-status" role="status"><span className="availability-dot" aria-hidden="true"/><span>Available to work</span></p>
       <button className="reset-shortcut-layout" type="button" disabled={!desktopLayout.changed} data-cuelume-hover="tick" data-cuelume-release="ready" onClick={desktopLayout.reset}>Reset icon arrangement</button>
       <p className={`interaction-hint${hintVisible ? " is-visible" : ""}`} role="status"><span>{mobile ? "Hold an app to rearrange" : "Drag apps to rearrange"}</span><span aria-hidden="true">·</span><span>{mobile ? "Tap to open" : "Click to open"}</span></p>
@@ -73,9 +92,9 @@ export function App() {
         {manager.windows.map((model) => {
           const project = model.projectKey ? projects[model.projectKey] : undefined;
           const kind: "project" | "about" | "notes" = project ? "project" : model.key === "about" ? "about" : "notes";
-          const title = project?.title ?? (model.key === "notes" ? "Notes" : "");
+          const title = project?.title ?? (model.key === "about" ? "About me" : "Notes");
           return (
-            <WindowFrame key={model.key} window={model} title={title} icon={project?.icon} kind={kind} active={manager.activeWindow?.key === model.key} accent={project?.accent} mobile={mobile} onClose={() => manager.close(model.key)} onFocus={() => manager.focus(model.key)} onMove={(position) => manager.move(model.key, position)} onToggleExpanded={() => manager.toggleExpanded(model.key)}>
+            <WindowFrame key={model.key} window={model} title={title} icon={project?.icon} kind={kind} active={manager.activeWindow?.key === model.key} accent={project?.accent} mobile={mobile} onClose={() => manager.close(model.key)} onFocus={() => manager.focus(model.key)} onMove={(position) => manager.move(model.key, position)} onToggleExpanded={() => manager.toggleExpanded(model.key)} githubAccent={project?.githubAccent}>
               {project ? <ProjectWindow project={project} /> : model.key === "about" ? <AboutWindow /> : <NotesWindow />}
             </WindowFrame>
           );

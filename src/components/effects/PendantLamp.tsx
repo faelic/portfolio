@@ -31,6 +31,7 @@ export function PendantLamp({ lightOn, onToggle, subdued = false }: PendantLampP
       <div className="pendant-lamp__beam pendant-lamp__beam--inner" />
       <div className="pendant-lamp__pool" />
       <span className="pendant-lamp__source-anchor" aria-hidden="true" />
+      <span className="pendant-lamp__bulb" aria-hidden="true" />
 
       <img
         className="pendant-lamp__fixture"
