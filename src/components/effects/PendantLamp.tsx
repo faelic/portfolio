@@ -20,22 +20,29 @@ export function PendantLamp({ lightOn, onToggle, subdued = false }: PendantLampP
         aria-label={lightOn ? "Turn light off" : "Turn light on"}
         aria-pressed={lightOn}
         onPointerDown={() => play("press", { volume: LAMP_CLICK_VOLUME })}
-        onClick={onToggle}
+        onClick={(event) => {
+          onToggle();
+          if (event.detail > 0) event.currentTarget.blur();
+        }}
       >
         <span className="sr-only">{lightOn ? "Turn light off" : "Turn light on"}</span>
       </button>
 
-      <div className="pendant-lamp__ambient" />
-      <div className="pendant-lamp__source-glow" />
       <div className="pendant-lamp__beam pendant-lamp__beam--outer" />
       <div className="pendant-lamp__beam pendant-lamp__beam--inner" />
-      <div className="pendant-lamp__pool" />
       <span className="pendant-lamp__source-anchor" aria-hidden="true" />
-      <span className="pendant-lamp__bulb" aria-hidden="true" />
 
       <img
-        className="pendant-lamp__fixture"
-        src={lightOn ? "/assets/effects/pendant-lamp-fixture.png" : "/assets/effects/pendant-lamp-fixture-off.png"}
+        className="pendant-lamp__fixture pendant-lamp__fixture--off"
+        src="/assets/effects/pendant-lamp-fixture-off.png"
+        width="816"
+        height="1010"
+        alt=""
+        draggable="false"
+      />
+      <img
+        className="pendant-lamp__fixture pendant-lamp__fixture--on"
+        src="/assets/effects/pendant-lamp-fixture.png"
         width="816"
         height="1010"
         alt=""

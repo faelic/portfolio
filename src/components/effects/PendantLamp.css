@@ -10,132 +10,61 @@
   --lamp-hit-height: clamp(108px, 8.37vw, 186px);
   --lamp-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --lamp-transition: 430ms var(--lamp-ease);
-  --lamp-ambient-opacity: 0.42;
-  --lamp-bloom-opacity: 0.72;
-  --lamp-outer-opacity: 0.31;
-  --lamp-inner-opacity: 0.34;
-  --lamp-pool-opacity: 0.38;
-  --lamp-bulb-opacity: 1;
-  --lamp-bulb-lightness: 1;
+  --lamp-outer-opacity: 0.18;
+  --lamp-inner-opacity: 0.44;
   position: absolute;
   inset: 0;
   pointer-events: none;
 }
 
-.pendant-lamp__ambient,
-.pendant-lamp__source-glow,
 .pendant-lamp__beam,
-.pendant-lamp__pool,
 .pendant-lamp__fixture,
 .pendant-lamp__source-anchor,
-.pendant-lamp__bulb,
 .pendant-lamp__control {
   position: absolute;
   left: 50%;
 }
 
-.pendant-lamp__ambient,
-.pendant-lamp__source-glow,
 .pendant-lamp__beam,
-.pendant-lamp__pool,
 .pendant-lamp__fixture,
-.pendant-lamp__source-anchor,
-.pendant-lamp__bulb {
+.pendant-lamp__source-anchor {
   pointer-events: none;
-}
-
-.pendant-lamp__ambient {
-  z-index: 1;
-  top: calc(var(--lamp-source-y) - min(8vh, 82px));
-  width: min(62vw, 1180px);
-  height: min(58vh, 720px);
-  background:
-    radial-gradient(ellipse at 50% 9%, rgba(255, 252, 236, 0.056) 0%, rgba(211, 220, 229, 0.034) 20%, rgba(170, 183, 197, 0.014) 50%, transparent 78%),
-    radial-gradient(ellipse at 50% 44%, rgba(154, 166, 181, 0.024) 0%, transparent 64%);
-  opacity: var(--lamp-ambient-opacity);
-  transform: translateX(-50%);
-  transition: opacity var(--lamp-transition);
-}
-
-.pendant-lamp__source-glow {
-  z-index: 5;
-  top: calc(var(--lamp-source-y) - calc(var(--lamp-bulb-size) * 0.42));
-  width: calc(var(--lamp-bulb-size) * 3.1);
-  height: calc(var(--lamp-bulb-size) * 3.5);
-  background: radial-gradient(ellipse at 50% 22%, rgba(255, 253, 238, 0.7) 0%, rgba(245, 244, 231, 0.34) 18%, rgba(217, 224, 230, 0.1) 46%, transparent 75%);
-  filter: blur(clamp(10px, 0.76vw, 18px));
-  opacity: var(--lamp-bloom-opacity);
-  transform: translateX(-50%);
-  transform-origin: 50% 0;
-  transition: opacity 240ms var(--lamp-ease), filter var(--lamp-transition);
 }
 
 .pendant-lamp__beam {
   z-index: 2;
-  top: calc(var(--lamp-source-y) + calc(var(--lamp-bulb-size) * 0.18));
+  top: calc(var(--lamp-source-y) + calc(var(--lamp-bulb-size) * 0.44));
   transform: translateX(-50%);
   transform-origin: 50% 0;
   mix-blend-mode: screen;
-  transition: opacity var(--lamp-transition), filter var(--lamp-transition);
+  transition-property: opacity, filter;
+  transition-timing-function: var(--lamp-ease);
 }
 
 .pendant-lamp__beam--outer {
-  width: min(30vw, 610px);
-  height: min(58vh, 710px);
-  background: conic-gradient(from 0deg at 50% 0%, transparent 0deg 157deg, rgba(184, 196, 210, 0.012) 164deg, rgba(211, 220, 229, 0.055) 174deg, rgba(246, 246, 236, 0.11) 180deg, rgba(211, 220, 229, 0.055) 186deg, rgba(184, 196, 210, 0.012) 196deg, transparent 203deg 360deg);
+  width: min(42vw, 850px);
+  height: min(68vh, 840px);
+  background: conic-gradient(from 0deg at 50% 0%, transparent 0deg 156deg, rgba(184, 196, 210, 0.008) 163deg, rgba(211, 220, 229, 0.038) 173deg, rgba(246, 246, 236, 0.085) 180deg, rgba(211, 220, 229, 0.038) 187deg, rgba(184, 196, 210, 0.008) 197deg, transparent 204deg 360deg);
   -webkit-mask-image:
-    radial-gradient(ellipse at 50% 4%, #000 0%, rgba(0, 0, 0, 0.96) 25%, rgba(0, 0, 0, 0.62) 55%, transparent 88%),
-    linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.86) 42%, rgba(0, 0, 0, 0.22) 74%, transparent 96%);
+    radial-gradient(ellipse at 50% 2%, #000 0%, rgba(0, 0, 0, 0.92) 24%, rgba(0, 0, 0, 0.52) 58%, transparent 91%),
+    linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.8) 44%, rgba(0, 0, 0, 0.18) 78%, transparent 98%);
   mask-image:
-    radial-gradient(ellipse at 50% 4%, #000 0%, rgba(0, 0, 0, 0.96) 25%, rgba(0, 0, 0, 0.62) 55%, transparent 88%),
-    linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.86) 42%, rgba(0, 0, 0, 0.22) 74%, transparent 96%);
-  filter: blur(clamp(68px, 5.3vw, 122px));
+    radial-gradient(ellipse at 50% 2%, #000 0%, rgba(0, 0, 0, 0.92) 24%, rgba(0, 0, 0, 0.52) 58%, transparent 91%),
+    linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.8) 44%, rgba(0, 0, 0, 0.18) 78%, transparent 98%);
+  filter: blur(clamp(82px, 6.4vw, 146px));
   opacity: var(--lamp-outer-opacity);
+  transition-duration: 440ms, 440ms;
 }
 
 .pendant-lamp__beam--inner {
-  width: min(17vw, 352px);
-  height: min(50vh, 610px);
-  background: conic-gradient(from 0deg at 50% 0%, transparent 0deg 166deg, rgba(213, 222, 230, 0.01) 170deg, rgba(240, 244, 242, 0.07) 176deg, rgba(255, 252, 236, 0.18) 180deg, rgba(240, 244, 242, 0.07) 184deg, rgba(213, 222, 230, 0.01) 190deg, transparent 194deg 360deg);
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.9) 34%, rgba(0, 0, 0, 0.28) 66%, transparent 94%);
-  mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.9) 34%, rgba(0, 0, 0, 0.28) 66%, transparent 94%);
-  filter: blur(clamp(42px, 3.5vw, 82px));
+  width: min(15vw, 310px);
+  height: min(46vh, 570px);
+  background: conic-gradient(from 0deg at 50% 0%, transparent 0deg 167deg, rgba(213, 222, 230, 0.012) 171deg, rgba(240, 244, 242, 0.085) 176deg, rgba(255, 252, 236, 0.22) 180deg, rgba(240, 244, 242, 0.085) 184deg, rgba(213, 222, 230, 0.012) 189deg, transparent 193deg 360deg);
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.94) 31%, rgba(0, 0, 0, 0.34) 67%, transparent 96%);
+  mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.94) 31%, rgba(0, 0, 0, 0.34) 67%, transparent 96%);
+  filter: blur(clamp(31px, 2.55vw, 60px));
   opacity: var(--lamp-inner-opacity);
-}
-
-.pendant-lamp__pool {
-  z-index: 1;
-  top: calc(var(--lamp-source-y) + min(20vh, 224px));
-  width: min(44vw, 900px);
-  height: min(38vh, 500px);
-  background:
-    radial-gradient(ellipse at 50% 33%, rgba(226, 230, 227, 0.052) 0%, rgba(173, 185, 198, 0.024) 34%, rgba(112, 126, 143, 0.01) 60%, transparent 78%),
-    radial-gradient(ellipse at 50% 78%, rgba(175, 183, 193, 0.018) 0%, transparent 65%);
-  -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 0%, rgba(0, 0, 0, 0.8) 48%, transparent 86%);
-  mask-image: radial-gradient(ellipse at 50% 40%, #000 0%, rgba(0, 0, 0, 0.8) 48%, transparent 86%);
-  opacity: var(--lamp-pool-opacity);
-  transform: translateX(-50%);
-  transition: opacity var(--lamp-transition);
-}
-
-.pendant-lamp__bulb {
-  z-index: 5;
-  top: calc(var(--lamp-source-y) - calc(var(--lamp-bulb-size) * 0.4));
-  width: var(--lamp-bulb-size);
-  height: var(--lamp-bulb-size);
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 48% 18%, rgba(255, 255, 246, 0.98) 0 21%, rgba(255, 252, 235, 0.88) 35%, rgba(232, 226, 205, 0.54) 58%, rgba(155, 157, 150, 0.16) 100%);
-  box-shadow:
-    0 0 calc(var(--lamp-bulb-size) * 0.52) rgba(255, 251, 232, 0.42),
-    inset 0 calc(var(--lamp-bulb-size) * -0.12) calc(var(--lamp-bulb-size) * 0.28) rgba(0, 0, 0, 0.18);
-  opacity: var(--lamp-bulb-opacity);
-  transform: translateX(-50%);
-  transition:
-    background 210ms var(--lamp-ease),
-    box-shadow 260ms var(--lamp-ease),
-    filter 260ms var(--lamp-ease),
-    opacity 190ms var(--lamp-ease);
+  transition-duration: 320ms, 320ms;
 }
 
 .pendant-lamp__fixture {
@@ -148,8 +77,16 @@
   -webkit-user-drag: none;
   transform: translate3d(-50%, 0, 0);
   transform-origin: 50% 0;
-  transition: opacity 280ms ease, transform 440ms cubic-bezier(0.16, 1, 0.3, 1), filter var(--lamp-transition);
+  opacity: 0;
+  transition:
+    opacity 200ms var(--lamp-ease),
+    transform 440ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter var(--lamp-transition);
 }
+
+.pendant-lamp__fixture--on { z-index: 7; }
+.pendant-lamp.is-on .pendant-lamp__fixture--on,
+.pendant-lamp.is-off .pendant-lamp__fixture--off { opacity: 1; }
 
 .pendant-lamp__control {
   z-index: 9;
@@ -173,22 +110,8 @@
   box-shadow: none;
 }
 
-.pendant-lamp__control::after {
-  position: absolute;
-  left: 50%;
-  bottom: 4%;
-  width: calc(var(--lamp-bulb-size) + 10px);
-  height: calc(var(--lamp-bulb-size) + 10px);
-  content: "";
-  border: 1px solid rgba(255, 255, 255, 0.58);
-  border-radius: 50%;
-  opacity: 0;
-  transform: translateX(-50%);
-  transition: opacity 140ms ease;
-}
-
-.pendant-lamp__control:focus-visible::after {
-  opacity: 1;
+.pendant-lamp__control:focus-visible ~ .pendant-lamp__fixture {
+  filter: brightness(1.08) drop-shadow(0 0 8px rgba(255, 253, 236, 0.16));
 }
 
 .pendant-lamp__source-anchor {
@@ -200,52 +123,35 @@
   transform: translateX(-50%);
 }
 
-.pendant-lamp.is-on .pendant-lamp__control:hover ~ .pendant-lamp__source-glow { opacity: 0.78; }
-
 .pendant-lamp.is-off {
-  --lamp-ambient-opacity: 0;
-  --lamp-bloom-opacity: 0;
   --lamp-outer-opacity: 0;
   --lamp-inner-opacity: 0;
-  --lamp-pool-opacity: 0;
 }
 
-.pendant-lamp.is-off .pendant-lamp__bulb {
-  background:
-    radial-gradient(circle at 43% 22%, rgba(111, 117, 116, 0.52) 0 17%, rgba(51, 56, 55, 0.74) 42%, rgba(14, 17, 17, 0.95) 100%);
-  box-shadow:
-    inset 0 2px 8px rgba(255, 255, 255, 0.055),
-    inset 0 -7px 12px rgba(0, 0, 0, 0.62),
-    0 0 0 1px rgba(255, 255, 255, 0.035);
-  filter: brightness(0.64) saturate(0.82);
+.pendant-lamp.is-on .pendant-lamp__beam--inner { transition-delay: 34ms; }
+.pendant-lamp.is-on .pendant-lamp__beam--outer { transition-delay: 88ms; }
+
+.pendant-lamp.is-off .pendant-lamp__beam--inner {
+  transition-duration: 240ms, 240ms;
+  transition-delay: 0ms;
 }
 
-.pendant-lamp.is-off .pendant-lamp__fixture { filter: brightness(0.76) saturate(0.9) contrast(1.04); }
+.pendant-lamp.is-off .pendant-lamp__beam--outer {
+  transition-duration: 290ms, 290ms;
+  transition-delay: 0ms;
+}
 
-.pendant-lamp.is-subdued:not(.is-off) .pendant-lamp__ambient,
-.pendant-lamp.is-subdued:not(.is-off) .pendant-lamp__source-glow,
-.pendant-lamp.is-subdued:not(.is-off) .pendant-lamp__pool { opacity: 0.12; }
-.pendant-lamp.is-subdued:not(.is-off) .pendant-lamp__beam { opacity: 0.075; }
-.pendant-lamp.is-subdued .pendant-lamp__fixture { filter: brightness(0.56); opacity: 0.64; }
-.pendant-lamp.is-subdued:not(.is-off) .pendant-lamp__bulb { opacity: 0.48; }
-.pendant-lamp.is-subdued.is-off .pendant-lamp__ambient,
-.pendant-lamp.is-subdued.is-off .pendant-lamp__source-glow,
-.pendant-lamp.is-subdued.is-off .pendant-lamp__pool { opacity: 0.06; }
-.pendant-lamp.is-subdued.is-off .pendant-lamp__beam { opacity: 0.035; }
+.pendant-lamp.is-subdued:not(.is-off) .pendant-lamp__beam--inner { opacity: 0.075; }
+.pendant-lamp.is-subdued:not(.is-off) .pendant-lamp__beam--outer { opacity: 0.04; }
+.pendant-lamp.is-subdued .pendant-lamp__fixture { filter: brightness(0.56); }
+.pendant-lamp.is-subdued.is-on .pendant-lamp__fixture--on,
+.pendant-lamp.is-subdued.is-off .pendant-lamp__fixture--off { opacity: 0.64; }
+.pendant-lamp.is-subdued.is-off .pendant-lamp__beam { opacity: 0; }
 .pendant-lamp.is-subdued.is-off .pendant-lamp__fixture { filter: brightness(0.58) saturate(0.86) contrast(1.02); }
-.pendant-lamp.is-subdued.is-off .pendant-lamp__bulb { opacity: 0.38; }
 
 .desktop.is-entry-pending .pendant-lamp__fixture,
-.desktop.is-entry-pending .pendant-lamp__source-anchor,
-.desktop.is-entry-pending .pendant-lamp__bulb { opacity: 0; transform: translate3d(-50%, -12px, 0); }
-.desktop.is-entry-pending .pendant-lamp__ambient,
-.desktop.is-entry-pending .pendant-lamp__source-glow,
-.desktop.is-entry-pending .pendant-lamp__beam,
-.desktop.is-entry-pending .pendant-lamp__pool { opacity: 0; }
-.desktop.is-entry-ready .pendant-lamp__ambient,
-.desktop.is-entry-ready .pendant-lamp__source-glow,
-.desktop.is-entry-ready .pendant-lamp__beam,
-.desktop.is-entry-ready .pendant-lamp__pool { transition-delay: 130ms; }
+.desktop.is-entry-pending .pendant-lamp__source-anchor { opacity: 0; transform: translate3d(-50%, -12px, 0); }
+.desktop.is-entry-pending .pendant-lamp__beam { opacity: 0; }
 
 @media (max-width: 767px) {
   .pendant-lamp {
@@ -257,11 +163,11 @@
     --lamp-hit-top: 74px;
     --lamp-hit-width: 156px;
     --lamp-hit-height: 93px;
+    --lamp-outer-opacity: 0.14;
+    --lamp-inner-opacity: 0.36;
   }
-  .pendant-lamp__ambient { width: 132vw; height: 68vh; opacity: 0.52; }
-  .pendant-lamp__beam--outer { width: 104vw; height: 56vh; filter: blur(32px); opacity: 0.24; }
-  .pendant-lamp__beam--inner { width: 64vw; height: 47vh; filter: blur(23px); opacity: 0.28; }
-  .pendant-lamp__pool { top: 29vh; width: 112vw; height: 49vh; }
+  .pendant-lamp__beam--outer { width: 112vw; height: 64vh; filter: blur(38px); }
+  .pendant-lamp__beam--inner { width: 52vw; height: 45vh; filter: blur(19px); }
 }
 
 @media (max-height: 620px) and (min-width: 768px) {
@@ -278,11 +184,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pendant-lamp__ambient,
-  .pendant-lamp__source-glow,
   .pendant-lamp__beam,
-  .pendant-lamp__pool,
   .pendant-lamp__fixture,
-  .pendant-lamp__source-anchor,
-  .pendant-lamp__bulb { transition-duration: 80ms; transition-delay: 0ms; }
+  .pendant-lamp__source-anchor { transition-duration: 80ms; transition-delay: 0ms; }
 }

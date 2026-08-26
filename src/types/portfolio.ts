@@ -51,6 +51,7 @@ export interface Project {
   featuredImageIndex?: number;
   description: string;
   windowStory: {
+    learnedTitle?: string;
     learned: string;
     howItWorks: string;
   };

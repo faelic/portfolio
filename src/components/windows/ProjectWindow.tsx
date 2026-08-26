@@ -18,6 +18,13 @@ function GitHubIcon() {
 
 export function ProjectWindow({ project }: { project: Project }) {
   const featuredImage = project.images[project.featuredImageIndex ?? 0];
+  const renderStoryCopy = (copy: string) => {
+    return copy
+      .split(/\n{2,}/g)
+      .map((paragraph) => paragraph.trim())
+      .filter(Boolean)
+      .map((paragraph, index) => <p key={`${project.key}-story-${index}`}>{paragraph}</p>);
+  };
 
   return (
     <div className="window-body">
@@ -29,7 +36,6 @@ export function ProjectWindow({ project }: { project: Project }) {
                 {featuredImage ? (
                   <figure className="project-featured-media">
                     <img src={featuredImage.src} alt={featuredImage.alt} decoding="async" />
-                    <figcaption>{featuredImage.caption}</figcaption>
                   </figure>
                 ) : (
                   <div className="project-featured-empty" role="img" aria-label={`${project.title} has no deployed interface screenshot`}>
@@ -44,13 +50,13 @@ export function ProjectWindow({ project }: { project: Project }) {
                 <h2 id={`${project.key}-case-title`}>{project.title}</h2>
 
                 <section className="project-window-story-section">
-                  <h3>What I learnt</h3>
-                  <p>{project.windowStory.learned}</p>
+                  <h3>{project.windowStory.learnedTitle ?? "What I learnt"}</h3>
+                  {renderStoryCopy(project.windowStory.learned)}
                 </section>
 
-                <section className="project-window-story-section">
+                <section className="project-window-story-section project-window-story-section--how-works">
                   <h3>How it works</h3>
-                  <p>{project.windowStory.howItWorks}</p>
+                  {renderStoryCopy(project.windowStory.howItWorks)}
                 </section>
 
                 <section className="project-window-story-section project-window-stack" aria-labelledby={`${project.key}-stack-title`}>

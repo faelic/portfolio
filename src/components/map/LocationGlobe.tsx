@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import maplibregl, { type GeoJSONSource, type Map as MapLibreMap, type Marker } from "maplibre-gl";
+import maplibregl, { Point, type GeoJSONSource, type Map as MapLibreMap, type Marker } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import { continentLabels, locationHub, locationLevels, type LocationPoint } from "../../data/locations";
 
@@ -66,17 +66,22 @@ export function LocationGlobe() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
   const [error, setError] = useState(false);
+  const [surfaceHovered, setSurfaceHovered] = useState(false);
 
   useEffect(() => {
     if (!containerRef.current) return;
     let map: MapLibreMap;
-    const markers: Marker[] = [];
+    let hubMarker: Marker | undefined;
+    const destinationMarkers = new Map<string, Marker>();
     let animation = 0;
     let interacting = false;
+    let surfaceInteractive = false;
+    let lastPointer: { x: number; y: number } | undefined;
     let lastInteraction = performance.now();
     let currentSignature = "";
     let lastMarkerRefresh = 0;
     let previousAnimationTime = performance.now();
+    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
     try {
       map = new maplibregl.Map({
         container: containerRef.current,
@@ -85,6 +90,12 @@ export function LocationGlobe() {
         zoom: 1.45,
         minZoom: 0.55,
         maxZoom: 18.5,
+        scrollZoom: false,
+        dragPan: false,
+        doubleClickZoom: false,
+        boxZoom: false,
+        keyboard: false,
+        touchZoomRotate: false,
         dragRotate: false,
         touchPitch: false,
         renderWorldCopies: false,
@@ -97,6 +108,65 @@ export function LocationGlobe() {
       setError(true);
       return;
     }
+    const canvasContainer = map.getCanvasContainer();
+    map.touchZoomRotate.disableRotation();
+
+    const globePoint = (clientX: number, clientY: number) => {
+      const bounds = map.getCanvas().getBoundingClientRect();
+      if (bounds.width <= 0 || bounds.height <= 0) return undefined;
+      return new Point(
+        (clientX - bounds.left) / bounds.width * map.transform.width,
+        (clientY - bounds.top) / bounds.height * map.transform.height,
+      );
+    };
+
+    const pointIsOnGlobe = (clientX: number, clientY: number) => {
+      const point = globePoint(clientX, clientY);
+      if (!point) return false;
+      return map.transform.isPointOnMapSurface(point);
+    };
+
+    const setMapInteraction = (active: boolean) => {
+      if (surfaceInteractive === active) return;
+      surfaceInteractive = active;
+      setSurfaceHovered(active);
+      if (active) {
+        map.dragPan.enable();
+        map.scrollZoom.enable();
+        map.doubleClickZoom.enable();
+        map.touchZoomRotate.enable();
+        map.touchZoomRotate.disableRotation();
+      } else {
+        map.dragPan.disable();
+        map.scrollZoom.disable();
+        map.doubleClickZoom.disable();
+        map.touchZoomRotate.disable();
+      }
+    };
+
+    const updatePointerSurface = (clientX: number, clientY: number) => {
+      lastPointer = { x: clientX, y: clientY };
+      if (!interacting) {
+        const active = pointIsOnGlobe(clientX, clientY);
+        setMapInteraction(active);
+      }
+    };
+
+    const handleMouseMove = (event: MouseEvent) => updatePointerSurface(event.clientX, event.clientY);
+    const handleMouseDown = (event: MouseEvent) => updatePointerSurface(event.clientX, event.clientY);
+    const handleWheel = (event: WheelEvent) => updatePointerSurface(event.clientX, event.clientY);
+    const handleMouseLeave = () => { if (!interacting) setMapInteraction(false); };
+    const handleTouchStart = (event: TouchEvent) => {
+      const touch = event.touches[0];
+      if (touch) updatePointerSurface(touch.clientX, touch.clientY);
+    };
+
+    canvasContainer.addEventListener("mousemove", handleMouseMove, { capture: true });
+    canvasContainer.addEventListener("mousedown", handleMouseDown, { capture: true });
+    canvasContainer.addEventListener("wheel", handleWheel, { capture: true, passive: true });
+    canvasContainer.addEventListener("mouseleave", handleMouseLeave);
+    canvasContainer.addEventListener("touchstart", handleTouchStart, { capture: true, passive: true });
+
     map.addControl(new maplibregl.AttributionControl({ compact: true }), "bottom-right");
     const refresh = (force = false) => {
       const level = locationLevels.find((item) => map.getZoom() < item.maxZoom) ?? locationLevels.at(-1)!;
@@ -105,11 +175,32 @@ export function LocationGlobe() {
         .sort((first, second) => angularDistance(center, first) - angularDistance(center, second))
         .filter((location) => angularDistance(center, location) < 108)
         .slice(0, level.limit);
-      const signature = `${level.id}:${selected.map((location) => location.name).join("|")}`;
+      const selectedNames = new Set(selected.map((location) => location.name));
+      const signature = `${level.id}:${[...selectedNames].sort().join("|")}`;
       if (!force && currentSignature === signature) return;
       currentSignature = signature;
-      markers.splice(1).forEach((marker) => marker.remove());
-      selected.forEach((location) => markers.push(new maplibregl.Marker({ element: markerElement(location), anchor: "bottom" }).setLngLat([location.lng, location.lat]).addTo(map)));
+      destinationMarkers.forEach((marker, name) => {
+        if (!selectedNames.has(name)) {
+          marker.remove();
+          destinationMarkers.delete(name);
+        }
+      });
+      selected.forEach((location) => {
+        const existing = destinationMarkers.get(location.name);
+        if (existing) {
+          existing.setLngLat([location.lng, location.lat]);
+          return;
+        }
+        destinationMarkers.set(
+          location.name,
+          new maplibregl.Marker({
+            element: markerElement(location),
+            anchor: "bottom",
+            opacityWhenCovered: 0,
+            subpixelPositioning: true,
+          }).setLngLat([location.lng, location.lat]).addTo(map),
+        );
+      });
       (map.getSource("connections") as GeoJSONSource | undefined)?.setData(featureCollection(selected));
     };
     map.once("style.load", () => {
@@ -120,16 +211,32 @@ export function LocationGlobe() {
       map.addLayer({ id: "connections", type: "line", source: "connections", paint: { "line-color": accent, "line-width": 1.25, "line-dasharray": [2, 2], "line-opacity": 0.72 } });
       map.addSource("continents", { type: "geojson", data: { type: "FeatureCollection", features: continentLabels.map((item) => ({ type: "Feature", properties: { name: item.name }, geometry: { type: "Point", coordinates: [item.lng, item.lat] } })) } });
       map.addLayer({ id: "continents", type: "symbol", source: "continents", maxzoom: 3.7, layout: { "text-field": ["get", "name"], "text-size": 14, "text-letter-spacing": 0.14, "text-transform": "uppercase" }, paint: { "text-color": "#8b9da5", "text-halo-color": "#040707", "text-halo-width": 1.2 } });
-      markers.push(new maplibregl.Marker({ element: markerElement(locationHub, true), anchor: "bottom" }).setLngLat([locationHub.lng, locationHub.lat]).addTo(map));
+      hubMarker = new maplibregl.Marker({
+        element: markerElement(locationHub, true),
+        anchor: "bottom",
+        opacityWhenCovered: 0,
+        subpixelPositioning: true,
+      }).setLngLat([locationHub.lng, locationHub.lat]).addTo(map);
       refresh(true);
     });
     map.once("load", () => setReady(true));
     map.on("zoom", () => refresh());
-    map.on("moveend", () => refresh());
     map.on("dragstart", () => { interacting = true; lastInteraction = performance.now(); });
-    map.on("dragend", () => { interacting = false; lastInteraction = performance.now(); });
+    map.on("dragend", () => {
+      interacting = false;
+      lastInteraction = performance.now();
+      refresh(true);
+      if (lastPointer) setMapInteraction(pointIsOnGlobe(lastPointer.x, lastPointer.y));
+    });
+    map.on("zoomstart", () => { interacting = true; lastInteraction = performance.now(); });
+    map.on("zoomend", () => {
+      interacting = false;
+      lastInteraction = performance.now();
+      refresh(true);
+      if (lastPointer) setMapInteraction(pointIsOnGlobe(lastPointer.x, lastPointer.y));
+    });
     const rotate = (time: number) => {
-      if (!interacting && time - lastInteraction > 1500 && map.getZoom() < 2.2 && !matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      if (!interacting && time - lastInteraction > 1500 && map.getZoom() < 2.2 && !reducedMotion) {
         const elapsed = Math.min(0.05, (time - previousAnimationTime) / 1000);
         const center = map.getCenter();
         map.jumpTo({ center: [center.lng - 7.5 * elapsed, center.lat] });
@@ -142,11 +249,21 @@ export function LocationGlobe() {
       animation = requestAnimationFrame(rotate);
     };
     animation = requestAnimationFrame(rotate);
-    return () => { cancelAnimationFrame(animation); markers.forEach((marker) => marker.remove()); map.remove(); };
+    return () => {
+      cancelAnimationFrame(animation);
+      canvasContainer.removeEventListener("mousemove", handleMouseMove, { capture: true });
+      canvasContainer.removeEventListener("mousedown", handleMouseDown, { capture: true });
+      canvasContainer.removeEventListener("wheel", handleWheel, { capture: true });
+      canvasContainer.removeEventListener("mouseleave", handleMouseLeave);
+      canvasContainer.removeEventListener("touchstart", handleTouchStart, { capture: true });
+      hubMarker?.remove();
+      destinationMarkers.forEach((marker) => marker.remove());
+      map.remove();
+    };
   }, []);
 
   return (
-    <div className={`map-card${ready ? " is-map-ready" : ""}${error ? " has-map-error" : ""}`} style={{ "--map-accent": accent, "--map-accent-glow": "rgba(10,255,62,.52)", "--map-accent-muted": "#75b98b" } as React.CSSProperties}>
+    <div className={`map-card${ready ? " is-map-ready" : ""}${error ? " has-map-error" : ""}${surfaceHovered ? " is-globe-hovered" : ""}`} style={{ "--map-accent": accent, "--map-accent-glow": "rgba(10,255,62,.52)", "--map-accent-muted": "#75b98b" } as React.CSSProperties}>
       <div ref={containerRef} className="location-map" role="application" aria-label="Interactive globe centered on Lagos. Drag to rotate and scroll to zoom." />
       {!ready && <p className="location-map-status" role="status">{error ? "Interactive map unavailable." : "Loading geographic data…"}</p>}
       <p className="location-map-instructions" aria-hidden="true">Drag to explore · Scroll to zoom</p>

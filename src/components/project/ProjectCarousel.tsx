@@ -18,7 +18,7 @@ function MobileProjectCarousel({ project }: { project: Project }) {
   useEffect(() => setActiveIndex(0), [project.key]);
 
   const move = (direction: -1 | 1) => {
-    play("page", { volume: 0.68 });
+    play("page", { volume: 1 });
     setActiveIndex((current) => (current + direction + count) % count);
   };
 
@@ -101,7 +101,7 @@ function MobileProjectCarousel({ project }: { project: Project }) {
             aria-label={`Show preview ${index + 1} of ${count}`}
             aria-current={index === activeIndex ? "true" : undefined}
             data-cuelume-hover="tick"
-            onClick={() => { play("page", { volume: 0.58 }); setActiveIndex(index); }}
+            onClick={() => { play("page", { volume: 1 }); setActiveIndex(index); }}
           />
         ))}
       </div>

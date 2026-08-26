@@ -18,8 +18,8 @@ interface DockMotionItem {
   targetX: number;
 }
 
-function InstagramIcon() {
-  return <svg viewBox="0 0 64 64" focusable="false"><defs><radialGradient id="instagram-glow" cx="30%" cy="96%" r="92%"><stop offset="0" stopColor="#ffd600"/><stop offset=".48" stopColor="#ff165d"/><stop offset="1" stopColor="#9a13e8"/></radialGradient></defs><rect width="64" height="64" rx="14" fill="url(#instagram-glow)"/><rect x="15" y="15" width="34" height="34" rx="11" fill="none" stroke="#fff" strokeWidth="4.5"/><circle cx="32" cy="32" r="8.5" fill="none" stroke="#fff" strokeWidth="4.5"/><circle cx="44" cy="20" r="3" fill="#fff"/></svg>;
+function GitHubIcon() {
+  return <svg viewBox="0 0 64 64" focusable="false"><rect width="64" height="64" rx="14" fill="#f6f6f4"/><path d="M32 11.5c-11.5 0-20.8 9.3-20.8 20.8 0 9.2 6 17 14.3 19.7 1 .2 1.4-.4 1.4-1v-3.6c-5.8 1.3-7-2.5-7-2.5-.9-2.4-2.3-3-2.3-3-1.9-1.3.1-1.3.1-1.3 2.1.1 3.2 2.2 3.2 2.2 1.9 3.2 4.9 2.3 6.1 1.8.2-1.4.7-2.3 1.3-2.8-4.6-.5-9.5-2.3-9.5-10.3 0-2.3.8-4.1 2.2-5.6-.2-.5-.9-2.7.2-5.5 0 0 1.8-.6 5.8 2.1 1.7-.5 3.4-.7 5.2-.7s3.6.2 5.2.7c4-2.7 5.8-2.1 5.8-2.1 1.1 2.8.4 5 .2 5.5 1.4 1.5 2.2 3.4 2.2 5.6 0 8-4.9 9.8-9.5 10.3.8.7 1.5 2 1.5 4v5.9c0 .6.4 1.2 1.4 1 8.3-2.8 14.3-10.5 14.3-19.7 0-11.5-9.3-20.8-20.8-20.8Z" fill="#171717"/></svg>;
 }
 
 function XIcon() {
@@ -180,9 +180,9 @@ export function Dock({ projectFocused, onOpenApp }: Props) {
         <span className="dock-visual"><span className="dock-artwork"><span className="dock-icon dock-icon--notes" aria-hidden="true" /></span></span><span className="dock-tooltip">Notes</span>
       </button>
       <span className="dock-divider" aria-hidden="true" />
-      <a className={`dock-hit dock-hit--instagram${tooltip === "Instagram" ? " is-tooltip-active" : ""}`} aria-label="Instagram" data-cuelume-hover="tick" data-cuelume-press="press" data-cuelume-release="release" {...socialProps("Instagram", "#")}><span className="dock-visual"><span className="dock-artwork"><span className="dock-icon" aria-hidden="true"><InstagramIcon /></span></span></span><span className="dock-tooltip">Instagram</span></a>
-      <a className={`dock-hit dock-hit--x${tooltip === "X" ? " is-tooltip-active" : ""}`} aria-label="X" data-cuelume-hover="tick" data-cuelume-press="press" data-cuelume-release="release" {...socialProps("X", "#")}><span className="dock-visual"><span className="dock-artwork"><span className="dock-icon" aria-hidden="true"><XIcon /></span></span></span><span className="dock-tooltip">X</span></a>
-      <a className={`dock-hit dock-hit--linkedin${tooltip === "LinkedIn" ? " is-tooltip-active" : ""}`} aria-label="LinkedIn" data-cuelume-hover="tick" data-cuelume-press="press" data-cuelume-release="release" {...socialProps("LinkedIn", "#")}><span className="dock-visual"><span className="dock-artwork"><span className="dock-icon" aria-hidden="true"><LinkedInIcon /></span></span></span><span className="dock-tooltip">LinkedIn</span></a>
+      <a className={`dock-hit dock-hit--github${tooltip === "GitHub" ? " is-tooltip-active" : ""}`} aria-label="GitHub" data-cuelume-hover="tick" data-cuelume-press="press" data-cuelume-release="release" {...socialProps("GitHub", "https://github.com/faelic")}><span className="dock-visual"><span className="dock-artwork"><span className="dock-icon" aria-hidden="true"><GitHubIcon /></span></span></span><span className="dock-tooltip">GitHub</span></a>
+      <a className={`dock-hit dock-hit--x${tooltip === "X" ? " is-tooltip-active" : ""}`} aria-label="X" data-cuelume-hover="tick" data-cuelume-press="press" data-cuelume-release="release" {...socialProps("X", "https://x.com/FavDeFi")}><span className="dock-visual"><span className="dock-artwork"><span className="dock-icon" aria-hidden="true"><XIcon /></span></span></span><span className="dock-tooltip">X</span></a>
+      <a className={`dock-hit dock-hit--linkedin${tooltip === "LinkedIn" ? " is-tooltip-active" : ""}`} aria-label="LinkedIn" data-cuelume-hover="tick" data-cuelume-press="press" data-cuelume-release="release" {...socialProps("LinkedIn", "https://www.linkedin.com/in/favour-ututu/")}><span className="dock-visual"><span className="dock-artwork"><span className="dock-icon" aria-hidden="true"><LinkedInIcon /></span></span></span><span className="dock-tooltip">LinkedIn</span></a>
     </nav>
   );
 }

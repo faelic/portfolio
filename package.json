@@ -14,7 +14,8 @@
     "cuelume": "^0.2.2",
     "maplibre-gl": "^5.24.0",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "thinking-orbs": "^0.3.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.34.0",

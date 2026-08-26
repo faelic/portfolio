@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { BootPreloader } from "./components/effects/BootPreloader";
 import { PendantLamp } from "./components/effects/PendantLamp";
 import { DesktopIcon } from "./components/desktop/DesktopIcon";
 import { Dock } from "./components/dock/Dock";
@@ -28,18 +29,32 @@ export function App() {
     }
   });
   const [entered, setEntered] = useState(false);
+  const [booting, setBooting] = useState(true);
   const [hoveredProject, setHoveredProject] = useState<ProjectKey>();
   const [hintVisible, setHintVisible] = useState(false);
   const [mobileArranging, setMobileArranging] = useState(false);
   const projectFocused = manager.activeWindow?.key.startsWith("project:") ?? false;
   const hasOpenWindow = manager.windows.length > 0;
+  const preloadAssets = useMemo(() => {
+    const projectAssets = projectList.flatMap((project) => {
+      const featuredImage = project.images[project.featuredImageIndex ?? 0]?.src;
+      return featuredImage ? [project.icon, featuredImage] : [project.icon];
+    });
+
+    return [
+      "/assets/effects/pendant-lamp-fixture.png",
+      "/assets/effects/pendant-lamp-fixture-off.png",
+      ...projectAssets,
+    ];
+  }, []);
 
   useEffect(() => {
     if (!mobile) setMobileArranging(false);
   }, [mobile]);
 
   useEffect(() => {
-    const frame = requestAnimationFrame(() => requestAnimationFrame(() => setEntered(true)));
+    if (booting) return;
+
     const seen = sessionStorage.getItem("favour.interaction-hint-seen.v2");
     let showTimer = 0;
     let hideTimer = 0;
@@ -47,8 +62,14 @@ export function App() {
       showTimer = window.setTimeout(() => { setHintVisible(true); sessionStorage.setItem("favour.interaction-hint-seen.v2", "true"); }, 1500);
       hideTimer = window.setTimeout(() => setHintVisible(false), 6900);
     }
-    return () => { cancelAnimationFrame(frame); clearTimeout(showTimer); clearTimeout(hideTimer); };
+    return () => { clearTimeout(showTimer); clearTimeout(hideTimer); };
+  }, [booting]);
+
+  const revealDesktop = useCallback(() => {
+    requestAnimationFrame(() => requestAnimationFrame(() => setEntered(true)));
   }, []);
+
+  const completeBoot = useCallback(() => setBooting(false), []);
 
   const hoverProject = useMemo(() => hoveredProject ? projects[hoveredProject] : undefined, [hoveredProject]);
   const toggleLamp = () => {
@@ -64,7 +85,15 @@ export function App() {
   };
 
   return (
-    <main className={`desktop${entered ? " is-entry-ready" : " is-entry-pending"}${lampOn ? " lamp-is-on" : " lamp-is-off"}${projectFocused ? " has-focused-project" : ""}${hasOpenWindow ? " has-open-window" : ""}${hoverProject ? " has-project-hover" : ""}${mobileArranging ? " is-arranging" : ""}`} aria-label="Favour interactive portfolio desktop">
+    <>
+      {booting && (
+        <BootPreloader
+          assets={preloadAssets}
+          onReveal={revealDesktop}
+          onComplete={completeBoot}
+        />
+      )}
+      <main className={`desktop${entered ? " is-entry-ready" : " is-entry-pending"}${booting ? " is-booting" : ""}${lampOn ? " lamp-is-on" : " lamp-is-off"}${projectFocused ? " has-focused-project" : ""}${hasOpenWindow ? " has-open-window" : ""}${hoverProject ? " has-project-hover" : ""}${mobileArranging ? " is-arranging" : ""}`} aria-label="Favour interactive portfolio desktop" aria-hidden={booting} inert={booting}>
       <h1 className="sr-only">Favour interactive portfolio</h1>
       <div className="favour-background" aria-hidden="true"><div className="favour-brand">FAVOUR</div></div>
       <PendantLamp lightOn={lampOn} subdued={manager.windows.length > 0} onToggle={toggleLamp} />
@@ -102,6 +131,7 @@ export function App() {
       </section>
 
       <Dock projectFocused={projectFocused} onOpenApp={manager.openApp} />
-    </main>
+      </main>
+    </>
   );
 }

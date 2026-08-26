@@ -72,7 +72,7 @@ export function DesktopIcon({ project, position, onMove, onMoveEnd, onOpen, onHo
   const updateLampInfluence = useCallback(() => {
     const icon = ref.current;
     const desktop = icon?.closest<HTMLElement>(".desktop");
-    const source = desktop?.querySelector<HTMLElement>(".pendant-lamp__bulb") ?? desktop?.querySelector<HTMLElement>(".pendant-lamp__source-anchor");
+    const source = desktop?.querySelector<HTMLElement>(".pendant-lamp__source-anchor");
     const thumbnail = icon?.querySelector<HTMLElement>(".shortcut-thumbnail");
     if (!icon || !desktop || !source || !thumbnail) return;
     if (!lampOn) {
@@ -142,7 +142,7 @@ export function DesktopIcon({ project, position, onMove, onMoveEnd, onOpen, onHo
   useEffect(() => {
     const desktop = ref.current?.closest<HTMLElement>(".desktop");
     if (!desktop) return;
-    const source = desktop.querySelector<HTMLElement>(".pendant-lamp__bulb") ?? desktop.querySelector<HTMLElement>(".pendant-lamp__source-anchor");
+    const source = desktop.querySelector<HTMLElement>(".pendant-lamp__source-anchor");
     const observer = new ResizeObserver(scheduleLampInfluence);
     observer.observe(desktop);
     if (source) observer.observe(source);
@@ -168,7 +168,7 @@ export function DesktopIcon({ project, position, onMove, onMoveEnd, onOpen, onHo
 
   const launch = () => {
     setLaunching(true);
-    play("pulse", { volume: 0.72 });
+    play("pulse", { volume: 1 });
     window.setTimeout(() => {
       onOpen();
       setLaunching(false);
@@ -268,7 +268,6 @@ export function DesktopIcon({ project, position, onMove, onMoveEnd, onOpen, onHo
       className={`shortcut shortcut--${project.key}${dragging ? " is-dragging" : ""}${launching ? " is-launching" : ""}`}
       type="button"
       data-project={project.key}
-      data-cuelume-hover="tick"
       aria-label={`Open ${project.title}`}
       style={position ? { left: `${position.x}%`, top: `${position.y}%` } : undefined}
       onPointerDown={pointerDown}
@@ -281,7 +280,7 @@ export function DesktopIcon({ project, position, onMove, onMoveEnd, onOpen, onHo
       onFocus={() => !mobile && onHover(true)}
       onBlur={() => onHover(false)}
     >
-      <span className="shortcut-visual" aria-hidden="true">
+      <span className="shortcut-visual" data-cuelume-hover="tick" aria-hidden="true">
         <img className="shortcut-thumbnail" src={project.icon} alt="" draggable={false} />
         <span className="shortcut-label">{project.desktopLabel}</span>
       </span>
