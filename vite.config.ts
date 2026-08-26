@@ -10,5 +10,4 @@ export default defineConfig({
     include: ["thinking-orbs/engine"],
   },
   server: { open: false },
-  build: { sourcemap: true },
 });

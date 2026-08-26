@@ -15,7 +15,7 @@ export const notes = {
       {
         title: "Frontend Developer Intern",
         place: "Flamong · Policy.ng",
-        date: "May 2026 – Present",
+        date: "May 2026 - Present",
         bullets: [
           "Build and maintain responsive React and TypeScript interfaces for Policy.ng, a civic-tech platform that helps people find and understand Nigerian policies across its public website and authenticated admin dashboard.",
           "Delivered more than 10 public and admin modules, including policy listings and detail pages, officials directories, AI-assisted policy Q&A, content management, comment moderation, policy suggestions, editor picks, civic facts, and subscriber management.",
@@ -26,7 +26,7 @@ export const notes = {
       {
         title: "Software Engineer",
         place: "Independent Projects",
-        date: "2025 – Present",
+        date: "2025 - Present",
         bullets: [
           "Monierave: Designed and built a Go and PostgreSQL backend for moving money between internal accounts. Protected transfers from retries, concurrent requests, and partial updates using idempotency keys, row-level locking, atomic database transactions, and append-only double-entry postings. Added reconciliation, a transactional outbox with Redis and Asynq, revocable sessions, and race-enabled tests for ledger and concurrency guarantees.",
           "BucketFlow: Built a Solidity and Next.js USDC vault that helps freelancers divide incoming payments between Rent, Savings, Tax, Family Support, and Cash-out. Enforced allocation rules that total 100% on-chain, handled wallet connections, token allowances, wrong-network and transaction states, and implemented a 30-day Savings withdrawal cooldown.",

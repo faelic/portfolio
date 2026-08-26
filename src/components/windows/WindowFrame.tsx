@@ -1,4 +1,4 @@
-import { useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
 import type { Point, PortfolioWindow } from "../../types/portfolio";
 
 interface Props {
@@ -28,6 +28,10 @@ export function WindowFrame({ window: model, title, icon, kind, active, accent, 
     ...(githubAccent ? { "--project-github-accent": githubAccent } : {}),
     ...(githubAccent ? { "--project-title-accent": githubAccent } : {}),
   } as React.CSSProperties;
+
+  useEffect(() => {
+    rootRef.current?.focus({ preventScroll: true });
+  }, []);
 
   const beginDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (mobile || model.expanded || (event.target as HTMLElement).closest(".traffic-lights") || !rootRef.current) return;
@@ -66,6 +70,7 @@ export function WindowFrame({ window: model, title, icon, kind, active, accent, 
       className={`window window--${kind} react-window-enter${active ? " is-active" : ""}${model.expanded ? " is-expanded" : ""}${closing ? " is-closing" : ""}`}
       role="dialog"
       aria-label={title || "About me"}
+      tabIndex={-1}
       style={style}
       onPointerDown={onFocus}
     >
