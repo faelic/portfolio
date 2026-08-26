@@ -13,6 +13,21 @@ npm run build
 npm run preview
 ```
 
+## Deploying to Vercel
+
+Import the repository into Vercel and use these project settings:
+
+- Framework Preset: `Vite`
+- Root Directory: repository root (`./`)
+- Install Command: `npm ci`
+- Build Command: `npm run build`
+- Output Directory: `dist`
+- Node.js Version: `22.x`
+
+No environment variables are currently required. `vercel.json` supplies the Vite
+SPA fallback and baseline security headers. Production deployments should track
+the `main` branch; all other branches can use Vercel Preview Deployments.
+
 ## Architecture
 
 - `src/data/` is the single source of truth for projects, notes and map locations.

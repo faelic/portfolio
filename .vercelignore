@@ -1,0 +1,8 @@
+.codex/
+.impeccable/
+prototype/
+references/
+PRODUCT.md
+*.mov
+*.log
+.DS_Store
