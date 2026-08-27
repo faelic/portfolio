@@ -1,13 +1,13 @@
 .pendant-lamp {
-  --lamp-size: clamp(175px, 13.5vw, 300px);
-  --lamp-bulb-y: clamp(178px, 13.74vw, 305px);
-  --lamp-top: clamp(-104px, -8.5vh, -66px);
-  --lamp-source-y: calc(var(--lamp-bulb-y) + var(--lamp-top));
-  --lamp-bulb-size: clamp(28px, 2.16vw, 48px);
-  --lamp-bulb-radius: clamp(14px, 1.08vw, 24px);
-  --lamp-hit-top: clamp(86px, 6.62vw, 147px);
-  --lamp-hit-width: clamp(182px, 14.04vw, 312px);
-  --lamp-hit-height: clamp(108px, 8.37vw, 186px);
+  --lamp-size: clamp(150px, 11.2vw, 250px);
+  --lamp-bulb-y: clamp(153px, 11.39vw, 254px);
+  --lamp-source-y: clamp(116px, 8.9vw, 190px);
+  --lamp-top: calc(var(--lamp-source-y) - var(--lamp-bulb-y));
+  --lamp-bulb-size: clamp(24px, 1.79vw, 40px);
+  --lamp-bulb-radius: clamp(12px, 0.895vw, 20px);
+  --lamp-hit-top: clamp(74px, 5.49vw, 123px);
+  --lamp-hit-width: clamp(156px, 11.65vw, 260px);
+  --lamp-hit-height: clamp(93px, 6.94vw, 155px);
   --lamp-ease: cubic-bezier(0.22, 1, 0.36, 1);
   --lamp-transition: 430ms var(--lamp-ease);
   --lamp-outer-opacity: 0.18;
@@ -42,7 +42,7 @@
 }
 
 .pendant-lamp__beam--outer {
-  width: min(42vw, 850px);
+  width: min(38vw, 760px);
   height: min(68vh, 840px);
   background: conic-gradient(from 0deg at 50% 0%, transparent 0deg 156deg, rgba(184, 196, 210, 0.008) 163deg, rgba(211, 220, 229, 0.038) 173deg, rgba(246, 246, 236, 0.085) 180deg, rgba(211, 220, 229, 0.038) 187deg, rgba(184, 196, 210, 0.008) 197deg, transparent 204deg 360deg);
   -webkit-mask-image:
@@ -57,7 +57,7 @@
 }
 
 .pendant-lamp__beam--inner {
-  width: min(15vw, 310px);
+  width: min(13.5vw, 270px);
   height: min(46vh, 570px);
   background: conic-gradient(from 0deg at 50% 0%, transparent 0deg 167deg, rgba(213, 222, 230, 0.012) 171deg, rgba(240, 244, 242, 0.085) 176deg, rgba(255, 252, 236, 0.22) 180deg, rgba(240, 244, 242, 0.085) 184deg, rgba(213, 222, 230, 0.012) 189deg, transparent 193deg 360deg);
   -webkit-mask-image: linear-gradient(180deg, #000 0%, rgba(0, 0, 0, 0.94) 31%, rgba(0, 0, 0, 0.34) 67%, transparent 96%);
@@ -155,31 +155,33 @@
 
 @media (max-width: 767px) {
   .pendant-lamp {
-    --lamp-size: 150px;
-    --lamp-bulb-y: 153px;
-    --lamp-top: -44px;
-    --lamp-bulb-size: 24px;
-    --lamp-bulb-radius: 12px;
-    --lamp-hit-top: 74px;
-    --lamp-hit-width: 156px;
-    --lamp-hit-height: 93px;
+    --lamp-size: clamp(112px, 30vw, 124px);
+    --lamp-bulb-y: clamp(114px, 30.5vw, 126px);
+    --lamp-source-y: clamp(92px, 24vw, 98px);
+    --lamp-top: calc(var(--lamp-source-y) - var(--lamp-bulb-y));
+    --lamp-bulb-size: clamp(18px, 4.8vw, 20px);
+    --lamp-bulb-radius: clamp(9px, 2.4vw, 10px);
+    --lamp-hit-top: clamp(55px, 14.7vw, 61px);
+    --lamp-hit-width: clamp(116px, 31.2vw, 129px);
+    --lamp-hit-height: clamp(69px, 18.6vw, 77px);
     --lamp-outer-opacity: 0.14;
     --lamp-inner-opacity: 0.36;
   }
-  .pendant-lamp__beam--outer { width: 112vw; height: 64vh; filter: blur(38px); }
-  .pendant-lamp__beam--inner { width: 52vw; height: 45vh; filter: blur(19px); }
+  .pendant-lamp__beam--outer { width: 100vw; height: 62vh; filter: blur(38px); }
+  .pendant-lamp__beam--inner { width: 46vw; height: 43vh; filter: blur(19px); }
 }
 
 @media (max-height: 620px) and (min-width: 768px) {
   .pendant-lamp {
-    --lamp-size: clamp(164px, 12.6vw, 218px);
-    --lamp-bulb-y: clamp(167px, 12.83vw, 222px);
-    --lamp-top: clamp(-82px, -10vh, -58px);
-    --lamp-bulb-size: clamp(26px, 2.02vw, 35px);
-    --lamp-bulb-radius: clamp(13px, 1.01vw, 17.5px);
-    --lamp-hit-top: clamp(80px, 6.18vw, 107px);
-    --lamp-hit-width: clamp(171px, 13.1vw, 227px);
-    --lamp-hit-height: clamp(102px, 7.8vw, 135px);
+    --lamp-size: clamp(140px, 10.4vw, 205px);
+    --lamp-bulb-y: clamp(142px, 10.58vw, 208px);
+    --lamp-source-y: clamp(104px, 7.8vw, 144px);
+    --lamp-top: calc(var(--lamp-source-y) - var(--lamp-bulb-y));
+    --lamp-bulb-size: clamp(22px, 1.66vw, 33px);
+    --lamp-bulb-radius: clamp(11px, 0.83vw, 16.5px);
+    --lamp-hit-top: clamp(69px, 5.1vw, 101px);
+    --lamp-hit-width: clamp(146px, 10.82vw, 213px);
+    --lamp-hit-height: clamp(87px, 6.45vw, 127px);
   }
 }
 
