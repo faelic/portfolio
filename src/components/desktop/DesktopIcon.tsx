@@ -168,7 +168,7 @@ export function DesktopIcon({ project, position, onMove, onMoveEnd, onOpen, onHo
 
   const launch = () => {
     setLaunching(true);
-    play("pulse", { volume: 1 });
+    play("release", { volume: 1 });
     window.setTimeout(() => {
       onOpen();
       setLaunching(false);
