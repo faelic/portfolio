@@ -97,7 +97,7 @@ export function App() {
       <h1 className="sr-only">Favour interactive portfolio</h1>
       <div className="favour-background" aria-hidden="true"><div className="favour-brand">FAVOUR</div></div>
       <PendantLamp lightOn={lampOn} subdued={manager.windows.length > 0} onToggle={toggleLamp} />
-      <p className="availability-status" role="status"><span className="availability-dot" aria-hidden="true"/><span>Available to work</span></p>
+      <p className="availability-status" role="status"><span className="availability-dot" aria-hidden="true"/><span>Available</span></p>
       <button className="reset-shortcut-layout" type="button" disabled={!desktopLayout.changed} data-cuelume-hover="tick" data-cuelume-release="ready" onClick={desktopLayout.reset}>Reset icon arrangement</button>
       <p className={`interaction-hint${hintVisible ? " is-visible" : ""}`} role="status"><span>{mobile ? "Hold an app to rearrange" : "Drag apps to rearrange"}</span><span aria-hidden="true">·</span><span>{mobile ? "Tap to open" : "Click to open"}</span></p>
 
