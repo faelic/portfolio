@@ -176,7 +176,7 @@ export function Dock({ projectFocused, onOpenApp }: Props) {
       <button className={`dock-hit dock-hit--avatar${tooltip === "About me" ? " is-tooltip-active" : ""}`} type="button" aria-label="About me" data-cuelume-hover="tick" data-cuelume-press="press" data-cuelume-release="release" onClick={openAbout} onPointerEnter={() => activateTooltip("About me")} onFocus={() => activateTooltip("About me")} onBlur={() => setTooltip(undefined)}>
         <span className="dock-visual"><span className="dock-artwork"><span className="dock-icon dock-icon--avatar" aria-hidden="true">🧔🏾</span></span>{badge && <span className="dock-badge" aria-hidden="true">1</span>}</span><span className="dock-tooltip">About me</span>
       </button>
-      <button className={`dock-hit dock-hit--notes${tooltip === "Notes" ? " is-tooltip-active" : ""}`} type="button" aria-label="Notes" data-cuelume-hover="tick" data-cuelume-press="press" data-cuelume-release="release" onClick={() => onOpenApp("notes")} onPointerEnter={() => activateTooltip("Notes")} onFocus={() => activateTooltip("Notes")} onBlur={() => setTooltip(undefined)}>
+      <button className={`dock-hit dock-hit--notes${tooltip === "Notes" ? " is-tooltip-active" : ""}`} type="button" aria-label="Notes" data-cuelume-hover="tick" data-cuelume-press="press" data-cuelume-release="pulse" onClick={() => onOpenApp("notes")} onPointerEnter={() => activateTooltip("Notes")} onFocus={() => activateTooltip("Notes")} onBlur={() => setTooltip(undefined)}>
         <span className="dock-visual"><span className="dock-artwork"><span className="dock-icon dock-icon--notes" aria-hidden="true" /></span></span><span className="dock-tooltip">Notes</span>
       </button>
       <span className="dock-divider" aria-hidden="true" />

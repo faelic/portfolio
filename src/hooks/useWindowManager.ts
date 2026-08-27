@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { play } from "cuelume";
 import { hashToProject, projectToHash } from "../data/projects";
 import type { AppKey, Point, PortfolioWindow, ProjectKey, WindowKey } from "../types/portfolio";
 
@@ -70,7 +71,10 @@ export function useWindowManager() {
 
   useEffect(() => {
     const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && activeWindow) close(activeWindow.key);
+      if (event.key === "Escape" && activeWindow) {
+        play("tick", { volume: 1 });
+        close(activeWindow.key);
+      }
     };
     window.addEventListener("keydown", handleEscape);
     return () => window.removeEventListener("keydown", handleEscape);

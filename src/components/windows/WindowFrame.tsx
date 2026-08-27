@@ -76,7 +76,7 @@ export function WindowFrame({ window: model, title, icon, kind, active, accent, 
     >
       <div className="titlebar" onPointerDown={beginDrag} onPointerMove={drag} onPointerUp={endDrag} onPointerCancel={endDrag}>
         <div className="traffic-lights" aria-label="Window controls">
-          <button className="traffic-light traffic-light--close" type="button" aria-label="Close window" data-cuelume-hover="tick" data-cuelume-release="droplet" onPointerDown={(event) => event.stopPropagation()} onClick={closeWithMotion} />
+          <button className="traffic-light traffic-light--close" type="button" aria-label="Close window" data-cuelume-hover="tick" data-cuelume-release="tick" onPointerDown={(event) => event.stopPropagation()} onClick={closeWithMotion} />
           <span className="traffic-light traffic-light--minimize" aria-hidden="true" />
           <button className="traffic-light traffic-light--zoom" type="button" aria-label={model.expanded ? "Restore window" : "Expand window"} aria-pressed={model.expanded} data-cuelume-hover="tick" data-cuelume-toggle="toggle" onPointerDown={(event) => event.stopPropagation()} onClick={onToggleExpanded} />
         </div>
