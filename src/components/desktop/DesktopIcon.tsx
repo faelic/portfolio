@@ -1,3 +1,5 @@
+import { ResilientImage } from "../shared/ResilientImage";
+import { clampIcon } from "../../state/layout";
 import { useCallback, useEffect, useLayoutEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent } from "react";
 import { play } from "cuelume";
 import type { Point, Project } from "../../types/portfolio";
@@ -7,11 +9,13 @@ interface Props {
   position?: Point;
   onMove: (position: Point) => void;
   onMoveEnd?: (position: Point, origin: Point) => void;
-  onOpen: () => void;
+  onOpen: (opener: HTMLButtonElement | null) => void;
   onHover: (hovered: boolean) => void;
   lampOn: boolean;
   mobile?: boolean;
   arranging?: boolean;
+  selected?: boolean;
+  onSelect: () => void;
   onArrangeStart?: () => void;
 }
 
@@ -35,7 +39,7 @@ const smoothstep = (value: number) => {
   return t * t * (3 - 2 * t);
 };
 
-export function DesktopIcon({ project, position, onMove, onMoveEnd, onOpen, onHover, lampOn, mobile = false, arranging = false, onArrangeStart }: Props) {
+export function DesktopIcon({ project, position, onMove, onMoveEnd, onOpen, onHover, lampOn, mobile = false, arranging = false, selected = false, onSelect, onArrangeStart }: Props) {
   const ref = useRef<HTMLButtonElement>(null);
   const drag = useRef<DragState | null>(null);
   const holdTimer = useRef<number | null>(null);
@@ -166,17 +170,32 @@ export function DesktopIcon({ project, position, onMove, onMoveEnd, onOpen, onHo
     };
   }, [position?.x, position?.y, mobile, updateLampInfluence]);
 
+  useLayoutEffect(() => {
+    const icon = ref.current;
+    const desktop = icon?.closest<HTMLElement>(".desktop");
+    if (!icon || !desktop || mobile || !position) return;
+    const clampPosition = () => {
+      const next = clampIcon(position, desktop.clientWidth, desktop.clientHeight, icon.offsetWidth, icon.offsetHeight);
+      if (Math.abs(next.x - position.x) > 0.01 || Math.abs(next.y - position.y) > 0.01) onMove(next);
+    };
+    clampPosition();
+    const observer = new ResizeObserver(clampPosition);
+    observer.observe(desktop);
+    return () => observer.disconnect();
+  }, [position, mobile, onMove]);
+
   const launch = () => {
     setLaunching(true);
     play("release", { volume: 1 });
     window.setTimeout(() => {
-      onOpen();
+      onOpen(ref.current);
       setLaunching(false);
     }, window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 82);
   };
 
   const pointerDown = (event: ReactPointerEvent<HTMLButtonElement>) => {
     if (event.button !== 0 || !ref.current) return;
+    if (arranging) onSelect();
     const desktop = ref.current.closest<HTMLElement>(".desktop");
     if (!desktop) return;
     const desktopRect = desktop.getBoundingClientRect();
@@ -246,8 +265,8 @@ export function DesktopIcon({ project, position, onMove, onMoveEnd, onOpen, onHo
     setDragging(false);
     if (ref.current?.hasPointerCapture(event.pointerId)) ref.current.releasePointerCapture(event.pointerId);
     if (moved) onMoveEnd?.(state.latest, state.origin);
-    if (!moved && !state.longPressed && !state.cancelled && !(mobile && arranging)) {
-      launch();
+    if (!moved && !state.longPressed && !state.cancelled) {
+      if (arranging) onSelect(); else launch();
     }
   };
 
@@ -257,6 +276,7 @@ export function DesktopIcon({ project, position, onMove, onMoveEnd, onOpen, onHo
   };
 
   const keyDown = (event: ReactKeyboardEvent<HTMLButtonElement>) => {
+    if (arranging) return;
     if ((event.key !== "Enter" && event.key !== " ") || event.repeat || dragging || (mobile && arranging)) return;
     event.preventDefault();
     launch();
@@ -268,7 +288,9 @@ export function DesktopIcon({ project, position, onMove, onMoveEnd, onOpen, onHo
       className={`shortcut shortcut--${project.key}${dragging ? " is-dragging" : ""}${launching ? " is-launching" : ""}`}
       type="button"
       data-project={project.key}
-      aria-label={`Open ${project.title}`}
+      aria-label={`${arranging ? "Select" : "Open"} ${project.title}`}
+      aria-pressed={arranging ? selected : undefined}
+      aria-describedby={arranging ? "arrangement-instructions" : undefined}
       style={position ? { left: `${position.x}%`, top: `${position.y}%` } : undefined}
       onPointerDown={pointerDown}
       onPointerMove={pointerMove}
@@ -277,11 +299,11 @@ export function DesktopIcon({ project, position, onMove, onMoveEnd, onOpen, onHo
       onKeyDown={keyDown}
       onPointerEnter={() => !mobile && !dragging && onHover(true)}
       onPointerLeave={() => onHover(false)}
-      onFocus={() => !mobile && onHover(true)}
+      onFocus={() => { if (arranging) onSelect(); else if (!mobile) onHover(true); }}
       onBlur={() => onHover(false)}
     >
       <span className="shortcut-visual" data-cuelume-hover="tick" aria-hidden="true">
-        <img className="shortcut-thumbnail" src={project.icon} alt="" draggable={false} />
+        <ResilientImage className="shortcut-thumbnail" src={project.icon} alt="" icon fallbackLabel={`${project.title} icon`} draggable={false} />
         <span className="shortcut-label">{project.desktopLabel}</span>
       </span>
     </button>

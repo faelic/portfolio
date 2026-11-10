@@ -1,3 +1,4 @@
+import { session } from "../../utils/storage";
 import { useEffect, useRef, useState } from "react";
 import { MODE_DRAWS, resolvePreset } from "thinking-orbs/engine";
 
@@ -31,11 +32,7 @@ function preloadImage(src: string) {
 }
 
 function hasBootedThisSession() {
-  try {
-    return sessionStorage.getItem(BOOT_SEEN_KEY) === "true";
-  } catch {
-    return false;
-  }
+  return session.flag(BOOT_SEEN_KEY);
 }
 
 function SolvingOrb() {
@@ -116,11 +113,7 @@ export function BootPreloader({ assets, onReveal, onComplete }: BootPreloaderPro
     ]).then(() => {
       if (cancelled) return;
 
-      try {
-        sessionStorage.setItem(BOOT_SEEN_KEY, "true");
-      } catch {
-        // The preloader still completes when storage is unavailable.
-      }
+      session.writeFlag(BOOT_SEEN_KEY, true);
 
       setExiting(true);
       callbacksRef.current.onReveal();

@@ -1,5 +1,31 @@
+# Dependencies and build output
 node_modules/
 dist/
+*.tsbuildinfo
+.vite/
+.cache/
+
+# Generated test reports
+playwright-report/
+test-results/
+coverage/
+.vitest/
+
+# Local environment files; keep shareable templates eligible for Git
+.env
+.env.*
+!.env.example
+!.env.*.example
+!.env.sample
+!.env.*.sample
+!.env.template
+!.env.*.template
+
+# Machine-specific tool and deployment state
+/.codex/
+/.impeccable/
+/.vercel/
+
+# OS metadata and logs
 .DS_Store
 *.log
-

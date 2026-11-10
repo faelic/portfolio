@@ -41,6 +41,7 @@ export interface ProjectCapability {
 export interface Project {
   key: ProjectKey;
   title: string;
+  slug: string;
   desktopLabel: string;
   icon: string;
   accent: string;

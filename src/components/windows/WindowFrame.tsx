@@ -1,5 +1,6 @@
+import { ResilientImage } from "../shared/ResilientImage";
 import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
-import type { Point, PortfolioWindow } from "../../types/portfolio";
+import type { Point, PortfolioWindow, WindowKey } from "../../types/portfolio";
 
 interface Props {
   window: PortfolioWindow;
@@ -11,16 +12,18 @@ interface Props {
   mobile?: boolean;
   githubAccent?: string;
   children: ReactNode;
+  register: (key: WindowKey, node: HTMLElement | null) => void;
   onClose: () => void;
   onFocus: () => void;
   onMove: (position: Point) => void;
   onToggleExpanded: () => void;
 }
 
-export function WindowFrame({ window: model, title, icon, kind, active, accent, mobile = false, githubAccent, children, onClose, onFocus, onMove, onToggleExpanded }: Props) {
+export function WindowFrame({ window: model, title, icon, kind, active, accent, mobile = false, githubAccent, children, register, onClose, onFocus, onMove, onToggleExpanded }: Props) {
   const rootRef = useRef<HTMLElement>(null);
   const dragRef = useRef<{ id: number; x: number; y: number; left: number; top: number } | undefined>(undefined);
   const [closing, setClosing] = useState(false);
+  const closeTimer = useRef(0);
   const style = {
     zIndex: model.zIndex,
     ...(model.position && !model.expanded ? { left: model.position.x, top: model.position.y } : {}),
@@ -29,9 +32,7 @@ export function WindowFrame({ window: model, title, icon, kind, active, accent, 
     ...(githubAccent ? { "--project-title-accent": githubAccent } : {}),
   } as React.CSSProperties;
 
-  useEffect(() => {
-    rootRef.current?.focus({ preventScroll: true });
-  }, []);
+  useEffect(() => () => clearTimeout(closeTimer.current), []);
 
   const beginDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (mobile || model.expanded || (event.target as HTMLElement).closest(".traffic-lights") || !rootRef.current) return;
@@ -61,18 +62,21 @@ export function WindowFrame({ window: model, title, icon, kind, active, accent, 
 
   const closeWithMotion = () => {
     setClosing(true);
-    window.setTimeout(onClose, window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 180);
+    closeTimer.current = window.setTimeout(onClose, window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 180);
   };
 
   return (
     <article
-      ref={rootRef}
+      ref={node => { rootRef.current = node; register(model.key, node); }}
+      data-window-key={model.key}
+      inert={mobile && !active}
       className={`window window--${kind} react-window-enter${active ? " is-active" : ""}${model.expanded ? " is-expanded" : ""}${closing ? " is-closing" : ""}`}
       role="dialog"
       aria-label={title || "About me"}
       tabIndex={-1}
       style={style}
       onPointerDown={onFocus}
+      onFocusCapture={onFocus}
     >
       <div className="titlebar" onPointerDown={beginDrag} onPointerMove={drag} onPointerUp={endDrag} onPointerCancel={endDrag}>
         <div className="traffic-lights" aria-label="Window controls">
@@ -81,7 +85,7 @@ export function WindowFrame({ window: model, title, icon, kind, active, accent, 
           <button className="traffic-light traffic-light--zoom" type="button" aria-label={model.expanded ? "Restore window" : "Expand window"} aria-pressed={model.expanded} data-cuelume-hover="tick" data-cuelume-toggle="toggle" onPointerDown={(event) => event.stopPropagation()} onClick={onToggleExpanded} />
         </div>
         <span className="window-title">
-          {icon && <img className="window-title-icon" src={icon} alt="" />}
+          {icon && <ResilientImage className="window-title-icon" src={icon} alt="" icon fallbackLabel={`${title} icon`} />}
           <span>{title}</span>
         </span>
       </div>

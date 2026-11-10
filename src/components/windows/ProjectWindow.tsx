@@ -1,3 +1,4 @@
+import { ResilientImage } from "../shared/ResilientImage";
 import type { Project } from "../../types/portfolio";
 
 function ExternalLinkIcon() {
@@ -35,11 +36,11 @@ export function ProjectWindow({ project }: { project: Project }) {
               <div className="project-featured-column">
                 {featuredImage ? (
                   <figure className="project-featured-media">
-                    <img src={featuredImage.src} alt={featuredImage.alt} decoding="async" />
+                    <ResilientImage src={featuredImage.src} alt={featuredImage.alt} fallbackLabel={`${project.title} project screenshot`} decoding="async" />
                   </figure>
                 ) : (
                   <div className="project-featured-empty" role="img" aria-label={`${project.title} has no deployed interface screenshot`}>
-                    <img src={project.icon} alt="" aria-hidden="true" />
+                    <ResilientImage src={project.icon} alt="" icon fallbackLabel={`${project.title} icon`} />
                     <strong>Repository-only project</strong>
                     <span>No fabricated product screenshot.</span>
                   </div>

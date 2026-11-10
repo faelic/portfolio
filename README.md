@@ -1,52 +1,57 @@
 # Favour Portfolio
 
-A production-ready React and TypeScript implementation of Favour's interactive macOS-inspired portfolio. The original vanilla prototype remains in `prototype/` as the visual and interaction baseline.
+FAVOUR is a React/TypeScript working desktop for exploring six project cases, About, and Notes. Desktop windows stack; mobile uses full-screen reading views. Favour is presented as a **Software Engineer**, working across backend, frontend, AI, and blockchain applications, with agentic AI engineering as continuing learning.
 
-## Commands
+## Documentation
+
+Updated 10 November 2026 after the pre-RAG gap remediation. Specifications separate **Implemented**, **Gap**, **Proposed**, and **Deferred** behavior and retain stable requirement/flow/gap/verification IDs.
+
+| Document | Purpose |
+|---|---|
+| [PRD](docs/PRD.md) | Audience, goals, six-project inventory, requirements, acceptance |
+| [TRD](docs/TRD.md) | Architecture, dependencies, lifecycle, state, build/deployment |
+| [UI/UX design](DESIGN.md) | Established visual system, responsive behavior, accessible controls, failures |
+| [App flows](docs/APP_FLOW.md) | Seven Mermaid visitor journeys and recovery paths |
+| [Backend schema / current data model](docs/BACKEND_SCHEMA.md) | Frontend content, stable identifiers, memory state, browser storage; no backend exists |
+| [Implementation and verification](docs/IMPLEMENTATION_PLAN.md) | Gap closures, tests, historical evidence, performance findings, remaining limits |
+
+[PRODUCT.md](PRODUCT.md) captures durable product context. The [knowledge base](rag/README.md) contains 12 topic documents under `rag/knowledge/`, with a data contract, source map, owner-confirmed additions, and retrieval evaluation cases outside the corpus. The original source is preserved separately. The portfolio assistant is Favour's first AI application project; it remains planned and the corpus is not imported or ingested. **RAG, backend APIs, database, and authentication are not implemented.**
+
+## Development and checks
+
+Use Node **22.12+ within Node 22** and the committed lockfile.
 
 ```bash
-npm install
+npm ci
 npm run dev
 npm run lint
 npm run typecheck
+npm test
 npm run build
+npx playwright install chromium webkit
+npm run test:e2e
+npm run test:map-smoke
 npm run preview
 ```
 
-## Deploying to Vercel
+`test:watch` runs Vitest interactively. `test:e2e` uses the production build for desktop Chromium, mobile-touch Chromium, and WebKit. External geography is blocked deterministically in that suite. Run `test:map-smoke` separately for real services/WebGL; run Playwright commands sequentially because they share report directories. CI configuration runs deterministic checks on pull requests and pushes to `main`, saving failure artifacts. Hosted CI execution is not claimed until those changes are pushed.
 
-Import the repository into Vercel and use these project settings:
+After starting a production preview on port 4173, `npm run measure:performance -- after` captures three fresh-context runs per device profile. See [recorded findings](docs/IMPLEMENTATION_PLAN.md#performance-findings); this is a controlled local comparison, not a production Core Web Vitals claim. The lazy MapLibre chunk warning remains visible.
 
-- Framework Preset: `Vite`
-- Root Directory: repository root (`./`)
-- Install Command: `npm ci`
-- Build Command: `npm run build`
-- Output Directory: `dist`
-- Node.js Version: `22.x`
+## Architecture and interaction model
 
-No environment variables are currently required. `vercel.json` supplies the Vite
-SPA fallback and baseline security headers. Production deployments should track
-the `main` branch; all other branches can use Vercel Preview Deployments.
+[src/App.tsx](src/App.tsx) composes the desktop, loader, lamp, dock, windows, and arrangement controls. [src/state](src/state/) contains pure window/layout operations; [src/hooks](src/hooks/) connects them to browser state and effects. [src/data](src/data/) owns project/profile/note/geographic content. [src/components/windows](src/components/windows/) renders the content, while [src/components/map](src/components/map/) isolates optional map loading and failure recovery. [ResilientImage](src/components/shared/ResilientImage.tsx) and [storage helpers](src/utils/storage.ts) contain optional-resource failures.
 
-## Architecture
+Icons open by click/tap or Enter/Space. Arrange apps (or mobile long press) starts a draft: select an icon, drag or use direction buttons/arrows, then Done/Enter saves or Cancel/Escape discards. Reset previews defaults. Desktop/mobile preferences remain separate; ordinary desktop dragging persists directly.
 
-- `src/data/` is the single source of truth for projects, notes and map locations.
-- `src/hooks/` owns persistent desktop layout and window-management state.
-- `src/components/desktop/` contains the desktop icons and desktop-level controls.
-- `src/features/tunnel/` contains the isolated, lazy-loaded Three.js tunnel renderer, its deterministic layout, shaders and motion configuration.
-- `src/components/windows/` contains the reusable window frame and app views.
-- `src/components/project/` contains project presentation components.
-- `src/components/dock/` contains dock behavior and social links.
-- `src/components/map/` contains the lazy-loaded MapLibre globe.
-- `src/styles/global.css` preserves the art-directed visual system and responsive rules.
-- `public/assets/` contains locally served project images, icons and fonts.
+Windows raise on pointer/focus entry, drag on desktop, expand/restore, and close. Yellow minimize is decorative. Dismissal restores focus; mobile covered windows/backgrounds are inert. Supported hashes remain `#monierave`, `#bucketflow`, `#blockscan`, `#cleanup`, `#escrow`, `#policyng`. Back/Forward and direct fragment changes reconcile projects; empty/unknown hashes dismiss project windows and retain About/Notes. Focus alone does not push history.
 
-## Interaction model
+The lamp preference persists for the page session. Reduced motion affects supported effects. Interface sounds have no app-level mute control. Static Lagos location remains readable if the near-view lazy globe fails; module/map failures have explicit Retry. [Prototype](prototype/) and [references](references/) remain historical material, not current application behavior. No tunnel or gallery is mounted.
 
-Project icons open on one click and can be dragged. Their positions persist in local storage and can be reset from the desktop. Windows can be focused, dragged, minimized, expanded and closed. Project windows are deep-linkable with hashes such as `#monierave`. Escape closes the focused window, and reduced-motion preferences are respected.
+## Content and deployment
 
-The tunnel uses project screenshots from `public/assets/projects/ambient/`. Its deterministic eight-row layout mounts every image to one of four shared corridor surfaces—left wall, right wall, ceiling or floor—with one responsive vanishing region. Side walls receive focused portrait crops while the floor and ceiling retain landscape crops. Hovering a project briefly emphasizes only its related planes; opening any window decelerates and subdues the renderer so application content remains primary.
+Edit project stories, slugs, links, and media in [projects.ts](src/data/projects.ts). Existing legacy keys/public slugs should remain stable. The renderer shows one featured image; Escrow is repository-only, and Policy.ng has no GitHub link. Local assets live under [public/assets](public/assets/).
 
-## Content updates
+Identity, biography, and intro live in [profile.ts](src/data/profile.ts); note content and authoritative dates in [notes.ts](src/data/notes.ts); social destinations in [Dock.tsx](src/components/dock/Dock.tsx). Align static metadata in [index.html](index.html) when positioning changes.
 
-Add or edit project copy, links, metadata, accents and galleries in `src/data/projects.ts`. New project assets belong under `public/assets/projects/<project-name>/` and should be referenced from the data module with root-relative `/assets/...` URLs.
+Vercel settings: Vite framework, repository root, `npm ci`, `npm run build`, output `dist`, Node 22. No environment variables are required. [vercel.json](vercel.json) supplies SPA fallback and security headers; external map resources remain network dependencies. These are repository settings, not an audit of the production project. Nothing is deployed by this change.

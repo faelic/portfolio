@@ -1,0 +1,1920 @@
+{
+  "label": "before",
+  "environment": "Chromium headless, local production preview, unthrottled loopback, fresh browser context per run; external map network is uncontrolled",
+  "results": [
+    {
+      "profile": "desktop",
+      "run": 1,
+      "entryMs": 2882,
+      "requestsBeforeScroll": 0,
+      "offscreenFramesPerSecond": 88,
+      "mapElapsedMs": 15362,
+      "mapState": "ready",
+      "mapRequests": 24,
+      "entryResources": [
+        {
+          "name": "index-DyrcZwfv.js",
+          "transfer": 92219,
+          "decoded": 285287
+        },
+        {
+          "name": "index-D6-L-1bW.css",
+          "transfer": 12026,
+          "decoded": 50882
+        },
+        {
+          "name": "pendant-lamp-fixture-off.png",
+          "transfer": 662054,
+          "decoded": 661754
+        },
+        {
+          "name": "pendant-lamp-fixture.png",
+          "transfer": 676866,
+          "decoded": 676566
+        },
+        {
+          "name": "monierave.svg",
+          "transfer": 1125,
+          "decoded": 1803
+        },
+        {
+          "name": "bucketflow.svg",
+          "transfer": 1089,
+          "decoded": 1793
+        },
+        {
+          "name": "blockexplorer.svg",
+          "transfer": 1158,
+          "decoded": 2197
+        },
+        {
+          "name": "cleanup.svg",
+          "transfer": 1132,
+          "decoded": 1794
+        },
+        {
+          "name": "escrow.svg",
+          "transfer": 1160,
+          "decoded": 1810
+        },
+        {
+          "name": "policy.svg",
+          "transfer": 1116,
+          "decoded": 1806
+        },
+        {
+          "name": "zalando-sans-expanded-latin.woff2",
+          "transfer": 37916,
+          "decoded": 37616
+        },
+        {
+          "name": "zalando-sans-latin.woff2",
+          "transfer": 86652,
+          "decoded": 86352
+        },
+        {
+          "name": "monierave-hero.png",
+          "transfer": 876461,
+          "decoded": 876161
+        },
+        {
+          "name": "blockscan-nft-azuki.png",
+          "transfer": 597104,
+          "decoded": 596804
+        },
+        {
+          "name": "bucketflow-hero.png",
+          "transfer": 747443,
+          "decoded": 747143
+        },
+        {
+          "name": "cleanup-approvals.png",
+          "transfer": 306489,
+          "decoded": 306189
+        },
+        {
+          "name": "policy-home.png",
+          "transfer": 804375,
+          "decoded": 804075
+        },
+        {
+          "name": "favicon.ico",
+          "transfer": 3590,
+          "decoded": 3290
+        },
+        {
+          "name": "favicon.svg",
+          "transfer": 604,
+          "decoded": 304
+        }
+      ],
+      "resources": [
+        {
+          "name": "index-DyrcZwfv.js",
+          "transfer": 92219,
+          "decoded": 285287
+        },
+        {
+          "name": "index-D6-L-1bW.css",
+          "transfer": 12026,
+          "decoded": 50882
+        },
+        {
+          "name": "pendant-lamp-fixture-off.png",
+          "transfer": 662054,
+          "decoded": 661754
+        },
+        {
+          "name": "pendant-lamp-fixture.png",
+          "transfer": 676866,
+          "decoded": 676566
+        },
+        {
+          "name": "monierave.svg",
+          "transfer": 1125,
+          "decoded": 1803
+        },
+        {
+          "name": "bucketflow.svg",
+          "transfer": 1089,
+          "decoded": 1793
+        },
+        {
+          "name": "blockexplorer.svg",
+          "transfer": 1158,
+          "decoded": 2197
+        },
+        {
+          "name": "cleanup.svg",
+          "transfer": 1132,
+          "decoded": 1794
+        },
+        {
+          "name": "escrow.svg",
+          "transfer": 1160,
+          "decoded": 1810
+        },
+        {
+          "name": "policy.svg",
+          "transfer": 1116,
+          "decoded": 1806
+        },
+        {
+          "name": "zalando-sans-expanded-latin.woff2",
+          "transfer": 37916,
+          "decoded": 37616
+        },
+        {
+          "name": "zalando-sans-latin.woff2",
+          "transfer": 86652,
+          "decoded": 86352
+        },
+        {
+          "name": "monierave-hero.png",
+          "transfer": 876461,
+          "decoded": 876161
+        },
+        {
+          "name": "blockscan-nft-azuki.png",
+          "transfer": 597104,
+          "decoded": 596804
+        },
+        {
+          "name": "bucketflow-hero.png",
+          "transfer": 747443,
+          "decoded": 747143
+        },
+        {
+          "name": "cleanup-approvals.png",
+          "transfer": 306489,
+          "decoded": 306189
+        },
+        {
+          "name": "policy-home.png",
+          "transfer": 804375,
+          "decoded": 804075
+        },
+        {
+          "name": "favicon.ico",
+          "transfer": 3590,
+          "decoded": 3290
+        },
+        {
+          "name": "favicon.svg",
+          "transfer": 604,
+          "decoded": 304
+        },
+        {
+          "name": "LocationGlobe-CTrZAT3Q.js",
+          "transfer": 288487,
+          "decoded": 1062151
+        },
+        {
+          "name": "LocationGlobe-DNVN2dqC.css",
+          "transfer": 10354,
+          "decoded": 69918
+        },
+        {
+          "name": "apple-touch-icon.png",
+          "transfer": 1744,
+          "decoded": 1444
+        },
+        {
+          "name": "dark",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "planet",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "ofm.json",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "ofm.png",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "0-255.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "0-255.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "768-1023.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "1024-1279.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "1280-1535.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "1536-1791.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "2304-2559.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "2816-3071.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "3328-3583.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "3584-3839.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "4096-4351.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "4608-4863.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "4864-5119.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "5888-6143.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "8192-8447.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "11520-11775.pbf",
+          "transfer": 0,
+          "decoded": 0
+        }
+      ]
+    },
+    {
+      "profile": "desktop",
+      "run": 2,
+      "entryMs": 2458,
+      "requestsBeforeScroll": 1,
+      "offscreenFramesPerSecond": 601,
+      "mapElapsedMs": 7764,
+      "mapState": "ready",
+      "mapRequests": 24,
+      "entryResources": [
+        {
+          "name": "index-DyrcZwfv.js",
+          "transfer": 92219,
+          "decoded": 285287
+        },
+        {
+          "name": "index-D6-L-1bW.css",
+          "transfer": 12026,
+          "decoded": 50882
+        },
+        {
+          "name": "pendant-lamp-fixture-off.png",
+          "transfer": 662054,
+          "decoded": 661754
+        },
+        {
+          "name": "monierave.svg",
+          "transfer": 1125,
+          "decoded": 1803
+        },
+        {
+          "name": "bucketflow.svg",
+          "transfer": 1089,
+          "decoded": 1793
+        },
+        {
+          "name": "pendant-lamp-fixture.png",
+          "transfer": 676866,
+          "decoded": 676566
+        },
+        {
+          "name": "blockexplorer.svg",
+          "transfer": 1158,
+          "decoded": 2197
+        },
+        {
+          "name": "cleanup.svg",
+          "transfer": 1132,
+          "decoded": 1794
+        },
+        {
+          "name": "escrow.svg",
+          "transfer": 1160,
+          "decoded": 1810
+        },
+        {
+          "name": "policy.svg",
+          "transfer": 1116,
+          "decoded": 1806
+        },
+        {
+          "name": "zalando-sans-expanded-latin.woff2",
+          "transfer": 37916,
+          "decoded": 37616
+        },
+        {
+          "name": "zalando-sans-latin.woff2",
+          "transfer": 86652,
+          "decoded": 86352
+        },
+        {
+          "name": "monierave-hero.png",
+          "transfer": 876461,
+          "decoded": 876161
+        },
+        {
+          "name": "bucketflow-hero.png",
+          "transfer": 747443,
+          "decoded": 747143
+        },
+        {
+          "name": "blockscan-nft-azuki.png",
+          "transfer": 597104,
+          "decoded": 596804
+        },
+        {
+          "name": "cleanup-approvals.png",
+          "transfer": 306489,
+          "decoded": 306189
+        },
+        {
+          "name": "policy-home.png",
+          "transfer": 804375,
+          "decoded": 804075
+        },
+        {
+          "name": "favicon.ico",
+          "transfer": 3590,
+          "decoded": 3290
+        },
+        {
+          "name": "favicon.svg",
+          "transfer": 604,
+          "decoded": 304
+        }
+      ],
+      "resources": [
+        {
+          "name": "index-DyrcZwfv.js",
+          "transfer": 92219,
+          "decoded": 285287
+        },
+        {
+          "name": "index-D6-L-1bW.css",
+          "transfer": 12026,
+          "decoded": 50882
+        },
+        {
+          "name": "pendant-lamp-fixture-off.png",
+          "transfer": 662054,
+          "decoded": 661754
+        },
+        {
+          "name": "monierave.svg",
+          "transfer": 1125,
+          "decoded": 1803
+        },
+        {
+          "name": "bucketflow.svg",
+          "transfer": 1089,
+          "decoded": 1793
+        },
+        {
+          "name": "pendant-lamp-fixture.png",
+          "transfer": 676866,
+          "decoded": 676566
+        },
+        {
+          "name": "blockexplorer.svg",
+          "transfer": 1158,
+          "decoded": 2197
+        },
+        {
+          "name": "cleanup.svg",
+          "transfer": 1132,
+          "decoded": 1794
+        },
+        {
+          "name": "escrow.svg",
+          "transfer": 1160,
+          "decoded": 1810
+        },
+        {
+          "name": "policy.svg",
+          "transfer": 1116,
+          "decoded": 1806
+        },
+        {
+          "name": "zalando-sans-expanded-latin.woff2",
+          "transfer": 37916,
+          "decoded": 37616
+        },
+        {
+          "name": "zalando-sans-latin.woff2",
+          "transfer": 86652,
+          "decoded": 86352
+        },
+        {
+          "name": "monierave-hero.png",
+          "transfer": 876461,
+          "decoded": 876161
+        },
+        {
+          "name": "bucketflow-hero.png",
+          "transfer": 747443,
+          "decoded": 747143
+        },
+        {
+          "name": "blockscan-nft-azuki.png",
+          "transfer": 597104,
+          "decoded": 596804
+        },
+        {
+          "name": "cleanup-approvals.png",
+          "transfer": 306489,
+          "decoded": 306189
+        },
+        {
+          "name": "policy-home.png",
+          "transfer": 804375,
+          "decoded": 804075
+        },
+        {
+          "name": "favicon.ico",
+          "transfer": 3590,
+          "decoded": 3290
+        },
+        {
+          "name": "favicon.svg",
+          "transfer": 604,
+          "decoded": 304
+        },
+        {
+          "name": "LocationGlobe-CTrZAT3Q.js",
+          "transfer": 288487,
+          "decoded": 1062151
+        },
+        {
+          "name": "LocationGlobe-DNVN2dqC.css",
+          "transfer": 10354,
+          "decoded": 69918
+        },
+        {
+          "name": "apple-touch-icon.png",
+          "transfer": 1744,
+          "decoded": 1444
+        },
+        {
+          "name": "dark",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "planet",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "ofm.json",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "ofm.png",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "0-255.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "0-255.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "768-1023.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "1024-1279.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "1280-1535.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "1536-1791.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "2304-2559.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "2816-3071.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "3328-3583.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "3584-3839.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "4096-4351.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "4608-4863.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "4864-5119.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "5888-6143.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "8192-8447.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "11520-11775.pbf",
+          "transfer": 0,
+          "decoded": 0
+        }
+      ]
+    },
+    {
+      "profile": "desktop",
+      "run": 3,
+      "entryMs": 2513,
+      "requestsBeforeScroll": 1,
+      "offscreenFramesPerSecond": 806,
+      "mapElapsedMs": 5647,
+      "mapState": "ready",
+      "mapRequests": 24,
+      "entryResources": [
+        {
+          "name": "index-DyrcZwfv.js",
+          "transfer": 92219,
+          "decoded": 285287
+        },
+        {
+          "name": "index-D6-L-1bW.css",
+          "transfer": 12026,
+          "decoded": 50882
+        },
+        {
+          "name": "monierave.svg",
+          "transfer": 1125,
+          "decoded": 1803
+        },
+        {
+          "name": "pendant-lamp-fixture-off.png",
+          "transfer": 662054,
+          "decoded": 661754
+        },
+        {
+          "name": "pendant-lamp-fixture.png",
+          "transfer": 676866,
+          "decoded": 676566
+        },
+        {
+          "name": "bucketflow.svg",
+          "transfer": 1089,
+          "decoded": 1793
+        },
+        {
+          "name": "blockexplorer.svg",
+          "transfer": 1158,
+          "decoded": 2197
+        },
+        {
+          "name": "cleanup.svg",
+          "transfer": 1132,
+          "decoded": 1794
+        },
+        {
+          "name": "escrow.svg",
+          "transfer": 1160,
+          "decoded": 1810
+        },
+        {
+          "name": "policy.svg",
+          "transfer": 1116,
+          "decoded": 1806
+        },
+        {
+          "name": "zalando-sans-expanded-latin.woff2",
+          "transfer": 37916,
+          "decoded": 37616
+        },
+        {
+          "name": "zalando-sans-latin.woff2",
+          "transfer": 86652,
+          "decoded": 86352
+        },
+        {
+          "name": "monierave-hero.png",
+          "transfer": 876461,
+          "decoded": 876161
+        },
+        {
+          "name": "bucketflow-hero.png",
+          "transfer": 747443,
+          "decoded": 747143
+        },
+        {
+          "name": "blockscan-nft-azuki.png",
+          "transfer": 597104,
+          "decoded": 596804
+        },
+        {
+          "name": "cleanup-approvals.png",
+          "transfer": 306489,
+          "decoded": 306189
+        },
+        {
+          "name": "policy-home.png",
+          "transfer": 804375,
+          "decoded": 804075
+        },
+        {
+          "name": "favicon.ico",
+          "transfer": 3590,
+          "decoded": 3290
+        },
+        {
+          "name": "favicon.svg",
+          "transfer": 604,
+          "decoded": 304
+        }
+      ],
+      "resources": [
+        {
+          "name": "index-DyrcZwfv.js",
+          "transfer": 92219,
+          "decoded": 285287
+        },
+        {
+          "name": "index-D6-L-1bW.css",
+          "transfer": 12026,
+          "decoded": 50882
+        },
+        {
+          "name": "monierave.svg",
+          "transfer": 1125,
+          "decoded": 1803
+        },
+        {
+          "name": "pendant-lamp-fixture-off.png",
+          "transfer": 662054,
+          "decoded": 661754
+        },
+        {
+          "name": "pendant-lamp-fixture.png",
+          "transfer": 676866,
+          "decoded": 676566
+        },
+        {
+          "name": "bucketflow.svg",
+          "transfer": 1089,
+          "decoded": 1793
+        },
+        {
+          "name": "blockexplorer.svg",
+          "transfer": 1158,
+          "decoded": 2197
+        },
+        {
+          "name": "cleanup.svg",
+          "transfer": 1132,
+          "decoded": 1794
+        },
+        {
+          "name": "escrow.svg",
+          "transfer": 1160,
+          "decoded": 1810
+        },
+        {
+          "name": "policy.svg",
+          "transfer": 1116,
+          "decoded": 1806
+        },
+        {
+          "name": "zalando-sans-expanded-latin.woff2",
+          "transfer": 37916,
+          "decoded": 37616
+        },
+        {
+          "name": "zalando-sans-latin.woff2",
+          "transfer": 86652,
+          "decoded": 86352
+        },
+        {
+          "name": "monierave-hero.png",
+          "transfer": 876461,
+          "decoded": 876161
+        },
+        {
+          "name": "bucketflow-hero.png",
+          "transfer": 747443,
+          "decoded": 747143
+        },
+        {
+          "name": "blockscan-nft-azuki.png",
+          "transfer": 597104,
+          "decoded": 596804
+        },
+        {
+          "name": "cleanup-approvals.png",
+          "transfer": 306489,
+          "decoded": 306189
+        },
+        {
+          "name": "policy-home.png",
+          "transfer": 804375,
+          "decoded": 804075
+        },
+        {
+          "name": "favicon.ico",
+          "transfer": 3590,
+          "decoded": 3290
+        },
+        {
+          "name": "favicon.svg",
+          "transfer": 604,
+          "decoded": 304
+        },
+        {
+          "name": "LocationGlobe-CTrZAT3Q.js",
+          "transfer": 288487,
+          "decoded": 1062151
+        },
+        {
+          "name": "LocationGlobe-DNVN2dqC.css",
+          "transfer": 10354,
+          "decoded": 69918
+        },
+        {
+          "name": "apple-touch-icon.png",
+          "transfer": 1744,
+          "decoded": 1444
+        },
+        {
+          "name": "dark",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "planet",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "ofm.json",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "ofm.png",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "0-255.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "0-255.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "768-1023.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "1024-1279.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "1280-1535.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "1536-1791.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "2304-2559.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "2816-3071.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "3328-3583.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "3584-3839.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "4096-4351.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "4608-4863.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "4864-5119.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "5888-6143.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "8192-8447.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "11520-11775.pbf",
+          "transfer": 0,
+          "decoded": 0
+        }
+      ]
+    },
+    {
+      "profile": "mobile-touch",
+      "run": 1,
+      "entryMs": 2506,
+      "requestsBeforeScroll": 1,
+      "offscreenFramesPerSecond": 900,
+      "mapElapsedMs": 7714,
+      "mapState": "ready",
+      "mapRequests": 24,
+      "entryResources": [
+        {
+          "name": "index-DyrcZwfv.js",
+          "transfer": 92219,
+          "decoded": 285287
+        },
+        {
+          "name": "index-D6-L-1bW.css",
+          "transfer": 12026,
+          "decoded": 50882
+        },
+        {
+          "name": "pendant-lamp-fixture-off.png",
+          "transfer": 662054,
+          "decoded": 661754
+        },
+        {
+          "name": "pendant-lamp-fixture.png",
+          "transfer": 676866,
+          "decoded": 676566
+        },
+        {
+          "name": "monierave.svg",
+          "transfer": 1125,
+          "decoded": 1803
+        },
+        {
+          "name": "bucketflow.svg",
+          "transfer": 1089,
+          "decoded": 1793
+        },
+        {
+          "name": "blockexplorer.svg",
+          "transfer": 1158,
+          "decoded": 2197
+        },
+        {
+          "name": "cleanup.svg",
+          "transfer": 1132,
+          "decoded": 1794
+        },
+        {
+          "name": "escrow.svg",
+          "transfer": 1160,
+          "decoded": 1810
+        },
+        {
+          "name": "policy.svg",
+          "transfer": 1116,
+          "decoded": 1806
+        },
+        {
+          "name": "zalando-sans-expanded-latin.woff2",
+          "transfer": 37916,
+          "decoded": 37616
+        },
+        {
+          "name": "zalando-sans-latin.woff2",
+          "transfer": 86652,
+          "decoded": 86352
+        },
+        {
+          "name": "monierave-hero.png",
+          "transfer": 876461,
+          "decoded": 876161
+        },
+        {
+          "name": "cleanup-approvals.png",
+          "transfer": 306489,
+          "decoded": 306189
+        },
+        {
+          "name": "blockscan-nft-azuki.png",
+          "transfer": 597104,
+          "decoded": 596804
+        },
+        {
+          "name": "bucketflow-hero.png",
+          "transfer": 747443,
+          "decoded": 747143
+        },
+        {
+          "name": "policy-home.png",
+          "transfer": 804375,
+          "decoded": 804075
+        },
+        {
+          "name": "favicon.ico",
+          "transfer": 3590,
+          "decoded": 3290
+        },
+        {
+          "name": "favicon.svg",
+          "transfer": 604,
+          "decoded": 304
+        }
+      ],
+      "resources": [
+        {
+          "name": "index-DyrcZwfv.js",
+          "transfer": 92219,
+          "decoded": 285287
+        },
+        {
+          "name": "index-D6-L-1bW.css",
+          "transfer": 12026,
+          "decoded": 50882
+        },
+        {
+          "name": "pendant-lamp-fixture-off.png",
+          "transfer": 662054,
+          "decoded": 661754
+        },
+        {
+          "name": "pendant-lamp-fixture.png",
+          "transfer": 676866,
+          "decoded": 676566
+        },
+        {
+          "name": "monierave.svg",
+          "transfer": 1125,
+          "decoded": 1803
+        },
+        {
+          "name": "bucketflow.svg",
+          "transfer": 1089,
+          "decoded": 1793
+        },
+        {
+          "name": "blockexplorer.svg",
+          "transfer": 1158,
+          "decoded": 2197
+        },
+        {
+          "name": "cleanup.svg",
+          "transfer": 1132,
+          "decoded": 1794
+        },
+        {
+          "name": "escrow.svg",
+          "transfer": 1160,
+          "decoded": 1810
+        },
+        {
+          "name": "policy.svg",
+          "transfer": 1116,
+          "decoded": 1806
+        },
+        {
+          "name": "zalando-sans-expanded-latin.woff2",
+          "transfer": 37916,
+          "decoded": 37616
+        },
+        {
+          "name": "zalando-sans-latin.woff2",
+          "transfer": 86652,
+          "decoded": 86352
+        },
+        {
+          "name": "monierave-hero.png",
+          "transfer": 876461,
+          "decoded": 876161
+        },
+        {
+          "name": "cleanup-approvals.png",
+          "transfer": 306489,
+          "decoded": 306189
+        },
+        {
+          "name": "blockscan-nft-azuki.png",
+          "transfer": 597104,
+          "decoded": 596804
+        },
+        {
+          "name": "bucketflow-hero.png",
+          "transfer": 747443,
+          "decoded": 747143
+        },
+        {
+          "name": "policy-home.png",
+          "transfer": 804375,
+          "decoded": 804075
+        },
+        {
+          "name": "favicon.ico",
+          "transfer": 3590,
+          "decoded": 3290
+        },
+        {
+          "name": "favicon.svg",
+          "transfer": 604,
+          "decoded": 304
+        },
+        {
+          "name": "LocationGlobe-CTrZAT3Q.js",
+          "transfer": 288487,
+          "decoded": 1062151
+        },
+        {
+          "name": "LocationGlobe-DNVN2dqC.css",
+          "transfer": 10354,
+          "decoded": 69918
+        },
+        {
+          "name": "apple-touch-icon.png",
+          "transfer": 1744,
+          "decoded": 1444
+        },
+        {
+          "name": "dark",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "planet",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "ofm.json",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "ofm.png",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "0-255.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "0-255.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "768-1023.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "1024-1279.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "1280-1535.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "1536-1791.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "2304-2559.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "2816-3071.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "3328-3583.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "3584-3839.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "4096-4351.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "4608-4863.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "4864-5119.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "5888-6143.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "8192-8447.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "11520-11775.pbf",
+          "transfer": 0,
+          "decoded": 0
+        }
+      ]
+    },
+    {
+      "profile": "mobile-touch",
+      "run": 2,
+      "entryMs": 2444,
+      "requestsBeforeScroll": 5,
+      "offscreenFramesPerSecond": 1142,
+      "mapElapsedMs": 5879,
+      "mapState": "ready",
+      "mapRequests": 24,
+      "entryResources": [
+        {
+          "name": "index-DyrcZwfv.js",
+          "transfer": 92219,
+          "decoded": 285287
+        },
+        {
+          "name": "index-D6-L-1bW.css",
+          "transfer": 12026,
+          "decoded": 50882
+        },
+        {
+          "name": "pendant-lamp-fixture-off.png",
+          "transfer": 662054,
+          "decoded": 661754
+        },
+        {
+          "name": "pendant-lamp-fixture.png",
+          "transfer": 676866,
+          "decoded": 676566
+        },
+        {
+          "name": "monierave.svg",
+          "transfer": 1125,
+          "decoded": 1803
+        },
+        {
+          "name": "bucketflow.svg",
+          "transfer": 1089,
+          "decoded": 1793
+        },
+        {
+          "name": "blockexplorer.svg",
+          "transfer": 1158,
+          "decoded": 2197
+        },
+        {
+          "name": "cleanup.svg",
+          "transfer": 1132,
+          "decoded": 1794
+        },
+        {
+          "name": "escrow.svg",
+          "transfer": 1160,
+          "decoded": 1810
+        },
+        {
+          "name": "policy.svg",
+          "transfer": 1116,
+          "decoded": 1806
+        },
+        {
+          "name": "zalando-sans-expanded-latin.woff2",
+          "transfer": 37916,
+          "decoded": 37616
+        },
+        {
+          "name": "zalando-sans-latin.woff2",
+          "transfer": 86652,
+          "decoded": 86352
+        },
+        {
+          "name": "bucketflow-hero.png",
+          "transfer": 747443,
+          "decoded": 747143
+        },
+        {
+          "name": "blockscan-nft-azuki.png",
+          "transfer": 597104,
+          "decoded": 596804
+        },
+        {
+          "name": "monierave-hero.png",
+          "transfer": 876461,
+          "decoded": 876161
+        },
+        {
+          "name": "policy-home.png",
+          "transfer": 804375,
+          "decoded": 804075
+        },
+        {
+          "name": "cleanup-approvals.png",
+          "transfer": 306489,
+          "decoded": 306189
+        },
+        {
+          "name": "favicon.ico",
+          "transfer": 3590,
+          "decoded": 3290
+        },
+        {
+          "name": "favicon.svg",
+          "transfer": 604,
+          "decoded": 304
+        }
+      ],
+      "resources": [
+        {
+          "name": "index-DyrcZwfv.js",
+          "transfer": 92219,
+          "decoded": 285287
+        },
+        {
+          "name": "index-D6-L-1bW.css",
+          "transfer": 12026,
+          "decoded": 50882
+        },
+        {
+          "name": "pendant-lamp-fixture-off.png",
+          "transfer": 662054,
+          "decoded": 661754
+        },
+        {
+          "name": "pendant-lamp-fixture.png",
+          "transfer": 676866,
+          "decoded": 676566
+        },
+        {
+          "name": "monierave.svg",
+          "transfer": 1125,
+          "decoded": 1803
+        },
+        {
+          "name": "bucketflow.svg",
+          "transfer": 1089,
+          "decoded": 1793
+        },
+        {
+          "name": "blockexplorer.svg",
+          "transfer": 1158,
+          "decoded": 2197
+        },
+        {
+          "name": "cleanup.svg",
+          "transfer": 1132,
+          "decoded": 1794
+        },
+        {
+          "name": "escrow.svg",
+          "transfer": 1160,
+          "decoded": 1810
+        },
+        {
+          "name": "policy.svg",
+          "transfer": 1116,
+          "decoded": 1806
+        },
+        {
+          "name": "zalando-sans-expanded-latin.woff2",
+          "transfer": 37916,
+          "decoded": 37616
+        },
+        {
+          "name": "zalando-sans-latin.woff2",
+          "transfer": 86652,
+          "decoded": 86352
+        },
+        {
+          "name": "bucketflow-hero.png",
+          "transfer": 747443,
+          "decoded": 747143
+        },
+        {
+          "name": "blockscan-nft-azuki.png",
+          "transfer": 597104,
+          "decoded": 596804
+        },
+        {
+          "name": "monierave-hero.png",
+          "transfer": 876461,
+          "decoded": 876161
+        },
+        {
+          "name": "policy-home.png",
+          "transfer": 804375,
+          "decoded": 804075
+        },
+        {
+          "name": "cleanup-approvals.png",
+          "transfer": 306489,
+          "decoded": 306189
+        },
+        {
+          "name": "favicon.ico",
+          "transfer": 3590,
+          "decoded": 3290
+        },
+        {
+          "name": "favicon.svg",
+          "transfer": 604,
+          "decoded": 304
+        },
+        {
+          "name": "LocationGlobe-CTrZAT3Q.js",
+          "transfer": 288487,
+          "decoded": 1062151
+        },
+        {
+          "name": "LocationGlobe-DNVN2dqC.css",
+          "transfer": 10354,
+          "decoded": 69918
+        },
+        {
+          "name": "apple-touch-icon.png",
+          "transfer": 1744,
+          "decoded": 1444
+        },
+        {
+          "name": "dark",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "planet",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "ofm.json",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "ofm.png",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "0-255.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "0-255.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "768-1023.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "1024-1279.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "1280-1535.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "1536-1791.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "2304-2559.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "2816-3071.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "3328-3583.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "3584-3839.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "4096-4351.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "4608-4863.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "4864-5119.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "5888-6143.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "8192-8447.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "11520-11775.pbf",
+          "transfer": 0,
+          "decoded": 0
+        }
+      ]
+    },
+    {
+      "profile": "mobile-touch",
+      "run": 3,
+      "entryMs": 2379,
+      "requestsBeforeScroll": 1,
+      "offscreenFramesPerSecond": 816,
+      "mapElapsedMs": 9625,
+      "mapState": "ready",
+      "mapRequests": 24,
+      "entryResources": [
+        {
+          "name": "index-DyrcZwfv.js",
+          "transfer": 92219,
+          "decoded": 285287
+        },
+        {
+          "name": "index-D6-L-1bW.css",
+          "transfer": 12026,
+          "decoded": 50882
+        },
+        {
+          "name": "pendant-lamp-fixture.png",
+          "transfer": 676866,
+          "decoded": 676566
+        },
+        {
+          "name": "pendant-lamp-fixture-off.png",
+          "transfer": 662054,
+          "decoded": 661754
+        },
+        {
+          "name": "monierave.svg",
+          "transfer": 1125,
+          "decoded": 1803
+        },
+        {
+          "name": "bucketflow.svg",
+          "transfer": 1089,
+          "decoded": 1793
+        },
+        {
+          "name": "blockexplorer.svg",
+          "transfer": 1158,
+          "decoded": 2197
+        },
+        {
+          "name": "cleanup.svg",
+          "transfer": 1132,
+          "decoded": 1794
+        },
+        {
+          "name": "escrow.svg",
+          "transfer": 1160,
+          "decoded": 1810
+        },
+        {
+          "name": "policy.svg",
+          "transfer": 1116,
+          "decoded": 1806
+        },
+        {
+          "name": "zalando-sans-expanded-latin.woff2",
+          "transfer": 37916,
+          "decoded": 37616
+        },
+        {
+          "name": "zalando-sans-latin.woff2",
+          "transfer": 86652,
+          "decoded": 86352
+        },
+        {
+          "name": "blockscan-nft-azuki.png",
+          "transfer": 597104,
+          "decoded": 596804
+        },
+        {
+          "name": "monierave-hero.png",
+          "transfer": 876461,
+          "decoded": 876161
+        },
+        {
+          "name": "bucketflow-hero.png",
+          "transfer": 747443,
+          "decoded": 747143
+        },
+        {
+          "name": "cleanup-approvals.png",
+          "transfer": 306489,
+          "decoded": 306189
+        },
+        {
+          "name": "policy-home.png",
+          "transfer": 804375,
+          "decoded": 804075
+        },
+        {
+          "name": "favicon.ico",
+          "transfer": 3590,
+          "decoded": 3290
+        },
+        {
+          "name": "favicon.svg",
+          "transfer": 604,
+          "decoded": 304
+        }
+      ],
+      "resources": [
+        {
+          "name": "index-DyrcZwfv.js",
+          "transfer": 92219,
+          "decoded": 285287
+        },
+        {
+          "name": "index-D6-L-1bW.css",
+          "transfer": 12026,
+          "decoded": 50882
+        },
+        {
+          "name": "pendant-lamp-fixture.png",
+          "transfer": 676866,
+          "decoded": 676566
+        },
+        {
+          "name": "pendant-lamp-fixture-off.png",
+          "transfer": 662054,
+          "decoded": 661754
+        },
+        {
+          "name": "monierave.svg",
+          "transfer": 1125,
+          "decoded": 1803
+        },
+        {
+          "name": "bucketflow.svg",
+          "transfer": 1089,
+          "decoded": 1793
+        },
+        {
+          "name": "blockexplorer.svg",
+          "transfer": 1158,
+          "decoded": 2197
+        },
+        {
+          "name": "cleanup.svg",
+          "transfer": 1132,
+          "decoded": 1794
+        },
+        {
+          "name": "escrow.svg",
+          "transfer": 1160,
+          "decoded": 1810
+        },
+        {
+          "name": "policy.svg",
+          "transfer": 1116,
+          "decoded": 1806
+        },
+        {
+          "name": "zalando-sans-expanded-latin.woff2",
+          "transfer": 37916,
+          "decoded": 37616
+        },
+        {
+          "name": "zalando-sans-latin.woff2",
+          "transfer": 86652,
+          "decoded": 86352
+        },
+        {
+          "name": "blockscan-nft-azuki.png",
+          "transfer": 597104,
+          "decoded": 596804
+        },
+        {
+          "name": "monierave-hero.png",
+          "transfer": 876461,
+          "decoded": 876161
+        },
+        {
+          "name": "bucketflow-hero.png",
+          "transfer": 747443,
+          "decoded": 747143
+        },
+        {
+          "name": "cleanup-approvals.png",
+          "transfer": 306489,
+          "decoded": 306189
+        },
+        {
+          "name": "policy-home.png",
+          "transfer": 804375,
+          "decoded": 804075
+        },
+        {
+          "name": "favicon.ico",
+          "transfer": 3590,
+          "decoded": 3290
+        },
+        {
+          "name": "favicon.svg",
+          "transfer": 604,
+          "decoded": 304
+        },
+        {
+          "name": "LocationGlobe-CTrZAT3Q.js",
+          "transfer": 288487,
+          "decoded": 1062151
+        },
+        {
+          "name": "LocationGlobe-DNVN2dqC.css",
+          "transfer": 10354,
+          "decoded": 69918
+        },
+        {
+          "name": "apple-touch-icon.png",
+          "transfer": 1744,
+          "decoded": 1444
+        },
+        {
+          "name": "dark",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "planet",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "ofm.json",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "ofm.png",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "0-255.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "0-255.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "768-1023.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "1280-1535.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "1024-1279.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "1536-1791.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "2304-2559.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "2816-3071.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "3328-3583.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "3584-3839.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "4608-4863.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "4096-4351.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "5888-6143.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "4864-5119.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "11520-11775.pbf",
+          "transfer": 0,
+          "decoded": 0
+        },
+        {
+          "name": "8192-8447.pbf",
+          "transfer": 0,
+          "decoded": 0
+        }
+      ]
+    }
+  ]
+}

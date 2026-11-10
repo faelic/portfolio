@@ -1,12 +1,10 @@
+import { profile } from "./profile";
+
 export const notes = {
   about: {
     title: "About",
     date: "January 22, 2026 at 11:35 AM",
-    paragraphs: [
-      "I'm Favour, a software engineer focused on backend engineering with Go, with experience building full-stack products and blockchain applications.",
-      "I work on everything from financial systems and APIs to on-chain tools and interactive interfaces. I care about reliability, clear product flows and making complex systems easier for people to understand and use.",
-      "This portfolio is designed as a working desktop. Each app documents a real project, while the desktop itself is an ongoing experiment in motion, spatial interfaces, and product storytelling. It is not a finished project yet so it will keep changing as I build new projects, improve existing ones and keep learning along the way.",
-    ],
+    paragraphs: profile.introduction,
   },
   experience: {
     title: "Experience",

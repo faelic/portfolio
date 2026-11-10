@@ -1,84 +1,93 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useReducer, useRef } from "react";
 import { play } from "cuelume";
 import { hashToProject, projectToHash } from "../data/projects";
-import type { AppKey, Point, PortfolioWindow, ProjectKey, WindowKey } from "../types/portfolio";
+import { initialWindowState, topWindow, windowReducer } from "../state/windows";
+import type { AppKey, Point, ProjectKey, WindowKey } from "../types/portfolio";
 
-const initialWindow = (key: WindowKey, zIndex: number, projectKey?: ProjectKey): PortfolioWindow => ({
-  key,
-  projectKey,
-  zIndex,
-  expanded: false,
-});
-
-export function useWindowManager() {
-  const [windows, setWindows] = useState<PortfolioWindow[]>([]);
-  const zCounter = useRef(110);
-  const activeWindow = useMemo(() => windows.reduce<PortfolioWindow | undefined>((top, item) => !top || item.zIndex > top.zIndex ? item : top, undefined), [windows]);
-
-  const focus = useCallback((key: WindowKey) => {
-    zCounter.current += 1;
-    setWindows((current) => current.map((item) => item.key === key ? { ...item, zIndex: zCounter.current } : item));
+export function useWindowManager(ready = true, arranging = false) {
+  const [, requestFocus] = useReducer((value: number) => value + 1, 0);
+  const [state, dispatch] = useReducer(windowReducer, initialWindowState);
+  const openers = useRef(new Map<WindowKey, HTMLElement>());
+  const nodes = useRef(new Map<WindowKey, HTMLElement>());
+  const pendingFocus = useRef<WindowKey | "desktop" | null>(null);
+  const activeWindow = topWindow(state.windows);
+  const register = useCallback((key: WindowKey, node: HTMLElement | null) => {
+    if (node) nodes.current.set(key, node); else nodes.current.delete(key);
   }, []);
-
-  const openProject = useCallback((projectKey: ProjectKey, updateHash = true) => {
+  const rememberOpener = (key: WindowKey, opener?: HTMLElement | null) => {
+    const element = opener ?? document.activeElement;
+    if (element instanceof HTMLElement && element !== document.body && !element.closest(".window")) openers.current.set(key, element);
+  };
+  const focus = useCallback((key: WindowKey) => { pendingFocus.current = null; dispatch({ type: "focus", key }); }, []);
+  const openProject = useCallback((projectKey: ProjectKey, opener?: HTMLElement | null) => {
     const key: WindowKey = `project:${projectKey}`;
-    zCounter.current += 1;
-    setWindows((current) => {
-      const existing = current.find((item) => item.key === key);
-      return existing
-        ? current.map((item) => item.key === key ? { ...item, zIndex: zCounter.current } : item)
-        : [...current, initialWindow(key, zCounter.current, projectKey)];
-    });
-    if (updateHash && window.location.hash !== projectToHash(projectKey)) history.pushState({ projectKey }, "", projectToHash(projectKey));
+    rememberOpener(key, opener);
+    pendingFocus.current = key;
+    requestFocus();
+    dispatch({ type: "open", key, projectKey });
+    if (hashToProject(location.hash) !== projectKey) history.pushState(null, "", projectToHash(projectKey));
   }, []);
-
-  const openApp = useCallback((appKey: AppKey) => {
-    zCounter.current += 1;
-    setWindows((current) => {
-      const existing = current.find((item) => item.key === appKey);
-      return existing
-        ? current.map((item) => item.key === appKey ? { ...item, zIndex: zCounter.current } : item)
-        : [...current, initialWindow(appKey, zCounter.current)];
-    });
+  const openApp = useCallback((key: AppKey, opener?: HTMLElement) => {
+    rememberOpener(key, opener);
+    pendingFocus.current = key;
+    requestFocus();
+    dispatch({ type: "open", key });
   }, []);
-
   const close = useCallback((key: WindowKey) => {
-    setWindows((current) => current.filter((item) => item.key !== key));
-    if (key.startsWith("project:")) {
-      const projectKey = key.slice(8) as ProjectKey;
-      if (window.location.hash === projectToHash(projectKey)) history.replaceState(null, "", `${location.pathname}${location.search}`);
-    }
+    pendingFocus.current = key;
+    requestFocus();
+    dispatch({ type: "close", key });
+    if (key.startsWith("project:") && hashToProject(location.hash) === key.slice(8)) history.replaceState(null, "", `${location.pathname}${location.search}`);
   }, []);
-
-  const toggleExpanded = useCallback((key: WindowKey) => {
-    setWindows((current) => current.map((item) => item.key === key ? { ...item, expanded: !item.expanded } : item));
-    focus(key);
-  }, [focus]);
-
-  const move = useCallback((key: WindowKey, position: Point) => {
-    setWindows((current) => current.map((item) => item.key === key ? { ...item, position } : item));
-  }, []);
-
+  const move = useCallback((key: WindowKey, position: Point) => dispatch({ type: "move", key, position }), []);
+  const toggleExpanded = useCallback((key: WindowKey) => dispatch({ type: "expand", key }), []);
   useEffect(() => {
-    const openFromHash = () => {
+    const navigate = (event?: Event) => {
       const projectKey = hashToProject(location.hash);
-      if (projectKey) openProject(projectKey, false);
+      pendingFocus.current = projectKey ? `project:${projectKey}` : event ? "desktop" : null;
+      requestFocus();
+      dispatch({ type: "navigate", projectKey });
     };
-    openFromHash();
-    window.addEventListener("popstate", openFromHash);
-    return () => window.removeEventListener("popstate", openFromHash);
-  }, [openProject]);
-
-  useEffect(() => {
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape" && activeWindow) {
-        play("tick", { volume: 1 });
-        close(activeWindow.key);
+    navigate();
+    window.addEventListener("popstate", navigate);
+    window.addEventListener("hashchange", navigate);
+    return () => { window.removeEventListener("popstate", navigate); window.removeEventListener("hashchange", navigate); };
+  }, []);
+  useLayoutEffect(() => {
+    if (!ready || !pendingFocus.current) return;
+    const requested = pendingFocus.current;
+    const target = requested !== "desktop" ? nodes.current.get(requested) : undefined;
+    const active = activeWindow && nodes.current.get(activeWindow.key);
+    const opener = requested !== "desktop" ? openers.current.get(requested) : undefined;
+    const fallback = document.querySelector<HTMLElement>(".desktop .shortcut") ?? document.querySelector<HTMLElement>(".desktop");
+    const next = target || active || (opener?.isConnected && !opener.closest("[inert]") ? opener : fallback);
+    let frame = 0;
+    let attempts = 0;
+    const applyFocus = () => {
+      if (pendingFocus.current !== requested) return;
+      if (next?.isConnected && !next.closest("[inert]") && getComputedStyle(next).visibility === "visible") {
+        next.focus({ preventScroll: true });
+        pendingFocus.current = null;
+      } else if (++attempts < 30) {
+        // A just-revealed mobile dock can remain hidden until the next style frame.
+        frame = requestAnimationFrame(applyFocus);
+      } else {
+        document.querySelector<HTMLElement>(".desktop")?.focus({ preventScroll: true });
+        pendingFocus.current = null;
       }
     };
-    window.addEventListener("keydown", handleEscape);
-    return () => window.removeEventListener("keydown", handleEscape);
-  }, [activeWindow, close]);
-
-  return { windows, activeWindow, openProject, openApp, close, focus, toggleExpanded, move };
+    frame = requestAnimationFrame(applyFocus);
+    return () => cancelAnimationFrame(frame);
+  });
+  useEffect(() => {
+    const escape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || event.defaultPrevented || event.repeat || arranging || !activeWindow) return;
+      event.preventDefault();
+      play("tick", { volume: 1 });
+      close(activeWindow.key);
+    };
+    window.addEventListener("keydown", escape);
+    return () => window.removeEventListener("keydown", escape);
+  }, [activeWindow, arranging, close]);
+  return { windows: state.windows, activeWindow, openProject, openApp, close, focus, toggleExpanded, move, register };
 }

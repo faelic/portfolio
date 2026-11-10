@@ -8,7 +8,7 @@ web
 
 ## Users
 
-Primary users are hiring managers and technical recruiters evaluating FAVOUR for software engineering roles, plus product and design leaders assessing fit for senior or product-engineering roles.
+Primary users are hiring managers and technical recruiters evaluating FAVOUR for software engineering roles, plus engineering, product, and design leaders assessing engineering range, product judgment, and interface craft.
 
 Secondary audiences include selective freelance clients and potential collaborators in web3, fintech, and creative-tech ecosystems.
 
@@ -18,7 +18,11 @@ This portfolio exists to function as a hiring artifact that proves FAVOUR can de
 
 ## Positioning
 
+Present Favour as a **Software Engineer**, with backend, frontend, AI, and blockchain as areas of work. Support each area with truthful evidence and clear contribution boundaries; do not imply equal depth or completed capabilities without evidence. This direction was confirmed on 10 November 2026. About, Notes, metadata, and the shared profile now use this positioning; the completed alignment is tracked as GAP-02 in the [implementation backlog](docs/IMPLEMENTATION_PLAN.md#gap-register).
+
 The product is a credible, testable product statement rather than a portfolio brochure. Its differentiator is that it presents engineering range, product judgment, and interface craft through a macOS-inspired interactive environment with real project evidence, deep-linkable navigation, and project-aware case surfaces.
+
+The existing app is frontend-only. RAG is planned, not implemented. The [PRD](docs/PRD.md) and [technical specification](docs/TRD.md) establish the baseline; a future assistant and backend require separate design and implementation.
 
 ## Operating Context
 
@@ -40,9 +44,9 @@ Visitors explore the work through a desktop-like web interface with draggable an
 
 ## Evidence on Hand
 
-- Real project cases and structured portfolio content live in [src/data/projects.ts](/Users/favour/Desktop/portfolio/src/data/projects.ts:1).
-- The interactive portfolio shell and product framing live in [src/App.tsx](/Users/favour/Desktop/portfolio/src/App.tsx:1), [src/components/windows/AboutWindow.tsx](/Users/favour/Desktop/portfolio/src/components/windows/AboutWindow.tsx:1), and [src/styles/global.css](/Users/favour/Desktop/portfolio/src/styles/global.css:1).
-- Real screenshots and supporting visual references are present in `/public/assets/projects` and `/references`.
+- Real project cases and structured portfolio content live in [src/data/projects.ts](src/data/projects.ts).
+- The interactive portfolio shell and product framing live in [src/App.tsx](src/App.tsx), [src/components/windows/AboutWindow.tsx](src/components/windows/AboutWindow.tsx), and [src/styles/global.css](src/styles/global.css).
+- Real screenshots and supporting visual references are present in [public/assets/projects](public/assets/projects/) and [references](references/).
 - Escrow intentionally has repository-only evidence and no fabricated deployed screenshots.
 
 ## Product Principles

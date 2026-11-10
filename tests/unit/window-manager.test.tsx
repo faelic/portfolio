@@ -1,0 +1,31 @@
+import { act, renderHook } from "@testing-library/react";
+import { expect, it } from "vitest";
+import { useWindowManager } from "../../src/hooks/useWindowManager";
+it("handles fragments/history, preserves stacking and does not erase unrelated hashes on close", () => {
+  const { result } = renderHook(() => useWindowManager());
+  act(() => result.current.openApp("about"));
+  act(() => result.current.openProject("champ"));
+  act(() => result.current.openProject("silences"));
+  expect(result.current.windows).toHaveLength(3);
+  act(() => result.current.close("project:champ"));
+  expect(location.hash).toBe("#bucketflow");
+  act(() => { history.replaceState(null, "", "#MONIERAVE"); window.dispatchEvent(new HashChangeEvent("hashchange")); window.dispatchEvent(new PopStateEvent("popstate")); });
+  expect(result.current.windows).toHaveLength(3);
+  expect(result.current.activeWindow?.key).toBe("project:champ");
+  act(() => result.current.close("project:champ"));
+  expect(location.hash).toBe("");
+  act(() => { history.replaceState(null, "", "#unknown"); window.dispatchEvent(new HashChangeEvent("hashchange")); });
+  expect(result.current.windows.map(window => window.key)).toEqual(["about"]);
+});
+it("respects consumed Escape and arrangement mode", () => {
+  const { result, rerender } = renderHook(({ arranging }) => useWindowManager(true, arranging), { initialProps: { arranging: true } });
+  act(() => result.current.openApp("notes"));
+  act(() => window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" })));
+  expect(result.current.windows).toHaveLength(1);
+  rerender({ arranging: false });
+  const consumed = new KeyboardEvent("keydown", { key: "Escape", cancelable: true }); consumed.preventDefault();
+  act(() => window.dispatchEvent(consumed));
+  expect(result.current.windows).toHaveLength(1);
+  act(() => window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" })));
+  expect(result.current.windows).toHaveLength(0);
+});

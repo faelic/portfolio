@@ -339,7 +339,7 @@ a:focus-visible {
   border-radius: 0;
   background: transparent;
   opacity: 0.78;
-  transition: color 140ms ease, border-color 140ms ease, opacity 180ms ease, visibility 180ms ease;
+  transition: color 140ms ease, border-color 140ms ease, opacity 180ms ease;
 }
 
 .reset-shortcut-layout:hover,
@@ -2025,7 +2025,7 @@ a:focus-visible {
   }
 
   .desktop-shortcuts {
-    transition: opacity 180ms ease, visibility 180ms ease;
+    transition: opacity 180ms ease;
   }
 
   .desktop.has-open-window .desktop-shortcuts {
@@ -2433,7 +2433,7 @@ a:focus-visible {
     padding: 8px;
     border-radius: 18px;
     transform: translateX(-50%);
-    transition: opacity 180ms ease, transform 230ms cubic-bezier(0.16, 1, 0.3, 1), visibility 180ms ease;
+    transition: opacity 180ms ease, transform 230ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 
   .dock-hit {
@@ -2523,3 +2523,115 @@ a:focus-visible {
     will-change: auto;
   }
 }
+
+/* Gap remediation: the established desktop and project artwork remain the visual authority. */
+.desktop-utilities {
+  position: absolute;
+  z-index: 25;
+  left: 7.7%;
+  bottom: 3.1%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.desktop-utilities button {
+  min-height: 32px;
+  padding: 6px 0;
+  color: #bdbdbd;
+  font: 12px var(--favour-text-font);
+  border: 0;
+  border-bottom: 1px solid #666;
+  background: transparent;
+  cursor: pointer;
+}
+.desktop-utilities .reset-shortcut-layout { position: static; opacity: 1; }
+.desktop-utilities button:disabled { visibility: hidden; }
+.desktop.has-open-window .desktop-utilities { visibility: hidden; }
+.arrangement-toolbar {
+  position: absolute;
+  z-index: 360;
+  bottom: 24px;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  width: max-content;
+  max-width: calc(100% - 32px);
+  padding: 14px 18px;
+  color: #eee;
+  border: 1px solid rgba(255,255,255,.18);
+  border-radius: 16px;
+  background: rgba(38,38,39,.97);
+  box-shadow: 0 12px 28px rgba(0,0,0,.35);
+  transform: translateX(-50%);
+}
+.arrangement-toolbar p { margin: 0; font: 12px/1.4 var(--favour-text-font); }
+.arrangement-toolbar p span { display: block; margin-top: 3px; color: #c1c1c5; }
+.arrangement-directions, .arrangement-actions { display: flex; gap: 6px; }
+.arrangement-toolbar button, .globe-failure button {
+  min-width: 44px;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid rgba(255,255,255,.24);
+  border-radius: 8px;
+  background: #424245;
+  color: #fff;
+  font: 600 12px var(--favour-text-font);
+  cursor: pointer;
+}
+.arrangement-toolbar button:hover, .globe-failure button:hover { background: #56565b; }
+.arrangement-toolbar button:disabled { opacity: .5; cursor: default; }
+.arrangement-actions button:last-child { background: #f5f5f5; color: #111; }
+.arrangement-directions svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; }
+.desktop.is-arranging .dock-hit-area { visibility: hidden; pointer-events: none; }
+.shortcut[aria-pressed="true"] .shortcut-visual { outline: 2px solid #eee; outline-offset: 4px; border-radius: 15px; }
+.arrange-apps:focus-visible, .arrangement-toolbar button:focus-visible, .globe-failure button:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+.traffic-light { width: 24px; height: 24px; background: transparent; box-shadow: none; }
+.traffic-light::after { content: ""; position: absolute; inset: 6px; border-radius: 50%; background: var(--control-color); box-shadow: inset 0 0 0 .5px rgba(0,0,0,.15); }
+.traffic-light--close { --control-color: #ff5f57; }
+.traffic-light--minimize { --control-color: #febc2e; }
+.traffic-light--zoom { --control-color: #28c840; }
+.traffic-light::before { z-index: 1; }
+.traffic-lights { gap: 0; }
+.pendant-lamp__control:focus-visible { outline: 2px solid #fff; outline-offset: 4px; }
+.project-window-story h2, .project-window-story-section--how-works h3 { color: var(--project-title-accessible, #dedede); }
+.window:has([id="champ-case-title"]) { --project-title-accessible: #a99cff; }
+.window:has([id="silences-case-title"]) { --project-title-accessible: #a8bd71; --project-github-text: #101011; }
+.window:has([id="revolte-case-title"]) { --project-title-accessible: #a2b8ed; }
+.window:has([id="lisiere-case-title"]) { --project-title-accessible: #79acff; }
+.window:has([id="elan-case-title"]) { --project-title-accessible: #ff9b78; --project-github-text: #101011; }
+.window:has([id="eau-case-title"]) { --project-title-accessible: #78bd8a; }
+.project-window-links .project-window-link--github,
+.project-window-links .project-window-link--github:hover,
+.project-window-links .project-window-link--github:focus-visible { color: var(--project-github-text, #fff); }
+.project-window-link--github svg { fill: currentColor; }
+.note-list-preview, .note-date, .note-copy .role-place, .note-copy .role-date { color: #b1b1b3; }
+.note-list-button.is-selected .note-list-preview { color: #e5d9b4; }
+.project-featured-empty span { color: #aaaab0; }
+.location-summary { margin: 0 0 18px; color: #c5c5c9; font: 14px/1.5 var(--mono-font); }
+.globe-failure { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 24px; color: #d8d8dc; text-align: center; }
+.globe-failure p { max-width: 40ch; margin: 0; font: 13px/1.6 var(--favour-text-font); }
+.globe-failure p:first-child { color: #fff; font-weight: 600; }
+.map-resource-warning { position: absolute; z-index: 2; top: 12px; left: 12px; right: 12px; margin: 0; color: #eee; font-size: 12px; text-align: center; background: #17171a; border-radius: 6px; padding: 6px; }
+.image-fallback { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; width: 100%; aspect-ratio: 16/9; padding: 20px; border-radius: 12px; background: #1d1d20; color: #c5c5ca; font: 12px/1.5 var(--favour-text-font); text-align: center; }
+.image-fallback strong { color: #f5f5f5; font-weight: 600; }
+.image-fallback--icon { padding: 0; aspect-ratio: 1; border-radius: 22%; background: #303038; }
+.image-fallback--icon svg { width: 64%; height: 64%; fill: none; stroke: #ededf2; stroke-width: 1.5; }
+@media (max-width: 767px) {
+  .desktop-utilities { left: 20px; bottom: calc(105px + env(safe-area-inset-bottom)); }
+  .desktop-utilities .reset-shortcut-layout { display: none; }
+  .desktop-utilities button { min-height: 44px; }
+  .arrangement-toolbar { bottom: max(12px, env(safe-area-inset-bottom)); width: calc(100% - 24px); max-width: none; padding: 12px; gap: 10px; flex-wrap: wrap; justify-content: space-between; }
+  .arrangement-toolbar p { flex-basis: 100%; }
+  .arrangement-toolbar button { padding: 8px 10px; }
+  .traffic-light--close { flex-basis: 44px; width: 44px; height: 44px; background: rgba(18,18,18,.07); }
+  .traffic-light--close::after { display: none; }
+}
+@media (max-width: 767px) {
+  /* Visibility must settle before returning keyboard focus after a window closes. */
+  .desktop-shortcuts { transition: opacity 180ms ease; }
+}
+.desktop.is-arranging .interaction-hint { visibility: hidden; }
+.interaction-hint, .project-hover-stack, .location-map-instructions { color: #aaaab0; }
+.titlebar, .window:not(.is-active) .titlebar { color: #626268; }
+.traffic-light--close:focus-visible, .traffic-light--zoom:focus-visible { outline-color: #185fac; }

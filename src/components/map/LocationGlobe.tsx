@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import maplibregl, { Point, type GeoJSONSource, type Map as MapLibreMap, type Marker } from "maplibre-gl";
+import * as maplibregl from "maplibre-gl";
+import { Point, type GeoJSONSource, type Map as MapLibreMap, type Marker } from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
+import workerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url";
+maplibregl.setWorkerUrl(workerUrl);
 import { continentLabels, locationHub, locationLevels, type LocationPoint } from "../../data/locations";
 
 const accent = "#0aff3e";
@@ -62,10 +65,14 @@ function markerElement(location: LocationPoint, hub = false) {
   return element;
 }
 
-export function LocationGlobe() {
+export function LocationGlobe({ active = true, onFailure }: { active?: boolean; onFailure: () => void }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [ready, setReady] = useState(false);
-  const [error, setError] = useState(false);
+  const activeRef = useRef(active);
+  activeRef.current = active;
+  const [visible, setVisible] = useState(true);
+  const visibleRef = useRef(true);
+  const [warning, setWarning] = useState(false);
   const [surfaceHovered, setSurfaceHovered] = useState(false);
 
   useEffect(() => {
@@ -81,7 +88,12 @@ export function LocationGlobe() {
     let currentSignature = "";
     let lastMarkerRefresh = 0;
     let previousAnimationTime = performance.now();
-    const reducedMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const motion = matchMedia("(prefers-reduced-motion: reduce)");
+    let disposed = false;
+    let loaded = false;
+    let inView = true;
+    const fail = () => { if (!disposed) onFailure(); };
+    const watchdog = window.setTimeout(fail, 10_000);
     try {
       map = new maplibregl.Map({
         container: containerRef.current,
@@ -105,25 +117,33 @@ export function LocationGlobe() {
           : { url },
       });
     } catch {
-      setError(true);
+      clearTimeout(watchdog);
+      fail();
       return;
     }
     const canvasContainer = map.getCanvasContainer();
+    const hostElement = containerRef.current;
+    map.getCanvas().tabIndex = -1;
     map.touchZoomRotate.disableRotation();
 
     const globePoint = (clientX: number, clientY: number) => {
       const bounds = map.getCanvas().getBoundingClientRect();
       if (bounds.width <= 0 || bounds.height <= 0) return undefined;
       return new Point(
-        (clientX - bounds.left) / bounds.width * map.transform.width,
-        (clientY - bounds.top) / bounds.height * map.transform.height,
+        (clientX - bounds.left) / bounds.width * map.getCanvas().clientWidth,
+        (clientY - bounds.top) / bounds.height * map.getCanvas().clientHeight,
       );
     };
 
     const pointIsOnGlobe = (clientX: number, clientY: number) => {
       const point = globePoint(clientX, clientY);
       if (!point) return false;
-      return map.transform.isPointOnMapSurface(point);
+      try {
+        // Globe unprojection clamps points outside the sphere to its edge.
+        // Round-trip public coordinates instead of relying on private transform internals.
+        const projected = map.project(map.unproject(point));
+        return Math.hypot(projected.x - point.x, projected.y - point.y) < 2;
+      } catch { return false; }
     };
 
     const setMapInteraction = (active: boolean) => {
@@ -204,6 +224,7 @@ export function LocationGlobe() {
       (map.getSource("connections") as GeoJSONSource | undefined)?.setData(featureCollection(selected));
     };
     map.once("style.load", () => {
+      try {
       map.setProjection({ type: "globe" });
       tuneMapPalette(map);
       map.addSource("connections", { type: "geojson", data: featureCollection([]) });
@@ -218,8 +239,27 @@ export function LocationGlobe() {
         subpixelPositioning: true,
       }).setLngLat([locationHub.lng, locationHub.lat]).addTo(map);
       refresh(true);
+      } catch { fail(); }
     });
-    map.once("load", () => setReady(true));
+    map.once("load", () => { loaded = true; clearTimeout(watchdog); setReady(true); });
+    map.on("error", () => {
+      if (!loaded && !map.isStyleLoaded()) fail();
+      else setWarning(true);
+    });
+    const contextLost = () => fail();
+    map.getCanvas().addEventListener("webglcontextlost", contextLost);
+    const visibility = () => {
+      visibleRef.current = !document.hidden && inView;
+      setVisible(visibleRef.current);
+      previousAnimationTime = performance.now();
+    };
+    document.addEventListener("visibilitychange", visibility);
+    const observer = new IntersectionObserver(entries => {
+      inView = entries.some(entry => entry.isIntersecting);
+      visibleRef.current = !document.hidden && inView;
+      setVisible(visibleRef.current);
+    });
+    observer.observe(containerRef.current);
     map.on("zoom", () => refresh());
     map.on("dragstart", () => { interacting = true; lastInteraction = performance.now(); });
     map.on("dragend", () => {
@@ -236,7 +276,7 @@ export function LocationGlobe() {
       if (lastPointer) setMapInteraction(pointIsOnGlobe(lastPointer.x, lastPointer.y));
     });
     const rotate = (time: number) => {
-      if (!interacting && time - lastInteraction > 1500 && map.getZoom() < 2.2 && !reducedMotion) {
+      if (activeRef.current && visibleRef.current && !interacting && time - lastInteraction > 1500 && map.getZoom() < 2.2 && !motion.matches) {
         const elapsed = Math.min(0.05, (time - previousAnimationTime) / 1000);
         const center = map.getCenter();
         map.jumpTo({ center: [center.lng - 7.5 * elapsed, center.lat] });
@@ -246,10 +286,29 @@ export function LocationGlobe() {
         }
       }
       previousAnimationTime = time;
-      animation = requestAnimationFrame(rotate);
+      if (!disposed && activeRef.current && visibleRef.current && !motion.matches) animation = requestAnimationFrame(rotate);
+      else animation = 0;
     };
-    animation = requestAnimationFrame(rotate);
+    const resume = () => {
+      if (!animation && activeRef.current && visibleRef.current && !motion.matches) {
+        previousAnimationTime = performance.now();
+        animation = requestAnimationFrame(rotate);
+      }
+    };
+    // A lightweight event resumes a stopped loop when the containing window is active again.
+    containerRef.current.addEventListener("globe:resume", resume);
+    motion.addEventListener("change", resume);
+    document.addEventListener("visibilitychange", resume);
+    resume();
     return () => {
+      disposed = true;
+      clearTimeout(watchdog);
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", visibility);
+      document.removeEventListener("visibilitychange", resume);
+      motion.removeEventListener("change", resume);
+      map.getCanvas().removeEventListener("webglcontextlost", contextLost);
+      hostElement.removeEventListener("globe:resume", resume);
       cancelAnimationFrame(animation);
       canvasContainer.removeEventListener("mousemove", handleMouseMove, { capture: true });
       canvasContainer.removeEventListener("mousedown", handleMouseDown, { capture: true });
@@ -260,12 +319,16 @@ export function LocationGlobe() {
       destinationMarkers.forEach((marker) => marker.remove());
       map.remove();
     };
+  // Keep the map instance stable; callbacks/active state are owned by refs/parent lifetime.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  useEffect(() => { if (active && visible) containerRef.current?.dispatchEvent(new Event("globe:resume")); }, [active, visible]);
 
   return (
-    <div className={`map-card${ready ? " is-map-ready" : ""}${error ? " has-map-error" : ""}${surfaceHovered ? " is-globe-hovered" : ""}`} style={{ "--map-accent": accent, "--map-accent-glow": "rgba(10,255,62,.52)", "--map-accent-muted": "#75b98b" } as React.CSSProperties}>
-      <div ref={containerRef} className="location-map" role="application" aria-label="Interactive globe centered on Lagos. Drag to rotate and scroll to zoom." />
-      {!ready && <p className="location-map-status" role="status">{error ? "Interactive map unavailable." : "Loading geographic data…"}</p>}
+    <div className={`map-card${ready ? " is-map-ready" : ""}${surfaceHovered ? " is-globe-hovered" : ""}`} style={{ "--map-accent": accent, "--map-accent-glow": "rgba(10,255,62,.52)", "--map-accent-muted": "#75b98b" } as React.CSSProperties}>
+      <div ref={containerRef} className="location-map" role="img" aria-label="Globe showing illustrative connections from Lagos. Location is also provided in text above." />
+      {!ready && <p className="location-map-status" role="status">Loading geographic data…</p>}
+      {warning && <p className="map-resource-warning" role="status">Some geographic details could not load.</p>}
       <p className="location-map-instructions" aria-hidden="true">Drag to explore · Scroll to zoom</p>
     </div>
   );

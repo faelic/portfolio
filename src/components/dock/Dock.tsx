@@ -1,10 +1,10 @@
 import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import type { AppKey } from "../../types/portfolio";
-import { storage } from "../../utils/storage";
+import { isBoolean, storage } from "../../utils/storage";
 
 interface Props {
   projectFocused: boolean;
-  onOpenApp: (app: AppKey) => void;
+  onOpenApp: (app: AppKey, opener?: HTMLElement) => void;
 }
 
 const ABOUT_BADGE_KEY = "favour.about-update-seen.v2";
@@ -37,7 +37,7 @@ export function Dock({ projectFocused, onOpenApp }: Props) {
   const previousFrameTime = useRef(0);
   const reducedMotion = useRef(false);
   const [tooltip, setTooltip] = useState<string>();
-  const [badge, setBadge] = useState(() => !storage.read(ABOUT_BADGE_KEY, false));
+  const [badge, setBadge] = useState(() => !storage.read(ABOUT_BADGE_KEY, false, isBoolean));
 
   const syncMotionItems = useCallback(() => {
     const dock = dockRef.current;
@@ -154,10 +154,10 @@ export function Dock({ projectFocused, onOpenApp }: Props) {
     };
   }, [setMagnificationTargets, startMagnificationAnimation, syncMotionItems]);
 
-  const openAbout = () => {
+  const openAbout = (event: React.MouseEvent<HTMLButtonElement>) => {
     setBadge(false);
     storage.write(ABOUT_BADGE_KEY, true);
-    onOpenApp("about");
+    onOpenApp("about", event.currentTarget);
   };
 
   const activateTooltip = (label: string) => setTooltip(label);
@@ -176,7 +176,7 @@ export function Dock({ projectFocused, onOpenApp }: Props) {
       <button className={`dock-hit dock-hit--avatar${tooltip === "About me" ? " is-tooltip-active" : ""}`} type="button" aria-label="About me" data-cuelume-hover="tick" data-cuelume-press="press" data-cuelume-release="release" onClick={openAbout} onPointerEnter={() => activateTooltip("About me")} onFocus={() => activateTooltip("About me")} onBlur={() => setTooltip(undefined)}>
         <span className="dock-visual"><span className="dock-artwork"><span className="dock-icon dock-icon--avatar" aria-hidden="true">🧔🏾</span></span>{badge && <span className="dock-badge" aria-hidden="true">1</span>}</span><span className="dock-tooltip">About me</span>
       </button>
-      <button className={`dock-hit dock-hit--notes${tooltip === "Notes" ? " is-tooltip-active" : ""}`} type="button" aria-label="Notes" data-cuelume-hover="tick" data-cuelume-press="press" data-cuelume-release="release" onClick={() => onOpenApp("notes")} onPointerEnter={() => activateTooltip("Notes")} onFocus={() => activateTooltip("Notes")} onBlur={() => setTooltip(undefined)}>
+      <button className={`dock-hit dock-hit--notes${tooltip === "Notes" ? " is-tooltip-active" : ""}`} type="button" aria-label="Notes" data-cuelume-hover="tick" data-cuelume-press="press" data-cuelume-release="release" onClick={event => onOpenApp("notes", event.currentTarget)} onPointerEnter={() => activateTooltip("Notes")} onFocus={() => activateTooltip("Notes")} onBlur={() => setTooltip(undefined)}>
         <span className="dock-visual"><span className="dock-artwork"><span className="dock-icon dock-icon--notes" aria-hidden="true" /></span></span><span className="dock-tooltip">Notes</span>
       </button>
       <span className="dock-divider" aria-hidden="true" />

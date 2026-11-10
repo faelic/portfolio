@@ -12,6 +12,7 @@ export const projects: Record<ProjectKey, Project> = {
   champ: {
     key: "champ",
     title: "Monierave",
+    slug: "monierave",
     desktopLabel: "Monierave",
     icon: "/assets/icons/apps/monierave.svg",
     accent: "#79672d",
@@ -57,6 +58,7 @@ export const projects: Record<ProjectKey, Project> = {
   silences: {
     key: "silences",
     title: "BucketFlow",
+    slug: "bucketflow",
     desktopLabel: "BucketFlow",
     icon: "/assets/icons/apps/bucketflow.svg",
     accent: "#63762c",
@@ -103,6 +105,7 @@ export const projects: Record<ProjectKey, Project> = {
   revolte: {
     key: "revolte",
     title: "BlockScan",
+    slug: "blockscan",
     desktopLabel: "Blockexplorer",
     icon: "/assets/icons/apps/blockexplorer.svg",
     accent: "#087b9f",
@@ -149,6 +152,7 @@ export const projects: Record<ProjectKey, Project> = {
   lisiere: {
     key: "lisiere",
     title: "Cleanup",
+    slug: "cleanup",
     desktopLabel: "Cleanup",
     icon: "/assets/icons/apps/cleanup.svg",
     accent: "#1667d9",
@@ -194,6 +198,7 @@ export const projects: Record<ProjectKey, Project> = {
   elan: {
     key: "elan",
     title: "Escrow",
+    slug: "escrow",
     desktopLabel: "Escrow",
     icon: "/assets/icons/apps/escrow.svg",
     accent: "#5961d9",
@@ -238,6 +243,7 @@ export const projects: Record<ProjectKey, Project> = {
   eau: {
     key: "eau",
     title: "Policy.ng",
+    slug: "policyng",
     desktopLabel: "Policy",
     icon: "/assets/icons/apps/policy.svg",
     accent: "#07542f",
@@ -286,7 +292,7 @@ export const projectList = Object.values(projects);
 
 export const hashToProject = (hash: string): ProjectKey | undefined => {
   const slug = hash.replace(/^#/, "").toLowerCase();
-  return projectList.find((project) => project.title.toLowerCase().replace(/[^a-z0-9]+/g, "") === slug)?.key;
+  return projectList.find((project) => project.slug === slug)?.key;
 };
 
-export const projectToHash = (key: ProjectKey) => `#${projects[key].title.toLowerCase().replace(/[^a-z0-9]+/g, "")}`;
+export const projectToHash = (key: ProjectKey) => `#${projects[key].slug}`;

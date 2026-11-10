@@ -51,7 +51,7 @@ export function NotesWindow() {
               onClick={() => setSelected(key)}
             >
               <span className="note-list-title">{notes[key].title}</span>
-              <span className="note-list-preview"><time>17/08/2026</time> {key === "about" ? "I'm Favour…" : "Software…"}</span>
+              <span className="note-list-preview"><time>{notes[key].date}</time> {key === "about" ? "I'm Favour…" : "Software…"}</span>
             </button>
           ))}
         </aside>
