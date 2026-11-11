@@ -5,6 +5,13 @@ dist/
 .vite/
 .cache/
 
+# Python environments and caches
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+
 # Generated test reports
 playwright-report/
 test-results/
