@@ -1,20 +1,28 @@
 ---
-id: "project-blockscan"
-title: "BlockScan — Sepolia blockchain explorer"
-topic: "projects"
+id: project-blockscan
+title: BlockScan — Sepolia blockchain explorer
+category: projects
 topics:
-  - "Frontend engineering"
-  - "Blockchain explorers"
-  - "Blockchain data"
-  - "Live-data updates"
-  - "Accessible interfaces"
-  - "Credential handling"
-entities: ["Favour Chukwuemerie Ututu", "BlockScan", "Ethereum Sepolia", "Alchemy"]
-source: "rag/sources/original-portfolio-knowledge.md"
-source_sections: ["Independent projects > BlockScan — Sepolia blockchain explorer", "What Favour works on > Frontend engineering", "About Favour"]
-additional_sources:
-  - source: "rag/sources/confirmed-portfolio-details.md"
-    source_sections: ["Project links and names"]
+- Frontend engineering
+- Blockchain explorers
+- Blockchain data
+- Live-data updates
+- Accessible interfaces
+- Credential handling
+entities:
+- Favour Chukwuemerie Ututu
+- BlockScan
+- Ethereum Sepolia
+- Alchemy
+provenance:
+- path: rag/sources/original-portfolio-knowledge.md
+  sections:
+  - Independent projects > BlockScan — Sepolia blockchain explorer
+  - What Favour works on > Frontend engineering
+  - About Favour
+- path: rag/sources/confirmed-portfolio-details.md
+  sections:
+  - Project links and names
 ---
 
 # BlockScan — Sepolia blockchain explorer

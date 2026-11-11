@@ -12,7 +12,7 @@ When a pipeline exists, inspect evidence in its top five results and evaluate an
 
 - **Question:** Who is Favour Chukwuemerie Ututu, and what kinds of software does he build?
 - **Expected document IDs:** `profile-overview`.
-- **Required facts:** Software Engineer; frontend/backend and blockchain experience; representative projects including Escrow; Flamong/Policy.ng frontend work; planned portfolio assistant is his first AI application project, currently at knowledge-base preparation; agentic engineering is ongoing learning; country of residence is Nigeria when relevant.
+- **Required facts:** Software Engineer; self-taught beginnings and freelance development work before structured Alchemy frontend training in 2025–2026; frontend/backend and blockchain experience; representative projects including Escrow; Flamong/Policy.ng frontend work; planned portfolio assistant is his first AI application project, currently at knowledge-base preparation; agentic engineering is ongoing learning; country of residence is Nigeria when relevant.
 - **Unsupported claims to avoid:** Invented seniority, multiple completed AI applications, equal expertise depth across every domain, completed mastery of agentic engineering, or a city-level location.
 
 ### S02 — Engineering perspective and interests
@@ -68,8 +68,8 @@ When a pipeline exists, inspect evidence in its top five results and evaluate an
 
 - **Question:** What university education and engineering training does Favour have?
 - **Expected document IDs:** `education-training`.
-- **Required facts:** Federal University of Technology Minna — BSc in Quantity Survey; Alchemy University frontend training with React, TypeScript, API/Ethereum integration, wallets, transaction states, reusable UI, and testing; completed Cyfrin blockchain/smart-contract training.
-- **Unsupported claims to avoid:** A computer science degree, graduation years, grades, or unspecified professional certificates.
+- **Required facts:** Federal University of Technology Minna — BSc in Quantity Survey, 2018–2025; Alchemy University frontend training, 2025–2026, with React, TypeScript, API/Ethereum integration, wallets, transaction states, reusable UI, and testing; completed Cyfrin blockchain/smart-contract training.
+- **Unsupported claims to avoid:** A computer science degree, invented start/end months, grades, Cyfrin training dates, or unspecified professional certificates.
 
 ### S10 — Assistant availability
 
@@ -120,7 +120,7 @@ When a pipeline exists, inspect evidence in its top five results and evaluate an
 - **Question:** What practical frontend work and training support Favour's interest in frontend opportunities, and how can I reach him?
 - **Expected document IDs:** `experience-flamong-policy-ng`, `education-training`, `opportunities-contact`.
 - **Required facts:** Policy.ng public/admin React and TypeScript interfaces, API integration and selected testing; Alchemy University's relevant training; worldwide frontend opportunities and supplied email.
-- **Unsupported claims to avoid:** Invented years of experience, educational dates, or an unlisted credential.
+- **Unsupported claims to avoid:** Invented total years of experience, education dates beyond the approved year ranges, or an unlisted credential.
 
 ## Visitor lookup and referrals
 

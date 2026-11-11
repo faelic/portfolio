@@ -1,21 +1,28 @@
 ---
-id: "experience-flamong-policy-ng"
-title: "Favour at Flamong — Policy.ng frontend engineering"
-topic: "experience"
+id: experience-flamong-policy-ng
+title: Favour at Flamong — Policy.ng frontend engineering
+category: experience
 topics:
-  - "Frontend engineering"
-  - "API integration"
-  - "Form validation"
-  - "Authentication and permissions"
-  - "Content administration"
-  - "Software testing"
-  - "AI-assisted interfaces"
-entities: ["Favour Chukwuemerie Ututu", "Flamong", "Policy.ng"]
-source: "rag/sources/original-portfolio-knowledge.md"
-source_sections: ["Professional experience > Flamong — Frontend Developer Intern", "What Favour works on > Frontend engineering", "About Favour"]
-additional_sources:
-  - source: "rag/sources/confirmed-portfolio-details.md"
-    source_sections: ["Current role and start date"]
+- Frontend engineering
+- API integration
+- Form validation
+- Authentication and permissions
+- Content administration
+- Software testing
+- AI-assisted interfaces
+entities:
+- Favour Chukwuemerie Ututu
+- Flamong
+- Policy.ng
+provenance:
+- path: rag/sources/original-portfolio-knowledge.md
+  sections:
+  - Professional experience > Flamong — Frontend Developer Intern
+  - What Favour works on > Frontend engineering
+  - About Favour
+- path: rag/sources/confirmed-portfolio-details.md
+  sections:
+  - Current role and start date
 ---
 
 # Favour at Flamong — Policy.ng frontend engineering

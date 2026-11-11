@@ -2,7 +2,7 @@
 
 ## Source integrity and scope
 
-The original factual source is [the archived portfolio knowledge](sources/original-portfolio-knowledge.md), originally named `rag/knowledge/faour ututu portfolio knowledge.md`. Its 168 lines and 15,023 bytes remain preserved byte-for-byte. The corpus now also uses [individually confirmed portfolio details](sources/confirmed-portfolio-details.md), supplied by Favour on 10 November 2026.
+The original factual source is [the archived portfolio knowledge](sources/original-portfolio-knowledge.md), originally named `rag/knowledge/faour ututu portfolio knowledge.md`. Its 168 lines and 15,023 bytes remain preserved byte-for-byte. The corpus now also uses [individually confirmed portfolio details](sources/confirmed-portfolio-details.md), supplied by Favour on 10 and 11 November 2026.
 
 SHA-256: `83d70cd06ce32fb461a34a55bbd19377c537dd393c6b04444b4d6a809def1538`.
 
@@ -50,7 +50,7 @@ Project sections name their subject through body text or heading context. Monier
 
 ## Owner-confirmed additions and corrections
 
-All entries below refer to sections of [the confirmation record](sources/confirmed-portfolio-details.md), dated 10 November 2026. Existing topic IDs and primary archive references are preserved; amended documents identify this additional source in frontmatter. Escrow uses the confirmation record as its primary source.
+All entries below refer to sections of [the confirmation record](sources/confirmed-portfolio-details.md), with original confirmations dated 10 November 2026 and education/development-history additions dated 11 November 2026. Existing document IDs and all source references are preserved. Every document now uses `category` for folder grouping and one `provenance` list containing `path` and `sections` entries. Amended documents list both contributing records; Escrow lists only the confirmation record. This metadata migration leaves factual bodies and the immutable source records unchanged.
 
 | Confirmation section | Approved information | Destination and treatment |
 |---|---|---|
@@ -61,6 +61,8 @@ All entries below refer to sections of [the confirmation record](sources/confirm
 | Project links and names | BlockScan and Approval Cleanup application/repository links; Escrow repository; Approval Cleanup is the main name, with Cleanup and Allowance Cleanup as aliases | Relevant project documents: add the confirmed URLs and approved aliases. Escrow's repository is also recorded under its own confirmation section. No link-uptime or README-completeness verification is claimed. |
 | Public contact | Gmail, GitHub, LinkedIn, and X destinations approved for sharing | [Contact](knowledge/opportunities/availability-and-contact.md): preserve the existing email and add the confirmed profiles. |
 | AI application experience | The portfolio assistant is Favour's first AI application project | [Overview](knowledge/profile/overview.md), [expertise](knowledge/expertise/engineering-and-technical-skills.md), and [assistant status](knowledge/portfolio/assistant-status.md): replace wording implying multiple built AI applications; retain current AI focus/learning topics and the not-implemented status. |
+| Education dates | Confirmed 11 November 2026: university 2018–2025; Alchemy frontend training 2025–2026 | [Education](knowledge/education/education-and-training.md): add approved year ranges; [overview](knowledge/profile/overview.md): include the training period in the career narrative. |
+| Development beginnings | Confirmed 11 November 2026: self-directed learning and freelance development work before structured Alchemy training | [Overview](knowledge/profile/overview.md): add the approved paragraph without inventing earlier dates, clients, or project details. |
 | Source approval and visitor scope | Confirm each extra portfolio detail individually; answer visitor questions concisely and direct deeper implementation questions to GitHub | Data contract and README: document curation and referral rules outside the corpus. [Assistant status](knowledge/portfolio/assistant-status.md): describe the intended visitor-facing purpose. |
 
 ## Remaining evidence boundaries — excluded from the corpus
@@ -68,7 +70,7 @@ All entries below refer to sections of [the confirmation record](sources/confirm
 | Gap | Evidence boundary and handling |
 |---|---|
 | Employment chronology | Flamong's May 2026 start and current role are owner-confirmed. The start of Favour's entire professional career and exact total years of professional experience remain unspecified. |
-| Education chronology and credentials | No education dates, grades, or formal Alchemy/Cyfrin certification details are supplied. Completed training does not establish an additional credential. |
+| Education chronology and credentials | University years 2018–2025 and Alchemy frontend training years 2025–2026 are owner-confirmed. Exact months, grades, Cyfrin dates, and additional certification details remain unspecified. Completed training does not establish an additional credential. |
 | Detailed implementation beyond approved summaries | The corpus supports project purpose, contribution, stack, selected features, and limitations. For unrecorded mechanics, give the supported context and share the relevant confirmed repository. Do not infer that a particular README section exists. |
 | Work authorization and hiring logistics | Worldwide interest, remote work, and openness to discussing relocation are confirmed. Salary expectations, notice period, work authorization, and relocation eligibility were not supplied. |
 | Outcome and assurance evidence | No quantified business outcomes, production scale, or independent security audit results are supplied. Technical implementation claims do not establish those outcomes. |

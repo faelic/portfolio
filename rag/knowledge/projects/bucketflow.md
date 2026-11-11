@@ -1,17 +1,25 @@
 ---
-id: "project-bucketflow"
-title: "BucketFlow — Stablecoin allocation application"
-topic: "projects"
+id: project-bucketflow
+title: BucketFlow — Stablecoin allocation application
+category: projects
 topics:
-  - "Blockchain engineering"
-  - "Stablecoin allocation"
-  - "Smart contracts"
-  - "Wallet integration"
-  - "Transaction states"
-  - "Test networks"
-entities: ["Favour Chukwuemerie Ututu", "BucketFlow", "USDC", "Ethereum Sepolia"]
-source: "rag/sources/original-portfolio-knowledge.md"
-source_sections: ["Independent projects > BucketFlow — Stablecoin allocation application", "What Favour works on > Blockchain engineering", "About Favour"]
+- Blockchain engineering
+- Stablecoin allocation
+- Smart contracts
+- Wallet integration
+- Transaction states
+- Test networks
+entities:
+- Favour Chukwuemerie Ututu
+- BucketFlow
+- USDC
+- Ethereum Sepolia
+provenance:
+- path: rag/sources/original-portfolio-knowledge.md
+  sections:
+  - Independent projects > BucketFlow — Stablecoin allocation application
+  - What Favour works on > Blockchain engineering
+  - About Favour
 ---
 
 # BucketFlow — Stablecoin allocation application

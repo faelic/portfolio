@@ -1,21 +1,30 @@
 ---
-id: "project-approval-cleanup"
-title: "Approval Cleanup — ERC-20 wallet-permission manager"
-aliases: ["Cleanup", "Allowance Cleanup"]
-topic: "projects"
+id: project-approval-cleanup
+title: Approval Cleanup — ERC-20 wallet-permission manager
+category: projects
 topics:
-  - "Blockchain engineering"
-  - "Token approvals"
-  - "Wallet permissions"
-  - "RPC log processing"
-  - "Wallet integration"
-  - "Scan coverage"
-entities: ["Favour Chukwuemerie Ututu", "Approval Cleanup", "ERC-20"]
-source: "rag/sources/original-portfolio-knowledge.md"
-source_sections: ["Independent projects > Approval Cleanup — ERC-20 wallet-permission manager", "What Favour works on > Blockchain engineering", "About Favour"]
-additional_sources:
-  - source: "rag/sources/confirmed-portfolio-details.md"
-    source_sections: ["Project links and names"]
+- Blockchain engineering
+- Token approvals
+- Wallet permissions
+- RPC log processing
+- Wallet integration
+- Scan coverage
+entities:
+- Favour Chukwuemerie Ututu
+- Approval Cleanup
+- ERC-20
+aliases:
+- Cleanup
+- Allowance Cleanup
+provenance:
+- path: rag/sources/original-portfolio-knowledge.md
+  sections:
+  - Independent projects > Approval Cleanup — ERC-20 wallet-permission manager
+  - What Favour works on > Blockchain engineering
+  - About Favour
+- path: rag/sources/confirmed-portfolio-details.md
+  sections:
+  - Project links and names
 ---
 
 # Approval Cleanup — ERC-20 wallet-permission manager

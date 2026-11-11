@@ -1,21 +1,31 @@
 ---
-id: "opportunities-contact"
-title: "Favour's professional opportunities and contact"
-topic: "opportunities"
+id: opportunities-contact
+title: Favour's professional opportunities and contact
+category: opportunities
 topics:
-  - "Professional opportunities"
-  - "Frontend engineering"
-  - "Backend engineering"
-  - "Full-stack engineering"
-  - "AI application engineering"
-  - "Professional contact"
-  - "Public location"
-entities: ["Favour Chukwuemerie Ututu", "Nigeria", "GitHub", "LinkedIn", "X"]
-source: "rag/sources/original-portfolio-knowledge.md"
-source_sections: ["Professional opportunities", "Favour Chukwuemerie Ututu (email)"]
-additional_sources:
-  - source: "rag/sources/confirmed-portfolio-details.md"
-    source_sections: ["Professional opportunities", "Public location", "Public contact"]
+- Professional opportunities
+- Frontend engineering
+- Backend engineering
+- Full-stack engineering
+- AI application engineering
+- Professional contact
+- Public location
+entities:
+- Favour Chukwuemerie Ututu
+- Nigeria
+- GitHub
+- LinkedIn
+- X
+provenance:
+- path: rag/sources/original-portfolio-knowledge.md
+  sections:
+  - Professional opportunities
+  - Favour Chukwuemerie Ututu (email)
+- path: rag/sources/confirmed-portfolio-details.md
+  sections:
+  - Professional opportunities
+  - Public location
+  - Public contact
 ---
 
 # Favour's professional opportunities and contact

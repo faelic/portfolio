@@ -1,19 +1,23 @@
 ---
-id: "profile-perspective"
-title: "Favour's engineering perspective and interests"
-topic: "profile"
+id: profile-perspective
+title: Favour's engineering perspective and interests
+category: profile
 topics:
-  - "Engineering philosophy"
-  - "Frontend engineering"
-  - "Interface performance"
-  - "Security"
-  - "AI safety"
-  - "Agentic AI"
-  - "Large language models"
-  - "Video games"
-entities: ["Favour Chukwuemerie Ututu"]
-source: "rag/sources/original-portfolio-knowledge.md"
-source_sections: ["In Favour's words > How I think about engineering", "In Favour's words > What I enjoy"]
+- Engineering philosophy
+- Frontend engineering
+- Interface performance
+- Security
+- AI safety
+- Agentic AI
+- Large language models
+- Video games
+entities:
+- Favour Chukwuemerie Ututu
+provenance:
+- path: rag/sources/original-portfolio-knowledge.md
+  sections:
+  - In Favour's words > How I think about engineering
+  - In Favour's words > What I enjoy
 ---
 
 # Favour's engineering perspective and interests

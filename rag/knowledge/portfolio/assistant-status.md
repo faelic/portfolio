@@ -1,17 +1,26 @@
 ---
-id: "portfolio-assistant-status"
-title: "Portfolio AI assistant — Planned status and intended purpose"
-topic: "portfolio"
+id: portfolio-assistant-status
+title: Portfolio AI assistant — Planned status and intended purpose
+category: portfolio
 topics:
-  - "AI application engineering"
-  - "Retrieval-augmented generation"
-  - "Portfolio assistant planning"
-entities: ["Favour Chukwuemerie Ututu", "favourututu.com", "Policy.ng", "Monierave", "BlockScan"]
-source: "rag/sources/original-portfolio-knowledge.md"
-source_sections: ["Portfolio AI assistant", "What Favour works on > AI engineering"]
-additional_sources:
-  - source: "rag/sources/confirmed-portfolio-details.md"
-    source_sections: ["AI application experience", "Source approval and visitor scope"]
+- AI application engineering
+- Retrieval-augmented generation
+- Portfolio assistant planning
+entities:
+- Favour Chukwuemerie Ututu
+- favourututu.com
+- Policy.ng
+- Monierave
+- BlockScan
+provenance:
+- path: rag/sources/original-portfolio-knowledge.md
+  sections:
+  - Portfolio AI assistant
+  - What Favour works on > AI engineering
+- path: rag/sources/confirmed-portfolio-details.md
+  sections:
+  - AI application experience
+  - Source approval and visitor scope
 ---
 
 # Portfolio AI assistant — Planned status and intended purpose

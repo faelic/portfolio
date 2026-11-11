@@ -1,21 +1,27 @@
 ---
-id: "project-monierave"
-title: "Monierave — Full-stack banking simulation"
-topic: "projects"
+id: project-monierave
+title: Monierave — Full-stack banking simulation
+category: projects
 topics:
-  - "Backend engineering"
-  - "Frontend engineering"
-  - "Banking simulation"
-  - "Database transactions"
-  - "Double-entry ledger"
-  - "Idempotency"
-  - "Concurrency control"
-  - "Background processing"
-  - "Authentication and sessions"
-  - "Software testing"
-entities: ["Favour Chukwuemerie Ututu", "Monierave"]
-source: "rag/sources/original-portfolio-knowledge.md"
-source_sections: ["Independent projects > Monierave — Full-stack banking simulation", "What Favour works on > Backend engineering", "About Favour"]
+- Backend engineering
+- Frontend engineering
+- Banking simulation
+- Database transactions
+- Double-entry ledger
+- Idempotency
+- Concurrency control
+- Background processing
+- Authentication and sessions
+- Software testing
+entities:
+- Favour Chukwuemerie Ututu
+- Monierave
+provenance:
+- path: rag/sources/original-portfolio-knowledge.md
+  sections:
+  - Independent projects > Monierave — Full-stack banking simulation
+  - What Favour works on > Backend engineering
+  - About Favour
 ---
 
 # Monierave — Full-stack banking simulation

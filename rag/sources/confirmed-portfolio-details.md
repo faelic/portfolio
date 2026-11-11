@@ -1,6 +1,6 @@
 # Confirmed portfolio details
 
-Favour confirmed the following information individually in this chat on **10 November 2026**. This record supplements the original portfolio knowledge; it is excluded from ingestion. These are owner-confirmed statements, not an independent audit of project code, external links, or employment.
+Favour confirmed the original entries below individually in this chat on **10 November 2026**. The education dates and development beginnings sections were added with his approval on **11 November 2026**. This record supplements the original portfolio knowledge; it is excluded from ingestion. These are owner-confirmed statements, not an independent audit of project code, external links, employment, or education.
 
 ## Current role and start date
 
@@ -56,6 +56,23 @@ Favour stated: **“this portfolio assistant is my first ai application”**.
 The portfolio assistant is his **first AI application project**. The project is currently at knowledge-base preparation; the assistant is not implemented or available yet. Earlier broad wording that implies he has built multiple AI applications must be replaced in current corpus documents. The previously supplied AI subjects remain topics of current focus and learning, with agentic AI engineering explicitly described as ongoing learning.
 
 This confirmation does not attribute Policy.ng's backend or underlying AI services to Favour. His documented contribution there remains the frontend, including its AI-assisted question interface.
+
+## Education dates
+
+Confirmed by Favour on **11 November 2026**:
+
+- **Federal University of Technology Minna — BSc in Quantity Survey:** 2018–2025.
+- **Alchemy University — Frontend Engineering Training:** 2025–2026.
+
+These are year ranges only. No start/end months, grades, additional credentials, or Cyfrin training dates were supplied.
+
+## Development beginnings
+
+Approved by Favour on **11 November 2026**:
+
+> Favour began his software development journey as a self-taught developer. He learned independently and took on freelance development work before undertaking structured frontend engineering training at Alchemy University from 2025 to 2026.
+
+No dates, client identities, freelance project details, or total career duration were supplied for the earlier freelance work.
 
 ## Source approval and visitor scope
 

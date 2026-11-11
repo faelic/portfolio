@@ -1,25 +1,37 @@
 ---
-id: "expertise-engineering"
-title: "Favour's engineering areas and technical skills"
-topic: "expertise"
+id: expertise-engineering
+title: Favour's engineering areas and technical skills
+category: expertise
 topics:
-  - "Backend engineering"
-  - "Frontend engineering"
-  - "AI application engineering"
-  - "Blockchain engineering"
-  - "Retrieval-augmented generation"
-  - "Agentic AI"
-  - "Authentication and sessions"
-  - "Database transactions"
-  - "Background processing"
-  - "Software testing"
-  - "Continuous delivery"
-entities: ["Favour Chukwuemerie Ututu", "Monierave", "Policy.ng", "BlockScan", "BucketFlow", "Approval Cleanup"]
-source: "rag/sources/original-portfolio-knowledge.md"
-source_sections: ["What Favour works on > Backend engineering", "What Favour works on > Frontend engineering", "What Favour works on > AI engineering", "What Favour works on > Blockchain engineering", "Technical skills"]
-additional_sources:
-  - source: "rag/sources/confirmed-portfolio-details.md"
-    source_sections: ["AI application experience"]
+- Backend engineering
+- Frontend engineering
+- AI application engineering
+- Blockchain engineering
+- Retrieval-augmented generation
+- Agentic AI
+- Authentication and sessions
+- Database transactions
+- Background processing
+- Software testing
+- Continuous delivery
+entities:
+- Favour Chukwuemerie Ututu
+- Monierave
+- Policy.ng
+- BlockScan
+- BucketFlow
+- Approval Cleanup
+provenance:
+- path: rag/sources/original-portfolio-knowledge.md
+  sections:
+  - What Favour works on > Backend engineering
+  - What Favour works on > Frontend engineering
+  - What Favour works on > AI engineering
+  - What Favour works on > Blockchain engineering
+  - Technical skills
+- path: rag/sources/confirmed-portfolio-details.md
+  sections:
+  - AI application experience
 ---
 
 # Favour's engineering areas and technical skills

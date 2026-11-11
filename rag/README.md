@@ -31,13 +31,27 @@ Folders organize maintenance; future retrieval must search across them rather th
 - [Source map](SOURCE_MAP.md): every source section, consolidation decisions, integrity checksum, and coverage gaps.
 - [Retrieval evaluation cases](evaluation/retrieval-cases.md): 23 questions covering topic lookup, aliases, public contact, supported GitHub referrals, and missing information.
 - [Original source](sources/original-portfolio-knowledge.md): the supplied Markdown, preserved byte-for-byte outside the corpus.
-- [Owner-confirmed details](sources/confirmed-portfolio-details.md): individually approved additions and corrections from 10 November 2026, including source approval boundaries.
+- [Owner-confirmed details](sources/confirmed-portfolio-details.md): individually approved additions and corrections from 10 and 11 November 2026, including source approval boundaries.
+
+## Python environment
+
+The RAG folder uses `uv` with Python 3.12 or newer. From the repository root:
+
+```bash
+cd rag
+uv sync --locked
+uv run python -c "from dotenv import load_dotenv; from openai import OpenAI; print('Imports successful')"
+```
+
+`python-dotenv` provides `.env` loading; `openai` provides the Python API client. Dependency installation does not implement ingestion or make an API request. Run Python scripts from this folder with `uv run python your_script.py`.
+
+Keep `pyproject.toml` and `uv.lock` in Git. The local `.venv/`, Python bytecode caches, and notebook checkpoints are ignored.
 
 ## Maintaining the dataset
 
-Edit the appropriate topic document rather than the archived source. Keep stable document IDs, name the subject of a section explicitly, and keep contribution boundaries and limitations alongside the relevant claims. Every corpus document has a folder category (`topic`), a list of subjects and concepts (`topics`), and named subjects (`entities`). Approved alternative names use optional `aliases`; individually approved additions use primary or additional source references. Reuse topic labels consistently across files and ground them in the document text; see the data contract for labeling and future chunk metadata rules. Confirm each new portfolio detail with Favour, record its provenance, and update the source map and evaluation cases. Source references establish provenance, not independent verification.
+Edit the appropriate topic document rather than the archived source. Keep stable document IDs, name the subject of a section explicitly, and keep contribution boundaries and limitations alongside the relevant claims. Every corpus document has a folder category (`category`), a list of subjects and concepts (`topics`), and named subjects (`entities`). Approved alternative names use optional `aliases`; all approved source references use a single `provenance` list of `path` and `sections` objects. Reuse topic labels consistently across files and ground them in the document text; see the data contract for labeling and future chunk metadata rules. The metadata migration changes document headers only; the notebook loader and chunking code have not been migrated yet. Confirm each new portfolio detail with Favour, record its provenance, and update the source map and evaluation cases. Source references establish provenance, not independent verification.
 
-The original archive supplied no reliable as-of date. The supplemental source records owner confirmations from 10 November 2026 for specific facts, including employment, opportunities, public location, links, and AI project status. This does not date or verify every original claim. Review mutable statements before treating them as current indefinitely.
+The original archive supplied no reliable as-of date. The supplemental source records owner confirmations from 10 November 2026 for specific facts, including employment, opportunities, public location, links, and AI project status. Education year ranges and self-taught/freelance beginnings were additionally confirmed on 11 November 2026. This does not date or verify every original claim. Review mutable statements before treating them as current indefinitely.
 
 Preserve concise context in biography and expertise documents, and keep project-specific explanations in their corresponding documents. Full implementation breakdowns belong in the linked repositories. Share Nigeria as the public country of residence; do not add a city from other repository files. Do not expand the corpus with paraphrased FAQs solely to match evaluation questions.
 

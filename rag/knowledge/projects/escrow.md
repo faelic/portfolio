@@ -1,17 +1,22 @@
 ---
-id: "project-escrow"
-title: "Escrow — Sepolia payment learning project"
-topic: "projects"
+id: project-escrow
+title: Escrow — Sepolia payment learning project
+category: projects
 topics:
-  - "Frontend engineering"
-  - "Blockchain engineering"
-  - "Smart contracts"
-  - "Escrow payments"
-  - "Role-based permissions"
-  - "Test networks"
-entities: ["Favour Chukwuemerie Ututu", "Escrow", "Ethereum Sepolia"]
-source: "rag/sources/confirmed-portfolio-details.md"
-source_sections: ["Escrow"]
+- Frontend engineering
+- Blockchain engineering
+- Smart contracts
+- Escrow payments
+- Role-based permissions
+- Test networks
+entities:
+- Favour Chukwuemerie Ututu
+- Escrow
+- Ethereum Sepolia
+provenance:
+- path: rag/sources/confirmed-portfolio-details.md
+  sections:
+  - Escrow
 ---
 
 # Escrow — Sepolia payment learning project

@@ -1,21 +1,40 @@
 ---
-id: "profile-overview"
-title: "Favour Chukwuemerie Ututu — Professional overview"
-topic: "profile"
+id: profile-overview
+title: Favour Chukwuemerie Ututu — Professional overview
+category: profile
 topics:
-  - "Software engineering"
-  - "Frontend engineering"
-  - "Backend engineering"
-  - "AI application engineering"
-  - "Blockchain engineering"
-  - "Agentic AI"
-  - "Public location"
-entities: ["Favour Chukwuemerie Ututu", "Flamong", "Policy.ng", "Monierave", "BucketFlow", "BlockScan", "Approval Cleanup", "Escrow", "Nigeria"]
-source: "rag/sources/original-portfolio-knowledge.md"
-source_sections: ["Favour Chukwuemerie Ututu (identity and professional focus)", "About Favour"]
-additional_sources:
-  - source: "rag/sources/confirmed-portfolio-details.md"
-    source_sections: ["Escrow", "Public location", "AI application experience"]
+- Software engineering
+- Frontend engineering
+- Backend engineering
+- AI application engineering
+- Blockchain engineering
+- Agentic AI
+- Public location
+- Self-directed learning
+- Freelance development
+entities:
+- Favour Chukwuemerie Ututu
+- Flamong
+- Policy.ng
+- Monierave
+- BucketFlow
+- BlockScan
+- Approval Cleanup
+- Escrow
+- Nigeria
+- Alchemy University
+provenance:
+- path: rag/sources/original-portfolio-knowledge.md
+  sections:
+  - Favour Chukwuemerie Ututu (identity and professional focus)
+  - About Favour
+- path: rag/sources/confirmed-portfolio-details.md
+  sections:
+  - Escrow
+  - Public location
+  - AI application experience
+  - Development beginnings
+  - Education dates
 ---
 
 # Favour Chukwuemerie Ututu — Professional overview
@@ -24,6 +43,10 @@ additional_sources:
 **Professional focus:** Backend systems, frontend applications, and AI systems.  
 **Other work:** Blockchain applications and smart contracts.  
 **Country of residence:** Nigeria.
+
+## Self-directed learning and freelance work
+
+Favour began his software development journey as a self-taught developer. He learned independently and took on freelance development work before undertaking structured frontend engineering training at Alchemy University from 2025 to 2026.
 
 ## Background and work
 
