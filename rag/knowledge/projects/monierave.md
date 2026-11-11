@@ -22,6 +22,9 @@ provenance:
   - Independent projects > Monierave — Full-stack banking simulation
   - What Favour works on > Backend engineering
   - About Favour
+- path: rag/sources/confirmed-portfolio-details.md
+  sections:
+  - Professional positioning and portfolio RAG implementation
 ---
 
 # Monierave — Full-stack banking simulation
@@ -47,7 +50,7 @@ Monierave's transactional outbox connects durable database changes to asynchrono
 
 Background work uses a transactional outbox. PostgreSQL holds the durable record of work to be performed, while Redis and Asynq support processing and retries. The system also includes rotating refresh tokens, revocable sessions, audit records, and reconciliation-related checks.
 
-These Monierave features were built into a banking simulation and demonstrate the backend design problems Favour has chosen to study and implement.
+These Monierave features were built into a banking simulation and demonstrate the backend design problems Favour addressed in its implementation.
 
 ## Frontend and testing
 

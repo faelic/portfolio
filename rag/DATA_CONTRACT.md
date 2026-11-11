@@ -2,7 +2,7 @@
 
 ## Corpus interface
 
-The sole content boundary is `rag/knowledge/**/*.md`, resolved from the repository root. All 12 documents are UTF-8 Markdown with YAML frontmatter. Source records, evaluation cases, and authoring guidance are excluded. This contract describes the authoring schema and the local LangChain loader, chunking, and answering implementation. It does not establish deployed visitor-facing functionality or measured retrieval quality.
+The sole content boundary is `rag/knowledge/**/*.md`, resolved from the repository root. All 13 documents are UTF-8 Markdown with YAML frontmatter. Source records, evaluation cases, and authoring guidance are excluded. This contract describes the authoring schema and the local LangChain loader, chunking, and answering implementation. It does not establish deployed visitor-facing functionality or measured retrieval quality.
 
 | Frontmatter field | Type | Meaning |
 |---|---|---|
@@ -65,7 +65,7 @@ provenance:
 
 The earlier top-level `topic`, `source`, `source_sections`, and `additional_sources` fields are retired. `category` replaces singular `topic`; `provenance` unifies the source references. Existing IDs, titles, topics, entities, aliases, source references, and factual body text are preserved. The implementation modules now parse this schema. The experimental notebook is separate and has not been changed by the pipeline refactor.
 
-Owner-confirmed corrections supersede conflicting original wording only for the facts explicitly confirmed. The portfolio assistant is Favour's first AI application project; broad original statements implying multiple AI applications are superseded in the current corpus. Confirmation dates establish when Favour supplied or confirmed a statement, not an independent audit or a fresh review of every original claim.
+Owner-confirmed corrections supersede conflicting original wording only for the facts explicitly confirmed. The 11 November 2026 correction establishes Full-stack Software Engineer and AI Engineer positioning, the implemented Python RAG project, and owner-confirmed public availability. Superseded first-application and preparation-only descriptions remain historical records outside ingestion; the corpus does not infer additional AI projects. Confirmation dates establish when Favour supplied or confirmed a statement, not an independent audit or a fresh review of every original claim.
 
 Other local portfolio content is not automatically approved for ingestion. Confirm each additional detail with Favour before adding it, and record the confirmation and destination in the source map. Public residence is limited to **Nigeria**; city-level location is not approved for this corpus. Worldwide opportunity interest and openness to discussing relocation do not establish work authorization or eligibility in a particular country.
 
@@ -82,7 +82,7 @@ For detailed implementation questions beyond the corpus, acknowledge the informa
 - Choose labels grounded in the document body. Use `Retrieval-augmented generation` consistently for RAG and `Large language models` for LLMs rather than adding duplicate acronym labels.
 - Keep labels distinct and free of leading or trailing whitespace; treat case-only variants as duplicates. Review additions against existing corpus labels before introducing a synonym.
 - Label the subjects actually covered. Named products and people belong in `entities`; broad concepts, practices, and interests belong in `topics`. Keep the folder grouping in `category`.
-- A topic may describe an interest, training, ongoing learning, or a plan. Preserve those qualifications in the body: `Agentic AI` does not imply completed expertise, and `Portfolio assistant planning` does not imply a deployed assistant.
+- A topic may describe implemented work, historical training, or an interest. Preserve that distinction. Current visitor-facing positioning describes implemented capabilities without learner framing; an `Agentic AI` interest does not establish an autonomous-agent deployment.
 - Keep aliases distinct from topic labels. Resolve `Cleanup` and `Allowance Cleanup` to Approval Cleanup, and retain the approved aliases in its body so searchable text can recognize those names without relying on metadata filtering alone.
 
 ## Authoring rules
@@ -90,9 +90,9 @@ For detailed implementation questions beyond the corpus, acknowledge the informa
 - Use one H1, followed by descriptive H2/H3 sections with real content. Do not create empty template sections or standalone heading chunks.
 - Give project documents a concise overview, contribution, principal technologies, relevant features, status, and exploration links where the approved sources support them. Add technical explanation or limitations when useful; do not invent content to fill a template.
 - Identify the person or project in the section text or its retained heading context. Avoid paragraphs whose meaning depends on a different document being retrieved.
-- Preserve first-person perspective as attributed first-person text. Other documents describe Favour in the third person.
+- Preserve first-person perspective as attributed first-person text; label the narrowly owner-approved wording edits and retain original passages in the excluded archive. Other documents describe Favour in the third person.
 - Keep concise examples in biography and expertise documents; keep detailed mechanisms in the principal project or experience document.
-- Keep contribution scope, implementation status, network scope, and scan limitations close to the claims they qualify. Policy.ng frontend work does not establish ownership of its backend or AI services. Agentic engineering remains ongoing learning; the portfolio assistant remains planned.
+- Keep contribution scope, implementation status, network scope, and scan limitations close to the claims they qualify. Policy.ng frontend work does not establish ownership of its backend or AI services. Portfolio assistant availability is owner-confirmed on 11 November 2026. Its implementation and agent-boundary interests do not establish autonomous-agent deployments or measured production quality.
 - Preserve approved links and technical names. Do not silently supply missing dates, links, metrics, credentials, or production claims from the rest of the repository. Owner-confirmed link destinations do not establish external uptime or independently verified documentation.
 - Read relative Markdown links from their containing file. Read each `provenance[].path` from the repository root. Provenance sections use ` > ` for nested heading paths; parenthetical labels identify fields in the original identity preamble. Keep missing-evidence notes in the source map, outside retrievable content.
 
@@ -138,9 +138,9 @@ The prompt identifies Favour's third-person portfolio assistant, treats excerpts
 
 ## Validation and evaluation boundaries
 
-Offline unit checks cover all 12 documents, source-text fidelity, token budgets, parent/chunk metadata, native metadata types, deterministic IDs, repeated synchronization, failure preservation, readiness errors, history handling, pipeline call counts, provider limits, and package/direct-script imports. Storage and models are mocked, and network connections are blocked after the tokenizer vocabulary is cached.
+Offline unit checks cover all 13 documents, source-text fidelity, token budgets, parent/chunk metadata, native metadata types, deterministic IDs, repeated synchronization, failure preservation, readiness errors, history handling, pipeline call counts, provider limits, and package/direct-script imports. Storage and models are mocked, and network connections are blocked after the tokenizer vocabulary is cached.
 
-The knowledge content, source records, notebook, and evaluation questions are unchanged. The evaluation loader and scoring code use the existing record-level evidence labels. No real index synchronization, embeddings, live retrieval, judge calls, or quality metrics are part of these checks. Record-level evidence groups in the evaluation JSONL remain the basis for a later retrieval evaluation; do not interpret passing unit tests as evidence of MRR or answer quality. Source checksums and database hashes should remain unchanged by implementation verification.
+The original archive, notebook, and database remain unchanged by corpus maintenance. Current content, supplemental confirmations, and evaluation references can be updated together under owner approval. The evaluation loader and scoring code use record-level evidence labels. No real index synchronization, embeddings, live retrieval, judge calls, or quality metrics are part of these checks. Record-level evidence groups in the evaluation JSONL remain the basis for a later retrieval evaluation; do not interpret passing unit tests as evidence of MRR or answer quality. Source checksums and database hashes should remain unchanged by implementation verification.
 
 ### Evaluation scoring contract
 
@@ -151,3 +151,9 @@ Runtime retrieval relevance matches an alternative's stable document ID and exac
 Per-question scores are reciprocal rank@k and section-based evidence coverage@k; both use the same truncated ranked list. The cutoff defaults to the shared retrieval count and must be positive and no greater than that count. MRR and mean coverage macro-average eligible questions, including zero scores. Partial cases use supported evidence; fully unanswerable cases receive unavailable scores and are excluded from retrieval averages. Summaries include category breakdowns and eligible/excluded counts and reject mixed cutoffs.
 
 The LangChain structured-output judge receives the question, answerability, reference answer, generated answer, and retrieved passages as reference data. Accuracy, completeness, relevance, and grounding are integer scores from 1–5 with concise feedback. Appropriate acknowledgment of unknowns is expected, rather than invented facts or claims that missing evidence proves a negative. The combined CLI reuses answering's passages without a second retrieval. Offline tests mock retrieval and judging; they do not establish real retrieval or answer quality.
+
+### Current professional identity and project evidence
+
+Use **Full-stack Software Engineer and AI Engineer** as the supported professional role. Python and applied LLM/RAG capabilities are grounded in `project-portfolio-rag-assistant`; `portfolio-assistant-status` remains the availability and visitor-purpose record. Metadata and searchable body text must agree. Keep learning-only and first-application framing out of current visitor-facing descriptions, while preserving historical education and self-directed/freelance beginnings.
+
+The approved RAG repository is https://github.com/faelic/portfolio. Public availability is an owner-confirmed fact, not an independent uptime or deployment audit. Do not infer production scale, benchmark results, autonomous-agent deployments, model training, or fine-tuning. Repository referrals do not imply automatic GitHub retrieval. After corpus edits, a separately authorized ingestion run is required to replace stale vector records.

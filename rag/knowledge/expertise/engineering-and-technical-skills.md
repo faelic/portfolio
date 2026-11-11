@@ -8,12 +8,16 @@ topics:
 - AI application engineering
 - Blockchain engineering
 - Retrieval-augmented generation
-- Agentic AI
 - Authentication and sessions
 - Database transactions
 - Background processing
 - Software testing
 - Continuous delivery
+- Full-stack engineering
+- Python
+- Large language models
+- Semantic search
+- Evaluation
 entities:
 - Favour Chukwuemerie Ututu
 - Monierave
@@ -21,6 +25,11 @@ entities:
 - BlockScan
 - BucketFlow
 - Approval Cleanup
+- Portfolio RAG Assistant
+- LangChain
+- OpenAI
+- Chroma
+- Gradio
 provenance:
 - path: rag/sources/original-portfolio-knowledge.md
   sections:
@@ -32,6 +41,7 @@ provenance:
 - path: rag/sources/confirmed-portfolio-details.md
   sections:
   - AI application experience
+  - Professional positioning and portfolio RAG implementation
 ---
 
 # Favour's engineering areas and technical skills
@@ -52,15 +62,15 @@ Favour builds frontend interfaces for public websites, administration dashboards
 
 Favour's frontend examples include Policy.ng's public website and administrative tools, and BlockScan's live blockchain explorer. Favour's Policy.ng responsibility is frontend engineering, including the AI-assisted question interface; the backend and underlying AI services are separate responsibilities.
 
-## AI application engineering and ongoing learning
+## AI application engineering
 
-Favour is preparing his **first AI application project**: a planned RAG assistant for his portfolio. It is currently at knowledge-base preparation and is not implemented or available yet. His current AI focus and learning include LLM applications, document preparation, chunking, embeddings, vector search, semantic retrieval, reranking, prompt and context construction, and evaluation of generated answers.
+Favour builds LLM-powered applications with Python. His Portfolio RAG Assistant connects visitor questions to curated portfolio knowledge, retrieves relevant passages, and generates concise answers grounded in those passages.
 
-**AI topics of current focus and learning:** Large language models (LLMs), retrieval-augmented generation (RAG), document ingestion, text chunking, embeddings, vector databases, semantic search, retrieval, reranking, context construction, grounded generation, evaluation.
+Favour implemented Markdown ingestion with YAML metadata extraction, heading-aware token-bounded chunking, embedding generation and vector storage, semantic retrieval, conversation-aware query rewriting, prompt and context construction, and grounded answering. The implementation uses LangChain, OpenAI embeddings and chat models, and Chroma.
 
-Favour is **currently learning agentic AI engineering**, with an interest in how AI applications use tools, coordinate steps, and handle more involved tasks. This is part of his continuing study of AI application development.
+**AI engineering:** Python, large language models (LLMs), retrieval-augmented generation (RAG), document ingestion, YAML metadata, text chunking, embeddings, vector databases, semantic search, context construction, prompt engineering, grounded generation, and evaluation.
 
-The planned portfolio assistant will use a curated knowledge base about Favour's background, professional experience, and projects to support visitor questions.
+Favour also implemented a 50-question evaluation dataset, section-based retrieval scoring using mean reciprocal rank (MRR) and evidence-group coverage, and structured answer judging for accuracy, completeness, relevance, and grounding. Gradio interfaces support conversational testing, evidence inspection, individual cases, and category-level evaluation charts. Implemented evaluation tooling does not by itself establish measured retrieval quality.
 
 ## Blockchain engineering
 

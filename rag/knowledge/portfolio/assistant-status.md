@@ -1,17 +1,19 @@
 ---
 id: portfolio-assistant-status
-title: Portfolio AI assistant — Planned status and intended purpose
+title: Portfolio AI assistant — Availability and visitor purpose
 category: portfolio
 topics:
 - AI application engineering
 - Retrieval-augmented generation
-- Portfolio assistant planning
+- Portfolio assistant availability
+- Grounded generation
 entities:
 - Favour Chukwuemerie Ututu
 - favourututu.com
 - Policy.ng
 - Monierave
 - BlockScan
+- Portfolio RAG Assistant
 provenance:
 - path: rag/sources/original-portfolio-knowledge.md
   sections:
@@ -21,16 +23,23 @@ provenance:
   sections:
   - AI application experience
   - Source approval and visitor scope
+  - Professional positioning and portfolio RAG implementation
 ---
 
-# Portfolio AI assistant — Planned status and intended purpose
+# Portfolio AI assistant — Availability and visitor purpose
 
-## Current status and intended knowledge
+## Availability
 
-A conversational AI assistant is planned for [favourututu.com](https://www.favourututu.com/), but is not available yet. This is Favour's **first AI application project**, currently at knowledge-base preparation. The assistant is not implemented yet.
+As confirmed by Favour on **11 November 2026**, the Portfolio RAG Assistant is publicly available through his portfolio. This is an owner-confirmed availability statement, not an independent uptime check.
 
-The intended assistant will use retrieval-augmented generation to help visitors understand Favour's background, professional experience, contributions, and projects. It will provide concise supported answers and direct visitors to the relevant GitHub repository for deeper implementation explanations.
+## Visitor questions, curated knowledge, and GitHub
 
-## Intended questions
+Visitor questions guide retrieval from Favour's curated portfolio knowledge base. The retrieved passages supply the facts for concise answers about his background, professional experience, contributions, and projects. For deeper implementation explanations, the assistant directs visitors to the relevant GitHub repository.
 
-Planned questions include Favour's contribution to Policy.ng, how Monierave manages repeated transfer requests, what BlockScan does, or which areas of AI engineering he is studying.
+Repository links are referrals for visitors; they are not automatically searched or inspected by the assistant. The Portfolio RAG Assistant's code is in the [portfolio repository](https://github.com/faelic/portfolio).
+
+## Supported questions
+
+Visitors can ask about Favour's contribution to Policy.ng, how Monierave handles repeated transfer requests, what BlockScan does, or the Python and AI engineering work behind the Portfolio RAG Assistant. The assistant answers supported portions of questions and identifies information the retrieved evidence does not establish.
+
+Favour's portfolio is [favourututu.com](https://www.favourututu.com/). No separate assistant endpoint is specified here.

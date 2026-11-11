@@ -8,10 +8,13 @@ topics:
 - Backend engineering
 - AI application engineering
 - Blockchain engineering
-- Agentic AI
 - Public location
 - Self-directed learning
 - Freelance development
+- Full-stack engineering
+- Python
+- Large language models
+- Retrieval-augmented generation
 entities:
 - Favour Chukwuemerie Ututu
 - Flamong
@@ -23,6 +26,7 @@ entities:
 - Escrow
 - Nigeria
 - Alchemy University
+- Portfolio RAG Assistant
 provenance:
 - path: rag/sources/original-portfolio-knowledge.md
   sections:
@@ -35,11 +39,13 @@ provenance:
   - AI application experience
   - Development beginnings
   - Education dates
+  - Professional positioning and portfolio RAG implementation
 ---
 
 # Favour Chukwuemerie Ututu — Professional overview
 
-**Role:** Software Engineer.  
+**Role:** Full-stack Software Engineer and AI Engineer.
+
 **Professional focus:** Backend systems, frontend applications, and AI systems.  
 **Other work:** Blockchain applications and smart contracts.  
 **Country of residence:** Nigeria.
@@ -50,8 +56,10 @@ Favour began his software development journey as a self-taught developer. He lea
 
 ## Background and work
 
-Favour Chukwuemerie Ututu is a Software Engineer working across frontend and backend applications, with experience building blockchain applications. He works with Go, PostgreSQL, Redis, React, Next.js, and TypeScript, and has used Solidity and Ethereum tooling.
+Favour Chukwuemerie Ututu is a Full-stack Software Engineer and AI Engineer based in Nigeria. He builds frontend applications, backend systems, and LLM-powered applications. His work includes professional frontend engineering on Policy.ng, independent full-stack and blockchain projects, and a Python-based portfolio assistant using retrieval-augmented generation (RAG).
 
-At Flamong, he owns the frontend of [Policy.ng](https://policy.ng/), working on both the public website and the administrative tools behind it. His independent projects cover a wider range of engineering problems: Monierave is a banking simulation built around transaction integrity and reliable background processing; BucketFlow applies allocation rules through a Solidity contract; BlockScan explores live blockchain data; Approval Cleanup helps people inspect token-spending permissions; and Escrow is a Sepolia payment learning project for which he built the frontend and smart contract.
+Favour works with Python, Go, PostgreSQL, Redis, React, Next.js, and TypeScript, alongside Solidity and Ethereum tooling for blockchain applications.
 
-The planned portfolio assistant is Favour's **first AI application project** and is currently at knowledge-base preparation; it is not available yet. His AI interests include LLM applications, retrieval-augmented generation (RAG), the data pipelines behind retrieval, and assessing whether generated answers are supported by the available information. He is currently learning **agentic AI engineering**, including how AI applications use tools and carry out multi-step tasks.
+At Flamong, he owns the frontend of [Policy.ng](https://policy.ng/), working on both the public website and the administrative tools behind it. His independent projects cover a wider range of engineering problems: Monierave is a banking simulation built around transaction integrity and reliable background processing; BucketFlow applies allocation rules through a Solidity contract; BlockScan explores live blockchain data; Approval Cleanup helps people inspect token-spending permissions; and Escrow is a Sepolia payment project for which he built the frontend and smart contract.
+
+Favour's Portfolio RAG Assistant connects visitor questions to curated knowledge about his background, experience, contributions, and projects. He implemented its Python ingestion, retrieval, grounded-answering, evaluation tooling, and Gradio testing interfaces. Public availability on his portfolio was confirmed by Favour on 11 November 2026; the project code is available in his [portfolio repository](https://github.com/faelic/portfolio).

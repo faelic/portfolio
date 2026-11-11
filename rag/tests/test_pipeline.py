@@ -71,8 +71,8 @@ class LoadingAndChunkingTests(unittest.TestCase):
         cls.chunks = ingest.create_chunks(cls.documents)
 
     def test_curated_files_and_metadata(self):
-        self.assertEqual(len(self.documents), 12)
-        self.assertEqual(len({d.metadata['document_id'] for d in self.documents}), 12)
+        self.assertEqual(len(self.documents), 13)
+        self.assertEqual(len({d.metadata['document_id'] for d in self.documents}), 13)
         for document in self.documents:
             metadata = document.metadata
             path = config.RAG_DIR.parent / metadata['source_path']
@@ -94,6 +94,23 @@ class LoadingAndChunkingTests(unittest.TestCase):
                 self.assertEqual(len(values), len({v.casefold() for v in values}))
         cleanup = next(d for d in self.documents if d.metadata['document_id'] == 'project-approval-cleanup')
         self.assertEqual(cleanup.metadata['document_aliases'], ['Cleanup', 'Allowance Cleanup'])
+
+    def test_current_positioning_and_project_evidence(self):
+        documents = {d.metadata['document_id']: d.page_content for d in self.documents}
+        self.assertIn('**Role:** Full-stack Software Engineer and AI Engineer.', documents['profile-overview'])
+        for document_id in ('profile-overview', 'expertise-engineering', 'project-portfolio-rag-assistant'):
+            self.assertIn('Python', documents[document_id])
+            self.assertIn('Portfolio RAG Assistant', documents[document_id])
+        for document_id in ('portfolio-assistant-status', 'project-portfolio-rag-assistant'):
+            self.assertIn('https://github.com/faelic/portfolio', documents[document_id])
+            self.assertIn('11 November 2026', documents[document_id])
+        self.assertIn('publicly available', documents['portfolio-assistant-status'])
+        for text in documents.values():
+            self.assertNotRegex(text.lower(), r'currently learning|ongoing learning|learning project|'
+                                r'first ai application|knowledge-base preparation|not implemented yet|not available yet')
+        self.assertIn('self-taught developer', documents['profile-overview'])
+        self.assertIn('separate from that frontend responsibility', documents['experience-flamong-policy-ng'])
+        self.assertIn("Escrow's frontend is not deployed", documents['project-escrow'])
 
     def test_token_budgets_identity_and_source_text(self):
         parents = {d.metadata['document_id']: d for d in self.documents}

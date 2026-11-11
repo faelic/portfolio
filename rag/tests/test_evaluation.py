@@ -90,7 +90,7 @@ class DatasetTests(unittest.TestCase):
                     key = (alternative.document_id, alternative.section)
                     self.assertIn(' '.join(alternative.evidence_quote.split()), sections[key], test.id)
                     covered_documents.add(alternative.document_id)
-        self.assertEqual(len(covered_documents), 12)
+        self.assertEqual(len(covered_documents), 13)
 
     def test_schema_and_line_number_errors(self):
         base = question().model_dump()

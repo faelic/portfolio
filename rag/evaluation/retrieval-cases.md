@@ -2,7 +2,7 @@
 
 This file is evaluation material, excluded from `rag/knowledge/**/*.md`. The questions and expected evidence are a test specification, not additional knowledge or an executed retrieval benchmark.
 
-There are 23 cases: 12 single-document cases, four cross-topic cases, four visitor lookup/referral cases, and three missing-information or partial-answer cases. IDs below are stable corpus document IDs. Expected documents must supply the facts needed for the visitor's question; judge the supported passages rather than requiring a full architectural explanation. Missing-information cases may retrieve nearby context, but it does not establish absent facts. Partial-answer cases require both the known information and an explicit boundary on what is not documented.
+There are 24 cases: 13 single-document cases, four cross-topic cases, four visitor lookup/referral cases, and three missing-information or partial-answer cases. IDs below are stable corpus document IDs. Expected documents must supply the facts needed for the visitor's question; judge the supported passages rather than requiring a full architectural explanation. Missing-information cases may retrieve nearby context, but it does not establish absent facts. Partial-answer cases require both the known information and an explicit boundary on what is not documented.
 
 When a pipeline exists, inspect evidence in its top five results and evaluate answer grounding separately. Record case ID, retrieved document/section IDs, missing required facts, and any unsupported claims. These cases have not yet been run against a retriever.
 
@@ -12,7 +12,7 @@ When a pipeline exists, inspect evidence in its top five results and evaluate an
 
 - **Question:** Who is Favour Chukwuemerie Ututu, and what kinds of software does he build?
 - **Expected document IDs:** `profile-overview`.
-- **Required facts:** Software Engineer; self-taught beginnings and freelance development work before structured Alchemy frontend training in 2025–2026; frontend/backend and blockchain experience; representative projects including Escrow; Flamong/Policy.ng frontend work; planned portfolio assistant is his first AI application project, currently at knowledge-base preparation; agentic engineering is ongoing learning; country of residence is Nigeria when relevant.
+- **Required facts:** Full-stack Software Engineer and AI Engineer; self-taught beginnings and freelance development work before structured Alchemy frontend training in 2025–2026; frontend/backend and blockchain experience; representative projects including Escrow; Flamong/Policy.ng frontend work; implemented Python Portfolio RAG Assistant with owner-confirmed public availability; country of residence is Nigeria when relevant.
 - **Unsupported claims to avoid:** Invented seniority, multiple completed AI applications, equal expertise depth across every domain, completed mastery of agentic engineering, or a city-level location.
 
 ### S02 — Engineering perspective and interests
@@ -22,12 +22,12 @@ When a pipeline exists, inspect evidence in its top five results and evaluate an
 - **Required facts:** Frontend beginnings; useful, attractive, fast interfaces; security and AI safety; agent boundaries and failure behavior; video games outside coding. Attribute the first-person views to Favour.
 - **Unsupported claims to avoid:** Professional gaming, security certifications, or an established production agent deployment.
 
-### S03 — AI practice and current learning
+### S03 — Applied AI engineering
 
-- **Question:** Which AI engineering areas does Favour work with, and what is he currently learning?
+- **Question:** Which AI engineering capabilities and tools does Favour use in his portfolio assistant?
 - **Expected document IDs:** `expertise-engineering`.
-- **Required facts:** Portfolio assistant is his first AI application project, at knowledge-base preparation; LLM applications, RAG preparation/retrieval/evaluation subjects are current focus and learning; currently learning agentic AI engineering; portfolio assistant not implemented.
-- **Unsupported claims to avoid:** Multiple built AI applications, a deployed portfolio RAG system, model training credentials, named providers/vector databases not supplied, or completed agentic expertise.
+- **Required facts:** Python, LangChain, OpenAI integrations, Chroma, ingestion, chunking, embeddings, semantic retrieval, query rewriting, grounded answers, evaluation tooling, and Gradio interfaces supported by implemented RAG work.
+- **Unsupported claims to avoid:** Invented AI projects, model training credentials, autonomous-agent deployments, or unmeasured quality/scale guarantees.
 
 ### S04 — Policy.ng contribution boundary
 
@@ -75,8 +75,8 @@ When a pipeline exists, inspect evidence in its top five results and evaluate an
 
 - **Question:** Can I use Favour's portfolio AI assistant now, and what is it intended to answer?
 - **Expected document IDs:** `portfolio-assistant-status`.
-- **Required facts:** First AI application project, currently at knowledge-base preparation; planned and not available yet; intended RAG over curated background, professional experience, contributions and projects; concise visitor answers with GitHub referrals for deeper implementation questions.
-- **Unsupported claims to avoid:** A working chat endpoint, a launch date, deployed embeddings, or implemented retrieval.
+- **Required facts:** Public availability owner-confirmed on 11 November 2026; questions retrieve curated background, experience, contributions and project evidence for concise supported answers; deeper implementation details are referred to GitHub, which is not automatically searched.
+- **Unsupported claims to avoid:** An invented separate endpoint, original launch date, independent uptime verification, or production-quality guarantee.
 
 ### S11 — Opportunities and contact
 
@@ -89,8 +89,15 @@ When a pipeline exists, inspect evidence in its top five results and evaluate an
 
 - **Question:** What is Escrow, what did Favour build, and can I try it online?
 - **Expected document IDs:** `project-escrow`.
-- **Required facts:** Independent learning project on Ethereum Sepolia; Favour built both the React frontend and Solidity contract; depositor, beneficiary, and arbiter payment flow; arbiter can release or refund funds; frontend not deployed; repository https://github.com/faelic/escrow-webapp.
+- **Required facts:** Independent payment project on Ethereum Sepolia; Favour built both the React frontend and Solidity contract; depositor, beneficiary, and arbiter payment flow; arbiter can release or refund funds; frontend not deployed; repository https://github.com/faelic/escrow-webapp.
 - **Unsupported claims to avoid:** A deployed frontend, mainnet production use, a regulated escrow service, or detailed mechanics beyond the approved summary.
+
+### S13 — Portfolio RAG Assistant implementation
+
+- **Question:** What did Favour build for the Portfolio RAG Assistant, which tools does it use, and what do its evaluation interfaces establish?
+- **Expected document IDs:** `project-portfolio-rag-assistant`.
+- **Required facts:** Python and LangChain pipelines; curated Markdown/YAML, heading-aware chunking, OpenAI embeddings/chat, Chroma retrieval, query rewriting, grounded answers, 50 evaluation cases, MRR/coverage and structured judging, Gradio interfaces and category charts; approved repository https://github.com/faelic/portfolio.
+- **Unsupported claims to avoid:** Treating implemented evaluation tooling or offline tests as measured retrieval quality, production scale, independently checked uptime, autonomous agents, model training, or fine-tuning.
 
 ## Cross-topic cases
 
@@ -101,11 +108,11 @@ When a pipeline exists, inspect evidence in its top five results and evaluate an
 - **Required facts:** Go/PostgreSQL/Redis/Asynq and API/authentication/transaction/background-job areas; connect them to ledger, idempotency, locks, outbox, revocable sessions and tests in Monierave; preserve simulation scope.
 - **Unsupported claims to avoid:** Extrapolated production banking employment or throughput claims.
 
-### M02 — AI product contribution versus portfolio plans
+### M02 — Distinct AI product contributions
 
-- **Question:** Compare Favour's AI-related work on Policy.ng with his planned portfolio assistant and current learning.
-- **Expected document IDs:** `experience-flamong-policy-ng`, `portfolio-assistant-status`, `expertise-engineering`.
-- **Required facts:** Policy.ng frontend integration of AI-assisted questions, with underlying AI/backend responsibilities separate; portfolio assistant is Favour's first AI application project, currently at knowledge-base preparation, planned and unavailable; intended curated RAG knowledge; ongoing agentic learning.
+- **Question:** Compare Favour's AI-related responsibility on Policy.ng with his implemented Portfolio RAG Assistant.
+- **Expected document IDs:** `experience-flamong-policy-ng`, `project-portfolio-rag-assistant`, `expertise-engineering`.
+- **Required facts:** Policy.ng frontend integration of AI-assisted questions, with underlying AI/backend responsibilities separate; Python/LangChain/OpenAI/Chroma implementation of the Portfolio RAG Assistant; owner-confirmed public availability and grounded answers over curated knowledge. Policy.ng's underlying AI provider remains unspecified.
 - **Unsupported claims to avoid:** Conflating the two products or attributing Policy.ng's AI backend to Favour.
 
 ### M03 — Two blockchain applications with different limits

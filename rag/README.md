@@ -1,8 +1,8 @@
 # Portfolio knowledge base
 
-This directory contains Favour Chukwuemerie Ututu's curated portfolio knowledge and local LangChain ingestion/answering pipeline. The corpus contains 12 topic documents, based on the original supplied Markdown and individually confirmed additions. The pipeline has offline unit coverage; this refactor does not run OpenAI ingestion, live retrieval, or answer evaluation, and does not connect a chat interface to the portfolio website.
+This directory contains Favour Chukwuemerie Ututu's curated portfolio knowledge and local LangChain ingestion/answering pipeline. The corpus contains 13 topic documents, based on the original supplied Markdown and individually confirmed additions. The pipeline has offline unit coverage; this refactor does not run OpenAI ingestion, live retrieval, or answer evaluation, and does not connect a chat interface to the portfolio website.
 
-The intended assistant helps visitors understand Favour, his experience, his contributions, and his projects. It provides concise supported answers and directs deeper implementation questions to the relevant GitHub repository. The portfolio assistant is Favour's first AI application project. Curated status statements retain their approved dates and wording; implementing local pipeline code does not establish that the visitor-facing assistant has launched.
+The intended assistant helps visitors understand Favour, his experience, his contributions, and his projects. It provides concise supported answers and directs deeper implementation questions to the relevant GitHub repository. The corpus positions Favour as a Full-stack Software Engineer and AI Engineer and includes his Python-based Portfolio RAG Assistant. Public assistant availability was confirmed by Favour on 11 November 2026; this is not an independent deployment or uptime check.
 
 ## Reading and ingestion boundary
 
@@ -22,16 +22,17 @@ Folders organize maintenance; future retrieval must search across them rather th
 | `project-approval-cleanup` | [Approval Cleanup](knowledge/projects/approval-cleanup.md) |
 | `project-escrow` | [Escrow](knowledge/projects/escrow.md) |
 | `education-training` | [Education and training](knowledge/education/education-and-training.md) |
-| `portfolio-assistant-status` | [Planned assistant status and purpose](knowledge/portfolio/assistant-status.md) |
+| `project-portfolio-rag-assistant` | [Portfolio RAG Assistant](knowledge/projects/portfolio-rag-assistant.md) |
+| `portfolio-assistant-status` | [Assistant availability and visitor purpose](knowledge/portfolio/assistant-status.md) |
 | `opportunities-contact` | [Availability and contact](knowledge/opportunities/availability-and-contact.md) |
 
 ## Supporting material
 
 - [Data contract](DATA_CONTRACT.md): metadata, authoring rules, and the implemented local pipeline contract.
 - [Source map](SOURCE_MAP.md): every source section, consolidation decisions, integrity checksum, and coverage gaps.
-- [Retrieval evaluation cases](evaluation/retrieval-cases.md): 23 questions covering topic lookup, aliases, public contact, supported GitHub referrals, and missing information.
+- [Retrieval evaluation cases](evaluation/retrieval-cases.md): 24 questions covering topic lookup, aliases, public contact, supported GitHub referrals, and missing information.
 - [Original source](sources/original-portfolio-knowledge.md): the supplied Markdown, preserved byte-for-byte outside the corpus.
-- [Owner-confirmed details](sources/confirmed-portfolio-details.md): individually approved additions and corrections from 10 and 11 November 2026, including source approval boundaries.
+- [Owner-confirmed details](sources/confirmed-portfolio-details.md): individually approved additions and corrections from 10 and 11 November 2026, including positioning, RAG implementation, and public availability confirmation boundaries.
 
 ## Python environment
 
@@ -135,3 +136,11 @@ Preserve concise context in biography and expertise documents, and keep project-
 ## Completion and limits
 
 The local pipeline implements deterministic chunking and grounded-answer prompt construction. Actual retrieval relevance and generated-answer quality remain unmeasured until a separate live evaluation is authorized and run. No ingestion was executed by this refactor, and there is no runtime change to the portfolio website.
+
+## Positioning and corpus refresh — 11 November 2026
+
+Profile and expertise lead with **Full-stack Software Engineer and AI Engineer** and connect Python/LLM skills to the Portfolio RAG Assistant project. Current visitor-facing copy describes implemented work without learner or first-application framing. Historical education, self-taught/freelance beginnings, and completed training remain; professional contribution boundaries and project limitations remain explicit.
+
+The assistant-status document supplies owner-confirmed availability and the visitor workflow, while the new project document supplies implementation and contribution evidence. Source records retain superseded historical confirmations outside ingestion. Evaluation references follow the revised corpus. Prompt guidance favors professional identity, concrete examples and relationships, and concise answers without repetitive benefit statements.
+
+These edits do not refresh the vector index. Until an explicitly authorized ingestion run, retrieval can still return the previous corpus text. After that run, restart running assistant/evaluation processes before checking the two example questions. No ingestion, paid model calls, or live quality evaluation were performed by this content update.

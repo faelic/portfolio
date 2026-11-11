@@ -1,6 +1,6 @@
 # Confirmed portfolio details
 
-Favour confirmed the original entries below individually in this chat on **10 November 2026**. The education dates and development beginnings sections were added with his approval on **11 November 2026**. This record supplements the original portfolio knowledge; it is excluded from ingestion. These are owner-confirmed statements, not an independent audit of project code, external links, employment, or education.
+Favour confirmed the original entries below individually in this chat on **10 November 2026**. The education dates and development beginnings sections were added with his approval on **11 November 2026**. This record supplements the original portfolio knowledge; it is excluded from ingestion. The professional-positioning and RAG-implementation correction on 11 November 2026 is recorded in the final section and supersedes conflicting historical status wording. These are owner-confirmed statements, not an independent audit of project code, external links, employment, or education.
 
 ## Current role and start date
 
@@ -79,3 +79,16 @@ No dates, client identities, freelance project details, or total career duration
 Favour chose to **confirm each additional portfolio detail individually** rather than automatically treat all local portfolio content as an approved source. Only the additions and corrections recorded here are approved by this clarification round. Other repository details, including additional metrics or technical mechanics, must not be silently imported.
 
 The intended assistant helps visitors understand Favour, his experience, his contributions, and his projects. Concise technical context is useful; full architecture and implementation explanations belong in the relevant GitHub repositories. When the corpus cannot answer a detailed implementation question, it should give the supported overview and direct the visitor to the appropriate repository without inventing details or claiming that a particular README section has been verified.
+
+## Professional positioning and portfolio RAG implementation
+
+Confirmed and approved by Favour on **11 November 2026**:
+
+- Present Favour as a **Full-stack Software Engineer and AI Engineer**. Include Python and his implemented AI application work in the profile and expertise.
+- Remove current-learning, aspiring, preparation-only, and first-AI-application framing from visitor-facing descriptions. Retain self-taught beginnings, freelance history, formal education, and completed training as historical background. Narrow edits to first-person passages preserve his engineering values and personal voice without presenting unverified agent deployments.
+- Describe Escrow as an independent Sepolia payment project, preserving its frontend/contract contribution and undeployed-frontend limitation. Remove learner positioning from other project summaries as well.
+- Add the **Portfolio RAG Assistant** as an independent project. The owner-approved implementation summary covers curated Markdown and YAML metadata, Python/LangChain ingestion and heading-aware chunking, OpenAI embeddings and chat models, Chroma semantic retrieval, conversational query rewriting, grounded generation, a 50-question evidence-labeled evaluation dataset, MRR and evidence-group coverage, structured answer judging, and Gradio chat/single-case/batch interfaces with category charts. The documented configuration uses text-embedding-3-large and gpt-4.1-mini.
+- Favour selected **publicly available** as the assistant's current status and approved **https://github.com/faelic/portfolio** as its repository link, explaining that visitors access the assistant from his live portfolio. No separate assistant endpoint or original launch date was supplied. This is owner-confirmed availability, not independent verification of deployment, uptime, or the publicly deployed model configuration.
+- No measured retrieval-quality results, production scale, autonomous-agent deployment, model training, or fine-tuning claims are established by this update. Evaluation tooling and offline checks establish implementation behavior rather than real system quality.
+
+This confirmation supersedes the current-status and visitor-facing framing in the earlier **AI application experience** and **Escrow** entries where they conflict. Those earlier records remain as historical provenance outside ingestion. The original source archive remains unchanged.
