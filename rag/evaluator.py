@@ -1,12 +1,12 @@
 """Local batch dashboard for the existing sequential evaluation functions."""
 import gradio as gr
 import pandas as pd
-from openai import OpenAIError
 
 from evaluation.eval import (
     evaluate_all_answers, evaluate_all_retrieval, summarize_retrieval,
 )
-from implementation.answer import IndexNotReadyError
+from implementation.config import QUEUE_SIZE
+from implementation.guardrails import public_error
 
 ANSWER_METRICS = ('accuracy', 'completeness', 'relevance', 'grounding')
 
@@ -33,8 +33,8 @@ def run_retrieval_evaluation(progress=gr.Progress()):
         for test, result, fraction in evaluate_all_retrieval():
             results.append((test, result))
             progress(fraction, desc=f'{test.id}: {len(results)} cases processed')
-    except (IndexNotReadyError, OpenAIError, ValueError) as exc:
-        raise gr.Error(f'Retrieval run stopped after {len(results)} cases: {exc}') from exc
+    except Exception as exc:
+        raise gr.Error(f'Retrieval run stopped after {len(results)} cases. {public_error(exc)}') from None
     summary = summarize_retrieval(results)
     summary['processed_cases'] = len(results)
     categories = [
@@ -75,8 +75,8 @@ def run_answer_evaluation(progress=gr.Progress()):
         for test, score, fraction in evaluate_all_answers():
             results.append((test, score))
             progress(fraction, desc=f'{test.id}: {len(results)} cases processed')
-    except (IndexNotReadyError, OpenAIError, ValueError) as exc:
-        raise gr.Error(f'Answer run stopped after {len(results)} cases: {exc}') from exc
+    except Exception as exc:
+        raise gr.Error(f'Answer run stopped after {len(results)} cases. {public_error(exc)}') from None
     summary = summarize_answers(results)
     categories = [
         [category, scores['cases'], *[scores[name] for name in ANSWER_METRICS]]
@@ -94,7 +94,7 @@ def build_ui():
     with gr.Blocks(title="Favour's portfolio — batch evaluation", analytics_enabled=False) as ui:
         gr.Markdown("# Portfolio batch evaluation\nEvaluate the full authored question set using the existing local pipeline.")
         gr.Markdown(
-            'Opening this dashboard makes no provider calls. Run buttons use OpenAI services '
+            'Developer-only local dashboard. Do not expose evaluation endpoints publicly. Opening this dashboard makes no provider calls. Run buttons use OpenAI services '
             'and require the existing `docs` index; they never ingest or rebuild it. '
             'For chat and individual cases, use `app.py`.'
         )
@@ -164,7 +164,7 @@ def build_ui():
                 run_answer_evaluation, outputs=answer_outputs,
                 concurrency_id='evaluation', concurrency_limit=1,
             )
-    return ui
+    return ui.queue(max_size=QUEUE_SIZE, default_concurrency_limit=1)
 
 
 def main():

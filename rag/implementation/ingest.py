@@ -2,9 +2,7 @@
 import hashlib
 import json
 import re
-from functools import lru_cache
 
-import tiktoken
 import yaml
 from langchain_chroma import Chroma
 from langchain_core.documents import Document
@@ -13,12 +11,14 @@ from langchain_text_splitters import MarkdownHeaderTextSplitter, RecursiveCharac
 if __package__:
     from .config import (
         RAG_DIR, DB_NAME, COLLECTION_NAME, EMBEDDING_MODEL,
-        CHUNK_SIZE, CHUNK_OVERLAP, get_embeddings,
+        CHUNK_SIZE, CHUNK_OVERLAP, MARKDOWN_BYTE_LIMIT, CORPUS_BYTE_LIMIT, get_embeddings,
     )
+    from .guardrails import get_tokenizer, token_count
 else:
+    from guardrails import get_tokenizer, token_count
     from config import (
         RAG_DIR, DB_NAME, COLLECTION_NAME, EMBEDDING_MODEL,
-        CHUNK_SIZE, CHUNK_OVERLAP, get_embeddings,
+        CHUNK_SIZE, CHUNK_OVERLAP, MARKDOWN_BYTE_LIMIT, CORPUS_BYTE_LIMIT, get_embeddings,
     )
 
 KNOWLEDGE_BASE_PATH = RAG_DIR / "knowledge"
@@ -27,9 +27,31 @@ KNOWLEDGE_BASE_PATH = RAG_DIR / "knowledge"
 def fetch_documents() -> list[Document]:
     documents = []
     seen_ids = set()
-    for path in sorted(KNOWLEDGE_BASE_PATH.rglob("*.md")):
+    root = KNOWLEDGE_BASE_PATH.resolve()
+    if KNOWLEDGE_BASE_PATH.is_symlink():
+        raise ValueError("Knowledge root must not be a symlink")
+    paths = sorted(KNOWLEDGE_BASE_PATH.rglob("*.md"))
+    if any(path.is_symlink() for path in KNOWLEDGE_BASE_PATH.rglob('*')):
+        raise ValueError("Knowledge symlinks are not allowed")
+    sizes = []
+    for path in paths:
+        if not path.resolve().is_relative_to(root) or path.is_symlink():
+            raise ValueError("Knowledge file escapes the corpus")
+        size = path.stat().st_size
+        if size > MARKDOWN_BYTE_LIMIT:
+            raise ValueError("Markdown file exceeds byte limit")
+        sizes.append(size)
+    if sum(sizes) > CORPUS_BYTE_LIMIT:
+        raise ValueError("Corpus exceeds byte limit")
+    total_bytes = 0
+    for path in paths:
+        with path.open('rb') as file:
+            content = file.read(MARKDOWN_BYTE_LIMIT + 1)
+        total_bytes += len(content)
+        if len(content) > MARKDOWN_BYTE_LIMIT or total_bytes > CORPUS_BYTE_LIMIT:
+            raise ValueError("Knowledge size changed beyond byte limits")
         match = re.fullmatch(
-            r"---\n(.*?)\n---\n(.*)", path.read_text(encoding="utf-8"), re.DOTALL,
+            r"---\n(.*?)\n---\n(.*)", content.decode('utf-8'), re.DOTALL,
         )
         if not match:
             raise ValueError(f"Missing YAML frontmatter: {path}")
@@ -58,15 +80,6 @@ def fetch_documents() -> list[Document]:
     if not documents:
         raise ValueError(f"No Markdown documents found in {KNOWLEDGE_BASE_PATH}")
     return documents
-
-
-@lru_cache(maxsize=1)
-def get_tokenizer():
-    return tiktoken.get_encoding("cl100k_base")
-
-
-def token_count(text: str) -> int:
-    return len(get_tokenizer().encode(text, disallowed_special=()))
 
 
 def create_chunks(documents: list[Document]) -> list[Document]:
@@ -128,15 +141,30 @@ def create_embeddings(chunks: list[Document]) -> Chroma:
         embedding_function=get_embeddings(),
         collection_metadata={"embedding_model": EMBEDDING_MODEL},
     )
-    previous_ids = set(vectorstore.get(include=[])["ids"])
+    # Chroma exposes collection-level metadata through its underlying collection.
+    if (vectorstore._collection.metadata or {}).get('embedding_model') != EMBEDDING_MODEL:
+        raise ValueError("Collection embedding metadata is missing or incompatible; check the index before ingestion")
+    previous = vectorstore.get(include=['metadatas'])
+    previous_ids = set(previous['ids'])
+    metadata_by_id = dict(zip(previous['ids'], previous['metadatas']))
+    changed = [chunk for chunk in chunks if chunk.id not in previous_ids
+               or metadata_by_id[chunk.id] != chunk.metadata]
     # LangChain embeds before upserting. Failed writes never trigger cleanup.
-    vectorstore.add_documents(documents=chunks, ids=ids)
-    stored_ids = set(vectorstore.get(include=[])["ids"])
-    if not set(ids).issubset(stored_ids):
+    if changed:
+        vectorstore.add_documents(documents=changed, ids=[chunk.id for chunk in changed])
+    stored = vectorstore.get(include=['metadatas'])
+    stored_metadata = dict(zip(stored['ids'], stored['metadatas']))
+    if any(chunk.id not in stored_metadata or stored_metadata[chunk.id] != chunk.metadata
+           for chunk in chunks):
         raise RuntimeError("Not all current chunks were stored; old records were retained")
     stale_ids = sorted(previous_ids - set(ids))
     if stale_ids:
         vectorstore.delete(ids=stale_ids)
+    if __package__:
+        from .fingerprint import corpus_fingerprint
+    else:
+        from fingerprint import corpus_fingerprint
+    vectorstore._collection.modify(metadata={**(vectorstore._collection.metadata or {}), 'corpus_fingerprint': corpus_fingerprint()})
     print(f"Synchronized {len(chunks)} chunks in '{COLLECTION_NAME}'")
     return vectorstore
 

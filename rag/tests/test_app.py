@@ -1,5 +1,6 @@
 """Offline UI wiring checks with synthetic passages and mocked providers."""
 import copy
+import asyncio
 import runpy
 import socket
 import unittest
@@ -29,6 +30,14 @@ def tearDownModule():
     _guards.clear()
 
 
+def build_in_running_loop(factory):
+    # Gradio's synchronous lock helpers otherwise allocate a fresh unclosed
+    # event loop per lock. Exercise UI construction within an owned loop.
+    async def build():
+        return factory()
+    return asyncio.run(build())
+
+
 class AppTests(unittest.TestCase):
     def setUp(self):
         self.test = app.load_tests()[0]
@@ -44,7 +53,7 @@ class AppTests(unittest.TestCase):
              patch.object(app, 'fetch_context', side_effect=AssertionError('Retrieval call')), \
              patch.object(app, 'evaluate_answer', side_effect=AssertionError('Judge call')):
             runpy.run_path(str(config.RAG_DIR / 'app.py'), run_name='import_check')
-            ui = app.build_ui()
+            ui = build_in_running_loop(app.build_ui)
             labels = [component['props'].get('label') for component in ui.config['components']]
             self.assertIn('Conversation', labels)
             self.assertIn('Evaluation case', labels)
@@ -78,7 +87,7 @@ class AppTests(unittest.TestCase):
         self.assertEqual(app.clear_chat(), ('', [], [], app.EMPTY_CONTEXT))
         history = []
         with patch.object(app, 'answer_question', side_effect=IndexNotReadyError('Ingest docs first')):
-            with self.assertRaisesRegex(gr.Error, 'Ingest docs first'):
+            with self.assertRaisesRegex(gr.Error, 'portfolio index is unavailable'):
                 app.chat('Question', history)
         self.assertEqual(history, [])
 

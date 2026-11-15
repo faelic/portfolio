@@ -1,6 +1,12 @@
 # Portfolio knowledge base
 
-This directory contains Favour Chukwuemerie Ututu's curated portfolio knowledge and local LangChain ingestion/answering pipeline. The corpus contains 13 topic documents, based on the original supplied Markdown and individually confirmed additions. The pipeline has offline unit coverage; this refactor does not run OpenAI ingestion, live retrieval, or answer evaluation, and does not connect a chat interface to the portfolio website.
+Current backend/CI hardening (15 November 2026): see the [security and release contract](../docs/RAG_SECURITY.md). It covers reproducible tokenizer/signing-secret setup, 5 global / 1 visitor / 2 IP active requests, approved generated links, read-only readiness and evaluation evidence boundaries. Earlier dated results remain historical.
+
+This directory contains Favour Chukwuemerie Ututu's curated portfolio knowledge and local LangChain ingestion/answering pipeline. The corpus contains 13 topic documents, based on the original supplied Markdown and individually confirmed additions. The pipeline has offline unit coverage. A separate [local streaming API](../docs/ASSISTANT.md) now connects the React assistant window to the same grounded pipeline; Gradio remains the developer workbench. Integration verification does not run live ingestion or paid model evaluation.
+
+## Frontend integration
+
+From this folder run `uv sync --locked`, then `uv run python api.py`. From the repository root run `npm run dev`. The API binds only to `127.0.0.1:8000`; Vite proxies `/api`. Set `OPENAI_API_KEY` in the shell or `rag/.env` and deliberately ingest the OpenAI `docs` index before sending real questions. See the [assistant guide](../docs/ASSISTANT.md) for streaming/history behavior, safe rendering, limits, and update → ingestion → Gradio → batch evaluation workflow. Public deployment remains separate.
 
 The intended assistant helps visitors understand Favour, his experience, his contributions, and his projects. It provides concise supported answers and directs deeper implementation questions to the relevant GitHub repository. The corpus positions Favour as a Full-stack Software Engineer and AI Engineer and includes his Python-based Portfolio RAG Assistant. Public assistant availability was confirmed by Favour on 11 November 2026; this is not an independent deployment or uptime check.
 
@@ -40,7 +46,7 @@ The RAG folder uses `uv` with Python 3.12 or newer. From the repository root:
 
 ```bash
 cd rag
-uv sync --locked
+uv sync --locked --group workbench
 uv run python -c "from dotenv import load_dotenv; from openai import OpenAI; print('Imports successful')"
 ```
 
@@ -50,7 +56,7 @@ Keep `pyproject.toml` and `uv.lock` in Git. The local `.venv/`, Python bytecode 
 
 ## Local pipeline
 
-Shared settings in [config.py](implementation/config.py) select `vector_db`, the `docs` collection, `text-embedding-3-large`, and `gpt-4.1-mini`. The notebook's MiniLM `langchain` collection is separate. [Ingestion](implementation/ingest.py) loads the complete curated corpus, strips YAML, creates source-grounded chunks of at most 350 tokens including context, and uses up to 40 tokens of overlap within long sections. Short documents stay whole. LangChain's Markdown heading splitter handles longer documents before recursive splitting; limitations stay in their source sections without duplicated scope text. Detailed provenance remains outside vector metadata.
+Shared settings in [config.py](implementation/config.py) select `vector_db`, the `docs` collection, `text-embedding-3-large`, and `gpt-4.1-mini`. The notebook's MiniLM `langchain` collection is separate. [Ingestion](implementation/ingest.py) loads the complete curated corpus, strips YAML, creates source-grounded chunks of at most 350 tokens including heading context, and uses up to 40 tokens of overlap within long sections. Short documents stay whole. LangChain's Markdown heading splitter handles longer documents before recursive splitting; limitations stay in their source sections without duplicated scope text. Detailed provenance remains outside vector metadata.
 
 The following command is for an intentional ingestion run and requires an OpenAI API key. It requests embeddings and synchronizes only `docs`; it was not run as part of this refactor:
 
@@ -63,6 +69,8 @@ Synchronization upserts the complete current chunk snapshot before deleting obso
 [Answering](implementation/answer.py) requires an existing, nonempty `docs` collection. It retrieves up to ten passages and uses one answer call for standalone questions. A nonempty user/assistant history adds one standalone-query rewrite before the single search; the final answer still receives the original question. No LLM reranking is used. Both providers have a 30-second request timeout and at most two retries.
 
 Public interfaces are `fetch_context(question, history=None)` returning LangChain documents, and `answer_question(question, history=None)` returning `(answer_text, retrieved_documents)`. Module and direct-script imports are supported. Importing modules does not construct providers or open the database. The evaluation code uses these same interfaces and scores the passages returned by answering in combined runs.
+
+Streaming, Gradio chat and complete-answer evaluation share the owner-supplied response prompt, installed verbatim on 12 November. The query-rewrite prompt remains separate. Successfully retrieved empty context reaches answering as `excerpts: []`, rather than bypassing the model with a fixed sentence; index-readiness and provider errors remain errors. There is no greeting classifier. Twelve separate `evaluation/conversation-cases.jsonl` fixtures exercise greetings, identity, follow-ups and scope in offline prompt-construction tests. They do not alter the 50-case benchmark, run automatically in Gradio, or establish live-model quality.
 
 ## Local evaluation
 
@@ -91,7 +99,7 @@ Direct execution (`uv run python evaluation/eval.py 0`) is also supported. The C
 From the `rag` folder:
 
 ```bash
-uv sync --locked
+uv sync --locked --group workbench
 uv run python app.py
 ```
 
@@ -135,7 +143,7 @@ Preserve concise context in biography and expertise documents, and keep project-
 
 ## Completion and limits
 
-The local pipeline implements deterministic chunking and grounded-answer prompt construction. Actual retrieval relevance and generated-answer quality remain unmeasured until a separate live evaluation is authorized and run. No ingestion was executed by this refactor, and there is no runtime change to the portfolio website.
+The local pipeline implements deterministic chunking and grounded-answer prompt construction. Actual retrieval relevance and generated-answer quality remain unmeasured until a separate live evaluation is run. Local frontend integration uses the new streaming path; no index rebuild, paid evaluation, or public deployment is part of its offline verification.
 
 ## Positioning and corpus refresh — 11 November 2026
 
@@ -144,3 +152,15 @@ Profile and expertise lead with **Full-stack Software Engineer and AI Engineer**
 The assistant-status document supplies owner-confirmed availability and the visitor workflow, while the new project document supplies implementation and contribution evidence. Source records retain superseded historical confirmations outside ingestion. Evaluation references follow the revised corpus. Prompt guidance favors professional identity, concrete examples and relationships, and concise answers without repetitive benefit statements.
 
 These edits do not refresh the vector index. Until an explicitly authorized ingestion run, retrieval can still return the previous corpus text. After that run, restart running assistant/evaluation processes before checking the two example questions. No ingestion, paid model calls, or live quality evaluation were performed by this content update.
+
+## Local security hardening
+
+See [security boundaries](SECURITY.md) for the threat model, budgets, residual risks, and backend prerequisites. System instructions are static; selected evidence and bounded history are serialized as untrusted JSON data. Chat text is explicitly escaped before display, without active Markdown or HTML. Developer queues hold at most 16 pending jobs, and UI errors suppress raw exception details.
+
+Ingestion rejects symlinks and oversized corpora, requires compatible collection embedding metadata, and skips embedding chunks whose IDs and vector metadata are unchanged. It still verifies the complete expected ID set before stale cleanup. Generated `vector_db/` files are ignored and removed from Git tracking, while local files remain intact. No history rewrite is performed.
+
+The separate [security cases](evaluation/security-cases.jsonl) contain 18 adversarial and six benign fixtures. Offline tests check deterministic safeguards and untrusted-data placement; they do not establish live-model injection resistance. No ingestion, paid requests, backend integration, or live security evaluation is part of this hardening change.
+
+## Pxxl deployment package — 12 November 2026
+
+The production configuration, durable rate/spend controls, container packaging, and operator rollout checks are documented in [the deployment guide](../docs/PXXL_DEPLOYMENT.md). This supersedes earlier local-only transport boundaries above; actual public deployment and host controls require the checks in that guide. Evaluation improvements remain deferred.

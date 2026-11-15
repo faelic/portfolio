@@ -1,0 +1,15 @@
+{
+  "profile-overview": {"title":"Professional background","href":"https://www.favourututu.com/"},
+  "profile-perspective": {"title":"Engineering perspective","href":"https://www.favourututu.com/"},
+  "education-training": {"title":"Education and training","href":"https://www.favourututu.com/"},
+  "expertise-engineering": {"title":"Engineering areas and skills","href":"https://www.favourututu.com/"},
+  "opportunities-contact": {"title":"Opportunities and contact","href":"https://www.favourututu.com/"},
+  "experience-flamong-policy-ng": {"title":"Policy.ng contribution","href":"https://www.favourututu.com/#policyng"},
+  "portfolio-assistant-status": {"title":"About this portfolio assistant","href":"https://www.favourututu.com/"},
+  "project-portfolio-rag-assistant": {"title":"Portfolio RAG Assistant","href":"https://www.favourututu.com/"},
+  "project-monierave": {"title":"Monierave","href":"https://www.favourututu.com/#monierave"},
+  "project-bucketflow": {"title":"BucketFlow","href":"https://www.favourututu.com/#bucketflow"},
+  "project-blockscan": {"title":"BlockScan","href":"https://www.favourututu.com/#blockscan"},
+  "project-approval-cleanup": {"title":"Cleanup","href":"https://www.favourututu.com/#cleanup"},
+  "project-escrow": {"title":"Escrow","href":"https://www.favourututu.com/#escrow"}
+}

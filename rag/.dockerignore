@@ -1,0 +1,11 @@
+*
+!Dockerfile
+!pyproject.toml
+!uv.lock
+!api.py
+!implementation/
+!implementation/*.py
+!implementation/public_sources.json
+!implementation/approved_links.json
+!knowledge/
+!knowledge/**/*.md

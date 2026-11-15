@@ -17,7 +17,7 @@ else:
 
 from implementation.answer import answer_question, fetch_context, format_context
 from implementation.config import (
-    RETRIEVAL_K, REQUEST_TIMEOUT, MAX_RETRIES, load_environment,
+    RETRIEVAL_K, REQUEST_TIMEOUT, MAX_RETRIES, JUDGE_OUTPUT_TOKENS, load_environment,
 )
 
 MODEL = "gpt-4.1-mini"
@@ -29,6 +29,8 @@ class RetrievalEval(BaseModel):
     matched_groups: int
     total_groups: int
     evidence_coverage: float | None
+    quote_matched_groups: int | None = None
+    labelled_quote_coverage: float | None = None
 
 
 class AnswerEval(BaseModel):
@@ -39,11 +41,15 @@ class AnswerEval(BaseModel):
     grounding: int = Field(ge=1, le=5, description="Support for factual claims in retrieved context")
 
 
+def normalized_text(value):
+    return ' '.join(value.split()).casefold()
+
+
 def evaluate_retrieval(
     test: TestQuestion, k: int = RETRIEVAL_K,
     retrieved_docs: list[Document] | None = None,
 ) -> RetrievalEval:
-    """Score section matches, not exact fact coverage. Unanswerable cases are N/A."""
+    """Separate section matches from labelled literal-quote presence, not entailment."""
     if not 1 <= k <= RETRIEVAL_K:
         raise ValueError(f"k must be between 1 and {RETRIEVAL_K}")
     if test.answerability == "unanswerable":
@@ -51,7 +57,7 @@ def evaluate_retrieval(
                              total_groups=0, evidence_coverage=None)
     if retrieved_docs is None:
         retrieved_docs = fetch_context(test.question)
-    matched = set()
+    matched, quoted = set(), set()
     reciprocal_rank = 0.0
     for rank, document in enumerate(retrieved_docs[:k], 1):
         for index, group in enumerate(test.evidence_groups):
@@ -61,12 +67,21 @@ def evaluate_retrieval(
                 for alternative in group.alternatives
             ):
                 matched.add(index)
+                if any(
+                    alternative.document_id == document.metadata.get('document_id')
+                    and alternative.section in document.metadata.get('section_paths', [])
+                    and normalized_text(alternative.evidence_quote)
+                    and normalized_text(alternative.evidence_quote) in normalized_text(document.page_content)
+                    for alternative in group.alternatives
+                ):
+                    quoted.add(index)
                 if reciprocal_rank == 0:
                     reciprocal_rank = 1 / rank
     total = len(test.evidence_groups)
     return RetrievalEval(
         k=k, reciprocal_rank=reciprocal_rank, matched_groups=len(matched),
         total_groups=total, evidence_coverage=len(matched) / total,
+        quote_matched_groups=len(quoted), labelled_quote_coverage=len(quoted) / total,
     )
 
 
@@ -75,11 +90,13 @@ def summarize_retrieval(results: list[tuple[TestQuestion, RetrievalEval]]) -> di
     def summarize(rows):
         eligible = [result for test, result in rows if test.answerability != "unanswerable"]
         count = len(eligible)
+        quote_scores = [result.labelled_quote_coverage for result in eligible if result.labelled_quote_coverage is not None]
         return {
             "eligible_cases": count,
             "excluded_unanswerable": len(rows) - count,
             "mrr": sum(result.reciprocal_rank for result in eligible) / count if count else None,
             "mean_evidence_coverage": sum(result.evidence_coverage for result in eligible) / count if count else None,
+            "mean_labelled_quote_coverage": sum(quote_scores) / len(quote_scores) if quote_scores else None,
         }
 
     if len({result.k for _, result in results}) > 1:
@@ -117,6 +134,7 @@ def get_judge():
     load_environment()
     return ChatOpenAI(
         model=MODEL, temperature=0, timeout=REQUEST_TIMEOUT, max_retries=MAX_RETRIES,
+        max_tokens=JUDGE_OUTPUT_TOKENS,
     ).with_structured_output(AnswerEval)
 
 

@@ -109,6 +109,18 @@ class DatasetTests(unittest.TestCase):
 
 
 class RetrievalTests(unittest.TestCase):
+    def test_section_label_without_required_quote_is_not_quote_coverage(self):
+        test = question(evidence_groups=[{'alternatives':[
+            {'document_id':'alpha','section':'Title > Alpha','evidence_quote':'Required supporting fact'}]}])
+        wrong = passage('alpha','Title > Alpha')
+        result = evaluator.evaluate_retrieval(test,retrieved_docs=[wrong])
+        self.assertEqual(result.evidence_coverage,1)
+        self.assertEqual(result.labelled_quote_coverage,0)
+        wrong.page_content = 'Required\n supporting FACT is present.'
+        result = evaluator.evaluate_retrieval(test,retrieved_docs=[wrong])
+        self.assertEqual(result.quote_matched_groups,1)
+        self.assertEqual(result.labelled_quote_coverage,1)
+
     def test_rank_cutoff_alternatives_and_duplicate_groups(self):
         docs = [passage('wrong', 'Title > Alpha'), passage('other', '__preamble__'),
                 passage('alpha', 'Title > Alpha'), passage('beta', 'Title > Beta')]
@@ -197,7 +209,7 @@ class AnswerJudgeTests(unittest.TestCase):
                 judge = evaluator.get_judge()
                 self.assertIs(judge, evaluator.get_judge())
                 load.assert_called_once()
-                factory.assert_called_once_with(model='gpt-4.1-mini', temperature=0, timeout=30, max_retries=2)
+                factory.assert_called_once_with(model='gpt-4.1-mini', temperature=0, timeout=30, max_retries=2, max_tokens=768)
                 factory.return_value.with_structured_output.assert_called_once_with(evaluator.AnswerEval)
         finally:
             evaluator.get_judge.cache_clear()
@@ -217,7 +229,7 @@ class AnswerJudgeTests(unittest.TestCase):
              patch.object(evaluator, 'fetch_context', side_effect=AssertionError('Second search')), \
              redirect_stdout(io.StringIO()) as output:
             evaluator.run_cli_evaluation(0)
-        search.assert_called_once_with(test.question, None)
+        search.assert_called_once_with(test.question, [])
         for expected in ('synthetic', 'answerable', 'alpha-chunk', 'Reciprocal rank', 'Section-based', 'Grounding'):
             self.assertIn(expected, output.getvalue())
         with patch.object(evaluator, 'load_tests', return_value=[question(answerability='unanswerable', evidence_groups=[])]), \

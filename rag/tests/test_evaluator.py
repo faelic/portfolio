@@ -1,4 +1,5 @@
 """Offline batch-dashboard checks: only synthetic scores are aggregated."""
+import asyncio
 import runpy
 import socket
 import unittest
@@ -36,6 +37,14 @@ def retrieval_score(rank, coverage, matched=1, total=2):
 def answer_score(value, grounding=5):
     return AnswerEval(feedback='Synthetic feedback', accuracy=value, completeness=value,
                       relevance=value, grounding=grounding)
+
+
+def build_in_running_loop(factory):
+    # Gradio's synchronous lock helpers otherwise allocate a fresh unclosed
+    # event loop per lock. Exercise UI construction within an owned loop.
+    async def build():
+        return factory()
+    return asyncio.run(build())
 
 
 class BatchDashboardTests(unittest.TestCase):
@@ -110,10 +119,10 @@ class BatchDashboardTests(unittest.TestCase):
             raise ValueError('Malformed test record')
             yield
         with patch.object(evaluator, 'evaluate_all_retrieval', failed_retrieval):
-            with self.assertRaisesRegex(gr.Error, 'stopped after 1 cases: Missing docs index'):
+            with self.assertRaisesRegex(gr.Error, 'stopped after 1 cases.*portfolio index is unavailable'):
                 evaluator.run_retrieval_evaluation(Mock())
         with patch.object(evaluator, 'evaluate_all_answers', failed_answers):
-            with self.assertRaisesRegex(gr.Error, 'stopped after 0 cases: Malformed test record'):
+            with self.assertRaisesRegex(gr.Error, 'stopped after 0 cases.*Invalid request'):
                 evaluator.run_answer_evaluation(Mock())
 
     def test_import_and_ui_build_do_not_run_evaluations(self):
@@ -122,7 +131,7 @@ class BatchDashboardTests(unittest.TestCase):
              patch('langchain_openai.ChatOpenAI', side_effect=AssertionError('Client construction')), \
              patch('dotenv.load_dotenv', side_effect=AssertionError('Environment override')):
             runpy.run_path(str(config.RAG_DIR / 'evaluator.py'), run_name='import_check')
-            ui = evaluator.build_ui()
+            ui = build_in_running_loop(evaluator.build_ui)
         self.assertFalse(ui.analytics_enabled)
         labels = [component['props'].get('label') for component in ui.config['components']]
         self.assertIn('Answer scores by category', labels)
