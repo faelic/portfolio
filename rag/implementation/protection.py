@@ -1,4 +1,4 @@
-"""Single-host durable admission and conservative spend accounting; no transcripts."""
+"""Durable admission and conservative spend accounting; no transcripts."""
 import argparse
 import asyncio
 import calendar
@@ -19,6 +19,35 @@ PRICE_VERSION = 'openai-standard-2026-11-12'
 # Integer hundredths of micro-USD per token (input, output, denominator).
 # Equivalent uncached USD/million: 0.40/1.60 for chat and 0.13 for embeddings.
 PRICES = {ANSWER_MODEL: (40, 160, 100), EMBEDDING_MODEL: (13, 0, 100)}
+LEDGER_DEADLINE = 8
+
+
+def client_limits(visitor, ip):
+    if not visitor or not ip:
+        raise ProtectionError()
+    return (
+        ('visitor', visitor, 60, 3, 'visitor_rate_limited'),
+        ('ip', ip, 60, 6, 'ip_rate_limited'),
+        ('ip', ip, 86400, 20, 'ip_daily_limited'),
+    )
+
+
+def debit_quote(stage, model, payload, maximum_output, now=None):
+    if model not in PRICES or stage not in ('rewrite', 'embedding', 'answer'):
+        raise ProtectionError()
+    expected_model = EMBEDDING_MODEL if stage == 'embedding' else ANSWER_MODEL
+    output_limit = {'embedding': 0, 'rewrite': 128, 'answer': 512}[stage]
+    if model != expected_model or type(maximum_output) is not int or not 0 <= maximum_output <= output_limit:
+        raise ProtectionError()
+    now = time.time() if now is None else now
+    date = datetime.fromtimestamp(now, timezone.utc)
+    day = date.replace(hour=0, minute=0, second=0, microsecond=0).timestamp()
+    month = date.replace(day=1, hour=0, minute=0, second=0, microsecond=0).timestamp()
+    next_month = month + calendar.monthrange(date.year, date.month)[1] * 86400
+    input_rate, output_rate, denominator = PRICES[model]
+    input_bound = len(payload.encode('utf-8')) + (128 if stage != 'embedding' else 0)
+    micro = max(1, math.ceil((input_bound * input_rate + maximum_output * output_rate) / denominator))
+    return now, day, month, next_month, micro
 
 
 def client_schema(db):
@@ -56,6 +85,10 @@ def initialize(path: Path):
 
 
 class Ledger:
+    @staticmethod
+    def execute(db, query, parameters=()):
+        return db.execute(query, parameters)
+
     def __init__(self, path, daily_micro=1_000_000, monthly_micro=10_000_000):
         self.path = Path(path)
         self.daily = daily_micro
@@ -100,52 +133,33 @@ class Ledger:
         now = time.time() if now is None else now
         with self.transaction() as db:
             if visitor is not None or ip is not None:
-                if not visitor or not ip:
-                    raise ProtectionError()
-                db.execute('DELETE FROM client_admissions WHERE at<=?', (now - 86400,))
+                self.execute(db, 'DELETE FROM client_admissions WHERE at<=?', (now - 86400,))
                 failures = []
-                for column, identity, window, limit, code in (
-                    ('visitor', visitor, 60, 3, 'visitor_rate_limited'),
-                    ('ip', ip, 60, 6, 'ip_rate_limited'),
-                    ('ip', ip, 86400, 20, 'ip_daily_limited'),
-                ):
-                    count, oldest = db.execute(f'SELECT COUNT(*), MIN(at) FROM client_admissions WHERE {column}=? AND at>?', (identity, now-window)).fetchone()
+                for column, identity, window, limit, code in client_limits(visitor, ip):
+                    count, oldest = self.execute(db, f'SELECT COUNT(*), MIN(at) FROM client_admissions WHERE {column}=? AND at>?', (identity, now-window)).fetchone()
                     if count >= limit:
                         failures.append((oldest + window - now, code))
                 if failures:
                     retry, code = max(failures)
                     raise ProtectionError(code, retry)
-            db.execute('DELETE FROM admissions WHERE at<=?', (now - 60,))
-            count, oldest = db.execute('SELECT COUNT(*), MIN(at) FROM admissions').fetchone()
+            self.execute(db, 'DELETE FROM admissions WHERE at<=?', (now - 60,))
+            count, oldest = self.execute(db, 'SELECT COUNT(*), MIN(at) FROM admissions').fetchone()
             if count >= 30:
                 raise ProtectionError('rate_limited', oldest + 60 - now)
-            db.execute('INSERT INTO admissions VALUES (?)', (now,))
+            self.execute(db, 'INSERT INTO admissions VALUES (?)', (now,))
             if visitor is not None:
-                db.execute('INSERT INTO client_admissions VALUES (?,?,?)', (now, visitor, ip))
+                self.execute(db, 'INSERT INTO client_admissions VALUES (?,?,?)', (now, visitor, ip))
 
     def debit(self, request_id, stage, model, payload, maximum_output, now=None):
-        if model not in PRICES or stage not in ('rewrite', 'embedding', 'answer'):
-            raise ProtectionError()
-        expected_model = EMBEDDING_MODEL if stage == 'embedding' else ANSWER_MODEL
-        output_limit = {'embedding': 0, 'rewrite': 128, 'answer': 512}[stage]
-        if model != expected_model or type(maximum_output) is not int or not 0 <= maximum_output <= output_limit:
-            raise ProtectionError()
-        now = time.time() if now is None else now
-        date = datetime.fromtimestamp(now, timezone.utc)
-        day = date.replace(hour=0, minute=0, second=0, microsecond=0).timestamp()
-        month = date.replace(day=1, hour=0, minute=0, second=0, microsecond=0).timestamp()
-        next_month = month + calendar.monthrange(date.year, date.month)[1] * 86400
-        input_rate, output_rate, denominator = PRICES[model]
-        input_bound = len(payload.encode('utf-8')) + (128 if stage != 'embedding' else 0)
-        micro = max(1, math.ceil((input_bound * input_rate + maximum_output * output_rate) / denominator))
+        now, day, month, next_month, micro = debit_quote(stage, model, payload, maximum_output, now)
         with self.transaction() as db:
-            daily = db.execute('SELECT COALESCE(SUM(micro_usd),0) FROM debits WHERE at>=?', (day,)).fetchone()[0]
-            monthly = db.execute('SELECT COALESCE(SUM(micro_usd),0) FROM debits WHERE at>=?', (month,)).fetchone()[0]
+            daily = self.execute(db, 'SELECT COALESCE(SUM(micro_usd),0) FROM debits WHERE at>=?', (day,)).fetchone()[0]
+            monthly = self.execute(db, 'SELECT COALESCE(SUM(micro_usd),0) FROM debits WHERE at>=?', (month,)).fetchone()[0]
             if monthly + micro > self.monthly:
                 raise ProtectionError('budget_exhausted', next_month - now)
             if daily + micro > self.daily:
                 raise ProtectionError('budget_exhausted', day + 86400 - now)
-            db.execute('INSERT INTO debits VALUES (?,?,?,?,?)', (now, request_id, stage, micro, PRICE_VERSION))
+            self.execute(db, 'INSERT INTO debits VALUES (?,?,?,?,?)', (now, request_id, stage, micro, PRICE_VERSION))
         logger.info('provider_debit request_id=%s stage=%s micro_usd=%d price_version=%s', request_id, stage, micro, PRICE_VERSION)
         return micro
 
@@ -154,11 +168,33 @@ class Ledger:
             return db.execute("SELECT date(at,'unixepoch'),SUM(micro_usd),COUNT(*) FROM debits GROUP BY 1 ORDER BY 1").fetchall()
 
 
+def create_ledger(settings):
+    if settings.database_url:
+        from .postgres_ledger import PostgresLedger
+        return PostgresLedger(settings.database_url, settings.daily_micro, settings.monthly_micro)
+    if settings.production:
+        # Never silently put production protection state on an ephemeral disk.
+        from .postgres_ledger import UnavailableLedger
+        return UnavailableLedger()
+    return Ledger(settings.ledger_path, settings.daily_micro, settings.monthly_micro)
+
+
+async def call_ledger(ledger, method, *args, **kwargs):
+    """Bound async production I/O; retain the local SQLite/test interface."""
+    try:
+        async with asyncio.timeout(LEDGER_DEADLINE):
+            if callable(getattr(type(ledger), 'a' + method, None)):
+                return await getattr(ledger, 'a' + method)(*args, **kwargs)
+            return await asyncio.to_thread(getattr(ledger, method), *args, **kwargs)
+    except TimeoutError:
+        raise ProtectionError() from None
+
+
 def budget_guard(ledger, request_id):
     async def reserve(stage, model, payload, maximum_output):
         # Cancellation may leave this short transaction committed. Never refund
         # uncertain work; this deliberately errs toward an earlier cutoff.
-        await asyncio.to_thread(ledger.debit, request_id, stage, model, payload, maximum_output)
+        await call_ledger(ledger, 'debit', request_id, stage, model, payload, maximum_output)
     return reserve
 
 
@@ -167,6 +203,20 @@ if __name__ == '__main__':
     parser.add_argument('action', choices=('init', 'inspect', 'check'))
     parser.add_argument('--path', type=Path, default=Path(os.getenv('RAG_DATA_DIR', '/data')) / 'protection.sqlite3')
     args = parser.parse_args()
+    if os.getenv('DATABASE_URL'):
+        from .postgres_ledger import PostgresLedger, initialize_postgres
+        ledger = PostgresLedger(os.environ['DATABASE_URL'])
+        if args.action == 'init':
+            initialize_postgres(os.environ['DATABASE_URL'])
+            print('PostgreSQL ledger initialized; existing ledgers are never overwritten.')
+        elif args.action == 'check':
+            ledger.check()
+            print('PostgreSQL ledger schema check passed; allowances retained.')
+        else:
+            print(json.dumps(ledger.summary()))
+        raise SystemExit(0)
+    if os.getenv('APP_ENV') == 'production':
+        raise SystemExit('Production requires DATABASE_URL; refusing local SQLite ledger operations.')
     if args.action == 'init':
         initialize(args.path)
         print('Ledger initialized; existing ledgers are never overwritten.')

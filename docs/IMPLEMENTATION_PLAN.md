@@ -1,6 +1,20 @@
 # Portfolio Implementation and Verification Record
 
-Updated: 10 November 2026 · Remediation of the pre-RAG baseline originally reviewed at runtime revision `ebd7c51`. No deployment or RAG implementation is included.
+## Neon review corrections — 15 November 2026
+
+Addressed four review findings: remote database preparation now runs after local concurrency admission without a redundant per-chat probe; the runtime-grants SQL revokes UPDATE/DELETE/TRUNCATE on debits; async PostgreSQL calls have preparation/operation deadlines and close on cancellation without refunding uncertain commits; evaluation schema version 2 records retrieval mode plus index/search-code hashes. Added regressions for blocked preparation, connection cleanup before SQL settings, total deadlines, concurrent readiness, existing-grant repair, async/sync quota sharing and uncertain COMMIT. All 140 backend tests passed, including PostgreSQL cancellation, repaired grants and uncertain COMMIT; the production image built successfully. Hosted Neon/Pxxl checks remain separate from local verification.
+
+## Pxxl Free / Neon migration — 15 November 2026
+
+Implemented a PostgreSQL ledger with a singleton row lock, bound queries, explicit owner SQL initialization, verified production TLS and bounded transactions. Production without DATABASE_URL or required schema fails closed; local SQLite remains available. Packaged 33 existing source-matched embeddings and added build/runtime checksum, configuration, corpus and vector validation. Exact squared-L2 search matched Chroma top-10 order for all 33 stored-vector queries. These are offline parity checks, not paid answer-quality results. CI adds disposable PostgreSQL regressions; the [deployment runbook](PXXL_DEPLOYMENT.md) replaces the paid-volume plan. Hosted Neon credentials, initialization, connectivity and final enabled-chat checks remain operator steps. Initial migration validation: 128 backend tests passed, including disposable PostgreSQL concurrency/role/API-outage checks; the production image built with release-index validation; dependency audit passed with existing exceptions only; current-source scan found no secret matches.
+
+## Current contract — 15 November 2026
+
+The CI/security hardening batch repairs the prompt snapshot and tokenizer/secret setup, adds per-IP concurrency and denial logs, restricts generated links, separates readiness from integrity/migration, and adds labelled-quote evidence coverage plus explicit chunker provenance. Older test counts and performance records below remain dated historical evidence.
+
+See [RAG security and release contract](RAG_SECURITY.md), [assistant integration](ASSISTANT.md), and [evaluation evidence](AI_EVALUATION.md). Historical screenshots, raw performance JSON and dated measurements are preserved; they are not new security or quality results.
+
+Historical record: 10 November 2026 · Remediation of the pre-RAG baseline originally reviewed at runtime revision `ebd7c51`. The record below predates RAG integration. See the [11 November local assistant guide](ASSISTANT.md) for the subsequent implementation and current verification; no public deployment is included.
 
 ## Delivery and compatibility
 
@@ -109,8 +123,22 @@ Full screen-reader coverage, physical-device testing, production headers, extern
 **Deferred:** chat UI, providers, ingestion/chunking execution, embeddings, retrieval/reranking, vector schema, grounded generation/citations, conversation storage, credentials, cost controls, evaluation execution, and deployment. The knowledge corpus preserves the planned assistant status and has no ingestion/runtime connection. Review the completed baseline, data contract, and recorded limitations before specifying the working RAG pipeline.
 
 
+## Local hardening verification — 15 November 2026
+
+- 111 Python offline tests passed, including the corrected prompt snapshot and new IP-concurrency/readiness/evidence regressions. Dependency-level event-loop ResourceWarnings remain visible; they are not reported as production failures or silently suppressed.
+- 52 frontend unit/component tests and 87 browser regressions passed across desktop Chromium, mobile Chromium and WebKit, including approved/unapproved link rendering. TypeScript/production build and ESLint passed; existing lazy-bundle size advisories remain.
+- The non-root production image built and passed a network-disabled startup/liveness/unready/disabled-chat check with a disposable signing secret. The public corpus and new link registry were packaged; no provider call or ingestion was made. The smoke container was removed.
+- npm audit found zero vulnerabilities. The production Python audit passed under the existing exact advisory-ID exception policy; its tool summary reported five ignored entries. This is an exception-qualified pass, not a zero-advisory or comprehensive security guarantee.
+- The redacted current-source scanner and Git-history scanner found no matching secrets; 14 commits were scanned. Ignored local secrets were not printed or incorporated into the image.
+- All 13 Markdown documents under docs were reconciled and local file-link targets checked. Historical JSON measurements/screenshots remain unchanged.
+
+No hosted GitHub run, commit/push, Pxxl configuration, public deployment, paid model evaluation or real-provider capacity benchmark is claimed. Proxy ranges, cross-domain cookies, volume persistence and a reviewed answer-quality baseline remain operator evidence tasks.
+
+
 ## CI failure correction — 15 November 2026
 
-The verify failure on d339810 came from a stale test expecting planned/unavailable assistant copy. The corrected regression checks owner-confirmed public availability with its non-uptime qualification, and the profile introduction now agrees with that status.
+The verify failure on d339810 was the old content assertion expecting a planned/unavailable assistant while the current corpus records owner-confirmed availability. The current test explicitly requires public availability plus its owner-confirmed/non-uptime qualification and rejects the old planned text; no availability fact was reverted to silence the test.
 
-The verify job pins ubuntu-24.04 and uses checkout/setup-node/upload-artifact v7 (Node24 internally), while application commands retain Node22. Browser artifacts upload only after the browser step fails; missing artifacts no longer warn after an earlier unit failure. This fix does not change the knowledge corpus or claim independently verified public uptime.
+Both jobs now pin ubuntu-24.04. checkout/setup-node/upload-artifact use v7 with a Node24 action runtime; the application still installs Node22 to match package.json. Browser regressions have an explicit step ID, and failure-artifact upload runs only when that step fails, with missing files ignored. A unit failure before Playwright is therefore not a missing-browser-report warning.
+
+Local validation: all 53 frontend tests, ESLint, TypeScript/production build, workflow YAML/conditions and whitespace checks passed. These workflow changes require a new committed/pushed revision; re-running the old commit does not use local files. No hosted Actions result is claimed for the corrected workflow.

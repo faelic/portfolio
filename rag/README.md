@@ -1,5 +1,7 @@
 # Portfolio knowledge base
 
+Production now uses a verified packaged embedding index and a Neon PostgreSQL protection ledger on Pxxl Free. No persistent application disk or startup ingestion is required. See [the deployment runbook](../docs/PXXL_DEPLOYMENT.md), [release index](index/README.md), and [owner-only initialization SQL](implementation/ledger_schema.sql). Local development retains Chroma/SQLite.
+
 Current backend/CI hardening (15 November 2026): see the [security and release contract](../docs/RAG_SECURITY.md). It covers reproducible tokenizer/signing-secret setup, 5 global / 1 visitor / 2 IP active requests, approved generated links, read-only readiness and evaluation evidence boundaries. Earlier dated results remain historical.
 
 This directory contains Favour Chukwuemerie Ututu's curated portfolio knowledge and local LangChain ingestion/answering pipeline. The corpus contains 13 topic documents, based on the original supplied Markdown and individually confirmed additions. The pipeline has offline unit coverage. A separate [local streaming API](../docs/ASSISTANT.md) now connects the React assistant window to the same grounded pipeline; Gradio remains the developer workbench. Integration verification does not run live ingestion or paid model evaluation.

@@ -17,7 +17,7 @@ if __package__:
     from .config import (
         DB_NAME, COLLECTION_NAME, ANSWER_MODEL, RETRIEVAL_K,
         REQUEST_TIMEOUT, MAX_RETRIES, ANSWER_OUTPUT_TOKENS, REWRITE_OUTPUT_TOKENS,
-        EMBEDDING_MODEL, get_embeddings, load_environment, PRODUCTION, register_provider,
+        EMBEDDING_MODEL, get_embeddings, load_environment, PRODUCTION, register_provider, INDEX_MODE,
     )
     from .guardrails import (
         IndexNotReadyError, validate_request, bounded_output, select_context,
@@ -31,7 +31,7 @@ else:
     from config import (
         DB_NAME, COLLECTION_NAME, ANSWER_MODEL, RETRIEVAL_K,
         REQUEST_TIMEOUT, MAX_RETRIES, ANSWER_OUTPUT_TOKENS, REWRITE_OUTPUT_TOKENS,
-        EMBEDDING_MODEL, get_embeddings, load_environment, PRODUCTION, register_provider,
+        EMBEDDING_MODEL, get_embeddings, load_environment, PRODUCTION, register_provider, INDEX_MODE,
     )
 
 logger = logging.getLogger(__name__)
@@ -286,6 +286,12 @@ Return only the search query.
 
 @lru_cache(maxsize=1)
 def get_vectorstore() -> Chroma:
+    if INDEX_MODE == 'packaged':
+        if __package__:
+            from .packaged_index import load_packaged_index
+        else:
+            from packaged_index import load_packaged_index
+        return load_packaged_index()
     message = (
         f"OpenAI index '{COLLECTION_NAME}' is missing or empty at {DB_NAME}. "
         "From the rag folder, run: uv run python -m implementation.ingest. "

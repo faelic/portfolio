@@ -69,7 +69,8 @@ def fetch_documents() -> list[Document]:
         metadata = {
             "document_id": header["id"], "document_title": header["title"],
             "category": header["category"],
-            "source_path": path.resolve().relative_to(RAG_DIR.parent).as_posix(),
+            # Public provenance is repository-relative even when deployed at /app.
+            "source_path": 'rag/knowledge/' + path.resolve().relative_to(root).as_posix(),
             "document_topics": header["topics"], "document_entities": header["entities"],
         }
         if header.get("aliases"):

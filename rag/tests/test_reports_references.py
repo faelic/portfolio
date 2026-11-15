@@ -1,5 +1,6 @@
 """No provider calls: verify public evidence and report provenance boundaries."""
 import json
+import hashlib
 import tempfile
 import unittest
 from pathlib import Path
@@ -98,6 +99,34 @@ class TraceTests(unittest.IsolatedAsyncioTestCase):
 
 
 class ReportTests(unittest.TestCase):
+    def test_packaged_provenance_records_the_actual_mode_vectors_and_search_code(self):
+        with patch.object(reporting, 'INDEX_MODE', 'packaged'):
+            result = reporting.metadata('heldout')
+        self.assertEqual(result['schema_version'], 2)
+        self.assertEqual(result['retrieval_index']['mode'], 'packaged')
+        for name in ('index/knowledge.json', 'index/knowledge.sha256'):
+            expected = hashlib.sha256((reporting.ROOT/name).read_bytes()).hexdigest()
+            self.assertEqual(result['retrieval_index']['artifact_sha256'][name], expected)
+        path = reporting.ROOT/'implementation/packaged_index.py'
+        self.assertEqual(result['implementation_sha256']['implementation/packaged_index.py'], hashlib.sha256(path.read_bytes()).hexdigest())
+        with tempfile.TemporaryDirectory() as folder:
+            output = Path(folder)/'report.json'
+            reporting.write_report(output, {**result, 'cases':[], 'requested_cases':0, 'status':'complete'})
+            markdown = output.with_suffix('.md').read_text()
+            self.assertIn('Retrieval index: packaged', markdown)
+            self.assertIn(result['retrieval_index']['artifact_sha256']['index/knowledge.json'], markdown)
+
+    def test_local_index_artifact_changes_are_recorded_without_opening_chroma(self):
+        with tempfile.TemporaryDirectory() as folder, patch.object(reporting, 'INDEX_MODE', 'chroma'), patch.object(reporting, 'DB_NAME', folder):
+            path = Path(folder)/'chroma.sqlite3'
+            path.write_bytes(b'fixture-one')
+            before = reporting.index_provenance()
+            path.write_bytes(b'fixture-two')
+            after = reporting.index_provenance()
+        self.assertEqual(before['mode'], 'chroma')
+        self.assertNotEqual(before['artifact_sha256'], after['artifact_sha256'])
+        self.assertNotIn(folder, json.dumps(before))
+
     def test_chunker_revision_changes_fingerprint_without_changing_current_format(self):
         from implementation import fingerprint
         before = fingerprint.corpus_fingerprint()

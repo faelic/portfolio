@@ -1,20 +1,35 @@
 # Backend Schema and Current Data Model
 
-Updated: 10 November 2026 · Remediated pre-RAG implementation. Historical source baseline: `ebd7c51`.
+## Current contract — 15 November 2026
+
+Conversation history remains browser-owned, but the backend now has durable Neon PostgreSQL metadata, admissions, client_admissions and debits tables in the portfolio_rag schema. Signed browser identity and HMAC IP keys support atomic quotas; process-local concurrency is 5 global / 1 visitor / 2 IP by default. See the current protection schema below.
+
+See [RAG security and release contract](RAG_SECURITY.md), [assistant integration](ASSISTANT.md), and [evaluation evidence](AI_EVALUATION.md). Historical screenshots, raw performance JSON and dated measurements are preserved; they are not new security or quality results.
+
+## Current data extensions — 12 November 2026
+
+Desktop and mobile now store separate validated six-project orders in favour.shortcut-layout.v4 and favour.shortcut-layout.mobile.v3. Legacy coordinate records are read only for relative-order migration and remain available for rollback. Reset persists the default order and offers a short Undo. Sound defaults off; its saved volume defaults to 20%.
+
+The shared profile supplies the portrait, role and contact. Public presentation config selects the featured project and optional resume destination. Typed case summaries add problem, personal contribution, engineering decision and limitation boundaries, while existing stable project keys/hashes remain intact.
+
+The assistant accepts `X-Portfolio-References: 1` as a response-extension request. Its optional references event has at most ten registry-controlled items and a 12,000-byte UTF-8 batch budget: id, canonical title/href, up to three section labels of 160 characters, and an excerpt of 400 characters. The same public registry is bundled by React and copied into the Python image. Text-only requests retain the old protocol. Optional saved references are revalidated and never become model history. See [evaluation reporting](AI_EVALUATION.md) for owner-only result artifacts; the older tables below are historical where superseded.
+
+
+Updated: 11 November 2026. The [assistant guide](ASSISTANT.md) owns the new local API and chat storage contract. Historical pre-RAG source baseline: `ebd7c51`.
 
 ## Backend boundary
 
-**Implemented:** this portfolio has **no backend or database schema**. There are no server-side entities, SQL tables, migrations, application API endpoints, account records, authentication tokens, vector indexes, or chat records. This document describes what the current frontend stores and consumes; its filename does not imply a server exists.
+**Implemented locally:** a stateless FastAPI `POST /api/chat` endpoint and Python/Chroma RAG pipeline, with optional browser-owned chat persistence. There are no account records or server-side conversation database. A separate Neon PostgreSQL protection ledger stores quotas and conservative spend; initialization is explicit owner-only SQL. Production retrieval uses a verified packaged embedding index; local workbench Chroma and SQLite remain available. The [assistant guide](ASSISTANT.md) specifies request/events, limits, and chat storage. This document retains the existing portfolio UI/content contracts.
 
 Content is compiled from TypeScript and components. Local/session storage belong to each visitor's browser and are not authoritative shared databases. External map services do not persist portfolio business records on the app's behalf. Monierave's ledger and Policy.ng's admin APIs are descriptions of other projects, not entities in this portfolio.
 
-**Deferred:** designing a database or backend for RAG. Do not convert these UI types into database tables automatically. See the [PRD](PRD.md) for requirements and the [TRD](TRD.md) for execution boundaries.
+**Deferred:** public backend deployment and server-side conversation persistence. Do not convert these UI types into database tables automatically. See the [PRD](PRD.md) for requirements and the [TRD](TRD.md) for execution boundaries.
 
 ## Content ownership
 
 | Domain | Current source of truth | Consumption |
 |---|---|---|
-| Projects and hash conversion | [projects.ts](../src/data/projects.ts) | Desktop labels/hover summaries, window content, featured assets, project URLs |
+| Projects and hash conversion | [projects.ts](../src/data/projects.ts) | Desktop labels, window content, featured assets, project URLs |
 | Model interfaces | [portfolio.ts](../src/types/portfolio.ts) | TypeScript compile-time checks; no runtime validation |
 | Notes/experience | [notes.ts](../src/data/notes.ts) | Read-only Notes window |
 | Profile and biography | [profile.ts](../src/data/profile.ts) | Shared identity, biography, and shorter Notes introduction |
@@ -22,9 +37,9 @@ Content is compiled from TypeScript and components. Local/session storage belong
 | Geography | [locations.ts](../src/data/locations.ts) | Globe hub, connections, continent labels |
 | Default mobile slots | [mobileLayout.ts](../src/data/mobileLayout.ts) | Icon placement and nearest-slot selection |
 | SEO/social metadata | [index.html](../index.html) | Static page head; distinct from profile copy |
-| Candidate knowledge content | [12 topic-based Markdown documents](../rag/README.md) | **Prepared:** corpus, metadata contract, original and owner-confirmed source mapping, evaluation cases. **Deferred:** runtime import and ingestion |
+| Curated knowledge content | [13 topic-based Markdown documents](../rag/README.md) | Python ingestion/retrieval; source/archive and evaluation material excluded; no browser corpus import |
 
-The knowledge corpus remains reference material under `rag/knowledge/`. GAP-03 corrected the original assistant passages to planned/not available; those qualifications survive the reorganization. The original source is preserved outside the corpus. The [data contract](../rag/DATA_CONTRACT.md) defines the content interface and a future chunking baseline; it does not implement ingestion or independently audit professional claims.
+The curated corpus remains under `rag/knowledge/`; the original source is preserved outside it. The [data contract](../rag/DATA_CONTRACT.md) defines the content/chunk metadata interface. Owner-confirmed availability is qualified separately from deployment verification. The integration does not modify the corpus or automatically ingest it.
 
 ## Identifiers and URL mapping
 
@@ -39,7 +54,7 @@ The knowledge corpus remains reference material under `rag/knowledge/`. GAP-03 c
 | `elan` | Escrow | Escrow | `project:elan` | `#escrow` |
 | `eau` | Policy.ng | Policy | `project:eau` | `#policyng` |
 
-`AppKey` is `"about" | "notes"`. `WindowKey` is `` `project:${ProjectKey}` | AppKey ``. About and Notes have no implemented URL fragments. Registry order is Monierave, BucketFlow, BlockScan, Cleanup, Escrow, Policy.ng; spatial placement is configured separately.
+`AppKey` is `"about" | "notes" | "assistant"`. `WindowKey` is `` `project:${ProjectKey}` | AppKey ``. Dock applications have no implemented URL fragments. Registry order is Monierave, BucketFlow, BlockScan, Cleanup, Escrow, Policy.ng; spatial placement is configured separately.
 
 `projectToHash` reads the explicit `slug` field. `hashToProject` removes a leading `#`, lowercases input, and matches that stable slug; it does not provide aliases such as `#policy.ng`, `#blockexplorer`, or `#approvalcleanup`. Unknown or empty input yields `undefined`. Title edits no longer change public hashes or storage identities (GAP-04 resolved).
 
@@ -52,7 +67,7 @@ The knowledge corpus remains reference material under `rag/knowledge/`. GAP-03 c
 | `key`, `title`, `slug`, `desktopLabel` | `ProjectKey` and required strings | Internal identity, display title, stable fragment, icon label |
 | `icon`, `accent` | `string`; required | Root-relative icon URL and window accent |
 | `githubAccent` | Optional `string` | Repository action background; readable heading variants are defined in CSS |
-| `desktopSummary`, `desktopStack` | `string`; required | Desktop hover/focus summary |
+| `desktopSummary`, `desktopStack` | `string`; required | Retained project metadata; launcher subtitles and hover previews are removed |
 | `techStack` | `string[]`; required | Rendered stack tags |
 | `featuredImageIndex` | Optional `number` | Selects `images[index]`, defaults to index 0 |
 | `windowStory` | Required object | Main rendered narrative; fields below |
@@ -100,37 +115,45 @@ Each level owns a location array. Continent labels are a separate `LocationPoint
 | `Bounds` | Extends `Point` with numeric `width`, `height`; defined in shared types, unused by the current app. |
 | `PortfolioWindow` | Required `key`, `zIndex`, `expanded`; optional `projectKey`, `position: Point`. No minimized field exists. |
 | Window collection | Pure reducer state `{ windows: PortfolioWindow[], nextZ: number }`, initially empty/110. Unique keys; meaningful focus/open/expand advances z-order; repeated active focus is a no-op. |
-| App transients | Booting, entry-ready, hovered project, hint visibility, mobile arrangement mode, lamp state. |
+| App transients | Selected project, settings-open state, arrangement method/draft, assistant request/mount state, sound preferences. |
 | View transients | Selected note, pointer drag state, launch/close animation, dock tooltip/magnification, map readiness/error/interaction. |
 
-Closing a window destroys its view state. Reopening an existing instance raises it without remounting; reloading loses all windows except a project reopened from a recognized fragment. Opener and window DOM references remain outside reducer state. No visitor-authored content is stored. Layout drafts are transient and become persisted preferences only on Done/Enter.
+Closing ordinary windows destroys their view state. Assistant state lives above its conditional window, survives close/reopen, and persists through reload only when saving is enabled. Reopening an existing instance raises it without remounting; reloading loses window positions except a project reopened from a recognized fragment. Opener and window DOM references remain outside reducer state. Layout drafts become persisted preferences only on Done/Enter. Chat storage keys and validation are specified in the [assistant guide](ASSISTANT.md#history-and-storage).
 
 ## Browser storage contracts
 
-**Implemented:** exact keys and encodings below. Local-storage values are JSON encoded by [storage.ts](../src/utils/storage.ts); session values are raw strings. “Session” follows browser `sessionStorage` lifetime, including reloads in the same page session; there is no app-defined expiry time.
+Current localStorage contracts are validated and guarded. Earlier coordinate/session keys may remain for rollback but are not new writes by the current studio.
 
-| Key | Store / value | Default and lifecycle | Owner / failure behavior |
-|---|---|---|---|
-| `favour.shortcut-layout.v2` | Local; JSON `Partial<Record<ProjectKey, Point>>` | `{}` means CSS desktop defaults; persists until removed/cleared | Layout hook; read/write/remove errors caught |
-| `favour.shortcut-layout.mobile.v1` | Local; same JSON shape | `{}` means mobile defaults; separate from desktop | Layout hook; draft previews stay in memory; Done commits; errors caught |
-| `favour.about-update-seen.v2` | Local; JSON boolean | Missing/false displays badge; opening About writes `true` | Dock; helper catches access/parse errors |
-| `favour.boot-seen.v1` | Session; string `"true"` | Missing uses first-visit boot minimum; written after boot readiness | Preloader; read/write guarded |
-| `favour.pendant-lamp-on.v1` | Session; string `"true"` / `"false"` | Lamp is on unless stored value is exactly `"false"` | App; read/write guarded; toggle still changes in-memory state |
-| `favour.interaction-hint-seen.v2` | Session; string `"true"` | Only the string `"true"` suppresses the hint; invalid values use unseen default | App through guarded session helper, including delayed write (GAP-06 resolved) |
+| Key | Store / value | Current behavior |
+|---|---|---|
+| favour.shortcut-layout.v4 | Local; six unique ProjectKey values | Desktop relative order; defaults to curated order |
+| favour.shortcut-layout.mobile.v3 | Local; six unique ProjectKey values | Independent mobile relative order |
+| favour.arrangement-method.v1 | Local; drag or arrows | Drag default; keyboard movement remains available |
+| favour.interface-sound.v1 | Local; boolean | Muted default |
+| favour.interface-volume.v1 | Local; number 0–1 | 0.2 default; changing while muted does not play sound |
+| favour.assistant-keep-history.v1 | Local; boolean | False default |
+| favour.assistant-history.v1 | Local; bounded validated completed exchanges | Optional history; see ASSISTANT.md |
 
-Example layout record:
+Example order: `["champ", "eau", "silences", "revolte", "lisiere", "elan"]`. This means Monierave, Policy.ng, BucketFlow, BlockScan, Cleanup and Escrow. Positions are derived from responsive slots rather than saved screen coordinates. Dragging swaps slots. Keyboard/directional arrangement shares the draft; Done persists, Cancel discards, and a scope change cancels unsaved work. Reset outside arrangement persists defaults and offers an eight-second Undo.
 
-```json
-{
-  "champ": { "x": 17.5, "y": 27 },
-  "silences": { "x": 43.5, "y": 27 }
-}
-```
+Malformed/denied storage falls back to an in-memory default. The old desktop v2/v3 and mobile v1/v2 keys are retained as migration inputs; inactive lamp/badge/boot flags are not current preference controls. No cross-tab synchronization is promised.
 
-**Implemented default mobile layout:** Monierave `(4,27)`, BucketFlow `(36,27)`, BlockScan `(68,27)`, Cleanup `(4,54)`, Policy `(36,54)`, Escrow `(68,54)`. Values are percentages. A drop snaps to the nearest default slot by Euclidean distance; if occupied, its project is moved to the dragged project's original slot. Outside arrangement mode, reset removes only the current scope key. In arrangement mode it previews `{}`; Done removes the key and Cancel discards the preview. Scope changes cancel unsaved drafts.
+## Current protection ledger
 
-**Implemented validation (GAP-06):** local-storage reads require a validator. Layout loading accepts only object containers and known finite points; invalid desktop entries are dropped and valid points clamp to actual icon bounds in the mounted view. Mobile overrides are accepted only when the effective six-slot layout is a unique permutation of the defined slots. Invalid records fall back to defaults. Badge values must be boolean. Session values are exactly raw `"true"` / `"false"`; unknown values use each flag’s default.
+Production selects Neon with DATABASE_URL and never falls back to local storage. The SQL schema is rag/implementation/ledger_schema.sql; the local-only ledger path remains RAG_DATA_DIR/protection.sqlite3. Tables are independent of chat history:
 
-All store access, writes, removals, and delayed hint writes are guarded. Denied persistence preserves in-memory use; it cannot guarantee reload persistence. Version suffixes and encodings remain unchanged, with no migration or cross-tab synchronization.
+| Table | Fields / purpose |
+|---|---|
+| metadata | singleton id=1 primary key and version=1 compatibility marker / transaction lock |
+| admissions | at timestamp; global rolling-minute admissions |
+| client_admissions | at, visitor, ip; HMAC identities and 24-hour admission window |
+| debits | at, request_id, stage, positive micro_usd, price_version; conservative provider reservations |
 
-**Verification:** V-06, V-08, and V-11 in the [scenario matrix](IMPLEMENTATION_PLAN.md#verification-scenarios) cover transactional save/cancel/reset, isolation, displacement, denied storage, and invalid records. RAG entities and backend wire contracts remain **Deferred**.
+Indexes cover admission time, visitor/time, IP/time and debit time. SELECT FOR UPDATE on the singleton metadata row serializes admission/debit decisions at READ COMMITTED isolation. The following bound queries read committed usage before inserting. Provider calls occur after commit. Startup/readiness use read-only bounded SELECTs, not schema creation. Owner SQL initializes once and refuses existing state. Local SQLite retains BEGIN IMMEDIATE for workbench tests. Active global/visitor/IP counters are process-local and never persist coordinates, raw IPs, cookie values, prompts or transcripts. Keep one worker/replica.
+
+The verified release index lives at rag/index/knowledge.json with a SHA-256 sidecar. It contains 33 public chunks and 3072-dimensional vectors, model/metric configuration and the corpus fingerprint. It is not a mutable Chroma database. Deployment/runtime checks reject stale, incomplete or incompatible artifacts. DATABASE_URL is a backend-only secret; production requires sslmode=verify-full. See [the deployment guide](PXXL_DEPLOYMENT.md).
+
+The HttpOnly signed visitor cookie is separate from localStorage history. generated/restored answer links use approved_links.json plus registered public-source destinations. Model/history text cannot extend either registry.
+
+
+The owner-applied ledger_runtime_grants.sql preserves admissions pruning but makes debit rows append-only for the non-owner runtime role (SELECT/INSERT only). Reapply it to repair earlier DELETE grants. Sync owner CLI and async API operations share price calculation and client-window policy; both serialize mutations on metadata. API operations close their connection on cancellation and never refund uncertain committed work.

@@ -11,6 +11,8 @@ jobs:
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v7
         with:
           node-version: '22'
@@ -19,6 +21,7 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm test
+      - run: npm audit --audit-level=high
       - run: npm run build
       - run: npx playwright install --with-deps chromium webkit
       - name: Browser regressions
@@ -33,3 +36,64 @@ jobs:
             test-results/
           retention-days: 14
           if-no-files-found: ignore
+  backend:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      TIKTOKEN_CACHE_DIR: ${{ runner.temp }}/portfolio-tokenizer
+      LEDGER_TEST_DATABASE_URL: postgresql://postgres@127.0.0.1:5432/portfolio_ledger_test
+    services:
+      postgres:
+        image: postgres:18-bookworm
+        env:
+          POSTGRES_DB: portfolio_ledger_test
+          POSTGRES_HOST_AUTH_METHOD: trust
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d portfolio_ledger_test"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v7
+        with:
+          version: '0.13.1'
+          python-version: '3.12'
+      - run: uv sync --locked --group workbench
+        working-directory: rag
+      - name: Prepare checksum-verified tokenizer vocabulary
+        run: uv run --locked python -c "from implementation.guardrails import get_tokenizer; get_tokenizer()"
+        working-directory: rag
+      - run: uv run --locked python -m unittest discover -s tests
+        working-directory: rag
+      - name: Audit production dependencies
+        # Exact, embedded-only exceptions are reviewed in docs/DEPENDENCY_REVIEW.md.
+        run: |
+          uv export --locked --no-dev --no-emit-project --format requirements-txt --output-file /tmp/runtime-requirements.txt > /dev/null
+          uv run --locked pip-audit -r /tmp/runtime-requirements.txt --disable-pip --no-deps --ignore-vuln PYSEC-2026-311 --ignore-vuln PYSEC-2026-3813 --ignore-vuln PYSEC-2026-3814 --ignore-vuln PYSEC-2026-3815
+        working-directory: rag
+      - name: Scan Git history with redacted output
+        run: docker run --rm --network none -v "$PWD/.git:/repo/.git:ro" ghcr.io/gitleaks/gitleaks:v8.30.1 git /repo --redact --log-opts=--all
+      - name: Scan current source snapshot
+        run: python3 scripts/scan-secrets.py
+      - name: Build production image
+        run: docker build -t portfolio-rag:ci -f rag/Dockerfile rag
+      - name: Verify non-root image and startup without paid work
+        run: |
+          test "$(docker image inspect portfolio-rag:ci --format '{{.Config.User}}')" = '10001:10001'
+          trap 'docker rm -f rag-ci >/dev/null 2>&1 || true' EXIT
+          docker run -d --name rag-ci --network none -e OPENAI_API_KEY=offline-test -e CHAT_IDENTITY_SECRET="$(python3 -c 'import secrets; print(secrets.token_hex(32))')" -e ALLOWED_HOSTS=127.0.0.1 -e ALLOWED_ORIGINS=https://www.favourututu.com portfolio-rag:ci
+          for attempt in $(seq 1 20); do
+            if docker exec rag-ci python -c "import urllib.request; assert urllib.request.urlopen('http://127.0.0.1:8000/health/live',timeout=2).status == 200"; then break; fi
+            sleep 1
+          done
+          docker exec rag-ci python -c "import urllib.request; assert urllib.request.urlopen('http://127.0.0.1:8000/health/live',timeout=2).status == 200"
+          docker exec rag-ci python -c "import http.client; client=http.client.HTTPConnection('127.0.0.1',8000,timeout=2); client.request('GET','/health/ready'); assert client.getresponse().status == 503; client.close()"
+          docker exec rag-ci python -c "import json; from pathlib import Path; assert json.loads(Path('implementation/approved_links.json').read_text())"
+          docker exec rag-ci python -c "from implementation.ingest import fetch_documents,create_chunks; assert create_chunks(fetch_documents())"
+          docker exec rag-ci python -c "import asyncio; from implementation.config import get_embeddings,close_providers; from implementation.answer import get_chat_model; assert get_embeddings() is get_embeddings(); assert get_chat_model() is get_chat_model(); asyncio.run(close_providers())"
+          docker rm -f rag-ci

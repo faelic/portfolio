@@ -3,7 +3,7 @@ import os
 import re
 import secrets
 from ipaddress import ip_network
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
 from urllib.parse import urlsplit
 
@@ -22,6 +22,7 @@ class Settings:
     identity_secret: str = LOCAL_IDENTITY_SECRET
     trusted_proxy_cidrs: tuple[str, ...] = ()
     max_active_per_ip: int = 2
+    database_url: str = field(default='', repr=False)
 
     @property
     def ledger_path(self):
@@ -33,6 +34,15 @@ class Settings:
         if mode not in ('local', 'production'):
             raise ValueError('APP_ENV must be local or production')
         production = mode == 'production'
+        database_url = os.getenv('DATABASE_URL', '')
+        if database_url:
+            from psycopg.conninfo import conninfo_to_dict
+            try:
+                connection = conninfo_to_dict(database_url)
+            except Exception:
+                raise ValueError('DATABASE_URL must be a valid PostgreSQL connection string') from None
+            if production and (connection.get('sslmode') != 'verify-full' or not connection.get('host')):
+                raise ValueError('Production DATABASE_URL requires a hostname and sslmode=verify-full')
         enabled = os.getenv('CHAT_ENABLED', 'false' if production else 'true')
         if enabled not in ('true', 'false'):
             raise ValueError('CHAT_ENABLED must be true or false')
@@ -66,4 +76,4 @@ class Settings:
                 parsed = urlsplit(origin)
                 if parsed.scheme != 'https' or not parsed.hostname or parsed.username or parsed.password or parsed.path or parsed.query or parsed.fragment or '*' in origin:
                     raise ValueError('Origins must be exact HTTPS origins')
-        return cls(production, enabled == 'true', data, hosts, origins, daily, monthly, identity_secret, proxies, max_active_per_ip)
+        return cls(production, enabled == 'true', data, hosts, origins, daily, monthly, identity_secret, proxies, max_active_per_ip, database_url)

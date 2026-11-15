@@ -16,7 +16,7 @@ from pathlib import Path
 
 from langchain_core.documents import Document
 from implementation.answer import SYSTEM_PROMPT, stream_answer
-from implementation.config import ANSWER_MODEL, EMBEDDING_MODEL, RETRIEVAL_K, CHUNK_SIZE, CHUNK_OVERLAP, CHUNKER_VERSION
+from implementation.config import ANSWER_MODEL, EMBEDDING_MODEL, RETRIEVAL_K, CHUNK_SIZE, CHUNK_OVERLAP, CHUNKER_VERSION, INDEX_MODE, DB_NAME
 from implementation.fingerprint import corpus_fingerprint
 from implementation.references import public_references
 from implementation.protection import PRICES, PRICE_VERSION
@@ -44,10 +44,24 @@ def distribution(values):
             'p95_ms': values[max(0, math.ceil(len(values) * .95) - 1)] if len(values) >= 20 else None}
 
 
+def index_provenance():
+    if INDEX_MODE == 'packaged':
+        from implementation.packaged_index import INDEX_PATH, load_packaged_index
+        load_packaged_index()  # Fail before a paid run if the release is invalid.
+        paths = (INDEX_PATH, INDEX_PATH.with_suffix('.sha256'))
+    else:
+        # Do not open/modify Chroma to describe a run. Hash its persisted files,
+        # including any WAL, so local results cannot masquerade as the release.
+        paths = tuple(sorted(path for path in Path(DB_NAME).rglob('*') if path.is_file() and not path.is_symlink()))
+    return {'mode': INDEX_MODE,
+            'artifact_sha256': {(str(path.relative_to(ROOT)) if path.is_relative_to(ROOT) else 'local-index/'+str(path.relative_to(DB_NAME))):
+                                hashlib.sha256(path.read_bytes()).hexdigest() for path in paths}}
+
+
 def metadata(suite):
     revision = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=ROOT, capture_output=True, text=True, check=False)
     dirty = subprocess.run(['git', 'status', '--porcelain'], cwd=ROOT, capture_output=True, text=True, check=False)
-    return {'schema_version': 1, 'run_id': uuid.uuid4().hex, 'suite': suite,
+    return {'schema_version': 2, 'run_id': uuid.uuid4().hex, 'suite': suite,
             'created_at': datetime.now(timezone.utc).isoformat(),
             'source_revision': revision.stdout.strip() or None, 'working_tree_dirty': bool(dirty.stdout.strip()),
             'answer_model': ANSWER_MODEL, 'embedding_model': EMBEDDING_MODEL,
@@ -55,7 +69,8 @@ def metadata(suite):
             'retrieval_k': RETRIEVAL_K, 'chunk_size': CHUNK_SIZE, 'chunk_overlap': CHUNK_OVERLAP,
             'chunker_version': CHUNKER_VERSION,
             'pricing_version': PRICE_VERSION,
-            'implementation_sha256': {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest() for path in [ROOT / 'implementation' / name for name in ('answer.py', 'config.py', 'ingest.py', 'fingerprint.py', 'guardrails.py', 'references.py', 'public_sources.json', 'approved_links.json')] + [Path(__file__)]},
+            'retrieval_index': index_provenance(),
+            'implementation_sha256': {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest() for path in [ROOT / 'implementation' / name for name in ('answer.py', 'config.py', 'ingest.py', 'packaged_index.py', 'fingerprint.py', 'guardrails.py', 'references.py', 'public_sources.json', 'approved_links.json')] + [Path(__file__)]},
             'dataset_sha256': hashlib.sha256(json.dumps(load_cases(suite), sort_keys=True).encode()).hexdigest()}
 
 
@@ -129,6 +144,12 @@ def write_report(path, report):
              f"Completed {summary['completed']} of {report['requested_cases']} requested cases; {summary['failed']} failed; {summary['expected_rejections']} expected input rejections; {summary['human_reviewed']} human reviewed.", '',
              'Section coverage measures metadata matches; labelled-quote coverage separately checks normalized literal quotes inside retrieved passages. Neither establishes semantic entailment or support for every generated claim. Human review is required for factual support, uncertainty and reference correctness.', '',
              'Provider usage, when present, covers the answer stream only. No actual total bill or quality pass rate is inferred from missing metadata. p95 is omitted for fewer than 20 measurements.', '']
+    index = report.get('retrieval_index')
+    if index:
+        lines += [f"Retrieval index: {index['mode']}", '',
+                  'Index SHA-256: ' + json.dumps(index['artifact_sha256'], sort_keys=True), '']
+    else:
+        lines += ['Retrieval index: unrecorded (legacy report)', '']
     if report.get('retrieval_summary'):
         lines += [f"Retrieval summary: {json.dumps(report['retrieval_summary'], ensure_ascii=False)}", '']
     for row in report['cases']:

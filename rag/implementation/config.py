@@ -8,6 +8,11 @@ from langchain_openai import OpenAIEmbeddings
 
 RAG_DIR = Path(__file__).resolve().parent.parent
 PRODUCTION = os.getenv('APP_ENV', 'local') == 'production'
+INDEX_MODE = os.getenv('RAG_INDEX_MODE', 'packaged' if PRODUCTION else 'chroma')
+if INDEX_MODE not in ('chroma', 'packaged'):
+    raise ValueError('RAG_INDEX_MODE must be chroma or packaged')
+if PRODUCTION and INDEX_MODE != 'packaged':
+    raise ValueError('Production requires the packaged knowledge index')
 DB_NAME = str(Path(os.getenv('RAG_DATA_DIR', str(RAG_DIR))) / 'vector_db')
 COLLECTION_NAME = "docs"
 EMBEDDING_MODEL = "text-embedding-3-large"

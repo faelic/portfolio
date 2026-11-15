@@ -11,12 +11,19 @@ __pycache__/
 *.pyc
 *.pyo
 .ipynb_checkpoints/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
 
 # Generated test reports
 playwright-report/
 test-results/
 coverage/
 .vitest/
+htmlcov/
+.coverage
+.coverage.*
 
 # Local environment files; keep shareable templates eligible for Git
 .env
@@ -36,3 +43,20 @@ coverage/
 # OS metadata and logs
 .DS_Store
 *.log
+
+# Generated RAG indexes and local Gradio artifacts
+/rag/vector_db/
+/rag/.gradio/
+/rag/data/
+protection.sqlite3*
+/rag/deployment-reports/
+
+prototype/
+
+# Local visual inputs and the original exploratory notebook. Runtime Python
+# modules, curated knowledge, evaluation fixtures, tests and lockfiles stay in Git.
+/references/
+/rag/app.ipynb
+
+# Owner-only evaluation outputs; publish reviewed summaries deliberately
+/rag/evaluation/reports/

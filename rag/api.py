@@ -18,20 +18,22 @@ from implementation.references import public_references
 from implementation.config import ANSWER_OUTPUT_TOKENS, HISTORY_MESSAGE_LIMIT, close_providers
 from implementation.guardrails import IndexNotReadyError, bounded_output, public_error, validate_request, get_tokenizer
 from implementation.settings import Settings
-from implementation.protection import Ledger, ProtectionError, budget_guard
+from implementation.protection import create_ledger, ProtectionError, budget_guard, call_ledger
 from implementation.identity import COOKIE_NAME, visitor_identity, cookie_header, client_ip, digest
 
 logger = logging.getLogger(__name__)
 BODY_LIMIT = 64 * 1024
 BODY_DEADLINE = 10
 REQUEST_DEADLINE = 90
+PREPARATION_DEADLINE = 8
 MAX_ACTIVE_REQUESTS = 5
 settings = Settings.from_env()
-ledger = Ledger(settings.ledger_path, settings.daily_micro, settings.monthly_micro)
+ledger = create_ledger(settings)
 LOCAL_ORIGINS = set(settings.origins)
 active_requests = 0
 active_visitors = set()
 active_ips = {}
+readiness_running = False
 MESSAGES = {
     'rate_limited': 'Too many messages. Please wait before trying again.',
     'busy': 'The assistant is busy. Please try again shortly.',
@@ -52,27 +54,32 @@ def denied(code, retry_after=60):
 
 
 async def ready():
+    global readiness_running
     if not settings.production:
         return True
+    # Health checks may use at most one database connection at a time. No queue
+    # or periodic heartbeat; concurrent checks return unavailable immediately.
+    if readiness_running:
+        return False
+    readiness_running = True
     try:
-        await asyncio.to_thread(ledger.probe)
-        await asyncio.to_thread(get_vectorstore)
+        async with asyncio.timeout(PREPARATION_DEADLINE):
+            await call_ledger(ledger, 'probe')
+            await asyncio.to_thread(get_vectorstore)
         return True
     except Exception as exc:
         logger.warning('readiness_failed exception_class=%s', type(exc).__name__)
         return False
+    finally:
+        readiness_running = False
 
 
 @asynccontextmanager
 async def lifespan(_app):
-    # No embedding/generation requests. Missing data leaves liveness available
-    # for the operator to initialize the volume and explicitly ingest knowledge.
+    # No embedding/generation requests or automatic ledger initialization.
+    # Missing database/index state leaves liveness available and chat closed.
     if settings.production:
         await asyncio.to_thread(get_tokenizer)
-        try:
-            await asyncio.to_thread(ledger.check)
-        except ProtectionError:
-            logger.warning('startup_ledger_unavailable')
         await ready()
     try:
         yield
@@ -121,7 +128,7 @@ class LocalRequests:
         if scope['path'] != '/api/chat' or scope['method'] != 'POST':
             return await self.app(scope, receive, safe_send)
         if settings.production:
-            if not settings.chat_enabled or not await ready():
+            if not settings.chat_enabled:
                 return await reject('unavailable')
             try:
                 visitor, new_cookie = visitor_identity(Request(scope).cookies.get(COOKIE_NAME), settings.identity_secret)
@@ -141,14 +148,24 @@ class LocalRequests:
         try:
             if settings.production:
                 try:
-                    await asyncio.to_thread(ledger.admit, visitor=visitor, ip=ip)
+                    # Slots are already held before any external database work.
+                    # Admission itself verifies durable schema and quotas; do not
+                    # open an extra readiness connection for each message.
+                    async with asyncio.timeout(min(PREPARATION_DEADLINE, REQUEST_DEADLINE)):
+                        await asyncio.to_thread(get_vectorstore)
+                        await call_ledger(ledger, 'admit', visitor=visitor, ip=ip)
                 except ProtectionError as exc:
                     return await reject(exc.code, exc.retry_after)
+                except (TimeoutError, IndexNotReadyError):
+                    return await reject('unavailable')
+                except Exception as exc:
+                    logger.warning('preparation_failed exception_class=%s', type(exc).__name__)
+                    return await reject('unavailable')
             if headers.get(b'content-type', b'').split(b';')[0].strip() != b'application/json':
                 return await JSONResponse({'message': 'Expected JSON.'}, 415)(scope, receive, safe_send)
             body = bytearray()
             try:
-                async with asyncio.timeout(BODY_DEADLINE):
+                async with asyncio.timeout(min(BODY_DEADLINE, max(0, REQUEST_DEADLINE-(time.perf_counter()-started)))):
                     while True:
                         message = await receive()
                         if message['type'] == 'http.disconnect':
@@ -237,7 +254,8 @@ async def chat(body: ChatRequest, request: Request):
             references = public_references(documents)
         started = request.state.started_at
         try:
-            async with asyncio.timeout(REQUEST_DEADLINE):
+            # Preparation and body time count toward the same total budget.
+            async with asyncio.timeout(max(0, REQUEST_DEADLINE-(time.perf_counter()-started))):
                 options = {'reserve': budget_guard(ledger, request.state.request_id), 'request_id': request.state.request_id} if settings.production else {}
                 # Old deployed clients retain the original text-only protocol.
                 if request.headers.get('x-portfolio-references') == '1':

@@ -3,6 +3,7 @@ name = "rag"
 version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [
+    "certifi>=2026.10.23",
     "fastapi==0.162.4",
     "langchain-chroma>=1.1.0",
     "langchain-core>=1.7.7",
@@ -11,6 +12,7 @@ dependencies = [
     "openai>=3.49.0",
     "pydantic>=2.14.3",
     "python-dotenv>=1.2.4",
+    "psycopg[binary]==3.3.9",
     "pyyaml>=6.0.3",
     "tiktoken>=0.14.0",
     "uvicorn==0.54.0",

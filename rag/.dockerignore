@@ -5,7 +5,12 @@
 !api.py
 !implementation/
 !implementation/*.py
+!implementation/ledger_schema.sql
+!implementation/ledger_runtime_grants.sql
 !implementation/public_sources.json
 !implementation/approved_links.json
 !knowledge/
 !knowledge/**/*.md
+!index/
+!index/knowledge.json
+!index/knowledge.sha256

@@ -146,7 +146,7 @@ class ProductionFairnessTests(unittest.TestCase):
 
     def test_cookie_limits_safe_messages_and_other_visitors_keep_their_allowance(self):
         with patch.object(api, 'settings', self.settings), patch.object(api, 'ledger', self.ledger), \
-             patch.object(api, 'ready', new_callable=AsyncMock, return_value=True), patch.object(api, 'stream_answer') as stream:
+             patch.object(api, 'get_vectorstore'), patch.object(api, 'stream_answer') as stream:
             origin = {'Origin': 'http://localhost:5173'}
             for _ in range(3):
                 response = self.client.post('/api/chat', json={'question': ''}, headers=origin)
@@ -203,7 +203,7 @@ class ConcurrentVisitorTests(unittest.IsolatedAsyncioTestCase):
                             (b'cookie', f'{COOKIE_NAME}={cookies[index]}'.encode())]}
             tasks = []
             with patch.object(api, 'settings', replace(api.settings, production=True, chat_enabled=True, identity_secret=SECRET)), \
-                 patch.object(api, 'ledger', Ledger(path)), patch.object(api, 'ready', new_callable=AsyncMock, return_value=True):
+                 patch.object(api, 'ledger', Ledger(path)), patch.object(api, 'get_vectorstore'):
                 try:
                     tasks.append(asyncio.create_task(middleware(scope(0), receive, send)))
                     await asyncio.wait_for(entered.get(), 2)
@@ -251,7 +251,7 @@ class ConcurrentVisitorTests(unittest.IsolatedAsyncioTestCase):
             path = Path(folder)/'ledger'
             initialize(path)
             with patch.object(api, 'settings', replace(api.settings, production=True, chat_enabled=True, identity_secret=SECRET)), \
-                 patch.object(api, 'ledger', Ledger(path)), patch.object(api, 'ready', new_callable=AsyncMock, return_value=True):
+                 patch.object(api, 'ledger', Ledger(path)), patch.object(api, 'get_vectorstore'):
                 try:
                     for _ in range(2):
                         tasks.append(asyncio.create_task(middleware(scope(), receive, send)))
