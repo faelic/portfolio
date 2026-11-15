@@ -29,3 +29,24 @@ it("respects consumed Escape and arrangement mode", () => {
   act(() => window.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape" })));
   expect(result.current.windows).toHaveLength(0);
 });
+
+it("cancels an interrupted close without deleting a reopened window", async () => {
+  const { result } = renderHook(() => useWindowManager());
+  const node = document.createElement('article'); document.body.append(node);
+  let reject: (reason?: unknown) => void = () => {};
+  const pending = () => {
+    const animation = { finished: new Promise<void>((_resolve, rejectPromise) => { reject = rejectPromise; }), cancel: () => reject(new Error('cancelled')) };
+    void animation.finished.catch(() => {});
+    return animation as unknown as Animation;
+  };
+  Object.defineProperty(node, 'animate', { value: pending });
+  act(() => result.current.openProject('champ'));
+  act(() => result.current.register('project:champ', node));
+  act(() => result.current.close('project:champ'));
+  expect(node.inert).toBe(true);
+  act(() => result.current.openProject('champ'));
+  await act(async () => { await Promise.resolve(); });
+  expect(node.inert).toBe(false);
+  expect(result.current.windows).toHaveLength(1);
+  node.remove();
+});

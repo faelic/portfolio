@@ -10,6 +10,7 @@ class GlobeBoundary extends Component<BoundaryProps, { failed: boolean }> {
 export function GlobeSection({ active }: { active: boolean }) {
   const host = useRef<HTMLDivElement>(null);
   const [near, setNear] = useState(false);
+  const [requested, setRequested] = useState(false);
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
   // A fresh lazy instance releases React's cached rejected promise on explicit retry.
@@ -28,7 +29,7 @@ export function GlobeSection({ active }: { active: boolean }) {
   }, []);
   const unavailable = <div className="map-card globe-failure"><p role="status">Interactive map unavailable.</p><p>You can still read my background and get in touch above.</p><button type="button" onClick={() => { setFailed(false); setAttempt(value => value + 1); }}>Retry map</button></div>;
   return <div ref={host}>
-    {!near ? <div className="map-card map-card--loading"><p className="location-map-status">The globe loads as you reach this section.</p></div>
+    {!requested || !near ? <div className="globe-launch"><p>Explore the globe and illustrative connections.</p><button type="button" onClick={() => { setRequested(true); setNear(true); }}>Explore globe</button></div>
       : failed ? unavailable
       : <GlobeBoundary key={attempt} fallback={unavailable}><Suspense fallback={<div className="map-card map-card--loading"><p className="location-map-status" role="status">Preparing interactive globe…</p></div>}><Globe active={active} onFailure={() => setFailed(true)} /></Suspense></GlobeBoundary>}
   </div>;

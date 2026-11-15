@@ -2,7 +2,7 @@ import { act, renderHook } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { isBoolean, session, storage } from "../../src/utils/storage";
 import { useDesktopLayout } from "../../src/hooks/useDesktopLayout";
-import { layoutStorageKey } from "../../src/state/layout";
+import { orderStorageKey, studioOrder } from "../../src/state/studioLayout";
 
 describe("optional browser persistence", () => {
   it("falls back for malformed JSON and wrong-shaped flags", () => {
@@ -29,19 +29,19 @@ describe("optional browser persistence", () => {
   it("keeps arrangement previews unpersisted, supports cancel/save/reset, and isolates scopes", () => {
     const { result, rerender } = renderHook(({ scope }) => useDesktopLayout(scope), { initialProps: { scope: "desktop" as "desktop" | "mobile" } });
     act(() => result.current.begin());
-    act(() => result.current.setPosition("champ", { x: 10, y: 20 }));
-    expect(localStorage.getItem(layoutStorageKey("desktop"))).toBeNull();
+    act(() => result.current.commitPosition("champ", { x: 100 / 3, y: 0 }));
+    expect(JSON.parse(localStorage.getItem(orderStorageKey("desktop"))!)).toEqual(studioOrder);
     act(() => result.current.cancel());
-    expect(result.current.layout).toEqual({});
+    expect(result.current.order).toEqual(studioOrder);
     act(() => result.current.begin());
-    act(() => result.current.setPosition("champ", { x: 10, y: 20 }));
+    act(() => result.current.commitPosition("champ", { x: 100 / 3, y: 0 }));
     act(() => result.current.save());
-    expect(JSON.parse(localStorage.getItem(layoutStorageKey("desktop"))!)).toEqual({ champ: { x: 10, y: 20 } });
+    expect(JSON.parse(localStorage.getItem(orderStorageKey("desktop"))!)).toEqual(["eau", "champ", ...studioOrder.slice(2)]);
     act(() => result.current.begin());
     rerender({ scope: "mobile" });
     expect(result.current.arranging).toBe(false);
-    expect(result.current.layout).toEqual({});
+    expect(result.current.order).toEqual(studioOrder);
     act(() => result.current.reset());
-    expect(localStorage.getItem(layoutStorageKey("desktop"))).not.toBeNull();
+    expect(localStorage.getItem(orderStorageKey("desktop"))).not.toBeNull();
   });
 });

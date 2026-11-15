@@ -1,5 +1,5 @@
 export type ProjectKey = "champ" | "silences" | "revolte" | "lisiere" | "elan" | "eau";
-export type AppKey = "about" | "notes";
+export type AppKey = "about" | "notes" | "assistant";
 export type WindowKey = `project:${ProjectKey}` | AppKey;
 
 export interface ProjectImage {
@@ -89,6 +89,7 @@ export interface Bounds extends Point {
 }
 
 export interface PortfolioWindow {
+  instanceKey?: WindowKey;
   key: WindowKey;
   projectKey?: ProjectKey;
   zIndex: number;

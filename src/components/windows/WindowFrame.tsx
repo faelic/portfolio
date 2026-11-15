@@ -1,12 +1,12 @@
 import { ResilientImage } from "../shared/ResilientImage";
-import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
+import { useCallback, useRef, type PointerEvent as ReactPointerEvent, type ReactNode } from "react";
 import type { Point, PortfolioWindow, WindowKey } from "../../types/portfolio";
 
 interface Props {
   window: PortfolioWindow;
   title: string;
   icon?: string;
-  kind: "project" | "about" | "notes";
+  kind: "project" | "about" | "notes" | "assistant";
   active: boolean;
   accent?: string;
   mobile?: boolean;
@@ -22,8 +22,10 @@ interface Props {
 export function WindowFrame({ window: model, title, icon, kind, active, accent, mobile = false, githubAccent, children, register, onClose, onFocus, onMove, onToggleExpanded }: Props) {
   const rootRef = useRef<HTMLElement>(null);
   const dragRef = useRef<{ id: number; x: number; y: number; left: number; top: number } | undefined>(undefined);
-  const [closing, setClosing] = useState(false);
-  const closeTimer = useRef(0);
+  const registerRoot = useCallback((node: HTMLElement | null) => {
+    rootRef.current = node;
+    register(model.key, node);
+  }, [register, model.key]);
   const style = {
     zIndex: model.zIndex,
     ...(model.position && !model.expanded ? { left: model.position.x, top: model.position.y } : {}),
@@ -32,7 +34,6 @@ export function WindowFrame({ window: model, title, icon, kind, active, accent, 
     ...(githubAccent ? { "--project-title-accent": githubAccent } : {}),
   } as React.CSSProperties;
 
-  useEffect(() => () => clearTimeout(closeTimer.current), []);
 
   const beginDrag = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (mobile || model.expanded || (event.target as HTMLElement).closest(".traffic-lights") || !rootRef.current) return;
@@ -60,17 +61,12 @@ export function WindowFrame({ window: model, title, icon, kind, active, accent, 
     if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
   };
 
-  const closeWithMotion = () => {
-    setClosing(true);
-    closeTimer.current = window.setTimeout(onClose, window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 0 : 180);
-  };
-
   return (
     <article
-      ref={node => { rootRef.current = node; register(model.key, node); }}
+      ref={registerRoot}
       data-window-key={model.key}
       inert={mobile && !active}
-      className={`window window--${kind} react-window-enter${active ? " is-active" : ""}${model.expanded ? " is-expanded" : ""}${closing ? " is-closing" : ""}`}
+      className={`window window--${kind} react-window-enter${active ? " is-active" : ""}${model.expanded ? " is-expanded" : ""}`}
       role="dialog"
       aria-label={title || "About me"}
       tabIndex={-1}
@@ -80,9 +76,8 @@ export function WindowFrame({ window: model, title, icon, kind, active, accent, 
     >
       <div className="titlebar" onPointerDown={beginDrag} onPointerMove={drag} onPointerUp={endDrag} onPointerCancel={endDrag}>
         <div className="traffic-lights" aria-label="Window controls">
-          <button className="traffic-light traffic-light--close" type="button" aria-label="Close window" data-cuelume-hover="tick" data-cuelume-release="tick" onPointerDown={(event) => event.stopPropagation()} onClick={closeWithMotion} />
-          <span className="traffic-light traffic-light--minimize" aria-hidden="true" />
-          <button className="traffic-light traffic-light--zoom" type="button" aria-label={model.expanded ? "Restore window" : "Expand window"} aria-pressed={model.expanded} data-cuelume-hover="tick" data-cuelume-toggle="toggle" onPointerDown={(event) => event.stopPropagation()} onClick={onToggleExpanded} />
+          <button className="traffic-light traffic-light--close" type="button" aria-label="Close window" onPointerDown={(event) => event.stopPropagation()} onClick={onClose} />
+          <button className="traffic-light traffic-light--zoom" type="button" aria-label={model.expanded ? "Restore window" : "Expand window"} aria-pressed={model.expanded} onPointerDown={(event) => event.stopPropagation()} onClick={onToggleExpanded} />
         </div>
         <span className="window-title">
           {icon && <ResilientImage className="window-title-icon" src={icon} alt="" icon fallbackLabel={`${title} icon`} />}

@@ -1,8 +1,45 @@
-.codex/
-.impeccable/
-prototype/
-references/
-PRODUCT.md
-*.mov
-*.log
-.DS_Store
+# Frontend CLI upload/build inputs only. Vite publishes dist/, not this source tree.
+/*
+!package.json
+!package-lock.json
+!index.html
+!vercel.json
+!.vercelignore
+!vite.config.ts
+!vitest.config.ts
+!playwright.config.ts
+!eslint.config.js
+!tsconfig*.json
+!src/
+!public/
+# npm run build typechecks the referenced test project as well.
+!tests/
+
+# React imports these two public registries. Do not exclude all of rag/.
+!rag/
+rag/*
+!rag/implementation/
+rag/implementation/*
+!rag/implementation/public_sources.json
+!rag/implementation/approved_links.json
+
+# Original/obsolete assets have no current source references. Keep them in Git
+# for provenance, but do not upload/copy them into the hosted frontend build.
+public/assets/background/desktop.jpg
+public/assets/background/portrait-clean-alternate.png
+public/assets/profile/marcus.jpg
+public/assets/profile/marcus-clean.jpg
+public/assets/profile/brooklyn-map.jpg
+public/assets/icons/dock.jpg
+public/assets/effects/pendant-lamp-fixture.png
+public/assets/effects/pendant-lamp-fixture-off.png
+public/assets/projects/previews/README.md
+
+# Also exclude generated files if they ever appear inside an allowed subtree.
+**/node_modules/
+**/.cache/
+**/__pycache__/
+**/.DS_Store
+**/*.log
+**/.env
+**/.env.*

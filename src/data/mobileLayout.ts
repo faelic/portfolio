@@ -1,12 +1,12 @@
 import type { Point, ProjectKey } from "../types/portfolio";
 
 export const MOBILE_SHORTCUT_LAYOUT: Record<ProjectKey, Point> = {
-  champ: { x: 4, y: 27 },
-  silences: { x: 36, y: 27 },
-  revolte: { x: 68, y: 27 },
-  lisiere: { x: 4, y: 54 },
-  eau: { x: 36, y: 54 },
-  elan: { x: 68, y: 54 },
+  champ: { x: 0, y: 0 },
+  eau: { x: 100 / 3, y: 0 },
+  silences: { x: 200 / 3, y: 0 },
+  revolte: { x: 0, y: 50 },
+  lisiere: { x: 100 / 3, y: 50 },
+  elan: { x: 200 / 3, y: 50 },
 };
 
 export const MOBILE_SHORTCUT_SLOTS = Object.values(MOBILE_SHORTCUT_LAYOUT);

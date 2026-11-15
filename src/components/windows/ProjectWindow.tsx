@@ -1,5 +1,7 @@
 import { ResilientImage } from "../shared/ResilientImage";
-import type { Project } from "../../types/portfolio";
+import { studioOrder } from "../../state/studioLayout";
+import { projects } from "../../data/projects";
+import type { Project, ProjectKey } from "../../types/portfolio";
 
 function ExternalLinkIcon() {
   return (
@@ -17,8 +19,10 @@ function GitHubIcon() {
   );
 }
 
-export function ProjectWindow({ project }: { project: Project }) {
-  const featuredImage = project.images[project.featuredImageIndex ?? 0];
+export function ProjectWindow({ project, onNavigate }: { project: Project; onNavigate?: (key: ProjectKey) => void }) {
+  const index = studioOrder.indexOf(project.key);
+  const previous = studioOrder[index - 1], next = studioOrder[index + 1];
+  const featuredImage = project.images[({ champ: 0, silences: 0, revolte: 2, lisiere: 1, eau: 0, elan: 0 })[project.key]];
   const renderStoryCopy = (copy: string) => {
     return copy
       .split(/\n{2,}/g)
@@ -83,6 +87,10 @@ export function ProjectWindow({ project }: { project: Project }) {
                     )}
                   </nav>
                 )}
+                {onNavigate && <nav className="project-sequence" aria-label="Continue exploring projects">
+                  {previous && <button type="button" onClick={() => onNavigate(previous)}><span>Previous project</span><strong>{projects[previous].title}</strong></button>}
+                  {next && <button type="button" onClick={() => onNavigate(next)}><span>Next project</span><strong>{projects[next].title}</strong></button>}
+                </nav>}
               </div>
             </article>
           </div>

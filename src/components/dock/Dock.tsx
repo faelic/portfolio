@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import type { AppKey } from "../../types/portfolio";
-import { isBoolean, storage } from "../../utils/storage";
+import { PortraitAvatar } from "../shared/PortraitAvatar";
 
 interface Props {
+  onPrepareAssistant?: () => void;
   projectFocused: boolean;
   onOpenApp: (app: AppKey, opener?: HTMLElement) => void;
+  openApps: AppKey[];
 }
 
-const ABOUT_BADGE_KEY = "favour.about-update-seen.v2";
 
 interface DockMotionItem {
   hit: HTMLElement;
@@ -30,14 +31,18 @@ function LinkedInIcon() {
   return <svg viewBox="0 0 64 64" focusable="false"><rect width="64" height="64" rx="14" fill="#0a66c2"/><circle cx="18" cy="19" r="4.5" fill="#fff"/><path d="M14 27h8v24h-8V27Zm14 0h7.7v3.3h.1c2.1-3.1 5.2-4.4 8.9-4.4 8.2 0 10.3 5.3 10.3 13V51h-8V40c0-4.6-.7-7.8-5.2-7.8-5 0-5.8 3.8-5.8 7.5V51h-8V27Z" fill="#fff"/></svg>;
 }
 
-export function Dock({ projectFocused, onOpenApp }: Props) {
+function AssistantIcon() {
+  return <svg viewBox="0 0 64 64" focusable="false"><rect width="64" height="64" rx="14" fill="var(--assistant-accent)"/><path d="M18 20h28v21H30l-10 7v-7h-2V20Z" fill="none" stroke="var(--assistant-accent-ink)" strokeWidth="3" strokeLinejoin="round"/><path d="M25 28h14m-14 6h9" fill="none" stroke="var(--assistant-accent-ink)" strokeWidth="3" strokeLinecap="round"/></svg>;
+}
+
+export function Dock({ projectFocused, onOpenApp, openApps, onPrepareAssistant }: Props) {
   const dockRef = useRef<HTMLElement>(null);
+  const assistantButton = useRef<HTMLButtonElement>(null);
   const motionItems = useRef<DockMotionItem[]>([]);
   const animationFrame = useRef<number | null>(null);
   const previousFrameTime = useRef(0);
   const reducedMotion = useRef(false);
   const [tooltip, setTooltip] = useState<string>();
-  const [badge, setBadge] = useState(() => !storage.read(ABOUT_BADGE_KEY, false, isBoolean));
 
   const syncMotionItems = useCallback(() => {
     const dock = dockRef.current;
@@ -63,7 +68,7 @@ export function Dock({ projectFocused, onOpenApp }: Props) {
 
     const dockRect = dock.getBoundingClientRect();
     const baseSize = items[0]?.hit.offsetWidth || 48;
-    const maximumScale = reducedMotion.current ? 1.12 : 1.84;
+    const maximumScale = reducedMotion.current ? 1 : 1.2;
     const sigma = baseSize * 1.68;
     const influences = items.map((item) => {
       if (pointerX === null) return 0;
@@ -111,6 +116,7 @@ export function Dock({ projectFocused, onOpenApp }: Props) {
   }, [animateMagnification]);
 
   const magnify = (event: ReactPointerEvent<HTMLElement>) => {
+    if ((event.target as HTMLElement).closest(".assistant-invitation")) return;
     if (window.matchMedia("(hover: none), (pointer: coarse)").matches) return;
     const dock = dockRef.current;
     if (!dock) return;
@@ -155,12 +161,15 @@ export function Dock({ projectFocused, onOpenApp }: Props) {
   }, [setMagnificationTargets, startMagnificationAnimation, syncMotionItems]);
 
   const openAbout = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setBadge(false);
-    storage.write(ABOUT_BADGE_KEY, true);
     onOpenApp("about", event.currentTarget);
   };
 
   const activateTooltip = (label: string) => setTooltip(label);
+  const openAssistant = () => {
+    resetMagnification();
+    // The invitation retires on launch; restore focus to the permanent dock icon.
+    onOpenApp("assistant", assistantButton.current ?? undefined);
+  };
   const socialProps = (label: string, url: string) => ({
     href: url,
     target: url === "#" ? undefined : "_blank",
@@ -173,16 +182,19 @@ export function Dock({ projectFocused, onOpenApp }: Props) {
 
   return (
     <nav ref={dockRef} className={`dock-hit-area${projectFocused ? " dock--project-focused" : ""}`} aria-label="Applications and social links" onPointerMove={magnify} onPointerLeave={resetMagnification}>
-      <button className={`dock-hit dock-hit--avatar${tooltip === "About me" ? " is-tooltip-active" : ""}`} type="button" aria-label="About me" data-cuelume-hover="tick" data-cuelume-press="press" data-cuelume-release="release" onClick={openAbout} onPointerEnter={() => activateTooltip("About me")} onFocus={() => activateTooltip("About me")} onBlur={() => setTooltip(undefined)}>
-        <span className="dock-visual"><span className="dock-artwork"><span className="dock-icon dock-icon--avatar" aria-hidden="true">🧔🏾</span></span>{badge && <span className="dock-badge" aria-hidden="true">1</span>}</span><span className="dock-tooltip">About me</span>
+      <button className={`dock-hit dock-hit--avatar${openApps.includes("about") ? " is-running" : ""}${tooltip === "About me" ? " is-tooltip-active" : ""}`} type="button" aria-label="About me" aria-description={openApps.includes("about") ? "Window open" : undefined} onClick={openAbout} onPointerEnter={() => activateTooltip("About me")} onFocus={() => activateTooltip("About me")} onBlur={() => setTooltip(undefined)}>
+        <span className="dock-visual"><span className="dock-artwork"><span className="dock-icon dock-icon--avatar" aria-hidden="true"><PortraitAvatar decorative /></span></span></span><span className="dock-tooltip">About me</span>
       </button>
-      <button className={`dock-hit dock-hit--notes${tooltip === "Notes" ? " is-tooltip-active" : ""}`} type="button" aria-label="Notes" data-cuelume-hover="tick" data-cuelume-press="press" data-cuelume-release="release" onClick={event => onOpenApp("notes", event.currentTarget)} onPointerEnter={() => activateTooltip("Notes")} onFocus={() => activateTooltip("Notes")} onBlur={() => setTooltip(undefined)}>
+      <button className={`dock-hit dock-hit--notes${openApps.includes("notes") ? " is-running" : ""}${tooltip === "Notes" ? " is-tooltip-active" : ""}`} type="button" aria-label="Notes" aria-description={openApps.includes("notes") ? "Window open" : undefined} onClick={event => onOpenApp("notes", event.currentTarget)} onPointerEnter={() => activateTooltip("Notes")} onFocus={() => activateTooltip("Notes")} onBlur={() => setTooltip(undefined)}>
         <span className="dock-visual"><span className="dock-artwork"><span className="dock-icon dock-icon--notes" aria-hidden="true" /></span></span><span className="dock-tooltip">Notes</span>
       </button>
+      <button ref={assistantButton} className={`dock-hit dock-hit--assistant${openApps.includes("assistant") ? " is-running" : ""}${tooltip === "Assistant" ? " is-tooltip-active" : ""}`} type="button" aria-label="Assistant" aria-description={openApps.includes("assistant") ? "Window open" : undefined} onClick={openAssistant} onPointerEnter={() => { activateTooltip("Assistant"); onPrepareAssistant?.(); }} onFocus={() => { activateTooltip("Assistant"); onPrepareAssistant?.(); }} onBlur={() => setTooltip(undefined)}>
+        <span className="dock-visual"><span className="dock-artwork"><span className="dock-icon" aria-hidden="true"><AssistantIcon /></span></span></span><span className="dock-tooltip">Assistant</span>
+      </button>
       <span className="dock-divider" aria-hidden="true" />
-      <a className={`dock-hit dock-hit--github${tooltip === "GitHub" ? " is-tooltip-active" : ""}`} aria-label="GitHub" data-cuelume-hover="tick" data-cuelume-press="press" data-cuelume-release="release" {...socialProps("GitHub", "https://github.com/faelic")}><span className="dock-visual"><span className="dock-artwork"><span className="dock-icon" aria-hidden="true"><GitHubIcon /></span></span></span><span className="dock-tooltip">GitHub</span></a>
-      <a className={`dock-hit dock-hit--x${tooltip === "X" ? " is-tooltip-active" : ""}`} aria-label="X" data-cuelume-hover="tick" data-cuelume-press="press" data-cuelume-release="release" {...socialProps("X", "https://x.com/FavDeFi")}><span className="dock-visual"><span className="dock-artwork"><span className="dock-icon" aria-hidden="true"><XIcon /></span></span></span><span className="dock-tooltip">X</span></a>
-      <a className={`dock-hit dock-hit--linkedin${tooltip === "LinkedIn" ? " is-tooltip-active" : ""}`} aria-label="LinkedIn" data-cuelume-hover="tick" data-cuelume-press="press" data-cuelume-release="release" {...socialProps("LinkedIn", "https://www.linkedin.com/in/favour-ututu/")}><span className="dock-visual"><span className="dock-artwork"><span className="dock-icon" aria-hidden="true"><LinkedInIcon /></span></span></span><span className="dock-tooltip">LinkedIn</span></a>
+      <a className={`dock-hit dock-hit--github${tooltip === "GitHub" ? " is-tooltip-active" : ""}`} aria-label="GitHub" {...socialProps("GitHub", "https://github.com/faelic")}><span className="dock-visual"><span className="dock-artwork"><span className="dock-icon" aria-hidden="true"><GitHubIcon /></span></span></span><span className="dock-tooltip">GitHub</span></a>
+      <a className={`dock-hit dock-hit--x${tooltip === "X" ? " is-tooltip-active" : ""}`} aria-label="X" {...socialProps("X", "https://x.com/FavDeFi")}><span className="dock-visual"><span className="dock-artwork"><span className="dock-icon" aria-hidden="true"><XIcon /></span></span></span><span className="dock-tooltip">X</span></a>
+      <a className={`dock-hit dock-hit--linkedin${tooltip === "LinkedIn" ? " is-tooltip-active" : ""}`} aria-label="LinkedIn" {...socialProps("LinkedIn", "https://www.linkedin.com/in/favour-ututu/")}><span className="dock-visual"><span className="dock-artwork"><span className="dock-icon" aria-hidden="true"><LinkedInIcon /></span></span></span><span className="dock-tooltip">LinkedIn</span></a>
     </nav>
   );
 }

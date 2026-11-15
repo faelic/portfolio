@@ -1,32 +1,38 @@
-import { useCallback, useEffect, useState } from "react";
-import { storage } from "../utils/storage";
-import { isLayoutContainer, layoutStorageKey, sanitizeLayout, swapMobile, type Layout, type LayoutScope } from "../state/layout";
-import type { Point, ProjectKey } from "../types/portfolio";
+import { useEffect, useState } from 'react';
+import { storage } from '../utils/storage';
+import { loadProjectOrder, orderStorageKey, slotPoint, studioOrder, swapProject } from '../state/studioLayout';
+import type { Layout, LayoutScope } from '../state/layout';
+import type { Point, ProjectKey } from '../types/portfolio';
 
-const load = (scope: LayoutScope) => sanitizeLayout(storage.read<unknown>(layoutStorageKey(scope), {}, isLayoutContainer), scope);
-export function useDesktopLayout(scope: LayoutScope = "desktop") {
-  const [saved, setSaved] = useState<Layout>(() => load(scope));
-  const [draft, setDraft] = useState<Layout | null>(null);
-  useEffect(() => { setSaved(load(scope)); setDraft(null); }, [scope]);
-  const persist = useCallback((next: Layout) => {
-    setSaved(next);
-    if (Object.keys(next).length) storage.write(layoutStorageKey(scope), next);
-    else storage.remove(layoutStorageKey(scope));
+export function useDesktopLayout(scope: LayoutScope = 'desktop', columns = 3) {
+  const [saved, setSaved] = useState(() => loadProjectOrder(scope));
+  const [draft, setDraft] = useState<ProjectKey[] | null>(null);
+  const [drag, setDrag] = useState<{ key: ProjectKey; point: Point } | null>(null);
+  const [undoOrder, setUndoOrder] = useState<ProjectKey[] | null>(null);
+  useEffect(() => { if (!undoOrder) return; const timer = window.setTimeout(() => setUndoOrder(null), 8000); return () => clearTimeout(timer); }, [undoOrder]);
+  useEffect(() => {
+    const next = loadProjectOrder(scope);
+    setSaved(next); setDraft(null); setDrag(null); setUndoOrder(null);
+    storage.write(orderStorageKey(scope), next);
   }, [scope]);
-  const setPosition = (key: ProjectKey, point: Point) => {
-    if (draft !== null) setDraft(current => ({ ...current, [key]: point }));
-    else persist({ ...saved, [key]: point });
+  useEffect(() => { setDrag(null); }, [columns]);
+  const persist = (order: ProjectKey[]) => { setUndoOrder(null); setSaved(order); storage.write(orderStorageKey(scope), order); };
+  const order = draft ?? saved;
+  const layout: Layout = Object.fromEntries(order.map((key, i) => [key, slotPoint(i, columns)]));
+  if (drag) layout[drag.key] = drag.point;
+  const previewPosition = (key: ProjectKey, point: Point) => setDrag({ key, point });
+  const commitPosition = (key: ProjectKey, point: Point) => {
+    const next = swapProject(order, key, point, columns);
+    if (draft) setDraft(next); else persist(next);
+    setDrag(null);
   };
-  const previewPosition = (key: ProjectKey, point: Point) => setDraft(current => ({ ...(current ?? saved), [key]: point }));
-  const commitPosition = (key: ProjectKey, point: Point, origin: Point) => {
-    const current = draft ?? saved;
-    const next = scope === "mobile" ? swapMobile(current, key, point, origin) : { ...current, [key]: point };
-    if (draft !== null) setDraft(next); else persist(next);
+  return {
+    canUndo: undoOrder !== null, undo: () => { if (undoOrder) persist(undoOrder); },
+    order, layout, changed: order.some((key, i) => key !== studioOrder[i]), arranging: draft !== null,
+    begin: () => setDraft(current => current ?? [...saved]),
+    cancel: () => { setDraft(null); setDrag(null); },
+    save: () => { if (draft) persist(draft); setDraft(null); setDrag(null); },
+    reset: () => { if (draft) setDraft([...studioOrder]); else { const previous = [...saved]; persist([...studioOrder]); setUndoOrder(previous); } setDrag(null); },
+    setPosition: previewPosition, previewPosition, commitPosition,
   };
-  const reset = () => { if (draft !== null) setDraft({}); else persist({}); };
-  const begin = () => setDraft(current => current ?? { ...saved });
-  const cancel = () => setDraft(null);
-  const save = () => { if (draft !== null) persist(draft); setDraft(null); };
-  const layout = draft ?? saved;
-  return { layout, changed: Object.keys(layout).length > 0, arranging: draft !== null, begin, cancel, save, setPosition, previewPosition, commitPosition, reset };
 }

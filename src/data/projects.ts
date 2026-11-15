@@ -17,10 +17,10 @@ export const projects: Record<ProjectKey, Project> = {
     icon: "/assets/icons/apps/monierave.svg",
     accent: "#79672d",
     githubAccent: "#6855E7",
-    desktopSummary: "Production-like banking backend",
+    desktopSummary: "Go banking backend",
     desktopStack: "Go · PostgreSQL · Redis",
     techStack: ["Go", "PostgreSQL", "Redis", "Asynq"],
-    featuredImageIndex: 0,
+    featuredImageIndex: 2,
     description: "Monierave is an advanced Go learning project designed as a production-like banking backend, not a licensed banking product. I used it to study how financial correctness, secure sessions, asynchronous delivery, auditability, reconciliation, and operational safeguards fit together inside a deliberately modular monolith.",
     windowStory: {
       learnedTitle: "What I built",
@@ -49,7 +49,7 @@ export const projects: Record<ProjectKey, Project> = {
       ["Status", "Live portfolio demonstration"],
     ],
     images: [
-      image("monierave-hero.png", "Monierave banking website hero with the message Banking made clear", "Open Monierave", "Public-facing entry point for a production-like banking backend."),
+      image("monierave-hero.png", "Monierave banking website hero with the message Banking made clear", "View public entry", "Public-facing entry point for a production-like banking backend."),
       image("monierave-dashboard.png", "Monierave banking dashboard showing accounts and money movement", "View dashboard", "Account overview, balances, and recent money movement."),
       image("monierave-transfer.png", "Monierave money-movement workspace reviewing an internal transfer", "Inspect transfer flow", "Idempotent transfer review and ledger-backed movement."),
       image("monierave-account.png", "Monierave USD account detail and transaction history", "View account detail", "Transaction history and account state as user-facing proof of backend rules."),
@@ -63,7 +63,7 @@ export const projects: Record<ProjectKey, Project> = {
     icon: "/assets/icons/apps/bucketflow.svg",
     accent: "#63762c",
     githubAccent: "#869B4D",
-    desktopSummary: "Stablecoin income infrastructure",
+    desktopSummary: "USDC allocation on Sepolia",
     desktopStack: "Solidity · Next.js · TypeScript",
     techStack: ["Solidity", "Foundry", "Next.js", "React", "TypeScript", "wagmi", "viem"],
     featuredImageIndex: 0,
@@ -106,14 +106,14 @@ export const projects: Record<ProjectKey, Project> = {
     key: "revolte",
     title: "BlockScan",
     slug: "blockscan",
-    desktopLabel: "Blockexplorer",
+    desktopLabel: "BlockScan",
     icon: "/assets/icons/apps/blockexplorer.svg",
     accent: "#087b9f",
     githubAccent: "#1B274A",
-    desktopSummary: "Sepolia blockchain explorer",
+    desktopSummary: "Sepolia explorer",
     desktopStack: "React · Alchemy SDK · Web3",
     techStack: ["React", "React Router", "JavaScript", "Alchemy SDK", "Ethereum Sepolia"],
-    featuredImageIndex: 2,
+    featuredImageIndex: 0,
     description: "BlockScan was one of my first blockchain learning projects: a React-based Sepolia explorer built to understand how frontend applications query, format, and navigate live Ethereum data through the Alchemy SDK. It brings blocks, transactions, wallet activity, NFT metadata, and a persistent watchlist into one responsive interface.",
     windowStory: {
       learnedTitle: "What I built",
@@ -157,7 +157,7 @@ export const projects: Record<ProjectKey, Project> = {
     icon: "/assets/icons/apps/cleanup.svg",
     accent: "#1667d9",
     githubAccent: "#156EEC",
-    desktopSummary: "ERC-20 allowance review and revocation",
+    desktopSummary: "Token allowance review",
     desktopStack: "Next.js · TypeScript · wagmi",
     techStack: ["Next.js", "React", "TypeScript", "wagmi", "viem", "Hardhat"],
     featuredImageIndex: 1,
@@ -203,7 +203,7 @@ export const projects: Record<ProjectKey, Project> = {
     icon: "/assets/icons/apps/escrow.svg",
     accent: "#5961d9",
     githubAccent: "#F1744A",
-    desktopSummary: "Role-based smart contract workflow",
+    desktopSummary: "Contract payment workflow",
     desktopStack: "Solidity · React · ethers.js",
     techStack: ["Solidity", "Hardhat", "React", "Vite", "ethers.js"],
     description: "Escrow was a learning project built to understand how a React interface stays synchronized with an Ethereum smart contract, connected wallet, user permissions, and transaction lifecycle. It validates a focused depositor, beneficiary, and arbiter payment flow on Sepolia; the frontend has not been deployed.",
@@ -244,14 +244,14 @@ export const projects: Record<ProjectKey, Project> = {
     key: "eau",
     title: "Policy.ng",
     slug: "policyng",
-    desktopLabel: "Policy",
+    desktopLabel: "Policy.ng",
     icon: "/assets/icons/apps/policy.svg",
     accent: "#07542f",
     githubAccent: "#317450",
-    desktopSummary: "Citizen-first Nigerian policy platform",
+    desktopSummary: "Public + admin frontend",
     desktopStack: "React · Civic technology · UX",
     techStack: ["React", "Responsive UI", "Design systems", "Content discovery"],
-    featuredImageIndex: 0,
+    featuredImageIndex: 5,
     description: "Policy.ng is an independent, citizen-first civic technology platform that makes Nigerian policies, bills, and acts easier to discover and understand. I collaborated with the team to build the React frontend, translating its policy index and discovery experience into a clear, searchable interface.",
     windowStory: {
       learnedTitle: "My contribution",
@@ -288,7 +288,7 @@ export const projects: Record<ProjectKey, Project> = {
   },
 };
 
-export const projectList = Object.values(projects);
+export const projectList = (["champ", "eau", "silences", "revolte", "lisiere", "elan"] as const).map(key => projects[key]);
 
 export const hashToProject = (hash: string): ProjectKey | undefined => {
   const slug = hash.replace(/^#/, "").toLowerCase();

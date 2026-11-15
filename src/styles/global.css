@@ -24,6 +24,12 @@
   --favour-display-font: "Zalando Sans Expanded", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --favour-text-font: "Zalando Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   --surface: #080808;
+  --assistant-accent: #B9D7E8;
+  --assistant-accent-ink: #101A20;
+  --assistant-user-surface: #1C2B35;
+  --assistant-user-text: #E5F0F6;
+  --assistant-reply-surface: #191C1F;
+  --assistant-reply-text: #E7E9EB;
   --surface-outside: #050505;
   --text-primary: #f5f5f5;
   --text-white: #fff;
@@ -814,6 +820,16 @@ a:focus-visible {
   height: 59.3%;
 }
 
+.window--assistant {
+  left: 22%;
+  top: 10%;
+  width: 56%;
+  bottom: var(--dock-safe-area, 132px);
+}
+.assistant-loading { flex: 1; margin: 0; padding: 30px; background: var(--surface); color: #b8bab7; font-size: 14px; }
+.assistant-loading button { min-height: 44px; padding: 8px 14px; border: 1px solid #b8bab7; border-radius: 8px; background: none; color: #ececea; font: inherit; cursor: pointer; }
+.assistant-loading button:focus-visible { outline: 2px solid #d6dbce; outline-offset: 4px; }
+
 .titlebar {
   position: relative;
   z-index: 2;
@@ -1312,6 +1328,11 @@ a:focus-visible {
     0 16px 34px rgba(0, 0, 0, 0.3);
 }
 
+.portrait-avatar { display: inline-block; flex-shrink: 0; aspect-ratio: 1; overflow: hidden; border-radius: 50%; background: #292c2b; line-height: 0; }
+.portrait-avatar > img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.portrait-avatar > .image-fallback { width: 100%; height: 100%; }
+.identity-avatar .portrait-avatar, .dock-icon--avatar .portrait-avatar { width: 100%; height: 100%; border-radius: inherit; }
+
 .identity-data {
   display: grid;
   align-content: end;
@@ -1757,6 +1778,56 @@ a:focus-visible {
   transition: opacity 280ms ease, filter 180ms ease, transform 340ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.assistant-invitation {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 12px);
+  display: flex;
+  width: 320px;
+  max-width: calc(100vw - 32px);
+  align-items: center;
+  padding: 4px;
+  border: 1px solid rgba(255, 255, 255, .16);
+  border-radius: 13px;
+  background: #252626;
+  box-shadow: 0 8px 22px rgba(0, 0, 0, .24);
+  font-family: var(--favour-text-font);
+  text-align: left;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(-50%);
+  transition: opacity 180ms ease, visibility 180ms;
+}
+.assistant-invitation.is-visible { opacity: 1; visibility: visible; pointer-events: auto; }
+.assistant-invitation button { min-height: 44px; border: 0; border-radius: 9px; background: transparent; color: #eeefeb; font: inherit; cursor: pointer; }
+.assistant-invitation button:hover { background: rgba(255, 255, 255, .055); }
+.assistant-invitation button:focus-visible { outline: 2px solid #d6dbce; outline-offset: 1px; }
+.assistant-invitation-action { display: flex; flex: 1; min-width: 0; align-items: center; gap: 10px; padding: 4px 8px; text-align: left; }
+.assistant-invitation-icon { display: block; flex: 0 0 24px; width: 24px; height: 24px; }
+.assistant-invitation-icon svg { display: block; width: 100%; height: 100%; }
+.assistant-invitation-copy { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 2px; }
+.assistant-invitation-title { font-size: 13px; font-weight: 550; line-height: 18px; }
+#assistant-invitation-description { color: #bfc2bc; font-size: 11px; line-height: 16px; }
+.assistant-invitation-arrow { flex: 0 0 14px; width: 14px; height: 14px; }
+.assistant-invitation-arrow, .assistant-invitation-dismiss svg { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.assistant-invitation-dismiss { display: grid; flex: 0 0 44px; width: 44px; height: 44px; place-items: center; padding: 0; }
+.assistant-invitation-dismiss svg { width: 16px; height: 16px; color: #bfc2bc; }
+
+@media (min-width: 768px) and (max-height: 800px) {
+  .assistant-invitation { width: 280px; left: -16px; bottom: calc(100% + 2px); }
+  #assistant-invitation-description { display: none; }
+}
+@media (max-width: 767px) {
+  .assistant-invitation { bottom: calc(100% + 72px); }
+}
+@media (max-width: 767px) and (max-height: 740px) {
+  .assistant-invitation { left: auto; right: 0; bottom: calc(100% + 25px); width: calc(100vw - 120px); transform: none; }
+  .assistant-invitation-icon, .assistant-invitation-arrow, #assistant-invitation-description { display: none; }
+  .assistant-invitation-action { padding: 4px 6px; }
+  .assistant-invitation-title { font-size: 12px; line-height: 16px; }
+}
+
 .desktop.is-entry-pending .dock-hit-area {
   opacity: 0;
   transform: translate3d(-50%, 13px, 0) scale(0.97);
@@ -1843,11 +1914,8 @@ a:focus-visible {
 .dock-icon--avatar {
   display: grid;
   place-items: center;
-  padding-top: 5%;
-  font-family: "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
-  font-size: clamp(26px, 2.08vw, 43px);
   line-height: 1;
-  background: #fff;
+  background: #292c2b;
 }
 
 .dock-icon--notes {
@@ -2468,6 +2536,11 @@ a:focus-visible {
     filter: none;
   }
 
+}
+
+@media (max-width: 359px) {
+  .dock-hit-area, .desktop.is-entry-ready .dock-hit-area { gap: 4px; }
+  .dock-hit { flex-basis: 44px; width: 44px; }
 }
 
 @media (min-width: 768px) and (max-width: 850px),

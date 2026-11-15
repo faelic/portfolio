@@ -1,4 +1,3 @@
-import { play } from "cuelume";
 import "./PendantLamp.css";
 
 interface PendantLampProps {
@@ -7,7 +6,6 @@ interface PendantLampProps {
   subdued?: boolean;
 }
 
-const LAMP_CLICK_VOLUME = 1;
 
 export function PendantLamp({ lightOn, onToggle, subdued = false }: PendantLampProps) {
   return (
@@ -19,7 +17,6 @@ export function PendantLamp({ lightOn, onToggle, subdued = false }: PendantLampP
         type="button"
         aria-label={lightOn ? "Turn light off" : "Turn light on"}
         aria-pressed={lightOn}
-        onPointerDown={() => play("press", { volume: LAMP_CLICK_VOLUME })}
         onClick={(event) => {
           onToggle();
           if (event.detail > 0) event.currentTarget.blur();
@@ -34,7 +31,7 @@ export function PendantLamp({ lightOn, onToggle, subdued = false }: PendantLampP
 
       <img
         className="pendant-lamp__fixture pendant-lamp__fixture--off"
-        src="/assets/effects/pendant-lamp-fixture-off.png"
+        src="/assets/effects/pendant-lamp-fixture-off.webp"
         width="816"
         height="1010"
         alt=""
@@ -42,7 +39,7 @@ export function PendantLamp({ lightOn, onToggle, subdued = false }: PendantLampP
       />
       <img
         className="pendant-lamp__fixture pendant-lamp__fixture--on"
-        src="/assets/effects/pendant-lamp-fixture.png"
+        src="/assets/effects/pendant-lamp-fixture.webp"
         width="816"
         height="1010"
         alt=""

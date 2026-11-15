@@ -19,11 +19,18 @@
     "measure:performance": "node scripts/measure-performance.mjs"
   },
   "dependencies": {
+    "@assistant-ui/react": "0.15.35",
     "cuelume": "^0.2.2",
     "maplibre-gl": "^6.17.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
+    "react-markdown": "10.1.0",
     "thinking-orbs": "^0.3.1"
+  },
+  "overrides": {
+    "@typescript-eslint/typescript-estree": {
+      "minimatch": "11.0.8"
+    }
   },
   "devDependencies": {
     "@eslint/js": "^9.34.0",

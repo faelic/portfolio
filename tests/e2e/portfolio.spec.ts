@@ -47,28 +47,33 @@ test("keyboard launch, dismissal focus, and mobile covered-window inertness", as
 });
 test("arrangement direction controls preview, cancel, commit and persist", async ({ page, isMobile }) => {
   await ready(page);
-  const key = isMobile ? 'favour.shortcut-layout.mobile.v1' : 'favour.shortcut-layout.v2';
+  const key = isMobile ? 'favour.shortcut-layout.mobile.v3' : 'favour.shortcut-layout.v4';
   const icon = page.locator('[data-project="champ"]');
   const start = await icon.boundingBox();
-  await page.getByRole('button', { name: 'Arrange apps', exact: true }).click();
+  await page.getByRole('button', { name: 'Desktop settings', exact: true }).click();
+  await page.getByRole('radio', { name: 'Arrow controls', exact: true }).check();
+  await page.getByRole('button', { name: 'Rearrange apps', exact: true }).click();
   await page.getByRole('button', { name: 'Move selected app right' }).click();
-  expect(await page.evaluate(key => localStorage.getItem(key), key)).toBeNull();
+  expect(await page.evaluate(key => JSON.parse(localStorage.getItem(key)!), key)).toEqual(['champ', 'eau', 'silences', 'revolte', 'lisiere', 'elan']);
   await page.getByRole('button', { name: 'Cancel', exact: true }).click();
   const cancelled = await icon.boundingBox();
   expect(Math.abs(cancelled!.x - start!.x)).toBeLessThan(1);
-  await page.getByRole('button', { name: 'Arrange apps', exact: true }).click();
+  await page.getByRole('button', { name: 'Desktop settings', exact: true }).click();
+  await page.getByRole('radio', { name: 'Arrow controls', exact: true }).check();
+  await page.getByRole('button', { name: 'Rearrange apps', exact: true }).click();
   await expect(page.getByRole('button', { name: 'Select Monierave', exact: true })).toBeFocused();
   await page.keyboard.press('ArrowRight');
   await page.keyboard.press('Enter');
   await expect(page.getByRole('toolbar', { name: 'Arrange project apps' })).toHaveCount(0);
   const saved = await page.evaluate(key => JSON.parse(localStorage.getItem(key)!), key);
-  expect(saved.champ.x).toBeGreaterThan(isMobile ? 4 : 17.5);
-  if (isMobile) expect(saved.silences).toEqual({ x: 4, y: 27 });
+  expect(saved).toEqual(['eau', 'champ', 'silences', 'revolte', 'lisiere', 'elan']);
   await page.reload();
   await expect(page.locator('.desktop')).not.toHaveClass(/is-booting/);
   const reloaded = await icon.boundingBox();
   expect(reloaded!.x).toBeGreaterThan(start!.x);
-  await page.getByRole('button', { name: 'Arrange apps', exact: true }).click();
+  await page.getByRole('button', { name: 'Desktop settings', exact: true }).click();
+  await page.getByRole('radio', { name: 'Arrow controls', exact: true }).check();
+  await page.getByRole('button', { name: 'Rearrange apps', exact: true }).click();
   await page.getByRole('button', { name: 'Reset', exact: true }).click();
   await page.keyboard.press('Escape');
   expect(await page.evaluate(key => JSON.parse(localStorage.getItem(key)!), key)).toEqual(saved);
@@ -84,11 +89,13 @@ test("scope changes cancel drafts at 767/768 and corrupt layouts stay reachable"
   expect(box!.x).toBeGreaterThanOrEqual(0);
   expect(box!.x + box!.width).toBeLessThanOrEqual(769);
   expect(box!.y).toBeGreaterThanOrEqual(0);
-  await page.getByRole('button', { name: 'Arrange apps', exact: true }).click();
+  await page.getByRole('button', { name: 'Desktop settings', exact: true }).click();
+  await page.getByRole('radio', { name: 'Arrow controls', exact: true }).check();
+  await page.getByRole('button', { name: 'Rearrange apps', exact: true }).click();
   await page.keyboard.press('ArrowLeft');
   await page.setViewportSize({ width: 767, height: 844 });
   await expect(page.getByRole('toolbar', { name: 'Arrange project apps' })).toHaveCount(0);
-  await expect(page.locator('[data-project="champ"]')).not.toHaveAttribute('style', /(?:^|;)\s*left:/);
+  expect(await page.locator('[data-project="champ"]').evaluate(el => el.getBoundingClientRect().left)).toBeGreaterThanOrEqual(0);
 });
 test("denied stores and failed image requests do not block entry or content", async ({ page }) => {
   await page.addInitScript(() => {
@@ -129,19 +136,18 @@ test("module-download failure stays local and Retry makes a fresh import attempt
   await page.getByRole('button', { name: 'About me', exact: true }).click();
   await expect(page.getByText('Based in Lagos, Nigeria', { exact: true })).toBeAttached();
   await page.locator('.location-block').scrollIntoViewIfNeeded();
+  await page.getByRole('button', { name: 'Explore globe', exact: true }).click();
   await expect(page.getByText('Interactive map unavailable.', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Retry map', exact: true }).click();
   await expect.poll(() => requests.length).toBeGreaterThanOrEqual(2);
   expect(new Set(requests).size).toBeGreaterThanOrEqual(2);
   await expect(page.getByRole('link', { name: 'ututufavour7@gmail.com', exact: true })).toBeAttached();
 });
-test("reduced motion, lamp restoration, note dates and responsive text remain usable", async ({ page }) => {
+test("reduced motion, note dates and responsive text remain usable", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await ready(page);
-  await page.getByRole('button', { name: 'Turn light off', exact: true }).click();
   await page.reload();
   await expect(page.locator('.desktop')).not.toHaveClass(/is-booting/);
-  await expect(page.getByRole('button', { name: 'Turn light on', exact: true })).toHaveAttribute('aria-pressed', 'false');
   await page.getByRole('button', { name: 'Notes', exact: true }).click();
   await expect(page.getByText('January 22, 2026 at 11:35 AM', { exact: true })).toHaveCount(2);
   await page.getByRole('tab', { name: /^About/ }).press('Home');

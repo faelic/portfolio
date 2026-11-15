@@ -1,5 +1,6 @@
 import { GlobeSection } from "../map/GlobeSection";
 import { profile } from "../../data/profile";
+import { PortraitAvatar } from "../shared/PortraitAvatar";
 
 export function AboutWindow({ active }: { active: boolean }) {
   return (
@@ -9,7 +10,7 @@ export function AboutWindow({ active }: { active: boolean }) {
           <div className="about-content">
             <h2>About me</h2>
             <section className="identity" aria-label="Profile details">
-              <div className="identity-avatar" role="img" aria-label="Favour avatar"><span aria-hidden="true">👨🏾‍💻</span></div>
+              <div className="identity-avatar"><PortraitAvatar large /></div>
               <dl className="identity-data">
                 <div><dt>NAME</dt><dd>{profile.name}</dd></div>
                 <div><dt>POSITION</dt><dd>{profile.position}</dd></div>

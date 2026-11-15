@@ -11,7 +11,8 @@ export const storage = {
     } catch { return fallback; }
   },
   write<T>(key: string, value: T) {
-    try { window.localStorage.setItem(key, JSON.stringify(value)); } catch { /* In-memory state remains usable. */ }
+    try { window.localStorage.setItem(key, JSON.stringify(value)); return true; }
+    catch { return false; /* In-memory state remains usable. */ }
   },
   remove(key: string) {
     try { window.localStorage.removeItem(key); } catch { /* Optional persistence. */ }

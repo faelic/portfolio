@@ -1,7 +1,19 @@
+import type { ProjectKey } from "../types/portfolio";
+
+export const portfolioPresentation: { featuredProject: ProjectKey; summary: string; proof: string; resumeUrl?: string } = {
+  featuredProject: "champ",
+  summary: "Hello, I'm Favour and I build backend systems, product interfaces, and AI applications.",
+  proof: "Go banking backend. React workflows at Policy.ng. A portfolio assistant built with RAG.",
+};
+
 export const profile = {
   name: "Favour Chukwuemerie Ututu",
   position: "Software Engineer",
   email: "ututufavour7@gmail.com",
+  avatar: {
+    small: "/assets/profile/favour-avatar-96.webp",
+    large: "/assets/profile/favour-avatar-384.webp",
+  },
   biography: [
     "I came into software from Quantity Surveying. My path was not a straight one, but I kept wanting to understand how digital products worked: what happened after an action, where the data went, and what made one implementation hold up better than another. Eventually, I started building to find out.",
     "Frontend engineering gave me my first close view of how software becomes a product. On Policy.ng at Flamong, I work across the public website and administrative tools, connecting React and TypeScript interfaces to API-driven workflows. I enjoy making an interface clear, responsive, and useful, as well as making it look good.",

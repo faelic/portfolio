@@ -2,14 +2,23 @@ import type { Point, PortfolioWindow, ProjectKey, WindowKey } from "../types/por
 
 export interface WindowState { windows: PortfolioWindow[]; nextZ: number }
 export type WindowAction =
+  | { type: "desktop" }
   | { type: "open"; key: WindowKey; projectKey?: ProjectKey }
   | { type: "focus" | "close" | "expand"; key: WindowKey }
   | { type: "move"; key: WindowKey; position: Point }
-  | { type: "navigate"; projectKey?: ProjectKey };
+  | { type: "navigate"; projectKey?: ProjectKey }
+  | { type: "replace-project"; key: WindowKey; projectKey: ProjectKey };
 export const initialWindowState: WindowState = { windows: [], nextZ: 110 };
 export const topWindow = (windows: PortfolioWindow[]) => windows.reduce<PortfolioWindow | undefined>((top, item) => !top || item.zIndex > top.zIndex ? item : top, undefined);
 
 export function windowReducer(state: WindowState, action: WindowAction): WindowState {
+  if (action.type === "desktop") return { ...state, windows: [] };
+  if (action.type === "replace-project") {
+    const current = state.windows.find(item => item.key === action.key);
+    if (!current) return windowReducer(state, { type: "open", key: `project:${action.projectKey}`, projectKey: action.projectKey });
+    const key: WindowKey = `project:${action.projectKey}`;
+    return { nextZ: state.nextZ + 1, windows: state.windows.filter(item => item.key !== key || item.key === action.key).map(item => item.key === action.key ? { ...item, key, projectKey: action.projectKey, instanceKey: item.instanceKey ?? item.key, zIndex: state.nextZ + 1 } : item) };
+  }
   if (action.type === "navigate") {
     if (action.projectKey) return windowReducer(state, { type: "open", key: `project:${action.projectKey}`, projectKey: action.projectKey });
     const windows = state.windows.filter(item => !item.projectKey);
