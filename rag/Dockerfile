@@ -1,6 +1,6 @@
-FROM ghcr.io/astral-sh/uv:0.13.1 AS uv
 FROM python:3.12.12-slim-bookworm
-COPY --from=uv /uv /usr/local/bin/uv
+# Keep the shell-capable runtime first for hosting build-image detection.
+COPY --from=ghcr.io/astral-sh/uv:0.13.1 /uv /usr/local/bin/uv
 ENV UV_LINK_MODE=copy UV_COMPILE_BYTECODE=1 PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 TIKTOKEN_CACHE_DIR=/app/tokenizer-cache \
     APP_ENV=production CHAT_ENABLED=false RAG_DATA_DIR=/data \
