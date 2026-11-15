@@ -137,3 +137,22 @@ Startup writes one backend_startup JSON line with a source-code fingerprint, the
 Application-handled responses include X-Portfolio-Backend with that same source fingerprint, including application 404/405 responses. This is a diagnostic marker, not authentication. Health-related GET/HEAD responses log backend_health_request with only an allowlisted static path, status and source fingerprint. Query strings, cookies, forwarded addresses and arbitrary paths are excluded.
 
 Compare the original and /api/health aliases using the public hostname. If the app logs /live when the requested path was /health/live, an upstream path rewrite is indicated. If the /api aliases succeed while the original paths fail, inspect the host's /health routing rules; do not reinitialize Neon to repair a routing 404. If neither alias nor the new source marker appears, inspect the deployment source/start command and the backend_startup line before changing application logic. A failed database check is 503 on readiness, not a missing liveness route. The aliases and extra health logging can be removed after the hosted routing discrepancy is resolved.
+
+### Safe PostgreSQL failure categories
+
+Ledger failures now emit `postgres_failed phase=<phase> category=<category>` in runtime logs. Phases distinguish connection establishment, session configuration, queries, commits, and owner-only initialization. Categories use known SQLSTATE mappings first; libpq connection messages without SQLSTATE are inspected internally for fixed diagnostic hints. No raw message, traceback, DSN, username, password, hostname, SQL text, or server diagnostic field is logged. Unknown errors remain `category=unknown`; message-based categories are diagnostic hints, not proof of a root cause.
+
+| Category | What to investigate |
+| --- | --- |
+| `authentication` | Runtime login credentials and authentication policy |
+| `dns` | Connection-string hostname and DNS resolution from the host |
+| `tls` / `channel_binding` | Verified TLS settings, certificate trust, and channel-binding requirements; retain `sslmode=verify-full` |
+| `connect_timeout` / `connection_refused` / `network_unreachable` | Endpoint availability and outbound connectivity |
+| `connection_lost` / `server_unavailable` / `connection_capacity` | Database availability or connection capacity |
+| `database_missing` | Selected database name |
+| `permission_denied` | Runtime-role grants, without switching the app to the owner login |
+| `schema_missing` / `schema_mismatch` | Ledger schema and version compatibility |
+| `statement_timeout_or_cancel` / `lock_timeout` | Bounded database work or lock contention |
+| `unknown` | Unclassified failure; do not assume credentials are wrong |
+
+The outer ledger deadline emits `ledger_failed category=operation_timeout`. All failures retain the existing fail-closed behavior and connection cleanup. Public readiness still returns only `{"status":"unavailable"}` with HTTP 503. After deploying, check readiness once and inspect the corresponding category in Pxxl runtime logs; do not share the connection string or reset the database.

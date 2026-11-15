@@ -8,6 +8,41 @@ import psycopg
 
 from .protection import Ledger, ProtectionError, logger, client_limits, debit_quote, PRICE_VERSION
 
+
+def failure_category(exc):
+    """Return fixed labels only. Never emit libpq messages or diagnostic fields."""
+    categories = {
+        '28P01': 'authentication', '28000': 'authentication',
+        '3D000': 'database_missing', '42501': 'permission_denied',
+        '42P01': 'schema_missing', '42703': 'schema_mismatch',
+        '53300': 'connection_capacity', '57P03': 'server_unavailable',
+        '57014': 'statement_timeout_or_cancel', '55P03': 'lock_timeout',
+    }
+    category = categories.get(getattr(exc, 'sqlstate', None))
+    if category:
+        return category
+    # libpq connection failures often have no SQLSTATE. Inspect internally, but
+    # return only our labels: messages may contain DSNs, passwords or SQL values.
+    message = str(exc).lower()
+    for label, fragments in (
+        ('authentication', ('password authentication failed', 'no password supplied', 'no pg_hba.conf entry')),
+        ('dns', ('could not translate host name', 'failed to resolve host', 'could not resolve hostname', 'name or service not known', 'temporary failure in name resolution', 'nodename nor servname provided')),
+        ('channel_binding', ('channel binding',)),
+        ('tls', ('certificate verify failed', 'certificate verification failed', 'root certificate', 'does not match host name', 'ssl error', 'ssl connection', 'tls error', 'server does not support ssl')),
+        ('connect_timeout', ('connection timeout expired', 'timeout expired', 'connection timed out')),
+        ('connection_refused', ('connection refused',)),
+        ('network_unreachable', ('network is unreachable', 'no route to host')),
+        ('connection_lost', ('server closed the connection unexpectedly', 'connection reset by peer')),
+    ):
+        if any(fragment in message for fragment in fragments):
+            return label
+    return 'unknown'
+
+
+def log_failure(exc, phase):
+    logger.warning('postgres_failed phase=%s category=%s', phase, failure_category(exc))
+
+
 def connect(database_url):
     # No persistent connection/heartbeat: let Neon scale to zero when idle.
     # Disable prepared statements for transaction-pooler compatibility.
@@ -32,8 +67,10 @@ def configuration(readonly=False):
 
 def initialize_postgres(database_url):
     """Owner-only, transactional first initialization; never clear existing data."""
+    phase = 'connect'
     try:
         with connect(database_url) as db:
+            phase = 'initialize'
             configure(db)
             # Coordinate two accidental operator initializations too.
             db.execute('SELECT pg_advisory_xact_lock(741829364)')
@@ -43,7 +80,7 @@ def initialize_postgres(database_url):
             # psycopg owns this transaction (the SQL-editor copy has wrappers).
             db.execute(schema.replace('BEGIN;\n', '').replace('COMMIT;\n', ''))
     except psycopg.Error as exc:
-        logger.warning('protection_init_failed exception_class=%s', type(exc).__name__)
+        log_failure(exc, phase)
         raise ProtectionError() from None
 
 
@@ -67,17 +104,21 @@ class PostgresLedger(Ledger):
 
     @contextmanager
     def transaction(self):
+        phase = 'connect'
         try:
             with connect(self._database_url) as db:
+                phase = 'configure'
                 configure(db)
+                phase = 'query'
                 # One singleton row serializes admissions and budget checks across
                 # connections/processes. The following statements see committed
                 # predecessors at READ COMMITTED; check+insert is atomic.
                 if db.execute('SELECT version FROM metadata WHERE id=1 FOR UPDATE').fetchall() != [(1,)]:
                     raise ProtectionError()
                 yield db
+                phase = 'commit'
         except (psycopg.Error, OSError) as exc:
-            logger.warning('protection_failed exception_class=%s', type(exc).__name__)
+            log_failure(exc, phase)
             raise ProtectionError() from None
 
     def check(self):
@@ -85,15 +126,19 @@ class PostgresLedger(Ledger):
         self.probe()
 
     def probe(self):
+        phase = 'connect'
         try:
             with connect(self._database_url) as db:
+                phase = 'configure'
                 configure(db, readonly=True)
+                phase = 'query'
                 if db.execute('SELECT version FROM metadata WHERE id=1').fetchall() != [(1,)]:
                     raise ProtectionError()
                 db.execute('SELECT at FROM admissions LIMIT 1').fetchall()
                 db.execute('SELECT micro_usd FROM debits LIMIT 1').fetchall()
                 db.execute('SELECT at, visitor, ip FROM client_admissions LIMIT 1').fetchall()
-        except (psycopg.Error, OSError):
+        except (psycopg.Error, OSError) as exc:
+            log_failure(exc, phase)
             raise ProtectionError() from None
 
     def summary(self):
@@ -104,17 +149,21 @@ class PostgresLedger(Ledger):
     @asynccontextmanager
     async def atransaction(self, *, readonly=False):
         db = None
+        phase = 'connect'
         try:
             db = await psycopg.AsyncConnection.connect(
                 self._database_url, sslrootcert=certifi.where(), connect_timeout=5, prepare_threshold=None)
+            phase = 'configure'
             await db.execute(configuration(readonly))
+            phase = 'query'
             query = 'SELECT version FROM metadata WHERE id=1' + ('' if readonly else ' FOR UPDATE')
             if await (await db.execute(query)).fetchall() != [(1,)]:
                 raise ProtectionError()
             yield db
+            phase = 'commit'
             await db.commit()
         except (psycopg.Error, OSError) as exc:
-            logger.warning('protection_failed exception_class=%s', type(exc).__name__)
+            log_failure(exc, phase)
             raise ProtectionError() from None
         finally:
             # Close even on cancellation/uncertain COMMIT. Do not retry or refund.

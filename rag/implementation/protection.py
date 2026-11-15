@@ -187,6 +187,7 @@ async def call_ledger(ledger, method, *args, **kwargs):
                 return await getattr(ledger, 'a' + method)(*args, **kwargs)
             return await asyncio.to_thread(getattr(ledger, method), *args, **kwargs)
     except TimeoutError:
+        logger.warning('ledger_failed category=operation_timeout')
         raise ProtectionError() from None
 
 
