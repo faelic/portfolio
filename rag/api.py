@@ -1,10 +1,12 @@
 """Visitor chat transport; workbench and ingestion stay owner-only CLI tools."""
 import asyncio
+import hashlib
 import json
 import logging
 import time
 import uuid
 from contextlib import aclosing, asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
@@ -22,6 +24,8 @@ from implementation.protection import create_ledger, ProtectionError, budget_gua
 from implementation.identity import COOKIE_NAME, visitor_identity, cookie_header, client_ip, digest
 
 logger = logging.getLogger(__name__)
+BACKEND_SOURCE = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()[:12]
+HEALTH_PATHS = {'/health/live', '/health/ready', '/api/health/live', '/api/health/ready', '/live', '/ready'}
 BODY_LIMIT = 64 * 1024
 BODY_DEADLINE = 10
 REQUEST_DEADLINE = 90
@@ -78,6 +82,15 @@ async def ready():
 async def lifespan(_app):
     # No embedding/generation requests or automatic ledger initialization.
     # Missing database/index state leaves liveness available and chat closed.
+    # Safe operator diagnostics for hosts without terminal access. No environment
+    # values, credentials, client addresses, queries, prompts or filesystem paths.
+    print('backend_startup ' + json.dumps({
+        'source': BACKEND_SOURCE,
+        'production': settings.production,
+        'chat_enabled': settings.chat_enabled,
+        'ledger_configured': bool(settings.database_url),
+        'health_routes': sorted(route.path for route in _app.routes if route.path in HEALTH_PATHS),
+    }), flush=True)
     if settings.production:
         await asyncio.to_thread(get_tokenizer)
         await ready()
@@ -116,7 +129,11 @@ class LocalRequests:
             nonlocal status
             if message['type'] == 'http.response.start':
                 status = message['status']
-                message['headers'] = list(message.get('headers', [])) + [(b'x-request-id', request_id.encode())]
+                message['headers'] = list(message.get('headers', [])) + [
+                    (b'x-request-id', request_id.encode()), (b'x-portfolio-backend', BACKEND_SOURCE.encode()),
+                ]
+                if scope['method'] in ('GET', 'HEAD') and scope['path'] in HEALTH_PATHS:
+                    logger.warning('backend_health_request path=%s status=%d source=%s', scope['path'], status, BACKEND_SOURCE)
                 if new_cookie is not None:
                     message['headers'].append((b'set-cookie', cookie_header(new_cookie, settings.production)))
             await send(message)
@@ -221,11 +238,13 @@ async def invalid_request(_request, _exc):
     return JSONResponse({'message': 'Invalid request. Check the input format and length, then try again.'}, 422)
 
 
+@app.get('/api/health/live', include_in_schema=False)
 @app.get('/health/live')
 async def live():
     return JSONResponse({'status': 'live'}, headers={'Cache-Control': 'no-store'})
 
 
+@app.get('/api/health/ready', include_in_schema=False)
 @app.get('/health/ready')
 async def readiness():
     available = await ready()
