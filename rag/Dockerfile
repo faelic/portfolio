@@ -4,7 +4,9 @@ RUN python -m pip install --no-cache-dir --only-binary=:all: uv==0.13.1
 ENV UV_LINK_MODE=copy UV_COMPILE_BYTECODE=1 PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 TIKTOKEN_CACHE_DIR=/app/tokenizer-cache \
     APP_ENV=production CHAT_ENABLED=false RAG_DATA_DIR=/data \
-    ANONYMIZED_TELEMETRY=false PATH=/app/.venv/bin:$PATH
+    ANONYMIZED_TELEMETRY=false
+# Use literal paths for builders that do not expand inherited ENV variables.
+ENV PATH=/app/.venv/bin:/usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin
 WORKDIR /app
 COPY pyproject.toml uv.lock ./
 RUN uv sync --locked --no-dev --no-install-project && \
