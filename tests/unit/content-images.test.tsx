@@ -21,13 +21,18 @@ it("uses each note's authoritative date in preview and reader, with keyboard tab
   expect(screen.getByRole("tab", { name: /Experience/ })).toHaveAttribute("aria-selected", "true");
   expect(screen.getAllByText(notes.experience.date)).toHaveLength(2);
 });
-it("aligns public positioning and records a planned assistant without changing project evidence", () => {
+it("preserves positioning and distinguishes owner-confirmed availability from verified uptime", () => {
   expect(profile.position).toBe("Software Engineer");
   expect(profile.biography.join(" ")).toContain("currently learning agentic AI");
   const html = readFileSync("index.html", "utf8");
   expect(html).not.toContain("Backend-Focused");
   const knowledge = readFileSync("rag/knowledge/portfolio/assistant-status.md", "utf8");
-  expect(knowledge).toContain("not available yet");
-  expect(knowledge).toContain("not implemented yet");
+  expect(profile.introduction.join(" ")).toContain("curated portfolio knowledge");
+  expect(profile.introduction.join(" ")).not.toContain("not available yet");
+  expect(knowledge).toContain("publicly available through his portfolio");
+  expect(knowledge).not.toContain("not available yet");
+  expect(knowledge).not.toContain("not implemented yet");
+  expect(knowledge).toContain("owner-confirmed availability statement");
+  expect(knowledge).toContain("not an independent uptime check");
   expect(knowledge).not.toContain("He uses these ideas in the AI assistant on his portfolio");
 });

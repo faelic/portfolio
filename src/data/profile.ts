@@ -12,6 +12,6 @@ export const profile = {
   introduction: [
     "I'm Favour, a software engineer building backend systems, frontend applications, AI applications, and blockchain tools.",
     "My work connects product interfaces with the systems beneath them. I care about reliability, security, clear user flows, and making complex software easier to understand and use. I am currently learning agentic AI engineering alongside my work with LLM applications and RAG.",
-    "This portfolio is a working desktop. Each app documents a real project, and the desktop itself is an ongoing experiment in interaction and product storytelling. The portfolio AI assistant is planned; it is not available yet. The work will keep evolving as I build, improve, and learn.",
+    "This portfolio is a working desktop. Each app documents a real project, and the desktop itself is an ongoing experiment in interaction and product storytelling. Its AI assistant answers questions from curated portfolio knowledge. The work will keep evolving as I build, improve, and learn.",
   ],
 } as const;

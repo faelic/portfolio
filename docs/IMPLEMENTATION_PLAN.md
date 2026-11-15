@@ -107,3 +107,10 @@ Full screen-reader coverage, physical-device testing, production headers, extern
 **Prepared through knowledge organization and individually confirmed updates:** 12 topic documents, frontmatter metadata with topics and approved aliases, a source map, a documented chunking baseline, and 23 retrieval evaluation cases. Owner confirmations add Escrow, approved links and opportunity preferences, country-only public residence, the Flamong start date, and the first-AI-project correction. See the [knowledge base guide](../rag/README.md). The supplied source remains preserved byte-for-byte outside the ingestion boundary.
 
 **Deferred:** chat UI, providers, ingestion/chunking execution, embeddings, retrieval/reranking, vector schema, grounded generation/citations, conversation storage, credentials, cost controls, evaluation execution, and deployment. The knowledge corpus preserves the planned assistant status and has no ingestion/runtime connection. Review the completed baseline, data contract, and recorded limitations before specifying the working RAG pipeline.
+
+
+## CI failure correction — 15 November 2026
+
+The verify failure on d339810 came from a stale test expecting planned/unavailable assistant copy. The corrected regression checks owner-confirmed public availability with its non-uptime qualification, and the profile introduction now agrees with that status.
+
+The verify job pins ubuntu-24.04 and uses checkout/setup-node/upload-artifact v7 (Node24 internally), while application commands retain Node22. Browser artifacts upload only after the browser step fails; missing artifacts no longer warn after an earlier unit failure. This fix does not change the knowledge corpus or claim independently verified public uptime.
