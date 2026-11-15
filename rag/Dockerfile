@@ -1,8 +1,6 @@
-# Pxxl needs a shell-capable first image and named stages for COPY --from.
-FROM python:3.12.12-slim-bookworm AS python-base
-FROM ghcr.io/astral-sh/uv:0.13.1 AS uv
-FROM python-base
-COPY --from=uv /uv /usr/local/bin/uv
+FROM python:3.12.12-slim-bookworm
+# Avoid shell-less stages and cross-stage copies in hosting build sandboxes.
+RUN python -m pip install --no-cache-dir --only-binary=:all: uv==0.13.1
 ENV UV_LINK_MODE=copy UV_COMPILE_BYTECODE=1 PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 TIKTOKEN_CACHE_DIR=/app/tokenizer-cache \
     APP_ENV=production CHAT_ENABLED=false RAG_DATA_DIR=/data \
