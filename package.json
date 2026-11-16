@@ -16,7 +16,8 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test --project=desktop-chromium --project=mobile-chromium --project=webkit",
     "test:map-smoke": "playwright test --project=map-smoke",
-    "measure:performance": "node scripts/measure-performance.mjs"
+    "measure:performance": "node scripts/measure-performance.mjs",
+    "capture:social": "node scripts/capture-social-preview.mjs"
   },
   "dependencies": {
     "@assistant-ui/react": "0.15.35",
