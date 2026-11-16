@@ -6,6 +6,8 @@ The 13 November implementation and screenshot record below is historical. Later 
 
 Owner revision on 16 November: remove the preloader entirely (including unused component, CSS and dependency); keep landing controls usable during image/font loading. Start with BlockScan is the recommended action. Contact retains the original envelope outline, with a short opening-flap hover/focus animation and static reduced-motion behavior. The other selected animated icons remain. Mobile header alignment and shared utility/dock footer are retained.
 
+Mobile-only layout refinement: move the introduction/actions/projects upward by up to 36px (with safe-area clearance) while preserving 56px portrait, 64px project artwork, 17px supporting text and 44px controls. Settings and dock share a fixed bottom region with safe-area clearance. Height-aware project slots reclaim unused spacing. Tested portrait layouts at 360×640, 375×667, 390×660, 390×844 and 430×932 fit without content scrolling; very short/narrow or landscape layouts retain internal content scrolling above the fixed footer instead of shrinking or overlapping controls. Desktop composition is unchanged. The mobile assistant starts at the top each time it opens and follows new responses after Send.
+
 See [RAG security and release contract](RAG_SECURITY.md), [assistant integration](ASSISTANT.md), and [evaluation evidence](AI_EVALUATION.md). Historical screenshots, raw performance JSON and dated measurements are preserved; they are not new security or quality results.
 
 Implemented the approved centered studio and connected project journey on 13 November 2026. This replaces the earlier left-introduction/right-grid composition. Backend services and assistant internals were outside this change.

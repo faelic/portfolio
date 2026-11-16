@@ -50,7 +50,7 @@ test('mobile bounces once when the icon enters view, without loading or opening 
  page.on('request',request=>requests.push(request.url()));
  await page.goto('/');
  const count=()=>page.evaluate(()=>(window as unknown as Window & {assistantBounceCount:number}).assistantBounceCount);
- expect(await count()).toBe(0);
+ await expect.poll(count).toBe(1);
  const assistant=page.getByRole('button',{name:'Assistant',exact:true});
  await assistant.scrollIntoViewIfNeeded();
  await expect.poll(count).toBe(1);

@@ -1,9 +1,9 @@
 import { AnimatedIcon } from "../icons/AnimatedIcon";
 import { createPortal } from "react-dom";
-import { useEffect, useRef, useState, type ComponentProps } from "react";
+import { useEffect, useRef, useState, type ComponentProps, type ReactNode } from "react";
 import {
   AssistantRuntimeProvider, ComposerPrimitive, MessagePrimitive, ThreadPrimitive,
-  useExternalStoreRuntime, useAuiState, type AppendMessage, type ThreadMessageLike,
+  useExternalStoreRuntime, useAuiState, useAuiEvent, type AppendMessage, type ThreadMessageLike,
 } from "@assistant-ui/react";
 import Markdown from "react-markdown";
 import { approvedAssistantUrl } from './links';
@@ -18,6 +18,35 @@ import "./assistant.css";
 export type AssistantFrameProps = Omit<ComponentProps<typeof WindowFrame>, "children">;
 const AVARTAR_NAME = "Avartar";
 const fullTimeFormat = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "long" });
+
+// Mounted fresh on each mobile opening; desktop retains its existing viewport.
+function MobileAssistantViewport({ children }: { children: ReactNode }) {
+  const viewport = useRef<HTMLDivElement>(null);
+  const [following, setFollowing] = useState(false);
+  const scrollFrame = useRef(0);
+  useAuiEvent('thread.runStart', () => {
+    setFollowing(true);
+    cancelAnimationFrame(scrollFrame.current);
+    scrollFrame.current = requestAnimationFrame(() => {
+      const element = viewport.current;
+      if (element) element.scrollTop = element.scrollHeight;
+    });
+  });
+  useEffect(() => {
+    const element = viewport.current;
+    if (element) element.scrollTop = 0;
+    scrollFrame.current = requestAnimationFrame(() => { if (element) element.scrollTop = 0; });
+    return () => cancelAnimationFrame(scrollFrame.current);
+  }, []);
+  return <ThreadPrimitive.Viewport ref={viewport} className="assistant-viewport" autoScroll={following}
+    scrollToBottomOnInitialize={false} scrollToBottomOnThreadSwitch={false} scrollToBottomOnRunStart={false}
+    role="region" aria-label="Conversation" tabIndex={0}>{children}</ThreadPrimitive.Viewport>;
+}
+
+function DesktopAssistantViewport({ children }: { children: ReactNode }) {
+  return <ThreadPrimitive.Viewport className="assistant-viewport" autoScroll scrollToBottomOnRunStart={false}
+    role="region" aria-label="Conversation" tabIndex={0}>{children}</ThreadPrimitive.Viewport>;
+}
 
 function convertMessage(message: ChatMessage): ThreadMessageLike {
   return {
@@ -85,6 +114,7 @@ export default function AssistantFeature({ frame, mount }: { frame?: AssistantFr
   const surface = useRef<HTMLDivElement>(null);
   const runtimeRef = useRef<ReturnType<typeof useExternalStoreRuntime<ChatMessage>> | null>(null);
   const mobileOpen = !!frame?.mobile;
+  const ConversationViewport = mobileOpen ? MobileAssistantViewport : DesktopAssistantViewport;
 
   const stop = () => { controller.current?.abort(); };
   useEffect(() => { if (!frame) controller.current?.abort(); }, [frame]);
@@ -182,7 +212,7 @@ export default function AssistantFeature({ frame, mount }: { frame?: AssistantFr
           <label className="assistant-history"><input className="sr-only" type="checkbox" role="switch" checked={keep} onChange={event => setKeep(event.target.checked)} /><span className="assistant-history-track" aria-hidden="true" />Keep chat history</label>
           <button type="button" className="assistant-clear" onClick={clear} disabled={!messages.length && !error} aria-label="Clear conversation" title="Clear conversation"><AnimatedIcon name="trash"/></button>
         </div>
-        <ThreadPrimitive.Viewport className="assistant-viewport" autoScroll scrollToBottomOnRunStart={false} role="region" aria-label="Conversation" tabIndex={0}>
+        <ConversationViewport>
           <ThreadPrimitive.Empty>
             <div className="assistant-welcome">
               <PortraitAvatar className="assistant-welcome-portrait" large />
@@ -192,7 +222,7 @@ export default function AssistantFeature({ frame, mount }: { frame?: AssistantFr
             </div>
           </ThreadPrimitive.Empty>
           <div className="assistant-messages"><ThreadPrimitive.Messages components={{ Message }} /></div>
-        </ThreadPrimitive.Viewport>
+        </ConversationViewport>
         <div className="assistant-bottom">
           {error && <p className="assistant-error" role="alert">{error}</p>}
           <p className="sr-only" role="status">{announcement}</p>

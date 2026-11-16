@@ -93,9 +93,11 @@ export function App() {
           <div className="favour-brand">FAVOUR</div>
           <p className="availability-status" role="status"><span className="availability-dot" aria-hidden="true"/><span>Available</span></p>
         </header>
+        <div className="studio-content">
         <DesktopIntro onOpen={manager.openProject} />
         <div className="desktop-shortcuts" aria-label="Projects">
           {projectList.map(project => <DesktopIcon key={project.key} project={project} dragEnabled={method === "drag"} position={desktopLayout.layout[project.key]} mobile={mobile} arranging={desktopLayout.arranging} selected={desktopLayout.arranging && selected === project.key} onSelect={() => { setSelected(project.key); setAnnouncement(`${project.title} selected.`); }} onArrangeStart={() => beginArrangement(project.key)} onMove={position => desktopLayout.previewPosition(project.key, position)} onMoveEnd={position => desktopLayout.commitPosition(project.key, position)} onOpen={opener => manager.openProject(project.key, opener)} />)}
+        </div>
         </div>
         {desktopLayout.arranging && <div className="arrangement-toolbar" role="toolbar" aria-label="Arrange project apps">
           <p id="arrangement-instructions"><strong>{projects[selected].desktopLabel}</strong><span>{method === "drag" ? "Drag apps to rearrange. Keyboard arrows also work." : "Select an app, then use the arrows."} Done saves your changes.</span></p>
