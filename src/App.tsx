@@ -107,7 +107,7 @@ export function App() {
           <button ref={arrangeButton} type="button" className="arrange-apps utility-button" aria-label="Desktop settings" data-tooltip="Desktop settings" onClick={() => setSettingsOpen(true)} disabled={desktopLayout.arranging}><UtilityIcon kind="settings" /></button>
           <button type="button" className="sound-toggle utility-button" aria-label={`Sound ${sound.audible ? "on" : "off"}`} data-tooltip={`Sound ${sound.audible ? "on" : "off"}`} aria-pressed={sound.audible} onClick={sound.toggle}><UtilityIcon kind={sound.audible ? "sound-on" : "sound-off"} /></button>
         </div>
-        <Dock projectFocused={projectFocused} onOpenApp={openApp} onPrepareAssistant={() => { void prepareAssistant().catch(() => { assistantModule = undefined; }); }} openApps={manager.windows.filter(model => !model.projectKey).map(model => model.key as AppKey)} />
+        <Dock discoveryEnabled={!hasOpenWindow && !desktopLayout.arranging && !settingsOpen} projectFocused={projectFocused} onOpenApp={openApp} onPrepareAssistant={() => { void prepareAssistant().catch(() => { assistantModule = undefined; }); }} openApps={manager.windows.filter(model => !model.projectKey).map(model => model.key as AppKey)} />
         </footer>
       </div>
       <p className="sr-only" role="status" aria-live="polite">{announcement}</p>

@@ -18,7 +18,7 @@ Starting the API, opening the window, and loading health checks do not make mode
 
 ## Visitor experience
 
-The permanent Assistant dock button opens a stable window frame around lazy-loaded content. Hover/focus may prepare the module; no automatic invitation or notification badge is shown. Closing/reopening preserves the current in-memory conversation; opening makes no assistant request.
+The permanent Assistant dock button opens a stable window frame around lazy-loaded content. On a first desktop entry in a session, its existing tooltip shows only “Assistant” and the artwork bounces gently. On mobile, only the bounce is shown, with no callout text. Both layouts use one 650ms bounce when at least 90% of the button enters view. Reduced motion suppresses the bounce. A guarded session flag (`favour.assistant-discovery.v1`) prevents repetition; denied storage falls back to the current mounted visit. The cue retires on dock interaction or when a window/settings/arrangement covers the home. It never opens/prepares the assistant or makes an API request. Hover/focus may still prepare the module. No notification badge or false running indicator is shown. Closing/reopening preserves the current in-memory conversation; opening makes no assistant request.
 
 The empty screen says “Hi! I'm Favour's assistant” and explains that answers draw from the portfolio. Three short inline suggested questions fill the composer without sending. Their backgrounds remain black; hover uses the pointer cursor rather than a blue border. The window shares the landing page's dark canvas. Clear conversation is a labelled delete-icon control.
 

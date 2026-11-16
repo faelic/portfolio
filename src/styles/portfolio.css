@@ -30,6 +30,7 @@
 .desktop .dock-hit-area { position: fixed; bottom: max(26px, env(safe-area-inset-bottom)); gap: 10px; padding: 9px; }
 .desktop .dock-hit { flex-basis: 44px; width: 44px; height: 44px; }
 .dock-hit.is-running::after { content: ''; position: absolute; bottom: -6px; left: calc(50% - 2px); width: 4px; height: 4px; border-radius: 50%; background: #eeeee8; }
+.dock-hit.has-entry-label .dock-tooltip { opacity: 1; transform: translate(-50%, 0); }
 .desktop .desktop-utilities { position: fixed; left: max(28px, 4vw); bottom: 30px; display: flex; gap: 6px; z-index: 30; }
 .desktop .desktop-utilities .utility-button { position: relative; display: grid; place-items: center; width: 44px; min-height: 44px; padding: 0; border: 0; border-radius: 10px; color: #c3c4be; background: transparent; }
 .desktop .utility-button:hover, .desktop .utility-button:focus-visible { background: #20211f; color: #fff; }

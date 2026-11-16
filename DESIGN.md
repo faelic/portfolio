@@ -215,7 +215,7 @@ Tags use compact corners, actions slightly larger corners, and panels larger cor
 
 **Implemented:** About, Notes, Assistant, a divider, then GitHub, X, and LinkedIn. Hover/focus labels are white tooltips; keyboard focus gets an outline. Fine-pointer proximity gently magnifies neighboring icons up to scale 1.2; reduced motion keeps scale 1 and coarse/no-hover input bypasses magnification. Current targets are 44px. A small running dot appears only for an actually open About, Notes, or Assistant window, with “Window open” exposed to assistive technology; social links receive no running indicator. The arrangement toolbar replaces the dock during rearranging.
 
-**Assistant discovery:** the permanent dock launcher opens the Assistant. The prior timed floating invitation and unread About badge are absent from the centered studio shell. Preserve the existing Assistant surface and lazy runtime behavior below.
+**Assistant discovery:** the permanent dock launcher opens the Assistant only on activation. A first desktop entry shows the existing “Assistant” tooltip and one gentle bounce; mobile uses the same bounce when the icon enters view, with no text. The cue is once per session, is suppressed while the home is covered, and does not load/open chat or imply a running window. Reduced motion suppresses the bounce. The prior floating invitation and unread About badge remain absent.
 
 ### Assistant
 

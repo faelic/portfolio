@@ -1,12 +1,17 @@
 import { useCallback, useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from "react";
 import type { AppKey } from "../../types/portfolio";
 import { PortraitAvatar } from "../shared/PortraitAvatar";
+import { session } from "../../utils/storage";
+import { useMediaQuery } from "../../hooks/useMediaQuery";
+
+const DISCOVERY_KEY = 'favour.assistant-discovery.v1';
 
 interface Props {
   onPrepareAssistant?: () => void;
   projectFocused: boolean;
   onOpenApp: (app: AppKey, opener?: HTMLElement) => void;
   openApps: AppKey[];
+  discoveryEnabled: boolean;
 }
 
 
@@ -35,7 +40,7 @@ function AssistantIcon() {
   return <svg viewBox="0 0 64 64" focusable="false"><rect width="64" height="64" rx="14" fill="var(--assistant-accent)"/><path d="M18 20h28v21H30l-10 7v-7h-2V20Z" fill="none" stroke="var(--assistant-accent-ink)" strokeWidth="3" strokeLinejoin="round"/><path d="M25 28h14m-14 6h9" fill="none" stroke="var(--assistant-accent-ink)" strokeWidth="3" strokeLinecap="round"/></svg>;
 }
 
-export function Dock({ projectFocused, onOpenApp, openApps, onPrepareAssistant }: Props) {
+export function Dock({ projectFocused, onOpenApp, openApps, onPrepareAssistant, discoveryEnabled }: Props) {
   const dockRef = useRef<HTMLElement>(null);
   const assistantButton = useRef<HTMLButtonElement>(null);
   const motionItems = useRef<DockMotionItem[]>([]);
@@ -43,6 +48,40 @@ export function Dock({ projectFocused, onOpenApp, openApps, onPrepareAssistant }
   const previousFrameTime = useRef(0);
   const reducedMotion = useRef(false);
   const [tooltip, setTooltip] = useState<string>();
+  const mobile = useMediaQuery('(max-width: 767px)');
+  const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
+  const discoverySeen = useRef(session.flag(DISCOVERY_KEY));
+  const discoveryAnimation = useRef<Animation | null>(null);
+
+  const dismissDiscovery = useCallback(() => {
+    assistantButton.current?.classList.remove('has-entry-label');
+    discoveryAnimation.current?.cancel();
+    discoveryAnimation.current = null;
+  }, []);
+
+  useEffect(() => {
+    const button = assistantButton.current;
+    if (!button || !discoveryEnabled || discoverySeen.current) return;
+    // Wait for the real icon to enter view: the mobile footer may be below the
+    // fold. Discovery never opens/prepares chat or makes an assistant request.
+    const observer = new IntersectionObserver(entries => {
+      if (discoverySeen.current || !entries.some(entry => entry.isIntersecting && entry.intersectionRatio >= .9)) return;
+      discoverySeen.current = true;
+      session.writeFlag(DISCOVERY_KEY, true);
+      observer.disconnect();
+      const artwork = button.querySelector<HTMLElement>('.dock-artwork');
+      if (!prefersReducedMotion && artwork?.animate) {
+        discoveryAnimation.current = artwork.animate([
+            { transform: 'translateY(0)' }, { transform: 'translateY(-7px)', offset: .3 },
+            { transform: 'translateY(0)', offset: .6 }, { transform: 'translateY(-3px)', offset: .78 },
+            { transform: 'translateY(0)' },
+        ], { duration: 650, iterations: 1, easing: 'ease-out' });
+      }
+      if (!mobile) button.classList.add('has-entry-label');
+    }, { threshold: .9 });
+    observer.observe(button);
+    return () => { observer.disconnect(); dismissDiscovery(); };
+  }, [discoveryEnabled, mobile, prefersReducedMotion, dismissDiscovery]);
 
   const syncMotionItems = useCallback(() => {
     const dock = dockRef.current;
@@ -127,6 +166,7 @@ export function Dock({ projectFocused, onOpenApp, openApps, onPrepareAssistant }
   };
 
   const resetMagnification = () => {
+    dismissDiscovery();
     dockRef.current?.classList.remove("is-magnifying");
     setMagnificationTargets(null);
     startMagnificationAnimation();
@@ -164,7 +204,7 @@ export function Dock({ projectFocused, onOpenApp, openApps, onPrepareAssistant }
     onOpenApp("about", event.currentTarget);
   };
 
-  const activateTooltip = (label: string) => setTooltip(label);
+  const activateTooltip = (label: string) => { dismissDiscovery(); setTooltip(label); };
   const openAssistant = () => {
     resetMagnification();
     // The invitation retires on launch; restore focus to the permanent dock icon.
@@ -181,7 +221,7 @@ export function Dock({ projectFocused, onOpenApp, openApps, onPrepareAssistant }
   });
 
   return (
-    <nav ref={dockRef} className={`dock-hit-area${projectFocused ? " dock--project-focused" : ""}`} aria-label="Applications and social links" onPointerMove={magnify} onPointerLeave={resetMagnification}>
+    <nav ref={dockRef} className={`dock-hit-area${projectFocused ? " dock--project-focused" : ""}`} aria-label="Applications and social links" onPointerMove={magnify} onPointerLeave={resetMagnification} onPointerDown={dismissDiscovery}>
       <button className={`dock-hit dock-hit--avatar${openApps.includes("about") ? " is-running" : ""}${tooltip === "About me" ? " is-tooltip-active" : ""}`} type="button" aria-label="About me" aria-description={openApps.includes("about") ? "Window open" : undefined} onClick={openAbout} onPointerEnter={() => activateTooltip("About me")} onFocus={() => activateTooltip("About me")} onBlur={() => setTooltip(undefined)}>
         <span className="dock-visual"><span className="dock-artwork"><span className="dock-icon dock-icon--avatar" aria-hidden="true"><PortraitAvatar decorative /></span></span></span><span className="dock-tooltip">About me</span>
       </button>
