@@ -22,6 +22,8 @@ The permanent Assistant dock button opens a stable window frame around lazy-load
 
 The empty screen says “Hi! I'm Favour's assistant” and explains that answers draw from the portfolio. Three short inline suggested questions fill the composer without sending. Their backgrounds remain black; hover uses the pointer cursor rather than a blue border. The window shares the landing page's dark canvas. Clear conversation is a labelled delete-icon control.
 
+Contact retains the previous envelope outline with local flap-opening motion; the other selected Lucide Animated artwork uses the shared `AnimatedIcon` component (MIT attribution in `THIRD_PARTY_LICENSES.md`). Send has a brief paper-plane movement; Clear has a custom lid movement. Motion follows the whole control's pointer/keyboard/touch interaction, stays off for disabled controls and reduced-motion preferences, and never delays actions. Keep chat history remains a labelled native checkbox/switch with a short thumb transition. During a request, Send immediately becomes the existing static Stop response control. Icon animation does not imply network success. Sound artwork always reflects the actual saved sound state.
+
 The UI uses assistant-ui runtime/primitives and react-markdown. Raw HTML, images and embeds are excluded. Generated/restored links become clickable only when their exact normalized destination is in the owner-approved link/reference registries. Other link labels render as text. No retrieved-reference list is displayed after the answer; optional bounded reference metadata remains compatible with the transport and saved history.
 
 ## History and storage

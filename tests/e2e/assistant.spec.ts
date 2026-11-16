@@ -1,11 +1,8 @@
 import { expect, test } from "@playwright/test";
 
-test.beforeEach(async ({ page }) => {
-  await page.addInitScript(() => sessionStorage.setItem("favour.boot-seen.v1", "true"));
-});
 const open = async (page: import("@playwright/test").Page) => {
   await page.goto("/");
-  await expect(page.locator(".desktop")).not.toHaveClass(/is-booting/);
+  await expect(page.locator(".desktop")).toHaveClass(/is-entry-ready/);
   await page.getByRole("button", { name: "Assistant", exact: true }).click();
   await expect(page.getByRole("dialog", { name: "Assistant", exact: true })).toBeVisible();
   await expect(page.getByRole("textbox", { name: "Message Avartar" })).toBeVisible();
@@ -28,7 +25,7 @@ test("assistant loads on demand, keeps contextual chat, and inherits window beha
     return route.fulfill({ contentType: "application/x-ndjson", body: answer(body.history.length ? "His contribution was frontend engineering." : "Favour builds backend systems, frontend applications, AI applications, and blockchain tools.") });
   });
   await page.goto("/");
-  await expect(page.locator(".desktop")).not.toHaveClass(/is-booting/);
+  await expect(page.locator(".desktop")).toHaveClass(/is-entry-ready/);
   expect(assistantLoaded).toBe(false);
   await page.getByRole("button", { name: "Assistant", exact: true }).click();
   const dialog = page.getByRole("dialog", { name: "Assistant", exact: true });
@@ -120,7 +117,7 @@ test("unavailable service preserves drafts and malicious output cannot load remo
 test("a failed assistant module stays inside its window", async ({ page }) => {
   await page.route("**/assets/AssistantFeature-*.js", route => route.abort());
   await page.goto("/");
-  await expect(page.locator(".desktop")).not.toHaveClass(/is-booting/);
+  await expect(page.locator(".desktop")).toHaveClass(/is-entry-ready/);
   await page.getByRole("button", { name: "Assistant", exact: true }).click();
   await expect(page.getByRole("alert")).toContainText("couldn’t load");
   await page.getByRole("dialog", { name: "Assistant", exact: true }).getByRole("button", { name: "Close window" }).click();

@@ -1,3 +1,4 @@
+import { AnimatedIcon } from "../icons/AnimatedIcon";
 import { createPortal } from "react-dom";
 import { useEffect, useRef, useState, type ComponentProps } from "react";
 import {
@@ -179,7 +180,7 @@ export default function AssistantFeature({ frame, mount }: { frame?: AssistantFr
   const content = <ThreadPrimitive.Root ref={surface} className="assistant">
         <div className="assistant-toolbar">
           <label className="assistant-history"><input className="sr-only" type="checkbox" role="switch" checked={keep} onChange={event => setKeep(event.target.checked)} /><span className="assistant-history-track" aria-hidden="true" />Keep chat history</label>
-          <button type="button" className="assistant-clear" onClick={clear} disabled={!messages.length && !error} aria-label="Clear conversation" title="Clear conversation"><svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7m4-7v7" /></svg></button>
+          <button type="button" className="assistant-clear" onClick={clear} disabled={!messages.length && !error} aria-label="Clear conversation" title="Clear conversation"><AnimatedIcon name="trash"/></button>
         </div>
         <ThreadPrimitive.Viewport className="assistant-viewport" autoScroll scrollToBottomOnRunStart={false} role="region" aria-label="Conversation" tabIndex={0}>
           <ThreadPrimitive.Empty>
@@ -198,7 +199,7 @@ export default function AssistantFeature({ frame, mount }: { frame?: AssistantFr
           <ComposerPrimitive.Root className="assistant-composer">
             <ComposerPrimitive.Input aria-label="Message Avartar" placeholder="Ask about Favour…" maxLength={2000} rows={1} maxRows={5} autoFocus={false} cancelOnEscape={false} />
             {running ? <ComposerPrimitive.Cancel className="assistant-send" aria-label="Stop response"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2" fill="currentColor" /></svg></ComposerPrimitive.Cancel>
-              : <ComposerPrimitive.Send className="assistant-send" aria-label="Send message"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg></ComposerPrimitive.Send>}
+              : <ComposerPrimitive.Send className="assistant-send" aria-label="Send message"><AnimatedIcon name="send"/></ComposerPrimitive.Send>}
           </ComposerPrimitive.Root>
           <p className="assistant-privacy">{keep
             ? storageUnavailable ? "This browser couldn’t save your history. Messages stay for this visit." : "Saved in this browser. You can clear it anytime."

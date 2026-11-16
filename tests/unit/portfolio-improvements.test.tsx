@@ -14,9 +14,9 @@ it("opens the featured project with its real opener and presents an immediately 
   const open = vi.fn();
   render(<DesktopIntro onOpen={open} />);
   expect(screen.getByRole("heading", { level: 2 })).toHaveTextContent("Hello, I'm Favour and I build backend systems, product interfaces, and AI applications.");
-  const primary = screen.getByRole("button", { name: "Start with Monierave" });
+  const primary = screen.getByRole("button", { name: "Start with BlockScan" });
   fireEvent.click(primary);
-  expect(open).toHaveBeenCalledWith("champ", primary);
+  expect(open).toHaveBeenCalledWith("revolte", primary);
   expect(screen.getByRole("link", { name: "Contact" })).toHaveAttribute("href", "mailto:ututufavour7@gmail.com");
   expect(screen.queryByRole("link", { name: /résumé/ })).not.toBeInTheDocument();
 });

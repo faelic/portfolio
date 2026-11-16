@@ -8,7 +8,7 @@ See [RAG security and release contract](RAG_SECURITY.md), [assistant integration
 
 ## Current implementation extension — 12 November 2026
 
-The accepted avatar introduction extends the existing React desktop without a framework replacement. Identity/navigation are immediately usable; the blocking boot is unmounted and project screenshots are requested only after case entry. Compressed WebP lamp art preserves the original PNG assets. Compact home layouts scroll, while mobile windows remain full-screen with inert backgrounds. App-region coordinates have versioned migration. Cases use explicit contribution/status/decision summaries, selected screenshot views and optional long-form details. The globe now requires an explicit action and sound defaults off.
+The accepted avatar introduction extends the existing React desktop without a framework replacement. Identity/navigation are immediately usable; the preloader and its boot state are removed and project screenshots are requested only after case entry. Historical lamp assets remain available but the lamp is not mounted. Compact home layouts scroll, while mobile windows remain full-screen with inert backgrounds. App-region coordinates have versioned migration. Cases use explicit contribution/status/decision summaries, selected screenshot views and optional long-form details. The globe now requires an explicit action and sound defaults off.
 
 The Python stream supports an opt-in public-reference extension with canonical destinations, Unicode-aware bounds and a 12,000-byte reference batch limit. Older clients retain text-only events; newer clients also accept old streams. Incremental parsing handles a proxy coalescing many valid frames without relaxing the per-frame bound. The owner evaluator records exact selected context, timings, available answer usage, version hashes and human-review state. Evaluation datasets/runners are not visitor endpoints. See [the delivery record](PORTFOLIO_DELIVERY.md) for current validation and outstanding hosted checks.
 
@@ -50,7 +50,7 @@ There is no active tunnel, Three.js dependency, gallery renderer, or real minimi
 
 ## Dependencies and development interface
 
-[package.json](../package.json) declares Node `>=22.12.0 <23`; use `npm ci`. [package-lock.json](../package-lock.json) is authoritative for exact versions. Current runtime dependencies remain React/React DOM 19, cuelume, thinking-orbs, and MapLibre; MapLibre was upgraded from 5.24 to patched 6.x after the attribution-sanitizer advisory. Vite received a compatible 7.x security update. No framework rewrite was introduced.
+[package.json](../package.json) declares Node `>=22.12.0 <23`; use `npm ci`. [package-lock.json](../package-lock.json) is authoritative for exact versions. Current runtime dependencies include React/React DOM 19, assistant-ui, react-markdown, cuelume, Motion, and MapLibre. The preloader-only thinking-orbs dependency has been removed; MapLibre was upgraded from 5.24 to patched 6.x after the attribution-sanitizer advisory. Vite received a compatible 7.x security update. No framework rewrite was introduced.
 
 Development-only additions: Vitest, React Testing Library, user-event, jest-dom, jsdom, Playwright, and Node typings. Test files live outside production source inputs. A separate [test TS project](../tsconfig.test.json) checks tests/configuration. [Vitest config](../vitest.config.ts) reuses Vite settings; [Playwright config](../playwright.config.ts) tests the built app.
 
@@ -69,7 +69,7 @@ Development-only additions: Vitest, React Testing Library, user-event, jest-dom,
 
 Content is compile-time TypeScript; no router/global state/server-cache package is introduced. The [schema document](BACKEND_SCHEMA.md) owns exact types, IDs, slots, and storage keys.
 
-**Windows:** unique keys; highest z-index is active; re-opening preserves position/expansion; already-active focus is a no-op. DOM nodes/openers are refs outside reducer state. Focus waits until boot releases inertness, then moves after the DOM/style update. Dismissal targets the next active window, otherwise the connected visible opener or desktop launcher. Desktop dialogs are nonmodal; mobile covered dialogs and background controls are inert. Focus entering a window raises it. Escape respects consumed events and arrangement mode.
+**Windows:** unique keys; highest z-index is active; re-opening preserves position/expansion; already-active focus is a no-op. DOM nodes/openers are refs outside reducer state. Focus moves after the DOM/style update, without an entry-loading gate. Dismissal targets the next active window, otherwise the connected visible opener or desktop launcher. Desktop dialogs are nonmodal; mobile covered dialogs and background controls are inert. Focus entering a window raises it. Escape respects consumed events and arrangement mode.
 
 **URLs:** explicit slugs preserve the six existing hashes. Mount, `popstate`, and `hashchange` share reconciliation. Valid navigation opens/raises its project with no history push; empty/unknown navigation removes only project windows. Ordinary project launches push only if the parsed project differs. Focus and About/Notes do not push history. Closing clears only a matching parsed project fragment, including uppercase recognized variants. The URL still does not serialize the complete workspace.
 
@@ -79,7 +79,7 @@ Content is compile-time TypeScript; no router/global state/server-cache package 
 
 ## Loading, assets, and globe lifecycle
 
-**Entry:** App does not mount BootPreloader or the lamp. Identity and launchers are immediately usable; project screenshots are loaded through opened cases rather than preloaded to gate entry. The old preloader component is retained historical code, not the current entry lifecycle.
+**Entry:** The preloader component, loading overlay styles, boot state/timers, and preloader-only orb dependency are removed. Identity and launchers are immediately usable even when landing images or fonts stall; direct-link focus is not gated by asset readiness. Project screenshots load through opened cases. Optional icon-animation features load separately and do not block navigation; failure leaves static icons. Contact uses the original envelope outline with a short flap-opening hover/focus motion and a static reduced-motion state.
 
 **Images:** [ResilientImage](../src/components/shared/ResilientImage.tsx) handles failed featured images and icon uses without fetching another fallback URL. Source changes retry naturally. Absent screenshot data remains distinct from network-failed supplied evidence. Local WOFF2 fonts/icons/screenshots remain under [public/assets](../public/assets/).
 

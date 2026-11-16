@@ -18,6 +18,7 @@ import { useWindowManager } from "./hooks/useWindowManager";
 import type { AppKey, ProjectKey } from "./types/portfolio";
 import type { AssistantFrameProps } from "./components/assistant/AssistantFeature";
 import { withDeadline } from "./utils/withDeadline";
+import { IconMotion } from "./components/icons/AnimatedIcon";
 
 let assistantModule: ReturnType<typeof loadAssistant> | undefined;
 function loadAssistant() { return withDeadline(import("./components/assistant/AssistantFeature")); }
@@ -85,12 +86,14 @@ export function App() {
     else if (directions[event.key]) { event.preventDefault(); moveSelected(...directions[event.key]); }
     else if (event.key === "Enter" && (event.target as HTMLElement).closest(".shortcut")) { event.preventDefault(); finishArrangement(true); }
   };
-  return <>
+  return <IconMotion>
     <main tabIndex={-1} className={`desktop is-entry-ready${projectFocused ? " has-focused-project" : ""}${hasOpenWindow ? " has-open-window" : ""}${desktopLayout.arranging ? " is-arranging" : ""}`} aria-label="Favour interactive portfolio desktop" onKeyDown={arrangementKey}>
-      <div className="favour-background" aria-hidden="true"><div className="favour-brand">FAVOUR</div></div>
       <div className="desktop-home" inert={backgroundInert}>
+        <header className="studio-header">
+          <div className="favour-brand">FAVOUR</div>
+          <p className="availability-status" role="status"><span className="availability-dot" aria-hidden="true"/><span>Available</span></p>
+        </header>
         <DesktopIntro onOpen={manager.openProject} />
-        <p className="availability-status" role="status"><span className="availability-dot" aria-hidden="true"/><span>Available</span></p>
         <div className="desktop-shortcuts" aria-label="Projects">
           {projectList.map(project => <DesktopIcon key={project.key} project={project} dragEnabled={method === "drag"} position={desktopLayout.layout[project.key]} mobile={mobile} arranging={desktopLayout.arranging} selected={desktopLayout.arranging && selected === project.key} onSelect={() => { setSelected(project.key); setAnnouncement(`${project.title} selected.`); }} onArrangeStart={() => beginArrangement(project.key)} onMove={position => desktopLayout.previewPosition(project.key, position)} onMoveEnd={position => desktopLayout.commitPosition(project.key, position)} onOpen={opener => manager.openProject(project.key, opener)} />)}
         </div>
@@ -99,11 +102,13 @@ export function App() {
           {method === "arrows" && <div className="arrangement-directions">{([['left', -1, 0], ['up', 0, -1], ['down', 0, 1], ['right', 1, 0]] as const).map(([direction, dx, dy]) => <button key={direction} type="button" aria-label={`Move selected app ${direction}`} onClick={() => moveSelected(dx, dy)}><svg viewBox="0 0 24 24" aria-hidden="true" style={{ transform: `rotate(${direction === "left" ? 180 : direction === "up" ? -90 : direction === "down" ? 90 : 0}deg)` }}><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>)}</div>}
           <div className="arrangement-actions"><button type="button" disabled={!desktopLayout.changed} onClick={desktopLayout.reset}>Reset</button><button type="button" onClick={() => finishArrangement(false)}>Cancel</button><button type="button" onClick={() => finishArrangement(true)}>Done</button></div>
         </div>}
+        <footer className="studio-footer">
         <div className="desktop-utilities" role="group" aria-label="Studio controls">
           <button ref={arrangeButton} type="button" className="arrange-apps utility-button" aria-label="Desktop settings" data-tooltip="Desktop settings" onClick={() => setSettingsOpen(true)} disabled={desktopLayout.arranging}><UtilityIcon kind="settings" /></button>
           <button type="button" className="sound-toggle utility-button" aria-label={`Sound ${sound.audible ? "on" : "off"}`} data-tooltip={`Sound ${sound.audible ? "on" : "off"}`} aria-pressed={sound.audible} onClick={sound.toggle}><UtilityIcon kind={sound.audible ? "sound-on" : "sound-off"} /></button>
         </div>
         <Dock projectFocused={projectFocused} onOpenApp={openApp} onPrepareAssistant={() => { void prepareAssistant().catch(() => { assistantModule = undefined; }); }} openApps={manager.windows.filter(model => !model.projectKey).map(model => model.key as AppKey)} />
+        </footer>
       </div>
       <p className="sr-only" role="status" aria-live="polite">{announcement}</p>
       <section className="window-layer" aria-label="Open windows">
@@ -124,5 +129,5 @@ export function App() {
       </section>
       {settingsOpen && <DesktopSettings method={method} onMethod={setMethod} sound={sound} changed={desktopLayout.changed} canUndo={desktopLayout.canUndo} onReset={desktopLayout.reset} onUndo={desktopLayout.undo} onClose={closeSettings} onArrange={() => { setSettingsOpen(false); beginArrangement(selected, true); }} />}
     </main>
-  </>;
+  </IconMotion>;
 }

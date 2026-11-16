@@ -16,7 +16,7 @@ test('project hover and keyboard focus do not show previews or fetch screenshots
 
 test('case journey reuses one window, preserves geometry, and supports Back and Forward', async ({ page }) => {
  await page.goto('/');
- await page.getByRole('button',{name:'Start with Monierave',exact:true}).click();
+ await page.getByRole('button',{name:'Open Monierave',exact:true}).click();
  const dialog = page.locator('.window--project');
  await expect(dialog).toBeFocused();
  await dialog.evaluate(el => Promise.all(el.getAnimations().map(animation => animation.finished.catch(() => {}))));

@@ -1,12 +1,11 @@
 import { test, expect } from "@playwright/test";
 
 test.beforeEach(async ({ page }) => {
-  await page.addInitScript(() => sessionStorage.setItem("favour.boot-seen.v1", "true"));
   await page.route(/https:\/\/(tiles\.openfreemap\.org|demotiles\.maplibre\.org)\//, route => route.abort());
 });
 const ready = async (page: import('@playwright/test').Page, url = '/') => {
   await page.goto(url);
-  await expect(page.locator('.desktop')).not.toHaveClass(/is-booting/);
+  await expect(page.locator('.desktop')).toHaveClass(/is-entry-ready/);
 };
 test("history preserves stacking, clears unknown projects, and retains Notes", async ({ page }) => {
   await ready(page);
@@ -68,7 +67,7 @@ test("arrangement direction controls preview, cancel, commit and persist", async
   const saved = await page.evaluate(key => JSON.parse(localStorage.getItem(key)!), key);
   expect(saved).toEqual(['eau', 'champ', 'silences', 'revolte', 'lisiere', 'elan']);
   await page.reload();
-  await expect(page.locator('.desktop')).not.toHaveClass(/is-booting/);
+  await expect(page.locator('.desktop')).toHaveClass(/is-entry-ready/);
   const reloaded = await icon.boundingBox();
   expect(reloaded!.x).toBeGreaterThan(start!.x);
   await page.getByRole('button', { name: 'Desktop settings', exact: true }).click();
@@ -147,7 +146,7 @@ test("reduced motion, note dates and responsive text remain usable", async ({ pa
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await ready(page);
   await page.reload();
-  await expect(page.locator('.desktop')).not.toHaveClass(/is-booting/);
+  await expect(page.locator('.desktop')).toHaveClass(/is-entry-ready/);
   await page.getByRole('button', { name: 'Notes', exact: true }).click();
   await expect(page.getByText('January 22, 2026 at 11:35 AM', { exact: true })).toHaveCount(2);
   await page.getByRole('tab', { name: /^About/ }).press('Home');

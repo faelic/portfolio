@@ -59,7 +59,7 @@ The original V IDs remain stable. Automated coverage is focused on observable tr
 
 | ID | Scenario | Coverage / limits |
 |---|---|---|
-| V-01 | Entry, failed preload, optional import waits | Browser entry with failed images/denied storage; unit cases for stalled images/fonts, return sessions, and optional-import deadlines. Authored boot minimums remain. |
+| V-01 | Immediate entry, failed assets, optional import waits | Browser entry remains interactive with stalled portraits/fonts, failed images, or denied storage. No preloader or authored boot minimum remains. Optional-import deadlines and static-icon fallback are tested separately. |
 | V-02 | All six projects, link/evidence parity, duplicate windows | Browser cases across three projects; reducer/manager duplicate-event tests. External project services are not audited. |
 | V-03 | Window focus, stacking, close, expand/restore, drag | Focus/stacking/dismissal regressions and pure transitions; browser-driven desktop Chromium/WebKit titlebar drag and expand/restore checks passed. |
 | V-04 | Keyboard launch, active window, Escape, tabs, restored focus | Browser launch/focus/inertness, unit consumed Escape and Notes navigation. Full screen-reader matrix remains manual. |

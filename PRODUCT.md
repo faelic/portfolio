@@ -22,7 +22,7 @@ Present Favour as a **Software Engineer**, with backend, frontend, AI, and block
 
 The product is a credible, testable product statement rather than a portfolio brochure. Its differentiator is that it presents engineering range, product judgment, and interface craft through a macOS-inspired interactive environment with real project evidence, deep-linkable navigation, and project-aware case surfaces.
 
-The existing app is frontend-only. RAG is planned, not implemented. The [PRD](docs/PRD.md) and [technical specification](docs/TRD.md) establish the baseline; a future assistant and backend require separate design and implementation.
+The portfolio includes a React frontend and Python RAG/API with bounded streaming and optional reference metadata (the retrieved-reference list is hidden). The first screen presents identity and selected work directly. The [assistant guide](docs/ASSISTANT.md) and [delivery record](docs/PORTFOLIO_DELIVERY.md) describe current behavior; historical pre-RAG specifications are not the current assistant contract. Public deployment and live answer quality require separate verification.
 
 ## Operating Context
 
@@ -46,7 +46,7 @@ Visitors explore the work through a desktop-like web interface with draggable an
 
 - Real project cases and structured portfolio content live in [src/data/projects.ts](src/data/projects.ts).
 - The interactive portfolio shell and product framing live in [src/App.tsx](src/App.tsx), [src/components/windows/AboutWindow.tsx](src/components/windows/AboutWindow.tsx), and [src/styles/global.css](src/styles/global.css).
-- Real screenshots and supporting visual references are present in [public/assets/projects](public/assets/projects/) and [references](references/).
+- Real project screenshots are present in [public/assets/projects](public/assets/projects/), with reviewed implementation captures in [docs/design](docs/design/). Local-only references/ inputs are intentionally ignored rather than published or versioned.
 - Escrow intentionally has repository-only evidence and no fabricated deployed screenshots.
 
 ## Product Principles

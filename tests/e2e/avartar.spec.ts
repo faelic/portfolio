@@ -2,7 +2,6 @@ import { expect, test } from "@playwright/test";
 
 test.use({ timezoneId: "Africa/Lagos" });
 test.beforeEach(async ({ page }) => {
-  await page.addInitScript(() => sessionStorage.setItem("favour.boot-seen.v1", "true"));
   await page.route(/^https?:\/\/(?!127\.0\.0\.1:4173\/)/, route => route.abort());
 });
 
@@ -17,7 +16,7 @@ test("Avartar shows the portrait, thinking state, aligned bubbles, and local mes
   });
   await page.clock.setFixedTime(new Date("2026-11-12T12:27:00.000Z"));
   await page.goto("/");
-  await expect(page.locator(".desktop")).not.toHaveClass(/is-booting/);
+  await expect(page.locator(".desktop")).toHaveClass(/is-entry-ready/);
   await expect(page.locator(".dock-icon--avatar img")).toBeVisible();
   await expect.poll(() => page.locator(".dock-icon--avatar img").evaluate((element: HTMLImageElement) => element.naturalWidth)).toBe(96);
   await page.getByRole("button", { name: "Assistant", exact: true }).click();
@@ -80,7 +79,7 @@ test("legacy history stays readable and portrait failures have a safe fallback",
   });
   await page.route("**/assets/profile/favour-avatar-*.webp", route => route.abort());
   await page.goto("/");
-  await expect(page.locator(".desktop")).not.toHaveClass(/is-booting/);
+  await expect(page.locator(".desktop")).toHaveClass(/is-entry-ready/);
   await page.getByRole("button", { name: "Assistant", exact: true }).click();
   await expect(page.getByText("An older answer", { exact: true })).toBeVisible();
   await expect(page.locator(".assistant-message time")).toHaveCount(0);

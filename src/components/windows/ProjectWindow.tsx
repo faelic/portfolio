@@ -1,3 +1,4 @@
+import { AnimatedIcon } from "../icons/AnimatedIcon";
 import { ResilientImage } from "../shared/ResilientImage";
 import { studioOrder } from "../../state/studioLayout";
 import { projects } from "../../data/projects";
@@ -88,8 +89,8 @@ export function ProjectWindow({ project, onNavigate }: { project: Project; onNav
                   </nav>
                 )}
                 {onNavigate && <nav className="project-sequence" aria-label="Continue exploring projects">
-                  {previous && <button type="button" onClick={() => onNavigate(previous)}><span>Previous project</span><strong>{projects[previous].title}</strong></button>}
-                  {next && <button type="button" onClick={() => onNavigate(next)}><span>Next project</span><strong>{projects[next].title}</strong></button>}
+                  {previous && <button type="button" onClick={() => onNavigate(previous)}><span><AnimatedIcon name="arrow-left"/>Previous project</span><strong>{projects[previous].title}</strong></button>}
+                  {next && <button type="button" onClick={() => onNavigate(next)}><span>Next project<AnimatedIcon name="arrow-right"/></span><strong>{projects[next].title}</strong></button>}
                 </nav>}
               </div>
             </article>

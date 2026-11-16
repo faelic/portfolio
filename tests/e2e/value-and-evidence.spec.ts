@@ -8,10 +8,10 @@ test("identity is immediately usable without project images, model or geography 
   await expect(page.locator(".desktop-intro-avatar img")).toHaveAttribute("src", "/assets/profile/favour-avatar-384.webp");
   await expect(page.getByRole("link", { name: "Contact", exact: true })).toHaveAttribute("href", "mailto:ututufavour7@gmail.com");
   expect(requests.filter(url => /\/assets\/projects\/|\/api\/chat|LocationGlobe-|AssistantFeature-/.test(url))).toEqual([]);
-  const opener = page.getByRole("button", { name: "Start with Monierave", exact: true });
+  const opener = page.getByRole("button", { name: "Start with BlockScan", exact: true });
   await opener.click();
-  await expect(page.getByRole("dialog", { name: "Monierave", exact: true })).toBeFocused();
-  await expect(page).toHaveURL(/#monierave$/);
+  await expect(page.getByRole("dialog", { name: "BlockScan", exact: true })).toBeFocused();
+  await expect(page).toHaveURL(/#blockscan$/);
   await page.getByRole("button", { name: "Close window", exact: true }).click();
   await expect(opener).toBeFocused();
 });

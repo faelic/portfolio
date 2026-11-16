@@ -1,7 +1,7 @@
 import type { ProjectKey } from "../types/portfolio";
 
 export const portfolioPresentation: { featuredProject: ProjectKey; summary: string; proof: string; resumeUrl?: string } = {
-  featuredProject: "champ",
+  featuredProject: "revolte",
   summary: "Hello, I'm Favour and I build backend systems, product interfaces, and AI applications.",
   proof: "Go banking backend. React workflows at Policy.ng. A portfolio assistant built with RAG.",
 };
