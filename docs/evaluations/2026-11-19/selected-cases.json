@@ -1,0 +1,694 @@
+{
+  "baseline": [
+    {
+      "id": "eval-001",
+      "question": "Someone called the wallet-permission tool Cleanup and someone else called it Allowance Cleanup. What is its preferred name, and what is the correct code repository?",
+      "keywords": [
+        "Approval Cleanup",
+        "Cleanup",
+        "Allowance Cleanup",
+        "https://github.com/faelic/approval-cleanup"
+      ],
+      "reference_answer": "Both names refer to Approval Cleanup. Its code repository is https://github.com/faelic/approval-cleanup.",
+      "category": "direct_fact",
+      "answerability": "answerable",
+      "evidence_groups": [
+        {
+          "alternatives": [
+            {
+              "document_id": "project-approval-cleanup",
+              "section": "__preamble__",
+              "evidence_quote": "**Also known as:** Cleanup; Allowance Cleanup."
+            }
+          ]
+        },
+        {
+          "alternatives": [
+            {
+              "document_id": "project-approval-cleanup",
+              "section": "__preamble__",
+              "evidence_quote": "**Repository:** https://github.com/faelic/approval-cleanup"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eval-002",
+      "question": "A visitor credits Favour with building Policy.ng's underlying AI service. What responsibility does the portfolio actually attribute to him?",
+      "keywords": [
+        "Policy.ng",
+        "frontend",
+        "AI-assisted question interface",
+        "separate"
+      ],
+      "reference_answer": "His responsibility is frontend engineering, including integration of the AI-assisted question interface. Policy.ng's backend and underlying AI services are separate from that responsibility.",
+      "category": "direct_fact",
+      "answerability": "answerable",
+      "evidence_groups": [
+        {
+          "alternatives": [
+            {
+              "document_id": "experience-flamong-policy-ng",
+              "section": "Favour at Flamong \u2014 Policy.ng frontend engineering > Product and responsibility",
+              "evidence_quote": "His responsibility at Policy.ng is the frontend, including the integration of its AI-assisted question interface. The product's backend and underlying AI services are separate from that frontend responsibility."
+            },
+            {
+              "document_id": "expertise-engineering",
+              "section": "Favour's engineering areas and technical skills > Frontend engineering",
+              "evidence_quote": "Favour's Policy.ng responsibility is frontend engineering, including the AI-assisted question interface; the backend and underlying AI services are separate responsibilities."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eval-003",
+      "question": "Which project lets someone return to saved wallet addresses and also inspect NFT metadata on a test network?",
+      "keywords": [
+        "BlockScan",
+        "persistent watchlist",
+        "NFT metadata",
+        "Ethereum Sepolia"
+      ],
+      "reference_answer": "BlockScan, an Ethereum Sepolia explorer, supports NFT metadata inspection and a persistent watchlist.",
+      "category": "direct_fact",
+      "answerability": "answerable",
+      "evidence_groups": [
+        {
+          "alternatives": [
+            {
+              "document_id": "project-blockscan",
+              "section": "BlockScan \u2014 Sepolia blockchain explorer > Overview",
+              "evidence_quote": "BlockScan is a blockchain explorer for Ethereum Sepolia. It lets users inspect blocks, transactions, wallet addresses, account activity, and NFT metadata."
+            }
+          ]
+        },
+        {
+          "alternatives": [
+            {
+              "document_id": "project-blockscan",
+              "section": "BlockScan \u2014 Sepolia blockchain explorer > Navigation, watchlist, and credential handling",
+              "evidence_quote": "a persistent watchlist"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eval-004",
+      "question": "Was Favour's university degree in computer science? Name the institution and the degree field actually recorded.",
+      "keywords": [
+        "Federal University of Technology Minna",
+        "BSc",
+        "Quantity Survey"
+      ],
+      "reference_answer": "The recorded degree is a BSc in Quantity Survey from Federal University of Technology Minna, rather than a computer science degree.",
+      "category": "direct_fact",
+      "answerability": "answerable",
+      "evidence_groups": [
+        {
+          "alternatives": [
+            {
+              "document_id": "education-training",
+              "section": "Favour's education and training > University education",
+              "evidence_quote": "**Federal University of Technology Minna \u2014 BSc in Quantity Survey**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eval-005",
+      "question": "What does Favour explicitly say he enjoys outside coding, without turning that interest into a professional credential?",
+      "keywords": [
+        "video games",
+        "personal interest"
+      ],
+      "reference_answer": "He says he loves playing video games. The passage presents this as a personal interest, not a professional gaming credential.",
+      "category": "direct_fact",
+      "answerability": "answerable",
+      "evidence_groups": [
+        {
+          "alternatives": [
+            {
+              "document_id": "profile-perspective",
+              "section": "Favour's engineering perspective and interests > Favour's interests \u2014 in his own words",
+              "evidence_quote": "And I love playing video games. I really do. It's one of my favourite things to do outside coding."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eval-006",
+      "question": "Which provider credential does BlockScan keep out of the browser bundle, and what mechanism is named for doing so?",
+      "keywords": [
+        "BlockScan",
+        "Alchemy",
+        "Vercel API proxies"
+      ],
+      "reference_answer": "BlockScan uses Vercel API proxies to keep Alchemy credentials out of the browser bundle.",
+      "category": "direct_fact",
+      "answerability": "answerable",
+      "evidence_groups": [
+        {
+          "alternatives": [
+            {
+              "document_id": "project-blockscan",
+              "section": "BlockScan \u2014 Sepolia blockchain explorer > Navigation, watchlist, and credential handling",
+              "evidence_quote": "Vercel API proxies that keep Alchemy credentials out of the browser bundle."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eval-007",
+      "question": "Can I open a deployed frontend for the project with a depositor, beneficiary, and arbiter? Give the supported way to explore it.",
+      "keywords": [
+        "Escrow",
+        "frontend not deployed",
+        "https://github.com/faelic/escrow-webapp"
+      ],
+      "reference_answer": "That project is Escrow. Its frontend is not deployed; visitors can explore the code at https://github.com/faelic/escrow-webapp.",
+      "category": "direct_fact",
+      "answerability": "answerable",
+      "evidence_groups": [
+        {
+          "alternatives": [
+            {
+              "document_id": "project-escrow",
+              "section": "Escrow \u2014 Sepolia payment project > Purpose and contribution",
+              "evidence_quote": "a payment flow involving a depositor, beneficiary, and arbiter."
+            }
+          ]
+        },
+        {
+          "alternatives": [
+            {
+              "document_id": "project-escrow",
+              "section": "Escrow \u2014 Sepolia payment project > Availability and further exploration",
+              "evidence_quote": "Escrow's frontend is not deployed. Visitors can explore its code and implementation in the [Escrow repository](https://github.com/faelic/escrow-webapp)."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eval-008",
+      "question": "What phone number should I call to discuss a role with Favour?",
+      "keywords": [
+        "phone number",
+        "not provided"
+      ],
+      "reference_answer": "The knowledge base does not provide a phone number, so I cannot supply one.",
+      "category": "direct_fact",
+      "answerability": "unanswerable",
+      "evidence_groups": []
+    },
+    {
+      "id": "eval-009",
+      "question": "What are the documented beginning and ending years of Favour's university education, and which institution do those years belong to?",
+      "keywords": [
+        "2018",
+        "2025",
+        "Federal University of Technology Minna"
+      ],
+      "reference_answer": "The university period is 2018\u20132025 at Federal University of Technology Minna.",
+      "category": "temporal",
+      "answerability": "answerable",
+      "evidence_groups": [
+        {
+          "alternatives": [
+            {
+              "document_id": "education-training",
+              "section": "Favour's education and training > University education",
+              "evidence_quote": "**Federal University of Technology Minna \u2014 BSc in Quantity Survey**\n\n**2018\u20132025**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eval-010",
+      "question": "Which year range belongs to the structured frontend course, rather than the university degree, and who provided that course?",
+      "keywords": [
+        "2025",
+        "2026",
+        "Alchemy University",
+        "frontend"
+      ],
+      "reference_answer": "Alchemy University provided the frontend engineering training recorded for 2025\u20132026.",
+      "category": "temporal",
+      "answerability": "answerable",
+      "evidence_groups": [
+        {
+          "alternatives": [
+            {
+              "document_id": "education-training",
+              "section": "Favour's education and training > Alchemy University",
+              "evidence_quote": "**Alchemy University \u2014 Frontend Engineering Training**\n\n**2025\u20132026**"
+            },
+            {
+              "document_id": "profile-overview",
+              "section": "Favour Chukwuemerie Ututu \u2014 Professional overview > Self-directed learning and freelance work",
+              "evidence_quote": "structured frontend engineering training at Alchemy University from 2025 to 2026."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eval-011",
+      "question": "As of the dated employment confirmation, when did Favour join Flamong and was the position recorded as ongoing or ended?",
+      "keywords": [
+        "May 2026",
+        "Present",
+        "10 November 2026",
+        "Flamong"
+      ],
+      "reference_answer": "The role is recorded as May 2026\u2013Present, confirmed on 10 November 2026. It was ongoing at that confirmation date.",
+      "category": "temporal",
+      "answerability": "answerable",
+      "evidence_groups": [
+        {
+          "alternatives": [
+            {
+              "document_id": "experience-flamong-policy-ng",
+              "section": "__preamble__",
+              "evidence_quote": "**Position:** Frontend Developer Intern at Flamong."
+            }
+          ]
+        },
+        {
+          "alternatives": [
+            {
+              "document_id": "experience-flamong-policy-ng",
+              "section": "__preamble__",
+              "evidence_quote": "**Employment period:** May 2026\u2013Present, confirmed on 10 November 2026."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eval-012",
+      "question": "Did Favour begin freelance development only after completing formal Alchemy training, or does the documented sequence say otherwise?",
+      "keywords": [
+        "self-taught",
+        "freelance",
+        "before",
+        "Alchemy University"
+      ],
+      "reference_answer": "The sequence says otherwise: he learned independently and took freelance development work before undertaking structured training at Alchemy University in 2025\u20132026.",
+      "category": "temporal",
+      "answerability": "answerable",
+      "evidence_groups": [
+        {
+          "alternatives": [
+            {
+              "document_id": "profile-overview",
+              "section": "Favour Chukwuemerie Ututu \u2014 Professional overview > Self-directed learning and freelance work",
+              "evidence_quote": "Favour began his software development journey as a self-taught developer. He learned independently and took on freelance development work before undertaking structured frontend engineering training at Alchemy University from 2025 to 2026."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eval-013",
+      "question": "Put these documented starting points in order: university education, Alchemy frontend training, and the Flamong internship. Give only the date precision the corpus provides.",
+      "keywords": [
+        "2018",
+        "2025",
+        "May 2026",
+        "university",
+        "Alchemy",
+        "Flamong"
+      ],
+      "reference_answer": "University education starts in 2018, Alchemy frontend training starts in 2025, and the Flamong internship starts in May 2026. The corpus gives no starting month for the first two.",
+      "category": "temporal",
+      "answerability": "answerable",
+      "evidence_groups": [
+        {
+          "alternatives": [
+            {
+              "document_id": "education-training",
+              "section": "Favour's education and training > University education",
+              "evidence_quote": "**2018\u20132025**"
+            }
+          ]
+        },
+        {
+          "alternatives": [
+            {
+              "document_id": "education-training",
+              "section": "Favour's education and training > Alchemy University",
+              "evidence_quote": "**2025\u20132026**"
+            }
+          ]
+        },
+        {
+          "alternatives": [
+            {
+              "document_id": "experience-flamong-policy-ng",
+              "section": "__preamble__",
+              "evidence_quote": "**Employment period:** May 2026\u2013Present, confirmed on 10 November 2026."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eval-014",
+      "question": "Was the university period recorded as ending before the calendar year in which the Flamong role began, or are they recorded as ending and starting in the same year?",
+      "keywords": [
+        "2025",
+        "2026",
+        "May",
+        "before"
+      ],
+      "reference_answer": "The university period ends in 2025, before the Flamong role begins in May 2026. They are not recorded as ending and starting in the same year.",
+      "category": "temporal",
+      "answerability": "answerable",
+      "evidence_groups": [
+        {
+          "alternatives": [
+            {
+              "document_id": "education-training",
+              "section": "Favour's education and training > University education",
+              "evidence_quote": "**2018\u20132025**"
+            }
+          ]
+        },
+        {
+          "alternatives": [
+            {
+              "document_id": "experience-flamong-policy-ng",
+              "section": "__preamble__",
+              "evidence_quote": "**Employment period:** May 2026\u2013Present, confirmed on 10 November 2026."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eval-015",
+      "question": "When did Favour first start freelancing, and did that happen before or after his Alchemy course?",
+      "keywords": [
+        "freelance",
+        "before Alchemy",
+        "start date unspecified"
+      ],
+      "reference_answer": "He took freelance development work before the Alchemy frontend training recorded for 2025\u20132026. The corpus does not state when his freelance work first began.",
+      "category": "temporal",
+      "answerability": "partial",
+      "evidence_groups": [
+        {
+          "alternatives": [
+            {
+              "document_id": "profile-overview",
+              "section": "Favour Chukwuemerie Ututu \u2014 Professional overview > Self-directed learning and freelance work",
+              "evidence_quote": "He learned independently and took on freelance development work before undertaking structured frontend engineering training at Alchemy University from 2025 to 2026."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eval-016",
+      "question": "A visitor confuses the banking simulation with the USDC allocation application. How do their purposes and product limitations differ?",
+      "keywords": [
+        "Monierave",
+        "banking simulation",
+        "BucketFlow",
+        "USDC",
+        "Sepolia"
+      ],
+      "reference_answer": "Monierave explores banking accounts and financial transactions as a simulation, not a licensed bank or real-customer-money service. BucketFlow splits USDC deposits among financial buckets using a Solidity vault; it is a Sepolia demonstration, not a regulated savings product.",
+      "category": "comparative",
+      "answerability": "answerable",
+      "evidence_groups": [
+        {
+          "alternatives": [
+            {
+              "document_id": "project-monierave",
+              "section": "Monierave \u2014 Full-stack banking simulation > Overview and contribution",
+              "evidence_quote": "Monierave is a banking simulation through which Favour explored the backend and frontend engineering of financial transactions."
+            }
+          ]
+        },
+        {
+          "alternatives": [
+            {
+              "document_id": "project-monierave",
+              "section": "Monierave \u2014 Full-stack banking simulation > Limitations",
+              "evidence_quote": "Monierave is a portfolio banking simulation. It is not a licensed bank or a service for handling customers' real money."
+            }
+          ]
+        },
+        {
+          "alternatives": [
+            {
+              "document_id": "project-bucketflow",
+              "section": "BucketFlow \u2014 Stablecoin allocation application > Overview and contribution",
+              "evidence_quote": "BucketFlow lets users set rules for splitting a USDC deposit among financial buckets, such as savings and other planned expenses."
+            }
+          ]
+        },
+        {
+          "alternatives": [
+            {
+              "document_id": "project-bucketflow",
+              "section": "BucketFlow \u2014 Stablecoin allocation application > Network and limitations",
+              "evidence_quote": "The documented application uses Ethereum Sepolia, a test network. BucketFlow is a demonstration of on-chain allocation logic, not a regulated savings product."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eval-017",
+      "question": "Both BucketFlow and Escrow involve contracts and payments. Which one allocates a deposit, which one has an arbiter, and which frontend is explicitly undeployed?",
+      "keywords": [
+        "BucketFlow",
+        "USDC allocation",
+        "Escrow",
+        "arbiter",
+        "undeployed"
+      ],
+      "reference_answer": "BucketFlow allocates USDC deposits among financial buckets. Escrow uses a depositor, beneficiary, and arbiter payment flow, with the arbiter able to release or refund funds. Escrow is the one whose frontend is explicitly not deployed.",
+      "category": "comparative",
+      "answerability": "answerable",
+      "evidence_groups": [
+        {
+          "alternatives": [
+            {
+              "document_id": "project-bucketflow",
+              "section": "BucketFlow \u2014 Stablecoin allocation application > Overview and contribution",
+              "evidence_quote": "BucketFlow lets users set rules for splitting a USDC deposit among financial buckets"
+            }
+          ]
+        },
+        {
+          "alternatives": [
+            {
+              "document_id": "project-escrow",
+              "section": "Escrow \u2014 Sepolia payment project > Purpose and contribution",
+              "evidence_quote": "a payment flow involving a depositor, beneficiary, and arbiter. Favour built both the React frontend and the Solidity smart contract. The arbiter can release or refund funds."
+            }
+          ]
+        },
+        {
+          "alternatives": [
+            {
+              "document_id": "project-escrow",
+              "section": "Escrow \u2014 Sepolia payment project > Availability and further exploration",
+              "evidence_quote": "Escrow's frontend is not deployed."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eval-018",
+      "question": "If I want to inspect a transaction or revoke a token allowance, should I use the same project? Identify the two relevant tools and their distinct purposes.",
+      "keywords": [
+        "BlockScan",
+        "transactions",
+        "Approval Cleanup",
+        "allowance",
+        "revocation"
+      ],
+      "reference_answer": "They serve different purposes. BlockScan is a Sepolia explorer for blocks, transactions, addresses, activity, and NFT metadata. Approval Cleanup reviews ERC-20 allowances and lets a connected wallet initiate an update or revocation.",
+      "category": "comparative",
+      "answerability": "answerable",
+      "evidence_groups": [
+        {
+          "alternatives": [
+            {
+              "document_id": "project-blockscan",
+              "section": "BlockScan \u2014 Sepolia blockchain explorer > Overview",
+              "evidence_quote": "BlockScan is a blockchain explorer for Ethereum Sepolia. It lets users inspect blocks, transactions, wallet addresses, account activity, and NFT metadata."
+            }
+          ]
+        },
+        {
+          "alternatives": [
+            {
+              "document_id": "project-approval-cleanup",
+              "section": "Approval Cleanup \u2014 ERC-20 wallet-permission manager > Overview and contribution",
+              "evidence_quote": "Approval Cleanup helps wallet owners review ERC-20 token allowances granted to other addresses or contracts."
+            }
+          ]
+        },
+        {
+          "alternatives": [
+            {
+              "document_id": "project-approval-cleanup",
+              "section": "Approval Cleanup \u2014 ERC-20 wallet-permission manager > Log processing and wallet actions",
+              "evidence_quote": "Users can review an allowance and initiate an update or revocation through their connected wallet."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eval-019",
+      "question": "How do the database credential exposure concern in BlockScan and the session-security work in Monierave differ? Correct any mistaken assumption in the question.",
+      "keywords": [
+        "BlockScan",
+        "Alchemy credentials",
+        "API proxies",
+        "Monierave",
+        "refresh tokens",
+        "revocable sessions"
+      ],
+      "reference_answer": "BlockScan documents protection of Alchemy credentials, not database credentials, through Vercel API proxies. Monierave documents rotating refresh tokens, revocable sessions, and audit records as part of its simulation's security work.",
+      "category": "comparative",
+      "answerability": "answerable",
+      "evidence_groups": [
+        {
+          "alternatives": [
+            {
+              "document_id": "project-blockscan",
+              "section": "BlockScan \u2014 Sepolia blockchain explorer > Navigation, watchlist, and credential handling",
+              "evidence_quote": "Vercel API proxies that keep Alchemy credentials out of the browser bundle."
+            }
+          ]
+        },
+        {
+          "alternatives": [
+            {
+              "document_id": "project-monierave",
+              "section": "Monierave \u2014 Full-stack banking simulation > Background processing and security",
+              "evidence_quote": "The system also includes rotating refresh tokens, revocable sessions, audit records, and reconciliation-related checks."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "eval-020",
+      "question": "Does Favour describe security mainly as an alternative to a good interface, or as something that should accompany it? Contrast his stated priorities.",
+      "keywords": [
+        "beautiful interface",
+        "functional",
+        "backend",
+        "security",
+        "performance"
+      ],
+      "reference_answer": "He values attractive, usable, fast interfaces together with a thoughtfully designed backend and security across the system. He also respects delaying a release rather than compromising security.",
+      "category": "comparative",
+      "answerability": "answerable",
+      "evidence_groups": [
+        {
+          "alternatives": [
+            {
+              "document_id": "profile-perspective",
+              "section": "Favour's engineering perspective and interests > Favour's engineering perspective \u2014 in his own words",
+              "evidence_quote": "I love an interface that looks good, feels easy to use, and loads quickly."
+            }
+          ]
+        },
+        {
+          "alternatives": [
+            {
+              "document_id": "profile-perspective",
+              "section": "Favour's engineering perspective and interests > Favour's engineering perspective \u2014 in his own words",
+              "evidence_quote": "I have a lot of respect for engineers who would rather delay a release than compromise on security. For me, it's exciting to see a beautiful, functional interface sitting on top of a thoughtfully designed backend, with security taken seriously across the whole system."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "heldout": [
+    {
+      "id": "heldout-001",
+      "kind": "ownership",
+      "question": "Did Favour build Policy.ng's AI backend, or connect the question interface to it?",
+      "history": [],
+      "expected_behavior": "Distinguish his frontend integration from the separate backend and underlying AI services; do not claim sole ownership."
+    },
+    {
+      "id": "heldout-002",
+      "kind": "missing_information",
+      "question": "How many paying customers does Monierave serve today?",
+      "history": [],
+      "expected_behavior": "Do not invent customers, licensed-bank status or current usage metrics. Explain the evidence boundary."
+    },
+    {
+      "id": "heldout-003",
+      "kind": "concurrency",
+      "question": "Why doesn't retrying a transfer mean sending the money twice in Monierave?",
+      "history": [],
+      "expected_behavior": "Ground the explanation in the documented idempotency and transaction behavior, without claiming independently verified production correctness."
+    },
+    {
+      "id": "heldout-004",
+      "kind": "followup",
+      "question": "And what happens if the email service fails afterward?",
+      "history": [
+        {
+          "role": "user",
+          "content": "Explain Monierave's transfer flow."
+        },
+        {
+          "role": "assistant",
+          "content": "We are discussing transfers in Monierave."
+        }
+      ],
+      "expected_behavior": "Resolve Monierave, distinguish the committed transfer from asynchronous notification delivery, and preserve evidence limits."
+    },
+    {
+      "id": "heldout-005",
+      "kind": "false_premise",
+      "question": "Since BucketFlow is a production banking service, can I deposit my salary?",
+      "history": [],
+      "expected_behavior": "Correct the production premise with its Sepolia test-network scope; do not invite real-value use or invent financial guarantees."
+    },
+    {
+      "id": "heldout-006",
+      "kind": "coverage",
+      "question": "Will Cleanup definitely find every approval my wallet has ever granted?",
+      "history": [],
+      "expected_behavior": "Explain the documented scan-window and non-standard token limitations; do not promise complete coverage."
+    },
+    {
+      "id": "heldout-007",
+      "kind": "availability",
+      "question": "Can you verify Favour's availability this minute and book an interview?",
+      "history": [],
+      "expected_behavior": "Distinguish dated documented availability from fresh verification; do not claim booking or messaging capability."
+    },
+    {
+      "id": "heldout-008",
+      "kind": "ai_evidence",
+      "question": "What measured accuracy does this portfolio assistant achieve, and what does its offline test suite prove?",
+      "history": [],
+      "expected_behavior": "Do not invent an accuracy score. Distinguish mocked implementation tests from live retrieval/answer quality and disclose absent measurements."
+    }
+  ]
+}

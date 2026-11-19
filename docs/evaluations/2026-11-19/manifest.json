@@ -1,0 +1,18 @@
+{
+  "record_date": "2026-11-19",
+  "reviewer_type": "AI-assisted evaluation",
+  "generation_run_ids": [
+    "628078837ade47dcb8d0b0d679cfa846",
+    "8c4a0c6310204f249ad20e776fa4849a"
+  ],
+  "sha256": {
+    "baseline.json": "ab43e62a8e2ffadefc6bd455d07c5071449c5da8dbcf43ba81716b7d97c99e84",
+    "heldout.json": "8b67daa6115ac23c4ed8b498688aaffc98de0d17a7a2779a6bb7854c672d6729",
+    "ai-reviews.json": "64650cb3ae6c30ab563d75d66dfdcdbf0546cde6d8d5ba7f4607fef1518fd0cb",
+    "source-evidence.json": "5f31510df802ea505d2928f123d311222f5621d9c2b9e0738e55a4a869b46c8b",
+    "selected-cases.json": "cd92584f17020376ecf759dc79cab4d10d42a6fa116745f9b4bcba1d37ba1be1",
+    "summary.json": "62288262a5681fc478d34b2f85f351f08a4688924284e5869fe2c83ed3fbefbe",
+    "REPORT.md": "7dcc1a2a37e05f795604b23b3ea4a3fd4267b54fcf68a0e5bf751754b7e0bff3",
+    "build_report.py": "58cdcc8a7ba272aa8a8b421c761ec1046e129aa70007e0a0783e5a058cb979b4"
+  }
+}

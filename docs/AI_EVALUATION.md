@@ -1,5 +1,9 @@
 # Portfolio Assistant Evaluation
 
+## Recorded AI-assisted run — 19 November 2026
+
+The [28-response evaluation report](evaluations/2026-11-19/REPORT.md) records actual paid generation through the local packaged-index pipeline: the first 20 baseline cases and all eight existing held-out cases. All 28 completed; direct AI-assisted review assigned 22 strict-rubric passes and six failures. These are AI judgments, not Favour's personal grades, independent human validation, or a before/after quality improvement. Raw generation reports retain pending human-review fields; separate AI reviews preserve scores, source evidence, and written rationales. The eligible 19-case baseline subset achieved MRR@10, section coverage, and labelled-quote coverage of 1.0, which did not prevent answer-level failures. The remaining baseline cases and the conversation/security suites were not run in this exercise. See the report for sampling, timing, provenance, artifacts, and limitations.
+
 The Pxxl Free release path uses packaged exact squared-L2 retrieval. Artifact verification is not an answer-quality evaluation. Offline parity checks matched Chroma top-10 order for all 33 stored embedding vectors; these are corpus-vector queries, not held-out visitor questions. No new embeddings, generated answers or judge calls were used for the migration. Set RAG_INDEX_MODE=packaged when evaluating the production retrieval path.
 
 ## Current contract — 15 November 2026
@@ -44,6 +48,8 @@ Use a new output path for each run. JSON and Markdown artifacts are written afte
 Artifacts record configured model identifiers, dataset and prompt hashes, corpus fingerprint, retrieval settings, source revision, dirty-tree state, exact answers, public references and measured timings. Actual provider usage is included only when the answer stream supplies it; it excludes rewriting and is not a total bill. The spending ledger's conservative reservations are not usage measurements. p95 is omitted for fewer than 20 observations. Section metrics measure metadata matches. labelled_quote_coverage separately checks whitespace-normalized, case-insensitive literal labelled quotes in matching retrieved passages. It can miss paraphrases or quotes split across chunks and does not establish entailment or answer correctness. Unanswerable cases are N/A; unmeasured legacy quote scores remain N/A, not zero.
 
 ## Human review
+
+The [retrospective human-evaluation record](HUMAN_EVALUATION_RECORD.md) preserves two owner-pasted answers and one reported conversational issue from earlier sessions, with owner feedback separated from AI analysis. It is qualitative historical evidence, not a completed scored study. Favour reports a broader 20–30-response exercise; its case-level scores and outputs have not been recovered. No accuracy or improvement metric is inferred from that report.
 
 Copy a report's `run_id` and add reviews in a separate JSON file:
 
