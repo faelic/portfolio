@@ -23,23 +23,25 @@ export function FollowupComposer({ suggestion, running, dismiss, setText }: {
     dismiss();
     input.current?.focus();
   };
-  return <ComposerPrimitive.Root className="assistant-composer">
+  return <div className="assistant-composer-wrap"><ComposerPrimitive.Root className="assistant-composer">
     <div className="assistant-composer-field">
       <ComposerPrimitive.Input ref={input} aria-label="Message Avartar" aria-describedby={visible ? hint : undefined}
-        placeholder={visible ? "" : "Ask about Favour…"} maxLength={2000} rows={1} maxRows={5} autoFocus={false} cancelOnEscape={false}
+        placeholder={visible ? suggestion : "Ask about Favour…"} maxLength={2000} rows={1} maxRows={5} autoFocus={false} cancelOnEscape={false}
         onChange={dismiss} onKeyDown={event => {
           if (!visible || event.nativeEvent.isComposing || event.altKey || event.ctrlKey || event.metaKey) return;
           if (event.key === "Tab" && !event.shiftKey) { event.preventDefault(); accept(); }
           if (event.key === "Escape") { event.preventDefault(); event.stopPropagation(); dismiss(); }
         }} />
-      {visible && <>
-        <span id={hint} className="sr-only">Suggested question: {suggestion} Press Tab to accept and select it, or type your own question.</span>
-        <button type="button" className="assistant-followup" aria-label={`Use suggested question: ${suggestion}`} onClick={accept}>
-          <span className="assistant-followup-text">{suggestion}</span><kbd aria-hidden="true">Tab</kbd>
-        </button>
-      </>}
     </div>
     {running ? <ComposerPrimitive.Cancel className="assistant-send" aria-label="Stop response"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2" fill="currentColor" /></svg></ComposerPrimitive.Cancel>
       : <ComposerPrimitive.Send className="assistant-send" aria-label="Send message"><AnimatedIcon name="send"/></ComposerPrimitive.Send>}
-  </ComposerPrimitive.Root>;
+  </ComposerPrimitive.Root>
+    {visible && <div className="assistant-completion-hint">
+      <span id={hint} className="sr-only">Optional suggestion: {suggestion} Press Tab to complete, or type your own question.</span>
+      <button type="button" className="assistant-followup" aria-label={`Use suggested question: ${suggestion}`} onClick={accept}>
+        <span className="assistant-followup-keyboard"><kbd aria-hidden="true">Tab</kbd> to complete</span>
+        <span className="assistant-followup-touch">Use suggested question</span>
+      </button>
+    </div>}
+  </div>;
 }

@@ -33,6 +33,9 @@ test("Tab accepts the whole preview once, selects it, and then resumes normal na
   await expect(preview).toBeVisible();
   await page.getByRole("dialog", { name: "Assistant", exact: true }).screenshot({ path: testInfo.outputPath("preview.png") });
   await expect(input).toHaveValue("");
+  await expect(input).toHaveAttribute("placeholder", question);
+  const composerBox = (await page.locator(".assistant-composer").boundingBox())!;
+  expect((await preview.boundingBox())!.y).toBeGreaterThanOrEqual(composerBox.y + composerBox.height);
   await expect(page.getByRole("button", { name: "Send message" })).toBeDisabled();
   await input.focus();
   await input.press("Enter");
@@ -110,7 +113,7 @@ test("a late suggestion never overwrites a draft and clearing cancels pending su
 
 test.describe("compact touch interaction", () => {
   test.use({ viewport: { width: 360, height: 640 }, isMobile: true, hasTouch: true });
-  test("tap fills without sending; wrapped suggestion and keyboard viewport stay clear", async ({ page }, testInfo) => {
+  test("placeholder stays optional; hint tap fills without sending and keyboard viewport stays clear", async ({ page }, testInfo) => {
     let calls = 0;
     await page.route("**/api/chat", route => {
       calls++;
@@ -123,6 +126,11 @@ test.describe("compact touch interaction", () => {
     await expect(preview).toBeVisible();
     expect((await preview.boundingBox())!.height).toBeGreaterThanOrEqual(44);
     await expect(preview.locator("kbd")).toBeHidden();
+    await expect(input).toHaveAttribute("placeholder", question);
+    await input.tap();
+    await expect(input).toHaveValue("");
+    await expect(page.getByRole("button", { name: "Send message" })).toBeDisabled();
+    expect(calls).toBe(1);
     await page.getByRole("dialog", { name: "Assistant", exact: true }).screenshot({ path: testInfo.outputPath("mobile-preview.png") });
     await preview.tap();
     await expect(input).toHaveValue(question);
