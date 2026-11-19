@@ -1,0 +1,4 @@
+# Reviewed false positives: SHA-256 source checksums keyed by api.py, not credentials.
+# Exact commit/path/rule/line exceptions only; see docs/RAG_SECURITY.md.
+f78398ef17bc0e3f55b6d6d37b36bfe710bb4c5b:docs/evaluations/2026-11-19/model-followups/continuity-replay.json:generic-api-key:10
+f78398ef17bc0e3f55b6d6d37b36bfe710bb4c5b:docs/evaluations/2026-11-19/model-followups/manifest.json:generic-api-key:17
