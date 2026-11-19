@@ -1,0 +1,2991 @@
+{
+  "schema_version": 2,
+  "run_id": "52768d6c75d34d9eb9513965e2e296bf",
+  "suite": "baseline",
+  "created_at": "2026-11-19T08:54:42.526501+00:00",
+  "source_revision": "ee1244660f2b558d53db702379f1f960c997e56d",
+  "working_tree_dirty": true,
+  "answer_model": "gpt-4.1-mini",
+  "embedding_model": "text-embedding-3-large",
+  "corpus_fingerprint": "8c0d67c2a2414cb0bbb791b78bea343921ae7f7db35641fd30e15a0445217e07",
+  "prompt_sha256": "1a6c3dd2cca3a0dd04c77e13641727c4468fc66e0e43e38acea26d5708dcb914",
+  "retrieval_k": 10,
+  "chunk_size": 350,
+  "chunk_overlap": 40,
+  "chunker_version": 1,
+  "pricing_version": "openai-standard-2026-11-12",
+  "retrieval_index": {
+    "mode": "packaged",
+    "artifact_sha256": {
+      "index/knowledge.json": "9577ceacd83bdef3b621049d9598d0ae2a754445cf80ff53fa3c9af4bd3619cb",
+      "index/knowledge.sha256": "8a0ce60dd3556769cafbf90bbd74542ce760c91b58cf77554904493cbf64e7f6"
+    }
+  },
+  "implementation_sha256": {
+    "implementation/answer.py": "57878b29088d2af23415ad6c9276c7daa900ae37fcc604a3fff559ccfebb4298",
+    "implementation/config.py": "821ab48069259e6dbcb2182f4afd8eba4804aa26cb0817c91555297df5656170",
+    "implementation/ingest.py": "3b5792023496c82a9169eef2f77d11d2f4afab237ecd964922b4a95e17aca486",
+    "implementation/packaged_index.py": "8d084743b152f48d788f332d3c7af1159e6c92296443f291e16ca35d3c440345",
+    "implementation/fingerprint.py": "11ab37590bbf36bb039d4a7d7beaf293ebd5c4dc7e8454de388dafd66fc2b5eb",
+    "implementation/guardrails.py": "793b1d96e9ec41a42355462e78db94f7ff402a108e78adbf580d9da8d100ebc3",
+    "implementation/references.py": "32f4840d63543f0bd9b47ec0b11ab6953d95f7c14952c68d2ffd4f16a46c787d",
+    "implementation/public_sources.json": "d993f25dd346b2b3814e509cf037682814deb0d6d62a2006a0a03696d78c46cd",
+    "implementation/approved_links.json": "3eced477d35d38bb19ca34aead22fbb874fe6c1b943dfa8cdc3db264899a82f5",
+    "evaluation/report.py": "606433b4fad18ccae97da2005dbffd97dcaa86da084e22807b5d7dfe00861d69"
+  },
+  "dataset_sha256": "6d0d2f4d3b6012e2db67822e14e3a63b57e3667be360525c01b9195acee27e3d",
+  "status": "complete",
+  "requested_cases": 20,
+  "cases": [
+    {
+      "id": "eval-001",
+      "kind": "direct_fact",
+      "question": "Someone called the wallet-permission tool Cleanup and someone else called it Allowance Cleanup. What is its preferred name, and what is the correct code repository?",
+      "history": [],
+      "expected_behavior": "Both names refer to Approval Cleanup. Its code repository is https://github.com/faelic/approval-cleanup.",
+      "status": "complete",
+      "error_class": null,
+      "answer": "The preferred name for the wallet-permission tool is **Approval Cleanup**. It is also known as Cleanup or Allowance Cleanup, but Approval Cleanup is the main name used. The correct code repository for this project is:\n\nhttps://github.com/faelic/approval-cleanup\n\nThis tool helps wallet owners review and manage ERC-20 token allowances granted to other addresses or contracts.",
+      "references": [
+        {
+          "id": "project-approval-cleanup",
+          "title": "Cleanup",
+          "href": "https://www.favourututu.com/#cleanup",
+          "sections": [
+            "__preamble__",
+            "Approval Cleanup — ERC-20 wallet-permission manager > Overview and contribution",
+            "Approval Cleanup — ERC-20 wallet-permission manager > Log processing and wallet actions"
+          ],
+          "excerpt": "# Approval Cleanup — ERC-20 wallet-permission manager\n\n**Type:** Independent blockchain application  \n**Also known as:** Cleanup; Allowance Cleanup.  \n**Repository:** https://github.com/faelic/approval-cleanup  \n**Application:** https://approval-cleanup-brt3.vercel.app/  \n**Stack:** Next.js, React, TypeScript, wagmi, viem, Hardhat, OpenZeppelin.\n\n## Overview and contribution\n\nApproval Cleanup help"
+        },
+        {
+          "id": "project-bucketflow",
+          "title": "BucketFlow",
+          "href": "https://www.favourututu.com/#bucketflow",
+          "sections": [
+            "__preamble__",
+            "BucketFlow — Stablecoin allocation application > Overview and contribution",
+            "BucketFlow — Stablecoin allocation application > Wallet and transaction implementation"
+          ],
+          "excerpt": "# BucketFlow — Stablecoin allocation application\n\n**Type:** Independent blockchain application  \n**Repository:** https://github.com/faelic/bucketflow  \n**Application:** https://bucketflow-tau.vercel.app/  \n**Stack:** Next.js, React, TypeScript, TanStack Query, Solidity, wagmi, viem, Foundry.\n\n## Overview and contribution\n\nBucketFlow lets users set rules for splitting a USDC deposit among financial"
+        },
+        {
+          "id": "project-escrow",
+          "title": "Escrow",
+          "href": "https://www.favourututu.com/#escrow",
+          "sections": [
+            "__preamble__",
+            "Escrow — Sepolia payment project > Purpose and contribution",
+            "Escrow — Sepolia payment project > Availability and further exploration"
+          ],
+          "excerpt": "# Escrow — Sepolia payment project\n\n**Type:** Independent project.\n\n**Contribution:** React frontend and Solidity smart contract.  \n**Network:** Ethereum Sepolia, a test network.  \n**Repository:** https://github.com/faelic/escrow-webapp\n\n## Purpose and contribution\n\nEscrow is Favour's independent project for a payment flow involving a depositor, beneficiary, and arbiter. Favour built both the Reac"
+        },
+        {
+          "id": "project-blockscan",
+          "title": "BlockScan",
+          "href": "https://www.favourututu.com/#blockscan",
+          "sections": [
+            "__preamble__",
+            "BlockScan — Sepolia blockchain explorer > Overview",
+            "BlockScan — Sepolia blockchain explorer > Search and live-data implementation"
+          ],
+          "excerpt": "# BlockScan — Sepolia blockchain explorer\n\n**Type:** Independent frontend project  \n**Repository:** https://github.com/faelic/sepolia-blockexplorer  \n**Application:** https://blockscan-seven.vercel.app/  \n**Stack:** React, JavaScript, React Router, React Testing Library, Alchemy SDK/RPC, Vercel.\n\n## Overview\n\nBlockScan is a blockchain explorer for Ethereum Sepolia. It lets users inspect blocks, tr"
+        },
+        {
+          "id": "project-portfolio-rag-assistant",
+          "title": "Portfolio RAG Assistant",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Portfolio RAG Assistant — Portfolio questions and grounded answers > Availability and limitations"
+          ],
+          "excerpt": "Document: Portfolio RAG Assistant — Portfolio questions and grounded answers\nSection: Portfolio RAG Assistant — Portfolio questions and grounded answers > Availability and limitations\n\n## Availability and limitations  \nPublic availability through Favour's portfolio was confirmed by Favour on 11 November 2026. The approved code link is https://github.com/faelic/portfolio; public availability has no"
+        },
+        {
+          "id": "project-portfolio-rag-assistant",
+          "title": "Portfolio RAG Assistant",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Portfolio RAG Assistant — Portfolio questions and grounded answers\nSection: __preamble__\n\n# Portfolio RAG Assistant — Portfolio questions and grounded answers  \n**Type:** Independent AI application project.  \n**Contribution:** Curated knowledge, Python ingestion and answering pipelines, evaluation tooling, and Gradio testing interfaces.  \n**Repository:** https://github.com/faelic/portfol"
+        },
+        {
+          "id": "portfolio-assistant-status",
+          "title": "About this portfolio assistant",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Portfolio AI assistant — Availability and visitor purpose > Availability",
+            "Portfolio AI assistant — Availability and visitor purpose > Visitor questions, curated knowledge, and GitHub",
+            "Portfolio AI assistant — Availability and visitor purpose > Supported questions"
+          ],
+          "excerpt": "# Portfolio AI assistant — Availability and visitor purpose\n\n## Availability\n\nAs confirmed by Favour on **11 November 2026**, the Portfolio RAG Assistant is publicly available through his portfolio. This is an owner-confirmed availability statement, not an independent uptime check.\n\n## Visitor questions, curated knowledge, and GitHub\n\nVisitor questions guide retrieval from Favour's curated portfol"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: __preamble__\n\n# Monierave — Full-stack banking simulation  \n**Type:** Independent full-stack project\n**Repository:** https://github.com/faelic/monierave\n**Application:** https://monierave.favourututu.com/\n**Stack:** Go, Gin, PostgreSQL, SQLC, pgx, Redis, Asynq, Next.js, React, TypeScript, TanStack Query, React Hook Form, Zod, Docker."
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Overview and contribution"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Overview and contribution\n\n## Overview and contribution  \nMonierave is a banking simulation through which Favour explored the backend and frontend engineering of financial transactions. He built account registration and verification, authentication, account management, beneficiaries, transfers,"
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "Favour at Flamong — Policy.ng frontend engineering > Administration, testing, and collaboration"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: Favour at Flamong — Policy.ng frontend engineering > Administration, testing, and collaboration\n\n## Administration, testing, and collaboration  \nThe administrative side also requires permission checks, forms that reject invalid data, protection against duplicate submissions, warnings for unsaved edits, and refreshed information "
+        }
+      ],
+      "timing": {
+        "retrieval_ms": 1388.2522499916377,
+        "first_text_ms": 2590.6554579996737,
+        "completion_ms": 3234.125832997961
+      },
+      "answer_provider_usage": {
+        "input_tokens": 4545,
+        "output_tokens": 75,
+        "total_tokens": 4620,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 0
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "estimated_answer_micro_usd": 1938,
+      "usage_scope": "Answer stream only when provider metadata is available; excludes rewriting and evaluation. Not a billing total.",
+      "human_review": {
+        "verdict": "pending",
+        "factual_claims": null,
+        "unsupported_claims": null,
+        "appropriate_uncertainty": null,
+        "reference_correctness": null,
+        "notes": ""
+      },
+      "retrieval": {
+        "k": 10,
+        "reciprocal_rank": 1.0,
+        "matched_groups": 2,
+        "total_groups": 2,
+        "evidence_coverage": 1.0,
+        "quote_matched_groups": 2,
+        "labelled_quote_coverage": 1.0
+      }
+    },
+    {
+      "id": "eval-002",
+      "kind": "direct_fact",
+      "question": "A visitor credits Favour with building Policy.ng's underlying AI service. What responsibility does the portfolio actually attribute to him?",
+      "history": [],
+      "expected_behavior": "His responsibility is frontend engineering, including integration of the AI-assisted question interface. Policy.ng's backend and underlying AI services are separate from that responsibility.",
+      "status": "complete",
+      "error_class": null,
+      "answer": "The portfolio attributes to Favour sole responsibility for the frontend engineering of Policy.ng, including building and maintaining the public-facing pages and authenticated administration tools using React and TypeScript. His work covers policy search, public-official directories, AI-assisted question interfaces, comments, moderation, content editing, and subscriber management. Importantly, his responsibility includes integrating the AI-assisted question interface on the frontend, but the product's backend and the underlying AI services themselves are separate from his frontend role. Therefore, Favour is not credited with building Policy.ng's underlying AI service but with the frontend integration and engineering around it.",
+      "references": [
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "Favour at Flamong — Policy.ng frontend engineering > Product and responsibility"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: Favour at Flamong — Policy.ng frontend engineering > Product and responsibility\n\n## Product and responsibility  \nPolicy.ng helps visitors find and understand public policies and information about public officials. It also includes civic content and AI-assisted policy questions, with administrative features for managing the infor"
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour Chukwuemerie Ututu — Professional overview > Background and work"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Background and work\n\n## Background and work  \nFavour Chukwuemerie Ututu is a Full-stack Software Engineer and AI Engineer based in Nigeria. He builds frontend applications, backend systems, and LLM-powered applications. His work includes professional frontend engineering on Poli"
+        },
+        {
+          "id": "portfolio-assistant-status",
+          "title": "About this portfolio assistant",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Portfolio AI assistant — Availability and visitor purpose > Availability",
+            "Portfolio AI assistant — Availability and visitor purpose > Visitor questions, curated knowledge, and GitHub",
+            "Portfolio AI assistant — Availability and visitor purpose > Supported questions"
+          ],
+          "excerpt": "# Portfolio AI assistant — Availability and visitor purpose\n\n## Availability\n\nAs confirmed by Favour on **11 November 2026**, the Portfolio RAG Assistant is publicly available through his portfolio. This is an owner-confirmed availability statement, not an independent uptime check.\n\n## Visitor questions, curated knowledge, and GitHub\n\nVisitor questions guide retrieval from Favour's curated portfol"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > AI application engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > AI application engineering\n\n## AI application engineering  \nFavour builds LLM-powered applications with Python. His Portfolio RAG Assistant connects visitor questions to curated portfolio knowledge, retrieves relevant passages, and generates concise answers grounded in those passage"
+        },
+        {
+          "id": "project-portfolio-rag-assistant",
+          "title": "Portfolio RAG Assistant",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Portfolio RAG Assistant — Portfolio questions and grounded answers > Overview and contribution"
+          ],
+          "excerpt": "Document: Portfolio RAG Assistant — Portfolio questions and grounded answers\nSection: Portfolio RAG Assistant — Portfolio questions and grounded answers > Overview and contribution\n\n## Overview and contribution  \nFavour built the Portfolio RAG Assistant to answer visitor questions about his background, professional experience, contributions, and projects. He organized the portfolio knowledge into "
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "Favour at Flamong — Policy.ng frontend engineering > Frontend integration and workflows"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: Favour at Flamong — Policy.ng frontend engineering > Frontend integration and workflows\n\n## Frontend integration and workflows  \nFavour integrates the frontend with the backend using TanStack Query. When an API response differs from what a screen expects, or a new workflow needs an additional endpoint, he works with the backend "
+        },
+        {
+          "id": "opportunities-contact",
+          "title": "Opportunities and contact",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's professional opportunities and contact > Availability and interests",
+            "Favour's professional opportunities and contact > Location and working arrangements",
+            "Favour's professional opportunities and contact > Contact"
+          ],
+          "excerpt": "# Favour's professional opportunities and contact\n\n## Availability and interests\n\nAs confirmed on **10 November 2026**, Favour is open to **both full-time roles and freelance or contract work** in frontend engineering, backend engineering, full-stack software engineering, and AI engineering. He is interested in building applications and backend services, as well as working with teams developing AI"
+        },
+        {
+          "id": "profile-perspective",
+          "title": "Engineering perspective",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering perspective and interests > Favour's engineering perspective — in his own words"
+          ],
+          "excerpt": "Document: Favour's engineering perspective and interests\nSection: Favour's engineering perspective and interests > Favour's engineering perspective — in his own words\n\n## Favour's engineering perspective — in his own words  \nI started my career as a frontend engineer, so I've always loved seeing beautiful user interfaces. But they have to work, too. I love an interface that looks good, feels easy "
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: __preamble__\n\n# Favour at Flamong — Policy.ng frontend engineering  \n**Position:** Frontend Developer Intern at Flamong.\n**Employment period:** May 2026–Present, confirmed on 10 November 2026.\n**Product:** [Policy.ng](https://policy.ng/)\n**Role:** Frontend engineering for the public website and administrative dashboard."
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "Favour at Flamong — Policy.ng frontend engineering > Administration, testing, and collaboration"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: Favour at Flamong — Policy.ng frontend engineering > Administration, testing, and collaboration\n\n## Administration, testing, and collaboration  \nThe administrative side also requires permission checks, forms that reject invalid data, protection against duplicate submissions, warnings for unsaved edits, and refreshed information "
+        }
+      ],
+      "timing": {
+        "retrieval_ms": 535.8563339977991,
+        "first_text_ms": 1181.0217089951038,
+        "completion_ms": 2278.81904199603
+      },
+      "answer_provider_usage": {
+        "input_tokens": 4682,
+        "output_tokens": 120,
+        "total_tokens": 4802,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "estimated_answer_micro_usd": 2065,
+      "usage_scope": "Answer stream only when provider metadata is available; excludes rewriting and evaluation. Not a billing total.",
+      "human_review": {
+        "verdict": "pending",
+        "factual_claims": null,
+        "unsupported_claims": null,
+        "appropriate_uncertainty": null,
+        "reference_correctness": null,
+        "notes": ""
+      },
+      "retrieval": {
+        "k": 10,
+        "reciprocal_rank": 1.0,
+        "matched_groups": 1,
+        "total_groups": 1,
+        "evidence_coverage": 1.0,
+        "quote_matched_groups": 1,
+        "labelled_quote_coverage": 1.0
+      }
+    },
+    {
+      "id": "eval-003",
+      "kind": "direct_fact",
+      "question": "Which project lets someone return to saved wallet addresses and also inspect NFT metadata on a test network?",
+      "history": [],
+      "expected_behavior": "BlockScan, an Ethereum Sepolia explorer, supports NFT metadata inspection and a persistent watchlist.",
+      "status": "complete",
+      "error_class": null,
+      "answer": "The project that lets someone return to saved wallet addresses and also inspect NFT metadata on a test network is **BlockScan — Sepolia blockchain explorer**. It is an independent frontend project for Ethereum Sepolia that allows users to inspect blocks, transactions, wallet addresses, account activity, and NFT metadata. It includes features like a persistent watchlist for saved addresses and live blockchain data updates.",
+      "references": [
+        {
+          "id": "project-blockscan",
+          "title": "BlockScan",
+          "href": "https://www.favourututu.com/#blockscan",
+          "sections": [
+            "__preamble__",
+            "BlockScan — Sepolia blockchain explorer > Overview",
+            "BlockScan — Sepolia blockchain explorer > Search and live-data implementation"
+          ],
+          "excerpt": "# BlockScan — Sepolia blockchain explorer\n\n**Type:** Independent frontend project  \n**Repository:** https://github.com/faelic/sepolia-blockexplorer  \n**Application:** https://blockscan-seven.vercel.app/  \n**Stack:** React, JavaScript, React Router, React Testing Library, Alchemy SDK/RPC, Vercel.\n\n## Overview\n\nBlockScan is a blockchain explorer for Ethereum Sepolia. It lets users inspect blocks, tr"
+        },
+        {
+          "id": "project-escrow",
+          "title": "Escrow",
+          "href": "https://www.favourututu.com/#escrow",
+          "sections": [
+            "__preamble__",
+            "Escrow — Sepolia payment project > Purpose and contribution",
+            "Escrow — Sepolia payment project > Availability and further exploration"
+          ],
+          "excerpt": "# Escrow — Sepolia payment project\n\n**Type:** Independent project.\n\n**Contribution:** React frontend and Solidity smart contract.  \n**Network:** Ethereum Sepolia, a test network.  \n**Repository:** https://github.com/faelic/escrow-webapp\n\n## Purpose and contribution\n\nEscrow is Favour's independent project for a payment flow involving a depositor, beneficiary, and arbiter. Favour built both the Reac"
+        },
+        {
+          "id": "project-approval-cleanup",
+          "title": "Cleanup",
+          "href": "https://www.favourututu.com/#cleanup",
+          "sections": [
+            "__preamble__",
+            "Approval Cleanup — ERC-20 wallet-permission manager > Overview and contribution",
+            "Approval Cleanup — ERC-20 wallet-permission manager > Log processing and wallet actions"
+          ],
+          "excerpt": "# Approval Cleanup — ERC-20 wallet-permission manager\n\n**Type:** Independent blockchain application  \n**Also known as:** Cleanup; Allowance Cleanup.  \n**Repository:** https://github.com/faelic/approval-cleanup  \n**Application:** https://approval-cleanup-brt3.vercel.app/  \n**Stack:** Next.js, React, TypeScript, wagmi, viem, Hardhat, OpenZeppelin.\n\n## Overview and contribution\n\nApproval Cleanup help"
+        },
+        {
+          "id": "project-bucketflow",
+          "title": "BucketFlow",
+          "href": "https://www.favourututu.com/#bucketflow",
+          "sections": [
+            "__preamble__",
+            "BucketFlow — Stablecoin allocation application > Overview and contribution",
+            "BucketFlow — Stablecoin allocation application > Wallet and transaction implementation"
+          ],
+          "excerpt": "# BucketFlow — Stablecoin allocation application\n\n**Type:** Independent blockchain application  \n**Repository:** https://github.com/faelic/bucketflow  \n**Application:** https://bucketflow-tau.vercel.app/  \n**Stack:** Next.js, React, TypeScript, TanStack Query, Solidity, wagmi, viem, Foundry.\n\n## Overview and contribution\n\nBucketFlow lets users set rules for splitting a USDC deposit among financial"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Blockchain engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Blockchain engineering\n\n## Blockchain engineering  \nFavour has built Solidity contracts and Ethereum-connected applications. His work covers wallet connections, token approvals, contract events, transaction receipts, RPC data, and handling wallet or network mismatches in the UI.  \n*"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Frontend and testing"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Frontend and testing\n\n## Frontend and testing  \nOn the frontend, Favour used TanStack Query to manage server data and React Hook Form with Zod for form handling. He added backend, integration, and end-to-end tests, including tests for transfer behavior under concurrency."
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: __preamble__\n\n# Monierave — Full-stack banking simulation  \n**Type:** Independent full-stack project\n**Repository:** https://github.com/faelic/monierave\n**Application:** https://monierave.favourututu.com/\n**Stack:** Go, Gin, PostgreSQL, SQLC, pgx, Redis, Asynq, Next.js, React, TypeScript, TanStack Query, React Hook Form, Zod, Docker."
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Overview and contribution"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Overview and contribution\n\n## Overview and contribution  \nMonierave is a banking simulation through which Favour explored the backend and frontend engineering of financial transactions. He built account registration and verification, authentication, account management, beneficiaries, transfers,"
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour Chukwuemerie Ututu — Professional overview > Background and work"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Background and work\n\n## Background and work  \nFavour Chukwuemerie Ututu is a Full-stack Software Engineer and AI Engineer based in Nigeria. He builds frontend applications, backend systems, and LLM-powered applications. His work includes professional frontend engineering on Poli"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Frontend engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Frontend engineering\n\n## Frontend engineering  \nFavour builds frontend interfaces for public websites, administration dashboards, financial workflows, blockchain explorers, and wallet-connected applications.  \n**Frontend:** TypeScript, JavaScript, React, Next.js, Vite, React Router,"
+        }
+      ],
+      "timing": {
+        "retrieval_ms": 563.7115419958718,
+        "first_text_ms": 1170.3659579943633,
+        "completion_ms": 1853.5208749963203
+      },
+      "answer_provider_usage": {
+        "input_tokens": 4612,
+        "output_tokens": 76,
+        "total_tokens": 4688,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "estimated_answer_micro_usd": 1967,
+      "usage_scope": "Answer stream only when provider metadata is available; excludes rewriting and evaluation. Not a billing total.",
+      "human_review": {
+        "verdict": "pending",
+        "factual_claims": null,
+        "unsupported_claims": null,
+        "appropriate_uncertainty": null,
+        "reference_correctness": null,
+        "notes": ""
+      },
+      "retrieval": {
+        "k": 10,
+        "reciprocal_rank": 1.0,
+        "matched_groups": 2,
+        "total_groups": 2,
+        "evidence_coverage": 1.0,
+        "quote_matched_groups": 2,
+        "labelled_quote_coverage": 1.0
+      }
+    },
+    {
+      "id": "eval-004",
+      "kind": "direct_fact",
+      "question": "Was Favour's university degree in computer science? Name the institution and the degree field actually recorded.",
+      "history": [],
+      "expected_behavior": "The recorded degree is a BSc in Quantity Survey from Federal University of Technology Minna, rather than a computer science degree.",
+      "status": "complete",
+      "error_class": null,
+      "answer": "Favour's university degree is not in computer science. He is recorded as pursuing a Bachelor of Science (BSc) degree in Quantity Survey at the Federal University of Technology Minna, from 2018 to 2025.",
+      "references": [
+        {
+          "id": "education-training",
+          "title": "Education and training",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's education and training > University education",
+            "Favour's education and training > Alchemy University",
+            "Favour's education and training > Cyfrin"
+          ],
+          "excerpt": "# Favour's education and training\n\n## University education\n\n**Federal University of Technology Minna — BSc in Quantity Survey**\n\n**2018–2025**\n\n## Alchemy University\n\n**Alchemy University — Frontend Engineering Training**\n\n**2025–2026**\n\nTraining covering React, TypeScript, API integration, and Ethereum-connected applications, including wallet interaction, transaction states, reusable UI component"
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour Chukwuemerie Ututu — Professional overview > Self-directed learning and freelance work"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Self-directed learning and freelance work\n\n## Self-directed learning and freelance work  \nFavour began his software development journey as a self-taught developer. He learned independently and took on freelance development work before undertaking structured frontend engineering "
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour Chukwuemerie Ututu — Professional overview > Background and work"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Background and work\n\n## Background and work  \nFavour Chukwuemerie Ututu is a Full-stack Software Engineer and AI Engineer based in Nigeria. He builds frontend applications, backend systems, and LLM-powered applications. His work includes professional frontend engineering on Poli"
+        },
+        {
+          "id": "opportunities-contact",
+          "title": "Opportunities and contact",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's professional opportunities and contact > Availability and interests",
+            "Favour's professional opportunities and contact > Location and working arrangements",
+            "Favour's professional opportunities and contact > Contact"
+          ],
+          "excerpt": "# Favour's professional opportunities and contact\n\n## Availability and interests\n\nAs confirmed on **10 November 2026**, Favour is open to **both full-time roles and freelance or contract work** in frontend engineering, backend engineering, full-stack software engineering, and AI engineering. He is interested in building applications and backend services, as well as working with teams developing AI"
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: __preamble__\n\n# Favour Chukwuemerie Ututu — Professional overview  \n**Role:** Full-stack Software Engineer and AI Engineer.  \n**Professional focus:** Backend systems, frontend applications, and AI systems.\n**Other work:** Blockchain applications and smart contracts.\n**Country of residence:** Nigeria."
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Blockchain engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Blockchain engineering\n\n## Blockchain engineering  \nFavour has built Solidity contracts and Ethereum-connected applications. His work covers wallet connections, token approvals, contract events, transaction receipts, RPC data, and handling wallet or network mismatches in the UI.  \n*"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Backend engineering and data"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Backend engineering and data\n\n# Favour's engineering areas and technical skills  \n## Backend engineering and data  \nFavour builds API-driven backend systems with Go. His backend project work covers authentication, account and session management, database transactions, background job"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > AI application engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > AI application engineering\n\n## AI application engineering  \nFavour builds LLM-powered applications with Python. His Portfolio RAG Assistant connects visitor questions to curated portfolio knowledge, retrieves relevant passages, and generates concise answers grounded in those passage"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Frontend engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Frontend engineering\n\n## Frontend engineering  \nFavour builds frontend interfaces for public websites, administration dashboards, financial workflows, blockchain explorers, and wallet-connected applications.  \n**Frontend:** TypeScript, JavaScript, React, Next.js, Vite, React Router,"
+        },
+        {
+          "id": "profile-perspective",
+          "title": "Engineering perspective",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Favour's engineering perspective and interests\nSection: __preamble__\n\n# Favour's engineering perspective and interests  \nThe following passages express Favour Chukwuemerie Ututu's perspective, with owner-approved wording updates on 11 November 2026."
+        }
+      ],
+      "timing": {
+        "retrieval_ms": 540.6561660056468,
+        "first_text_ms": 1104.7563750034897,
+        "completion_ms": 1652.6086250087246
+      },
+      "answer_provider_usage": {
+        "input_tokens": 4257,
+        "output_tokens": 46,
+        "total_tokens": 4303,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "estimated_answer_micro_usd": 1777,
+      "usage_scope": "Answer stream only when provider metadata is available; excludes rewriting and evaluation. Not a billing total.",
+      "human_review": {
+        "verdict": "pending",
+        "factual_claims": null,
+        "unsupported_claims": null,
+        "appropriate_uncertainty": null,
+        "reference_correctness": null,
+        "notes": ""
+      },
+      "retrieval": {
+        "k": 10,
+        "reciprocal_rank": 1.0,
+        "matched_groups": 1,
+        "total_groups": 1,
+        "evidence_coverage": 1.0,
+        "quote_matched_groups": 1,
+        "labelled_quote_coverage": 1.0
+      }
+    },
+    {
+      "id": "eval-005",
+      "kind": "direct_fact",
+      "question": "What does Favour explicitly say he enjoys outside coding, without turning that interest into a professional credential?",
+      "history": [],
+      "expected_behavior": "He says he loves playing video games. The passage presents this as a personal interest, not a professional gaming credential.",
+      "status": "complete",
+      "error_class": null,
+      "answer": "Favour explicitly says he enjoys playing video games outside of coding. He describes it as \"one of my favourite things to do outside coding,\" without framing it as a professional credential.",
+      "references": [
+        {
+          "id": "profile-perspective",
+          "title": "Engineering perspective",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering perspective and interests > Favour's interests — in his own words"
+          ],
+          "excerpt": "Document: Favour's engineering perspective and interests\nSection: Favour's engineering perspective and interests > Favour's interests — in his own words\n\n## Favour's interests — in his own words  \nI love coding. I enjoy working with LLMs, experimenting with what they can do, and exploring their potential in applications. I'm especially curious about what becomes possible as AI systems get better a"
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour Chukwuemerie Ututu — Professional overview > Self-directed learning and freelance work"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Self-directed learning and freelance work\n\n## Self-directed learning and freelance work  \nFavour began his software development journey as a self-taught developer. He learned independently and took on freelance development work before undertaking structured frontend engineering "
+        },
+        {
+          "id": "profile-perspective",
+          "title": "Engineering perspective",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Favour's engineering perspective and interests\nSection: __preamble__\n\n# Favour's engineering perspective and interests  \nThe following passages express Favour Chukwuemerie Ututu's perspective, with owner-approved wording updates on 11 November 2026."
+        },
+        {
+          "id": "profile-perspective",
+          "title": "Engineering perspective",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering perspective and interests > Favour's engineering perspective — in his own words"
+          ],
+          "excerpt": "Document: Favour's engineering perspective and interests\nSection: Favour's engineering perspective and interests > Favour's engineering perspective — in his own words\n\n## Favour's engineering perspective — in his own words  \nI started my career as a frontend engineer, so I've always loved seeing beautiful user interfaces. But they have to work, too. I love an interface that looks good, feels easy "
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour Chukwuemerie Ututu — Professional overview > Background and work"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Background and work\n\n## Background and work  \nFavour Chukwuemerie Ututu is a Full-stack Software Engineer and AI Engineer based in Nigeria. He builds frontend applications, backend systems, and LLM-powered applications. His work includes professional frontend engineering on Poli"
+        },
+        {
+          "id": "opportunities-contact",
+          "title": "Opportunities and contact",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's professional opportunities and contact > Availability and interests",
+            "Favour's professional opportunities and contact > Location and working arrangements",
+            "Favour's professional opportunities and contact > Contact"
+          ],
+          "excerpt": "# Favour's professional opportunities and contact\n\n## Availability and interests\n\nAs confirmed on **10 November 2026**, Favour is open to **both full-time roles and freelance or contract work** in frontend engineering, backend engineering, full-stack software engineering, and AI engineering. He is interested in building applications and backend services, as well as working with teams developing AI"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Backend engineering and data"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Backend engineering and data\n\n# Favour's engineering areas and technical skills  \n## Backend engineering and data  \nFavour builds API-driven backend systems with Go. His backend project work covers authentication, account and session management, database transactions, background job"
+        },
+        {
+          "id": "education-training",
+          "title": "Education and training",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's education and training > University education",
+            "Favour's education and training > Alchemy University",
+            "Favour's education and training > Cyfrin"
+          ],
+          "excerpt": "# Favour's education and training\n\n## University education\n\n**Federal University of Technology Minna — BSc in Quantity Survey**\n\n**2018–2025**\n\n## Alchemy University\n\n**Alchemy University — Frontend Engineering Training**\n\n**2025–2026**\n\nTraining covering React, TypeScript, API integration, and Ethereum-connected applications, including wallet interaction, transaction states, reusable UI component"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > AI application engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > AI application engineering\n\n## AI application engineering  \nFavour builds LLM-powered applications with Python. His Portfolio RAG Assistant connects visitor questions to curated portfolio knowledge, retrieves relevant passages, and generates concise answers grounded in those passage"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Blockchain engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Blockchain engineering\n\n## Blockchain engineering  \nFavour has built Solidity contracts and Ethereum-connected applications. His work covers wallet connections, token approvals, contract events, transaction receipts, RPC data, and handling wallet or network mismatches in the UI.  \n*"
+        }
+      ],
+      "timing": {
+        "retrieval_ms": 677.4949170066975,
+        "first_text_ms": 1248.7848750024568,
+        "completion_ms": 1715.7950420078123
+      },
+      "answer_provider_usage": {
+        "input_tokens": 4450,
+        "output_tokens": 36,
+        "total_tokens": 4486,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "estimated_answer_micro_usd": 1838,
+      "usage_scope": "Answer stream only when provider metadata is available; excludes rewriting and evaluation. Not a billing total.",
+      "human_review": {
+        "verdict": "pending",
+        "factual_claims": null,
+        "unsupported_claims": null,
+        "appropriate_uncertainty": null,
+        "reference_correctness": null,
+        "notes": ""
+      },
+      "retrieval": {
+        "k": 10,
+        "reciprocal_rank": 1.0,
+        "matched_groups": 1,
+        "total_groups": 1,
+        "evidence_coverage": 1.0,
+        "quote_matched_groups": 1,
+        "labelled_quote_coverage": 1.0
+      }
+    },
+    {
+      "id": "eval-006",
+      "kind": "direct_fact",
+      "question": "Which provider credential does BlockScan keep out of the browser bundle, and what mechanism is named for doing so?",
+      "history": [],
+      "expected_behavior": "BlockScan uses Vercel API proxies to keep Alchemy credentials out of the browser bundle.",
+      "status": "complete",
+      "error_class": null,
+      "answer": "BlockScan keeps the Alchemy provider credentials out of the browser bundle by using Vercel API proxies. This mechanism is named as \"Vercel API proxies\" for credential handling.",
+      "references": [
+        {
+          "id": "project-blockscan",
+          "title": "BlockScan",
+          "href": "https://www.favourututu.com/#blockscan",
+          "sections": [
+            "__preamble__",
+            "BlockScan — Sepolia blockchain explorer > Overview",
+            "BlockScan — Sepolia blockchain explorer > Search and live-data implementation"
+          ],
+          "excerpt": "# BlockScan — Sepolia blockchain explorer\n\n**Type:** Independent frontend project  \n**Repository:** https://github.com/faelic/sepolia-blockexplorer  \n**Application:** https://blockscan-seven.vercel.app/  \n**Stack:** React, JavaScript, React Router, React Testing Library, Alchemy SDK/RPC, Vercel.\n\n## Overview\n\nBlockScan is a blockchain explorer for Ethereum Sepolia. It lets users inspect blocks, tr"
+        },
+        {
+          "id": "project-approval-cleanup",
+          "title": "Cleanup",
+          "href": "https://www.favourututu.com/#cleanup",
+          "sections": [
+            "__preamble__",
+            "Approval Cleanup — ERC-20 wallet-permission manager > Overview and contribution",
+            "Approval Cleanup — ERC-20 wallet-permission manager > Log processing and wallet actions"
+          ],
+          "excerpt": "# Approval Cleanup — ERC-20 wallet-permission manager\n\n**Type:** Independent blockchain application  \n**Also known as:** Cleanup; Allowance Cleanup.  \n**Repository:** https://github.com/faelic/approval-cleanup  \n**Application:** https://approval-cleanup-brt3.vercel.app/  \n**Stack:** Next.js, React, TypeScript, wagmi, viem, Hardhat, OpenZeppelin.\n\n## Overview and contribution\n\nApproval Cleanup help"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Background processing and security"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Background processing and security\n\n## Background processing and security  \nBackground work uses a transactional outbox. PostgreSQL holds the durable record of work to be performed, while Redis and Asynq support processing and retries. The system also includes rotating refresh tokens, revocable"
+        },
+        {
+          "id": "project-bucketflow",
+          "title": "BucketFlow",
+          "href": "https://www.favourututu.com/#bucketflow",
+          "sections": [
+            "__preamble__",
+            "BucketFlow — Stablecoin allocation application > Overview and contribution",
+            "BucketFlow — Stablecoin allocation application > Wallet and transaction implementation"
+          ],
+          "excerpt": "# BucketFlow — Stablecoin allocation application\n\n**Type:** Independent blockchain application  \n**Repository:** https://github.com/faelic/bucketflow  \n**Application:** https://bucketflow-tau.vercel.app/  \n**Stack:** Next.js, React, TypeScript, TanStack Query, Solidity, wagmi, viem, Foundry.\n\n## Overview and contribution\n\nBucketFlow lets users set rules for splitting a USDC deposit among financial"
+        },
+        {
+          "id": "project-escrow",
+          "title": "Escrow",
+          "href": "https://www.favourututu.com/#escrow",
+          "sections": [
+            "__preamble__",
+            "Escrow — Sepolia payment project > Purpose and contribution",
+            "Escrow — Sepolia payment project > Availability and further exploration"
+          ],
+          "excerpt": "# Escrow — Sepolia payment project\n\n**Type:** Independent project.\n\n**Contribution:** React frontend and Solidity smart contract.  \n**Network:** Ethereum Sepolia, a test network.  \n**Repository:** https://github.com/faelic/escrow-webapp\n\n## Purpose and contribution\n\nEscrow is Favour's independent project for a payment flow involving a depositor, beneficiary, and arbiter. Favour built both the Reac"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Transfer integrity and concurrency"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Transfer integrity and concurrency\n\n## Transfer integrity and concurrency  \nA transfer in Monierave is recorded through an append-only double-entry ledger. PostgreSQL transactions keep related database changes together, row-level locking deals with concurrent account operations, and idempotency"
+        },
+        {
+          "id": "project-portfolio-rag-assistant",
+          "title": "Portfolio RAG Assistant",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Portfolio RAG Assistant — Portfolio questions and grounded answers > Availability and limitations"
+          ],
+          "excerpt": "Document: Portfolio RAG Assistant — Portfolio questions and grounded answers\nSection: Portfolio RAG Assistant — Portfolio questions and grounded answers > Availability and limitations\n\n## Availability and limitations  \nPublic availability through Favour's portfolio was confirmed by Favour on 11 November 2026. The approved code link is https://github.com/faelic/portfolio; public availability has no"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Blockchain engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Blockchain engineering\n\n## Blockchain engineering  \nFavour has built Solidity contracts and Ethereum-connected applications. His work covers wallet connections, token approvals, contract events, transaction receipts, RPC data, and handling wallet or network mismatches in the UI.  \n*"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: __preamble__\n\n# Monierave — Full-stack banking simulation  \n**Type:** Independent full-stack project\n**Repository:** https://github.com/faelic/monierave\n**Application:** https://monierave.favourututu.com/\n**Stack:** Go, Gin, PostgreSQL, SQLC, pgx, Redis, Asynq, Next.js, React, TypeScript, TanStack Query, React Hook Form, Zod, Docker."
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Frontend and testing"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Frontend and testing\n\n## Frontend and testing  \nOn the frontend, Favour used TanStack Query to manage server data and React Hook Form with Zod for form handling. He added backend, integration, and end-to-end tests, including tests for transfer behavior under concurrency."
+        }
+      ],
+      "timing": {
+        "retrieval_ms": 793.2432079978753,
+        "first_text_ms": 1385.8622499974445,
+        "completion_ms": 1897.6819999952568
+      },
+      "answer_provider_usage": {
+        "input_tokens": 4395,
+        "output_tokens": 37,
+        "total_tokens": 4432,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "estimated_answer_micro_usd": 1818,
+      "usage_scope": "Answer stream only when provider metadata is available; excludes rewriting and evaluation. Not a billing total.",
+      "human_review": {
+        "verdict": "pending",
+        "factual_claims": null,
+        "unsupported_claims": null,
+        "appropriate_uncertainty": null,
+        "reference_correctness": null,
+        "notes": ""
+      },
+      "retrieval": {
+        "k": 10,
+        "reciprocal_rank": 1.0,
+        "matched_groups": 1,
+        "total_groups": 1,
+        "evidence_coverage": 1.0,
+        "quote_matched_groups": 1,
+        "labelled_quote_coverage": 1.0
+      }
+    },
+    {
+      "id": "eval-007",
+      "kind": "direct_fact",
+      "question": "Can I open a deployed frontend for the project with a depositor, beneficiary, and arbiter? Give the supported way to explore it.",
+      "history": [],
+      "expected_behavior": "That project is Escrow. Its frontend is not deployed; visitors can explore the code at https://github.com/faelic/escrow-webapp.",
+      "status": "complete",
+      "error_class": null,
+      "answer": "You cannot open a deployed frontend for the Escrow project with depositor, beneficiary, and arbiter roles because its frontend is not deployed. The supported way to explore it is by visiting the Escrow repository on GitHub at https://github.com/faelic/escrow-webapp, where you can review the React frontend code and Solidity smart contract implementation.",
+      "references": [
+        {
+          "id": "project-escrow",
+          "title": "Escrow",
+          "href": "https://www.favourututu.com/#escrow",
+          "sections": [
+            "__preamble__",
+            "Escrow — Sepolia payment project > Purpose and contribution",
+            "Escrow — Sepolia payment project > Availability and further exploration"
+          ],
+          "excerpt": "# Escrow — Sepolia payment project\n\n**Type:** Independent project.\n\n**Contribution:** React frontend and Solidity smart contract.  \n**Network:** Ethereum Sepolia, a test network.  \n**Repository:** https://github.com/faelic/escrow-webapp\n\n## Purpose and contribution\n\nEscrow is Favour's independent project for a payment flow involving a depositor, beneficiary, and arbiter. Favour built both the Reac"
+        },
+        {
+          "id": "project-blockscan",
+          "title": "BlockScan",
+          "href": "https://www.favourututu.com/#blockscan",
+          "sections": [
+            "__preamble__",
+            "BlockScan — Sepolia blockchain explorer > Overview",
+            "BlockScan — Sepolia blockchain explorer > Search and live-data implementation"
+          ],
+          "excerpt": "# BlockScan — Sepolia blockchain explorer\n\n**Type:** Independent frontend project  \n**Repository:** https://github.com/faelic/sepolia-blockexplorer  \n**Application:** https://blockscan-seven.vercel.app/  \n**Stack:** React, JavaScript, React Router, React Testing Library, Alchemy SDK/RPC, Vercel.\n\n## Overview\n\nBlockScan is a blockchain explorer for Ethereum Sepolia. It lets users inspect blocks, tr"
+        },
+        {
+          "id": "project-portfolio-rag-assistant",
+          "title": "Portfolio RAG Assistant",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Portfolio RAG Assistant — Portfolio questions and grounded answers > Availability and limitations"
+          ],
+          "excerpt": "Document: Portfolio RAG Assistant — Portfolio questions and grounded answers\nSection: Portfolio RAG Assistant — Portfolio questions and grounded answers > Availability and limitations\n\n## Availability and limitations  \nPublic availability through Favour's portfolio was confirmed by Favour on 11 November 2026. The approved code link is https://github.com/faelic/portfolio; public availability has no"
+        },
+        {
+          "id": "project-bucketflow",
+          "title": "BucketFlow",
+          "href": "https://www.favourututu.com/#bucketflow",
+          "sections": [
+            "__preamble__",
+            "BucketFlow — Stablecoin allocation application > Overview and contribution",
+            "BucketFlow — Stablecoin allocation application > Wallet and transaction implementation"
+          ],
+          "excerpt": "# BucketFlow — Stablecoin allocation application\n\n**Type:** Independent blockchain application  \n**Repository:** https://github.com/faelic/bucketflow  \n**Application:** https://bucketflow-tau.vercel.app/  \n**Stack:** Next.js, React, TypeScript, TanStack Query, Solidity, wagmi, viem, Foundry.\n\n## Overview and contribution\n\nBucketFlow lets users set rules for splitting a USDC deposit among financial"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: __preamble__\n\n# Monierave — Full-stack banking simulation  \n**Type:** Independent full-stack project\n**Repository:** https://github.com/faelic/monierave\n**Application:** https://monierave.favourututu.com/\n**Stack:** Go, Gin, PostgreSQL, SQLC, pgx, Redis, Asynq, Next.js, React, TypeScript, TanStack Query, React Hook Form, Zod, Docker."
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Frontend and testing"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Frontend and testing\n\n## Frontend and testing  \nOn the frontend, Favour used TanStack Query to manage server data and React Hook Form with Zod for form handling. He added backend, integration, and end-to-end tests, including tests for transfer behavior under concurrency."
+        },
+        {
+          "id": "project-approval-cleanup",
+          "title": "Cleanup",
+          "href": "https://www.favourututu.com/#cleanup",
+          "sections": [
+            "__preamble__",
+            "Approval Cleanup — ERC-20 wallet-permission manager > Overview and contribution",
+            "Approval Cleanup — ERC-20 wallet-permission manager > Log processing and wallet actions"
+          ],
+          "excerpt": "# Approval Cleanup — ERC-20 wallet-permission manager\n\n**Type:** Independent blockchain application  \n**Also known as:** Cleanup; Allowance Cleanup.  \n**Repository:** https://github.com/faelic/approval-cleanup  \n**Application:** https://approval-cleanup-brt3.vercel.app/  \n**Stack:** Next.js, React, TypeScript, wagmi, viem, Hardhat, OpenZeppelin.\n\n## Overview and contribution\n\nApproval Cleanup help"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Frontend engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Frontend engineering\n\n## Frontend engineering  \nFavour builds frontend interfaces for public websites, administration dashboards, financial workflows, blockchain explorers, and wallet-connected applications.  \n**Frontend:** TypeScript, JavaScript, React, Next.js, Vite, React Router,"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Overview and contribution"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Overview and contribution\n\n## Overview and contribution  \nMonierave is a banking simulation through which Favour explored the backend and frontend engineering of financial transactions. He built account registration and verification, authentication, account management, beneficiaries, transfers,"
+        },
+        {
+          "id": "portfolio-assistant-status",
+          "title": "About this portfolio assistant",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Portfolio AI assistant — Availability and visitor purpose > Availability",
+            "Portfolio AI assistant — Availability and visitor purpose > Visitor questions, curated knowledge, and GitHub",
+            "Portfolio AI assistant — Availability and visitor purpose > Supported questions"
+          ],
+          "excerpt": "# Portfolio AI assistant — Availability and visitor purpose\n\n## Availability\n\nAs confirmed by Favour on **11 November 2026**, the Portfolio RAG Assistant is publicly available through his portfolio. This is an owner-confirmed availability statement, not an independent uptime check.\n\n## Visitor questions, curated knowledge, and GitHub\n\nVisitor questions guide retrieval from Favour's curated portfol"
+        }
+      ],
+      "timing": {
+        "retrieval_ms": 459.92037499672733,
+        "first_text_ms": 1459.6337499970105,
+        "completion_ms": 1818.0412079964299
+      },
+      "answer_provider_usage": {
+        "input_tokens": 4587,
+        "output_tokens": 71,
+        "total_tokens": 4658,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 0
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "estimated_answer_micro_usd": 1949,
+      "usage_scope": "Answer stream only when provider metadata is available; excludes rewriting and evaluation. Not a billing total.",
+      "human_review": {
+        "verdict": "pending",
+        "factual_claims": null,
+        "unsupported_claims": null,
+        "appropriate_uncertainty": null,
+        "reference_correctness": null,
+        "notes": ""
+      },
+      "retrieval": {
+        "k": 10,
+        "reciprocal_rank": 1.0,
+        "matched_groups": 2,
+        "total_groups": 2,
+        "evidence_coverage": 1.0,
+        "quote_matched_groups": 2,
+        "labelled_quote_coverage": 1.0
+      }
+    },
+    {
+      "id": "eval-008",
+      "kind": "direct_fact",
+      "question": "What phone number should I call to discuss a role with Favour?",
+      "history": [],
+      "expected_behavior": "The knowledge base does not provide a phone number, so I cannot supply one.",
+      "status": "complete",
+      "error_class": null,
+      "answer": "Favour does not list a phone number for contact. To discuss a role with him, you can email him at ututufavour7@gmail.com.",
+      "references": [
+        {
+          "id": "opportunities-contact",
+          "title": "Opportunities and contact",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's professional opportunities and contact > Availability and interests",
+            "Favour's professional opportunities and contact > Location and working arrangements",
+            "Favour's professional opportunities and contact > Contact"
+          ],
+          "excerpt": "# Favour's professional opportunities and contact\n\n## Availability and interests\n\nAs confirmed on **10 November 2026**, Favour is open to **both full-time roles and freelance or contract work** in frontend engineering, backend engineering, full-stack software engineering, and AI engineering. He is interested in building applications and backend services, as well as working with teams developing AI"
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour Chukwuemerie Ututu — Professional overview > Background and work"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Background and work\n\n## Background and work  \nFavour Chukwuemerie Ututu is a Full-stack Software Engineer and AI Engineer based in Nigeria. He builds frontend applications, backend systems, and LLM-powered applications. His work includes professional frontend engineering on Poli"
+        },
+        {
+          "id": "education-training",
+          "title": "Education and training",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's education and training > University education",
+            "Favour's education and training > Alchemy University",
+            "Favour's education and training > Cyfrin"
+          ],
+          "excerpt": "# Favour's education and training\n\n## University education\n\n**Federal University of Technology Minna — BSc in Quantity Survey**\n\n**2018–2025**\n\n## Alchemy University\n\n**Alchemy University — Frontend Engineering Training**\n\n**2025–2026**\n\nTraining covering React, TypeScript, API integration, and Ethereum-connected applications, including wallet interaction, transaction states, reusable UI component"
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: __preamble__\n\n# Favour Chukwuemerie Ututu — Professional overview  \n**Role:** Full-stack Software Engineer and AI Engineer.  \n**Professional focus:** Backend systems, frontend applications, and AI systems.\n**Other work:** Blockchain applications and smart contracts.\n**Country of residence:** Nigeria."
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "Favour at Flamong — Policy.ng frontend engineering > Frontend integration and workflows"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: Favour at Flamong — Policy.ng frontend engineering > Frontend integration and workflows\n\n## Frontend integration and workflows  \nFavour integrates the frontend with the backend using TanStack Query. When an API response differs from what a screen expects, or a new workflow needs an additional endpoint, he works with the backend "
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: __preamble__\n\n# Favour at Flamong — Policy.ng frontend engineering  \n**Position:** Frontend Developer Intern at Flamong.\n**Employment period:** May 2026–Present, confirmed on 10 November 2026.\n**Product:** [Policy.ng](https://policy.ng/)\n**Role:** Frontend engineering for the public website and administrative dashboard."
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Blockchain engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Blockchain engineering\n\n## Blockchain engineering  \nFavour has built Solidity contracts and Ethereum-connected applications. His work covers wallet connections, token approvals, contract events, transaction receipts, RPC data, and handling wallet or network mismatches in the UI.  \n*"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > AI application engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > AI application engineering\n\n## AI application engineering  \nFavour builds LLM-powered applications with Python. His Portfolio RAG Assistant connects visitor questions to curated portfolio knowledge, retrieves relevant passages, and generates concise answers grounded in those passage"
+        },
+        {
+          "id": "portfolio-assistant-status",
+          "title": "About this portfolio assistant",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Portfolio AI assistant — Availability and visitor purpose > Availability",
+            "Portfolio AI assistant — Availability and visitor purpose > Visitor questions, curated knowledge, and GitHub",
+            "Portfolio AI assistant — Availability and visitor purpose > Supported questions"
+          ],
+          "excerpt": "# Portfolio AI assistant — Availability and visitor purpose\n\n## Availability\n\nAs confirmed by Favour on **11 November 2026**, the Portfolio RAG Assistant is publicly available through his portfolio. This is an owner-confirmed availability statement, not an independent uptime check.\n\n## Visitor questions, curated knowledge, and GitHub\n\nVisitor questions guide retrieval from Favour's curated portfol"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Frontend engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Frontend engineering\n\n## Frontend engineering  \nFavour builds frontend interfaces for public websites, administration dashboards, financial workflows, blockchain explorers, and wallet-connected applications.  \n**Frontend:** TypeScript, JavaScript, React, Next.js, Vite, React Router,"
+        }
+      ],
+      "timing": {
+        "retrieval_ms": 466.3937919976888,
+        "first_text_ms": 1036.5185419941554,
+        "completion_ms": 1488.1578339991393
+      },
+      "answer_provider_usage": {
+        "input_tokens": 4463,
+        "output_tokens": 31,
+        "total_tokens": 4494,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "estimated_answer_micro_usd": 1835,
+      "usage_scope": "Answer stream only when provider metadata is available; excludes rewriting and evaluation. Not a billing total.",
+      "human_review": {
+        "verdict": "pending",
+        "factual_claims": null,
+        "unsupported_claims": null,
+        "appropriate_uncertainty": null,
+        "reference_correctness": null,
+        "notes": ""
+      },
+      "retrieval": {
+        "k": 10,
+        "reciprocal_rank": null,
+        "matched_groups": 0,
+        "total_groups": 0,
+        "evidence_coverage": null,
+        "quote_matched_groups": null,
+        "labelled_quote_coverage": null
+      }
+    },
+    {
+      "id": "eval-009",
+      "kind": "temporal",
+      "question": "What are the documented beginning and ending years of Favour's university education, and which institution do those years belong to?",
+      "history": [],
+      "expected_behavior": "The university period is 2018–2025 at Federal University of Technology Minna.",
+      "status": "complete",
+      "error_class": null,
+      "answer": "Favour's documented university education at the Federal University of Technology Minna spans from 2018 to 2025.",
+      "references": [
+        {
+          "id": "education-training",
+          "title": "Education and training",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's education and training > University education",
+            "Favour's education and training > Alchemy University",
+            "Favour's education and training > Cyfrin"
+          ],
+          "excerpt": "# Favour's education and training\n\n## University education\n\n**Federal University of Technology Minna — BSc in Quantity Survey**\n\n**2018–2025**\n\n## Alchemy University\n\n**Alchemy University — Frontend Engineering Training**\n\n**2025–2026**\n\nTraining covering React, TypeScript, API integration, and Ethereum-connected applications, including wallet interaction, transaction states, reusable UI component"
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour Chukwuemerie Ututu — Professional overview > Self-directed learning and freelance work"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Self-directed learning and freelance work\n\n## Self-directed learning and freelance work  \nFavour began his software development journey as a self-taught developer. He learned independently and took on freelance development work before undertaking structured frontend engineering "
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour Chukwuemerie Ututu — Professional overview > Background and work"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Background and work\n\n## Background and work  \nFavour Chukwuemerie Ututu is a Full-stack Software Engineer and AI Engineer based in Nigeria. He builds frontend applications, backend systems, and LLM-powered applications. His work includes professional frontend engineering on Poli"
+        },
+        {
+          "id": "opportunities-contact",
+          "title": "Opportunities and contact",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's professional opportunities and contact > Availability and interests",
+            "Favour's professional opportunities and contact > Location and working arrangements",
+            "Favour's professional opportunities and contact > Contact"
+          ],
+          "excerpt": "# Favour's professional opportunities and contact\n\n## Availability and interests\n\nAs confirmed on **10 November 2026**, Favour is open to **both full-time roles and freelance or contract work** in frontend engineering, backend engineering, full-stack software engineering, and AI engineering. He is interested in building applications and backend services, as well as working with teams developing AI"
+        },
+        {
+          "id": "profile-perspective",
+          "title": "Engineering perspective",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Favour's engineering perspective and interests\nSection: __preamble__\n\n# Favour's engineering perspective and interests  \nThe following passages express Favour Chukwuemerie Ututu's perspective, with owner-approved wording updates on 11 November 2026."
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: __preamble__\n\n# Favour Chukwuemerie Ututu — Professional overview  \n**Role:** Full-stack Software Engineer and AI Engineer.  \n**Professional focus:** Backend systems, frontend applications, and AI systems.\n**Other work:** Blockchain applications and smart contracts.\n**Country of residence:** Nigeria."
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Blockchain engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Blockchain engineering\n\n## Blockchain engineering  \nFavour has built Solidity contracts and Ethereum-connected applications. His work covers wallet connections, token approvals, contract events, transaction receipts, RPC data, and handling wallet or network mismatches in the UI.  \n*"
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: __preamble__\n\n# Favour at Flamong — Policy.ng frontend engineering  \n**Position:** Frontend Developer Intern at Flamong.\n**Employment period:** May 2026–Present, confirmed on 10 November 2026.\n**Product:** [Policy.ng](https://policy.ng/)\n**Role:** Frontend engineering for the public website and administrative dashboard."
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Backend engineering and data"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Backend engineering and data\n\n# Favour's engineering areas and technical skills  \n## Backend engineering and data  \nFavour builds API-driven backend systems with Go. His backend project work covers authentication, account and session management, database transactions, background job"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > AI application engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > AI application engineering\n\n## AI application engineering  \nFavour builds LLM-powered applications with Python. His Portfolio RAG Assistant connects visitor questions to curated portfolio knowledge, retrieves relevant passages, and generates concise answers grounded in those passage"
+        }
+      ],
+      "timing": {
+        "retrieval_ms": 611.289417007356,
+        "first_text_ms": 1274.7865420096787,
+        "completion_ms": 1535.9534169983817
+      },
+      "answer_provider_usage": {
+        "input_tokens": 4189,
+        "output_tokens": 24,
+        "total_tokens": 4213,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "estimated_answer_micro_usd": 1714,
+      "usage_scope": "Answer stream only when provider metadata is available; excludes rewriting and evaluation. Not a billing total.",
+      "human_review": {
+        "verdict": "pending",
+        "factual_claims": null,
+        "unsupported_claims": null,
+        "appropriate_uncertainty": null,
+        "reference_correctness": null,
+        "notes": ""
+      },
+      "retrieval": {
+        "k": 10,
+        "reciprocal_rank": 1.0,
+        "matched_groups": 1,
+        "total_groups": 1,
+        "evidence_coverage": 1.0,
+        "quote_matched_groups": 1,
+        "labelled_quote_coverage": 1.0
+      }
+    },
+    {
+      "id": "eval-010",
+      "kind": "temporal",
+      "question": "Which year range belongs to the structured frontend course, rather than the university degree, and who provided that course?",
+      "history": [],
+      "expected_behavior": "Alchemy University provided the frontend engineering training recorded for 2025–2026.",
+      "status": "complete",
+      "error_class": null,
+      "answer": "The structured frontend engineering training took place at Alchemy University from 2025 to 2026. This course was provided by Alchemy University and covered React, TypeScript, API integration, and Ethereum-connected applications. The university degree, a BSc in Quantity Survey at the Federal University of Technology Minna, spans from 2018 to 2025.",
+      "references": [
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour Chukwuemerie Ututu — Professional overview > Self-directed learning and freelance work"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Self-directed learning and freelance work\n\n## Self-directed learning and freelance work  \nFavour began his software development journey as a self-taught developer. He learned independently and took on freelance development work before undertaking structured frontend engineering "
+        },
+        {
+          "id": "education-training",
+          "title": "Education and training",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's education and training > University education",
+            "Favour's education and training > Alchemy University",
+            "Favour's education and training > Cyfrin"
+          ],
+          "excerpt": "# Favour's education and training\n\n## University education\n\n**Federal University of Technology Minna — BSc in Quantity Survey**\n\n**2018–2025**\n\n## Alchemy University\n\n**Alchemy University — Frontend Engineering Training**\n\n**2025–2026**\n\nTraining covering React, TypeScript, API integration, and Ethereum-connected applications, including wallet interaction, transaction states, reusable UI component"
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: __preamble__\n\n# Favour at Flamong — Policy.ng frontend engineering  \n**Position:** Frontend Developer Intern at Flamong.\n**Employment period:** May 2026–Present, confirmed on 10 November 2026.\n**Product:** [Policy.ng](https://policy.ng/)\n**Role:** Frontend engineering for the public website and administrative dashboard."
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Frontend engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Frontend engineering\n\n## Frontend engineering  \nFavour builds frontend interfaces for public websites, administration dashboards, financial workflows, blockchain explorers, and wallet-connected applications.  \n**Frontend:** TypeScript, JavaScript, React, Next.js, Vite, React Router,"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Overview and contribution"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Overview and contribution\n\n## Overview and contribution  \nMonierave is a banking simulation through which Favour explored the backend and frontend engineering of financial transactions. He built account registration and verification, authentication, account management, beneficiaries, transfers,"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Frontend and testing"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Frontend and testing\n\n## Frontend and testing  \nOn the frontend, Favour used TanStack Query to manage server data and React Hook Form with Zod for form handling. He added backend, integration, and end-to-end tests, including tests for transfer behavior under concurrency."
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour Chukwuemerie Ututu — Professional overview > Background and work"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Background and work\n\n## Background and work  \nFavour Chukwuemerie Ututu is a Full-stack Software Engineer and AI Engineer based in Nigeria. He builds frontend applications, backend systems, and LLM-powered applications. His work includes professional frontend engineering on Poli"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: __preamble__\n\n# Monierave — Full-stack banking simulation  \n**Type:** Independent full-stack project\n**Repository:** https://github.com/faelic/monierave\n**Application:** https://monierave.favourututu.com/\n**Stack:** Go, Gin, PostgreSQL, SQLC, pgx, Redis, Asynq, Next.js, React, TypeScript, TanStack Query, React Hook Form, Zod, Docker."
+        },
+        {
+          "id": "project-portfolio-rag-assistant",
+          "title": "Portfolio RAG Assistant",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Portfolio RAG Assistant — Portfolio questions and grounded answers > Overview and contribution"
+          ],
+          "excerpt": "Document: Portfolio RAG Assistant — Portfolio questions and grounded answers\nSection: Portfolio RAG Assistant — Portfolio questions and grounded answers > Overview and contribution\n\n## Overview and contribution  \nFavour built the Portfolio RAG Assistant to answer visitor questions about his background, professional experience, contributions, and projects. He organized the portfolio knowledge into "
+        },
+        {
+          "id": "project-escrow",
+          "title": "Escrow",
+          "href": "https://www.favourututu.com/#escrow",
+          "sections": [
+            "__preamble__",
+            "Escrow — Sepolia payment project > Purpose and contribution",
+            "Escrow — Sepolia payment project > Availability and further exploration"
+          ],
+          "excerpt": "# Escrow — Sepolia payment project\n\n**Type:** Independent project.\n\n**Contribution:** React frontend and Solidity smart contract.  \n**Network:** Ethereum Sepolia, a test network.  \n**Repository:** https://github.com/faelic/escrow-webapp\n\n## Purpose and contribution\n\nEscrow is Favour's independent project for a payment flow involving a depositor, beneficiary, and arbiter. Favour built both the Reac"
+        }
+      ],
+      "timing": {
+        "retrieval_ms": 642.4553750111954,
+        "first_text_ms": 1352.0172910066321,
+        "completion_ms": 1936.9069160020445
+      },
+      "answer_provider_usage": {
+        "input_tokens": 3989,
+        "output_tokens": 72,
+        "total_tokens": 4061,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "estimated_answer_micro_usd": 1711,
+      "usage_scope": "Answer stream only when provider metadata is available; excludes rewriting and evaluation. Not a billing total.",
+      "human_review": {
+        "verdict": "pending",
+        "factual_claims": null,
+        "unsupported_claims": null,
+        "appropriate_uncertainty": null,
+        "reference_correctness": null,
+        "notes": ""
+      },
+      "retrieval": {
+        "k": 10,
+        "reciprocal_rank": 1.0,
+        "matched_groups": 1,
+        "total_groups": 1,
+        "evidence_coverage": 1.0,
+        "quote_matched_groups": 1,
+        "labelled_quote_coverage": 1.0
+      }
+    },
+    {
+      "id": "eval-011",
+      "kind": "temporal",
+      "question": "As of the dated employment confirmation, when did Favour join Flamong and was the position recorded as ongoing or ended?",
+      "history": [],
+      "expected_behavior": "The role is recorded as May 2026–Present, confirmed on 10 November 2026. It was ongoing at that confirmation date.",
+      "status": "complete",
+      "error_class": null,
+      "answer": "Favour joined Flamong as a Frontend Developer Intern in May 2026. As of the confirmation date on 10 November 2026, this position was recorded as ongoing (\"May 2026–Present\").",
+      "references": [
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: __preamble__\n\n# Favour at Flamong — Policy.ng frontend engineering  \n**Position:** Frontend Developer Intern at Flamong.\n**Employment period:** May 2026–Present, confirmed on 10 November 2026.\n**Product:** [Policy.ng](https://policy.ng/)\n**Role:** Frontend engineering for the public website and administrative dashboard."
+        },
+        {
+          "id": "opportunities-contact",
+          "title": "Opportunities and contact",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's professional opportunities and contact > Availability and interests",
+            "Favour's professional opportunities and contact > Location and working arrangements",
+            "Favour's professional opportunities and contact > Contact"
+          ],
+          "excerpt": "# Favour's professional opportunities and contact\n\n## Availability and interests\n\nAs confirmed on **10 November 2026**, Favour is open to **both full-time roles and freelance or contract work** in frontend engineering, backend engineering, full-stack software engineering, and AI engineering. He is interested in building applications and backend services, as well as working with teams developing AI"
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour Chukwuemerie Ututu — Professional overview > Background and work"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Background and work\n\n## Background and work  \nFavour Chukwuemerie Ututu is a Full-stack Software Engineer and AI Engineer based in Nigeria. He builds frontend applications, backend systems, and LLM-powered applications. His work includes professional frontend engineering on Poli"
+        },
+        {
+          "id": "education-training",
+          "title": "Education and training",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's education and training > University education",
+            "Favour's education and training > Alchemy University",
+            "Favour's education and training > Cyfrin"
+          ],
+          "excerpt": "# Favour's education and training\n\n## University education\n\n**Federal University of Technology Minna — BSc in Quantity Survey**\n\n**2018–2025**\n\n## Alchemy University\n\n**Alchemy University — Frontend Engineering Training**\n\n**2025–2026**\n\nTraining covering React, TypeScript, API integration, and Ethereum-connected applications, including wallet interaction, transaction states, reusable UI component"
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "Favour at Flamong — Policy.ng frontend engineering > Frontend integration and workflows"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: Favour at Flamong — Policy.ng frontend engineering > Frontend integration and workflows\n\n## Frontend integration and workflows  \nFavour integrates the frontend with the backend using TanStack Query. When an API response differs from what a screen expects, or a new workflow needs an additional endpoint, he works with the backend "
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour Chukwuemerie Ututu — Professional overview > Self-directed learning and freelance work"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Self-directed learning and freelance work\n\n## Self-directed learning and freelance work  \nFavour began his software development journey as a self-taught developer. He learned independently and took on freelance development work before undertaking structured frontend engineering "
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "Favour at Flamong — Policy.ng frontend engineering > Product and responsibility"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: Favour at Flamong — Policy.ng frontend engineering > Product and responsibility\n\n## Product and responsibility  \nPolicy.ng helps visitors find and understand public policies and information about public officials. It also includes civic content and AI-assisted policy questions, with administrative features for managing the infor"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Blockchain engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Blockchain engineering\n\n## Blockchain engineering  \nFavour has built Solidity contracts and Ethereum-connected applications. His work covers wallet connections, token approvals, contract events, transaction receipts, RPC data, and handling wallet or network mismatches in the UI.  \n*"
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "Favour at Flamong — Policy.ng frontend engineering > Administration, testing, and collaboration"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: Favour at Flamong — Policy.ng frontend engineering > Administration, testing, and collaboration\n\n## Administration, testing, and collaboration  \nThe administrative side also requires permission checks, forms that reject invalid data, protection against duplicate submissions, warnings for unsaved edits, and refreshed information "
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: __preamble__\n\n# Favour Chukwuemerie Ututu — Professional overview  \n**Role:** Full-stack Software Engineer and AI Engineer.  \n**Professional focus:** Backend systems, frontend applications, and AI systems.\n**Other work:** Blockchain applications and smart contracts.\n**Country of residence:** Nigeria."
+        }
+      ],
+      "timing": {
+        "retrieval_ms": 731.0836670076242,
+        "first_text_ms": 1491.0173340031179,
+        "completion_ms": 2177.147584006889
+      },
+      "answer_provider_usage": {
+        "input_tokens": 4159,
+        "output_tokens": 44,
+        "total_tokens": 4203,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "estimated_answer_micro_usd": 1734,
+      "usage_scope": "Answer stream only when provider metadata is available; excludes rewriting and evaluation. Not a billing total.",
+      "human_review": {
+        "verdict": "pending",
+        "factual_claims": null,
+        "unsupported_claims": null,
+        "appropriate_uncertainty": null,
+        "reference_correctness": null,
+        "notes": ""
+      },
+      "retrieval": {
+        "k": 10,
+        "reciprocal_rank": 1.0,
+        "matched_groups": 2,
+        "total_groups": 2,
+        "evidence_coverage": 1.0,
+        "quote_matched_groups": 2,
+        "labelled_quote_coverage": 1.0
+      }
+    },
+    {
+      "id": "eval-012",
+      "kind": "temporal",
+      "question": "Did Favour begin freelance development only after completing formal Alchemy training, or does the documented sequence say otherwise?",
+      "history": [],
+      "expected_behavior": "The sequence says otherwise: he learned independently and took freelance development work before undertaking structured training at Alchemy University in 2025–2026.",
+      "status": "complete",
+      "error_class": null,
+      "answer": "Favour began freelance development work before undertaking formal frontend engineering training at Alchemy University. His software development journey started as a self-taught developer, learning independently and doing freelance work prior to his structured training at Alchemy University from 2025 to 2026.",
+      "references": [
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour Chukwuemerie Ututu — Professional overview > Self-directed learning and freelance work"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Self-directed learning and freelance work\n\n## Self-directed learning and freelance work  \nFavour began his software development journey as a self-taught developer. He learned independently and took on freelance development work before undertaking structured frontend engineering "
+        },
+        {
+          "id": "education-training",
+          "title": "Education and training",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's education and training > University education",
+            "Favour's education and training > Alchemy University",
+            "Favour's education and training > Cyfrin"
+          ],
+          "excerpt": "# Favour's education and training\n\n## University education\n\n**Federal University of Technology Minna — BSc in Quantity Survey**\n\n**2018–2025**\n\n## Alchemy University\n\n**Alchemy University — Frontend Engineering Training**\n\n**2025–2026**\n\nTraining covering React, TypeScript, API integration, and Ethereum-connected applications, including wallet interaction, transaction states, reusable UI component"
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour Chukwuemerie Ututu — Professional overview > Background and work"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Background and work\n\n## Background and work  \nFavour Chukwuemerie Ututu is a Full-stack Software Engineer and AI Engineer based in Nigeria. He builds frontend applications, backend systems, and LLM-powered applications. His work includes professional frontend engineering on Poli"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Blockchain engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Blockchain engineering\n\n## Blockchain engineering  \nFavour has built Solidity contracts and Ethereum-connected applications. His work covers wallet connections, token approvals, contract events, transaction receipts, RPC data, and handling wallet or network mismatches in the UI.  \n*"
+        },
+        {
+          "id": "opportunities-contact",
+          "title": "Opportunities and contact",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's professional opportunities and contact > Availability and interests",
+            "Favour's professional opportunities and contact > Location and working arrangements",
+            "Favour's professional opportunities and contact > Contact"
+          ],
+          "excerpt": "# Favour's professional opportunities and contact\n\n## Availability and interests\n\nAs confirmed on **10 November 2026**, Favour is open to **both full-time roles and freelance or contract work** in frontend engineering, backend engineering, full-stack software engineering, and AI engineering. He is interested in building applications and backend services, as well as working with teams developing AI"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Frontend engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Frontend engineering\n\n## Frontend engineering  \nFavour builds frontend interfaces for public websites, administration dashboards, financial workflows, blockchain explorers, and wallet-connected applications.  \n**Frontend:** TypeScript, JavaScript, React, Next.js, Vite, React Router,"
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: __preamble__\n\n# Favour at Flamong — Policy.ng frontend engineering  \n**Position:** Frontend Developer Intern at Flamong.\n**Employment period:** May 2026–Present, confirmed on 10 November 2026.\n**Product:** [Policy.ng](https://policy.ng/)\n**Role:** Frontend engineering for the public website and administrative dashboard."
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "Favour at Flamong — Policy.ng frontend engineering > Frontend integration and workflows"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: Favour at Flamong — Policy.ng frontend engineering > Frontend integration and workflows\n\n## Frontend integration and workflows  \nFavour integrates the frontend with the backend using TanStack Query. When an API response differs from what a screen expects, or a new workflow needs an additional endpoint, he works with the backend "
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Backend engineering and data"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Backend engineering and data\n\n# Favour's engineering areas and technical skills  \n## Backend engineering and data  \nFavour builds API-driven backend systems with Go. His backend project work covers authentication, account and session management, database transactions, background job"
+        },
+        {
+          "id": "profile-perspective",
+          "title": "Engineering perspective",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Favour's engineering perspective and interests\nSection: __preamble__\n\n# Favour's engineering perspective and interests  \nThe following passages express Favour Chukwuemerie Ututu's perspective, with owner-approved wording updates on 11 November 2026."
+        }
+      ],
+      "timing": {
+        "retrieval_ms": 513.9726659981534,
+        "first_text_ms": 1130.5422079894925,
+        "completion_ms": 1538.4308329958003
+      },
+      "answer_provider_usage": {
+        "input_tokens": 4163,
+        "output_tokens": 53,
+        "total_tokens": 4216,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "estimated_answer_micro_usd": 1750,
+      "usage_scope": "Answer stream only when provider metadata is available; excludes rewriting and evaluation. Not a billing total.",
+      "human_review": {
+        "verdict": "pending",
+        "factual_claims": null,
+        "unsupported_claims": null,
+        "appropriate_uncertainty": null,
+        "reference_correctness": null,
+        "notes": ""
+      },
+      "retrieval": {
+        "k": 10,
+        "reciprocal_rank": 1.0,
+        "matched_groups": 1,
+        "total_groups": 1,
+        "evidence_coverage": 1.0,
+        "quote_matched_groups": 1,
+        "labelled_quote_coverage": 1.0
+      }
+    },
+    {
+      "id": "eval-013",
+      "kind": "temporal",
+      "question": "Put these documented starting points in order: university education, Alchemy frontend training, and the Flamong internship. Give only the date precision the corpus provides.",
+      "history": [],
+      "expected_behavior": "University education starts in 2018, Alchemy frontend training starts in 2025, and the Flamong internship starts in May 2026. The corpus gives no starting month for the first two.",
+      "status": "complete",
+      "error_class": null,
+      "answer": "The documented starting points in order with their date precision are:\n\n1. University education at Federal University of Technology Minna — 2018 to 2025  \n2. Alchemy University frontend engineering training — 2025 to 2026  \n3. Flamong frontend developer internship at Policy.ng — starting May 2026 to present",
+      "references": [
+        {
+          "id": "education-training",
+          "title": "Education and training",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's education and training > University education",
+            "Favour's education and training > Alchemy University",
+            "Favour's education and training > Cyfrin"
+          ],
+          "excerpt": "# Favour's education and training\n\n## University education\n\n**Federal University of Technology Minna — BSc in Quantity Survey**\n\n**2018–2025**\n\n## Alchemy University\n\n**Alchemy University — Frontend Engineering Training**\n\n**2025–2026**\n\nTraining covering React, TypeScript, API integration, and Ethereum-connected applications, including wallet interaction, transaction states, reusable UI component"
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour Chukwuemerie Ututu — Professional overview > Self-directed learning and freelance work"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Self-directed learning and freelance work\n\n## Self-directed learning and freelance work  \nFavour began his software development journey as a self-taught developer. He learned independently and took on freelance development work before undertaking structured frontend engineering "
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: __preamble__\n\n# Favour at Flamong — Policy.ng frontend engineering  \n**Position:** Frontend Developer Intern at Flamong.\n**Employment period:** May 2026–Present, confirmed on 10 November 2026.\n**Product:** [Policy.ng](https://policy.ng/)\n**Role:** Frontend engineering for the public website and administrative dashboard."
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour Chukwuemerie Ututu — Professional overview > Background and work"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Background and work\n\n## Background and work  \nFavour Chukwuemerie Ututu is a Full-stack Software Engineer and AI Engineer based in Nigeria. He builds frontend applications, backend systems, and LLM-powered applications. His work includes professional frontend engineering on Poli"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Frontend engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Frontend engineering\n\n## Frontend engineering  \nFavour builds frontend interfaces for public websites, administration dashboards, financial workflows, blockchain explorers, and wallet-connected applications.  \n**Frontend:** TypeScript, JavaScript, React, Next.js, Vite, React Router,"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > AI application engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > AI application engineering\n\n## AI application engineering  \nFavour builds LLM-powered applications with Python. His Portfolio RAG Assistant connects visitor questions to curated portfolio knowledge, retrieves relevant passages, and generates concise answers grounded in those passage"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Blockchain engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Blockchain engineering\n\n## Blockchain engineering  \nFavour has built Solidity contracts and Ethereum-connected applications. His work covers wallet connections, token approvals, contract events, transaction receipts, RPC data, and handling wallet or network mismatches in the UI.  \n*"
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "Favour at Flamong — Policy.ng frontend engineering > Administration, testing, and collaboration"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: Favour at Flamong — Policy.ng frontend engineering > Administration, testing, and collaboration\n\n## Administration, testing, and collaboration  \nThe administrative side also requires permission checks, forms that reject invalid data, protection against duplicate submissions, warnings for unsaved edits, and refreshed information "
+        },
+        {
+          "id": "profile-perspective",
+          "title": "Engineering perspective",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Favour's engineering perspective and interests\nSection: __preamble__\n\n# Favour's engineering perspective and interests  \nThe following passages express Favour Chukwuemerie Ututu's perspective, with owner-approved wording updates on 11 November 2026."
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "Favour at Flamong — Policy.ng frontend engineering > Frontend integration and workflows"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: Favour at Flamong — Policy.ng frontend engineering > Frontend integration and workflows\n\n## Frontend integration and workflows  \nFavour integrates the frontend with the backend using TanStack Query. When an API response differs from what a screen expects, or a new workflow needs an additional endpoint, he works with the backend "
+        }
+      ],
+      "timing": {
+        "retrieval_ms": 502.9804579971824,
+        "first_text_ms": 1054.5402910065604,
+        "completion_ms": 1781.6555409954162
+      },
+      "answer_provider_usage": {
+        "input_tokens": 4148,
+        "output_tokens": 67,
+        "total_tokens": 4215,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "estimated_answer_micro_usd": 1767,
+      "usage_scope": "Answer stream only when provider metadata is available; excludes rewriting and evaluation. Not a billing total.",
+      "human_review": {
+        "verdict": "pending",
+        "factual_claims": null,
+        "unsupported_claims": null,
+        "appropriate_uncertainty": null,
+        "reference_correctness": null,
+        "notes": ""
+      },
+      "retrieval": {
+        "k": 10,
+        "reciprocal_rank": 1.0,
+        "matched_groups": 3,
+        "total_groups": 3,
+        "evidence_coverage": 1.0,
+        "quote_matched_groups": 3,
+        "labelled_quote_coverage": 1.0
+      }
+    },
+    {
+      "id": "eval-014",
+      "kind": "temporal",
+      "question": "Was the university period recorded as ending before the calendar year in which the Flamong role began, or are they recorded as ending and starting in the same year?",
+      "history": [],
+      "expected_behavior": "The university period ends in 2025, before the Flamong role begins in May 2026. They are not recorded as ending and starting in the same year.",
+      "status": "complete",
+      "error_class": null,
+      "answer": "Favour's university education period is recorded as 2018–2025. His role at Flamong began in May 2026. Therefore, the university period is recorded as ending before the calendar year in which the Flamong role started.",
+      "references": [
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: __preamble__\n\n# Favour at Flamong — Policy.ng frontend engineering  \n**Position:** Frontend Developer Intern at Flamong.\n**Employment period:** May 2026–Present, confirmed on 10 November 2026.\n**Product:** [Policy.ng](https://policy.ng/)\n**Role:** Frontend engineering for the public website and administrative dashboard."
+        },
+        {
+          "id": "education-training",
+          "title": "Education and training",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's education and training > University education",
+            "Favour's education and training > Alchemy University",
+            "Favour's education and training > Cyfrin"
+          ],
+          "excerpt": "# Favour's education and training\n\n## University education\n\n**Federal University of Technology Minna — BSc in Quantity Survey**\n\n**2018–2025**\n\n## Alchemy University\n\n**Alchemy University — Frontend Engineering Training**\n\n**2025–2026**\n\nTraining covering React, TypeScript, API integration, and Ethereum-connected applications, including wallet interaction, transaction states, reusable UI component"
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour Chukwuemerie Ututu — Professional overview > Self-directed learning and freelance work"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Self-directed learning and freelance work\n\n## Self-directed learning and freelance work  \nFavour began his software development journey as a self-taught developer. He learned independently and took on freelance development work before undertaking structured frontend engineering "
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "Favour at Flamong — Policy.ng frontend engineering > Administration, testing, and collaboration"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: Favour at Flamong — Policy.ng frontend engineering > Administration, testing, and collaboration\n\n## Administration, testing, and collaboration  \nThe administrative side also requires permission checks, forms that reject invalid data, protection against duplicate submissions, warnings for unsaved edits, and refreshed information "
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "Favour at Flamong — Policy.ng frontend engineering > Frontend integration and workflows"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: Favour at Flamong — Policy.ng frontend engineering > Frontend integration and workflows\n\n## Frontend integration and workflows  \nFavour integrates the frontend with the backend using TanStack Query. When an API response differs from what a screen expects, or a new workflow needs an additional endpoint, he works with the backend "
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour Chukwuemerie Ututu — Professional overview > Background and work"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Background and work\n\n## Background and work  \nFavour Chukwuemerie Ututu is a Full-stack Software Engineer and AI Engineer based in Nigeria. He builds frontend applications, backend systems, and LLM-powered applications. His work includes professional frontend engineering on Poli"
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "Favour at Flamong — Policy.ng frontend engineering > Product and responsibility"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: Favour at Flamong — Policy.ng frontend engineering > Product and responsibility\n\n## Product and responsibility  \nPolicy.ng helps visitors find and understand public policies and information about public officials. It also includes civic content and AI-assisted policy questions, with administrative features for managing the infor"
+        },
+        {
+          "id": "profile-perspective",
+          "title": "Engineering perspective",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Favour's engineering perspective and interests\nSection: __preamble__\n\n# Favour's engineering perspective and interests  \nThe following passages express Favour Chukwuemerie Ututu's perspective, with owner-approved wording updates on 11 November 2026."
+        },
+        {
+          "id": "project-portfolio-rag-assistant",
+          "title": "Portfolio RAG Assistant",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Portfolio RAG Assistant — Portfolio questions and grounded answers > Availability and limitations"
+          ],
+          "excerpt": "Document: Portfolio RAG Assistant — Portfolio questions and grounded answers\nSection: Portfolio RAG Assistant — Portfolio questions and grounded answers > Availability and limitations\n\n## Availability and limitations  \nPublic availability through Favour's portfolio was confirmed by Favour on 11 November 2026. The approved code link is https://github.com/faelic/portfolio; public availability has no"
+        },
+        {
+          "id": "portfolio-assistant-status",
+          "title": "About this portfolio assistant",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Portfolio AI assistant — Availability and visitor purpose > Availability",
+            "Portfolio AI assistant — Availability and visitor purpose > Visitor questions, curated knowledge, and GitHub",
+            "Portfolio AI assistant — Availability and visitor purpose > Supported questions"
+          ],
+          "excerpt": "# Portfolio AI assistant — Availability and visitor purpose\n\n## Availability\n\nAs confirmed by Favour on **11 November 2026**, the Portfolio RAG Assistant is publicly available through his portfolio. This is an owner-confirmed availability statement, not an independent uptime check.\n\n## Visitor questions, curated knowledge, and GitHub\n\nVisitor questions guide retrieval from Favour's curated portfol"
+        }
+      ],
+      "timing": {
+        "retrieval_ms": 523.5451250046026,
+        "first_text_ms": 1139.398125000298,
+        "completion_ms": 1546.7722920002416
+      },
+      "answer_provider_usage": {
+        "input_tokens": 4213,
+        "output_tokens": 49,
+        "total_tokens": 4262,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "estimated_answer_micro_usd": 1764,
+      "usage_scope": "Answer stream only when provider metadata is available; excludes rewriting and evaluation. Not a billing total.",
+      "human_review": {
+        "verdict": "pending",
+        "factual_claims": null,
+        "unsupported_claims": null,
+        "appropriate_uncertainty": null,
+        "reference_correctness": null,
+        "notes": ""
+      },
+      "retrieval": {
+        "k": 10,
+        "reciprocal_rank": 1.0,
+        "matched_groups": 2,
+        "total_groups": 2,
+        "evidence_coverage": 1.0,
+        "quote_matched_groups": 2,
+        "labelled_quote_coverage": 1.0
+      }
+    },
+    {
+      "id": "eval-015",
+      "kind": "temporal",
+      "question": "When did Favour first start freelancing, and did that happen before or after his Alchemy course?",
+      "history": [],
+      "expected_behavior": "He took freelance development work before the Alchemy frontend training recorded for 2025–2026. The corpus does not state when his freelance work first began.",
+      "status": "complete",
+      "error_class": null,
+      "answer": "Favour started freelancing before undertaking his structured frontend engineering training at Alchemy University. Specifically, he began as a self-taught developer and took on freelance development work prior to his Alchemy course, which ran from 2025 to 2026.",
+      "references": [
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour Chukwuemerie Ututu — Professional overview > Self-directed learning and freelance work"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Self-directed learning and freelance work\n\n## Self-directed learning and freelance work  \nFavour began his software development journey as a self-taught developer. He learned independently and took on freelance development work before undertaking structured frontend engineering "
+        },
+        {
+          "id": "education-training",
+          "title": "Education and training",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's education and training > University education",
+            "Favour's education and training > Alchemy University",
+            "Favour's education and training > Cyfrin"
+          ],
+          "excerpt": "# Favour's education and training\n\n## University education\n\n**Federal University of Technology Minna — BSc in Quantity Survey**\n\n**2018–2025**\n\n## Alchemy University\n\n**Alchemy University — Frontend Engineering Training**\n\n**2025–2026**\n\nTraining covering React, TypeScript, API integration, and Ethereum-connected applications, including wallet interaction, transaction states, reusable UI component"
+        },
+        {
+          "id": "opportunities-contact",
+          "title": "Opportunities and contact",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's professional opportunities and contact > Availability and interests",
+            "Favour's professional opportunities and contact > Location and working arrangements",
+            "Favour's professional opportunities and contact > Contact"
+          ],
+          "excerpt": "# Favour's professional opportunities and contact\n\n## Availability and interests\n\nAs confirmed on **10 November 2026**, Favour is open to **both full-time roles and freelance or contract work** in frontend engineering, backend engineering, full-stack software engineering, and AI engineering. He is interested in building applications and backend services, as well as working with teams developing AI"
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour Chukwuemerie Ututu — Professional overview > Background and work"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Background and work\n\n## Background and work  \nFavour Chukwuemerie Ututu is a Full-stack Software Engineer and AI Engineer based in Nigeria. He builds frontend applications, backend systems, and LLM-powered applications. His work includes professional frontend engineering on Poli"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Blockchain engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Blockchain engineering\n\n## Blockchain engineering  \nFavour has built Solidity contracts and Ethereum-connected applications. His work covers wallet connections, token approvals, contract events, transaction receipts, RPC data, and handling wallet or network mismatches in the UI.  \n*"
+        },
+        {
+          "id": "profile-perspective",
+          "title": "Engineering perspective",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering perspective and interests > Favour's interests — in his own words"
+          ],
+          "excerpt": "Document: Favour's engineering perspective and interests\nSection: Favour's engineering perspective and interests > Favour's interests — in his own words\n\n## Favour's interests — in his own words  \nI love coding. I enjoy working with LLMs, experimenting with what they can do, and exploring their potential in applications. I'm especially curious about what becomes possible as AI systems get better a"
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: __preamble__\n\n# Favour at Flamong — Policy.ng frontend engineering  \n**Position:** Frontend Developer Intern at Flamong.\n**Employment period:** May 2026–Present, confirmed on 10 November 2026.\n**Product:** [Policy.ng](https://policy.ng/)\n**Role:** Frontend engineering for the public website and administrative dashboard."
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "Favour at Flamong — Policy.ng frontend engineering > Frontend integration and workflows"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: Favour at Flamong — Policy.ng frontend engineering > Frontend integration and workflows\n\n## Frontend integration and workflows  \nFavour integrates the frontend with the backend using TanStack Query. When an API response differs from what a screen expects, or a new workflow needs an additional endpoint, he works with the backend "
+        },
+        {
+          "id": "profile-perspective",
+          "title": "Engineering perspective",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Favour's engineering perspective and interests\nSection: __preamble__\n\n# Favour's engineering perspective and interests  \nThe following passages express Favour Chukwuemerie Ututu's perspective, with owner-approved wording updates on 11 November 2026."
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Backend engineering and data"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Backend engineering and data\n\n# Favour's engineering areas and technical skills  \n## Backend engineering and data  \nFavour builds API-driven backend systems with Go. His backend project work covers authentication, account and session management, database transactions, background job"
+        }
+      ],
+      "timing": {
+        "retrieval_ms": 714.135542002623,
+        "first_text_ms": 2207.3991670040414,
+        "completion_ms": 2212.8084580035647
+      },
+      "answer_provider_usage": {
+        "input_tokens": 4117,
+        "output_tokens": 51,
+        "total_tokens": 4168,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "estimated_answer_micro_usd": 1729,
+      "usage_scope": "Answer stream only when provider metadata is available; excludes rewriting and evaluation. Not a billing total.",
+      "human_review": {
+        "verdict": "pending",
+        "factual_claims": null,
+        "unsupported_claims": null,
+        "appropriate_uncertainty": null,
+        "reference_correctness": null,
+        "notes": ""
+      },
+      "retrieval": {
+        "k": 10,
+        "reciprocal_rank": 1.0,
+        "matched_groups": 1,
+        "total_groups": 1,
+        "evidence_coverage": 1.0,
+        "quote_matched_groups": 1,
+        "labelled_quote_coverage": 1.0
+      }
+    },
+    {
+      "id": "eval-016",
+      "kind": "comparative",
+      "question": "A visitor confuses the banking simulation with the USDC allocation application. How do their purposes and product limitations differ?",
+      "history": [],
+      "expected_behavior": "Monierave explores banking accounts and financial transactions as a simulation, not a licensed bank or real-customer-money service. BucketFlow splits USDC deposits among financial buckets using a Solidity vault; it is a Sepolia demonstration, not a regulated savings product.",
+      "status": "complete",
+      "error_class": null,
+      "answer": "The banking simulation (Monierave) and the USDC allocation application (BucketFlow) serve different purposes and have distinct product limitations:\n\n- **Monierave (Banking Simulation):**  \n  It is a full-stack portfolio project simulating banking operations such as account registration, transfers, transaction history, and security features. Importantly, it is not a licensed bank and does not handle real customer money. It demonstrates backend and frontend engineering challenges in financial transactions but remains a simulation without real funds.\n\n- **BucketFlow (USDC Allocation Application):**  \n  This is an independent blockchain app that lets users allocate a USDC deposit across financial buckets with on-chain rules enforced by a Solidity vault. It runs on Ethereum Sepolia, a test network, and is a demonstration of on-chain allocation logic rather than a regulated savings or financial product. It handles wallet connections, approvals, deposits, and enforces withdrawal cooldowns but does not manage real regulated funds.\n\nIn summary, Monierave simulates traditional banking functions without real money, while BucketFlow demonstrates blockchain-based stablecoin allocation on a test network without being a regulated financial service. Their product limitations reflect these differences: Monierave is a simulation only, and BucketFlow is a testnet demo of allocation logic.",
+      "references": [
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Limitations"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Limitations\n\n## Limitations  \nMonierave is a portfolio banking simulation. It is not a licensed bank or a service for handling customers' real money."
+        },
+        {
+          "id": "project-bucketflow",
+          "title": "BucketFlow",
+          "href": "https://www.favourututu.com/#bucketflow",
+          "sections": [
+            "__preamble__",
+            "BucketFlow — Stablecoin allocation application > Overview and contribution",
+            "BucketFlow — Stablecoin allocation application > Wallet and transaction implementation"
+          ],
+          "excerpt": "# BucketFlow — Stablecoin allocation application\n\n**Type:** Independent blockchain application  \n**Repository:** https://github.com/faelic/bucketflow  \n**Application:** https://bucketflow-tau.vercel.app/  \n**Stack:** Next.js, React, TypeScript, TanStack Query, Solidity, wagmi, viem, Foundry.\n\n## Overview and contribution\n\nBucketFlow lets users set rules for splitting a USDC deposit among financial"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Overview and contribution"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Overview and contribution\n\n## Overview and contribution  \nMonierave is a banking simulation through which Favour explored the backend and frontend engineering of financial transactions. He built account registration and verification, authentication, account management, beneficiaries, transfers,"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: __preamble__\n\n# Monierave — Full-stack banking simulation  \n**Type:** Independent full-stack project\n**Repository:** https://github.com/faelic/monierave\n**Application:** https://monierave.favourututu.com/\n**Stack:** Go, Gin, PostgreSQL, SQLC, pgx, Redis, Asynq, Next.js, React, TypeScript, TanStack Query, React Hook Form, Zod, Docker."
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Background processing and security"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Background processing and security\n\n## Background processing and security  \nBackground work uses a transactional outbox. PostgreSQL holds the durable record of work to be performed, while Redis and Asynq support processing and retries. The system also includes rotating refresh tokens, revocable"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Transfer integrity and concurrency"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Transfer integrity and concurrency\n\n## Transfer integrity and concurrency  \nA transfer in Monierave is recorded through an append-only double-entry ledger. PostgreSQL transactions keep related database changes together, row-level locking deals with concurrent account operations, and idempotency"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Frontend and testing"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Frontend and testing\n\n## Frontend and testing  \nOn the frontend, Favour used TanStack Query to manage server data and React Hook Form with Zod for form handling. He added backend, integration, and end-to-end tests, including tests for transfer behavior under concurrency."
+        },
+        {
+          "id": "portfolio-assistant-status",
+          "title": "About this portfolio assistant",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Portfolio AI assistant — Availability and visitor purpose > Availability",
+            "Portfolio AI assistant — Availability and visitor purpose > Visitor questions, curated knowledge, and GitHub",
+            "Portfolio AI assistant — Availability and visitor purpose > Supported questions"
+          ],
+          "excerpt": "# Portfolio AI assistant — Availability and visitor purpose\n\n## Availability\n\nAs confirmed by Favour on **11 November 2026**, the Portfolio RAG Assistant is publicly available through his portfolio. This is an owner-confirmed availability statement, not an independent uptime check.\n\n## Visitor questions, curated knowledge, and GitHub\n\nVisitor questions guide retrieval from Favour's curated portfol"
+        },
+        {
+          "id": "project-approval-cleanup",
+          "title": "Cleanup",
+          "href": "https://www.favourututu.com/#cleanup",
+          "sections": [
+            "__preamble__",
+            "Approval Cleanup — ERC-20 wallet-permission manager > Overview and contribution",
+            "Approval Cleanup — ERC-20 wallet-permission manager > Log processing and wallet actions"
+          ],
+          "excerpt": "# Approval Cleanup — ERC-20 wallet-permission manager\n\n**Type:** Independent blockchain application  \n**Also known as:** Cleanup; Allowance Cleanup.  \n**Repository:** https://github.com/faelic/approval-cleanup  \n**Application:** https://approval-cleanup-brt3.vercel.app/  \n**Stack:** Next.js, React, TypeScript, wagmi, viem, Hardhat, OpenZeppelin.\n\n## Overview and contribution\n\nApproval Cleanup help"
+        },
+        {
+          "id": "project-escrow",
+          "title": "Escrow",
+          "href": "https://www.favourututu.com/#escrow",
+          "sections": [
+            "__preamble__",
+            "Escrow — Sepolia payment project > Purpose and contribution",
+            "Escrow — Sepolia payment project > Availability and further exploration"
+          ],
+          "excerpt": "# Escrow — Sepolia payment project\n\n**Type:** Independent project.\n\n**Contribution:** React frontend and Solidity smart contract.  \n**Network:** Ethereum Sepolia, a test network.  \n**Repository:** https://github.com/faelic/escrow-webapp\n\n## Purpose and contribution\n\nEscrow is Favour's independent project for a payment flow involving a depositor, beneficiary, and arbiter. Favour built both the Reac"
+        }
+      ],
+      "timing": {
+        "retrieval_ms": 651.2240419979207,
+        "first_text_ms": 1252.5722499995027,
+        "completion_ms": 3200.0334580079652
+      },
+      "answer_provider_usage": {
+        "input_tokens": 4286,
+        "output_tokens": 254,
+        "total_tokens": 4540,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "estimated_answer_micro_usd": 2121,
+      "usage_scope": "Answer stream only when provider metadata is available; excludes rewriting and evaluation. Not a billing total.",
+      "human_review": {
+        "verdict": "pending",
+        "factual_claims": null,
+        "unsupported_claims": null,
+        "appropriate_uncertainty": null,
+        "reference_correctness": null,
+        "notes": ""
+      },
+      "retrieval": {
+        "k": 10,
+        "reciprocal_rank": 1.0,
+        "matched_groups": 4,
+        "total_groups": 4,
+        "evidence_coverage": 1.0,
+        "quote_matched_groups": 4,
+        "labelled_quote_coverage": 1.0
+      }
+    },
+    {
+      "id": "eval-017",
+      "kind": "comparative",
+      "question": "Both BucketFlow and Escrow involve contracts and payments. Which one allocates a deposit, which one has an arbiter, and which frontend is explicitly undeployed?",
+      "history": [],
+      "expected_behavior": "BucketFlow allocates USDC deposits among financial buckets. Escrow uses a depositor, beneficiary, and arbiter payment flow, with the arbiter able to release or refund funds. Escrow is the one whose frontend is explicitly not deployed.",
+      "status": "complete",
+      "error_class": null,
+      "answer": "BucketFlow allocates a deposit among financial buckets (such as savings and expenses). Escrow involves an arbiter who can release or refund funds. Additionally, Escrow's React frontend is explicitly noted as not deployed, while BucketFlow's application is deployed on a test network (Ethereum Sepolia).",
+      "references": [
+        {
+          "id": "project-bucketflow",
+          "title": "BucketFlow",
+          "href": "https://www.favourututu.com/#bucketflow",
+          "sections": [
+            "__preamble__",
+            "BucketFlow — Stablecoin allocation application > Overview and contribution",
+            "BucketFlow — Stablecoin allocation application > Wallet and transaction implementation"
+          ],
+          "excerpt": "# BucketFlow — Stablecoin allocation application\n\n**Type:** Independent blockchain application  \n**Repository:** https://github.com/faelic/bucketflow  \n**Application:** https://bucketflow-tau.vercel.app/  \n**Stack:** Next.js, React, TypeScript, TanStack Query, Solidity, wagmi, viem, Foundry.\n\n## Overview and contribution\n\nBucketFlow lets users set rules for splitting a USDC deposit among financial"
+        },
+        {
+          "id": "project-escrow",
+          "title": "Escrow",
+          "href": "https://www.favourututu.com/#escrow",
+          "sections": [
+            "__preamble__",
+            "Escrow — Sepolia payment project > Purpose and contribution",
+            "Escrow — Sepolia payment project > Availability and further exploration"
+          ],
+          "excerpt": "# Escrow — Sepolia payment project\n\n**Type:** Independent project.\n\n**Contribution:** React frontend and Solidity smart contract.  \n**Network:** Ethereum Sepolia, a test network.  \n**Repository:** https://github.com/faelic/escrow-webapp\n\n## Purpose and contribution\n\nEscrow is Favour's independent project for a payment flow involving a depositor, beneficiary, and arbiter. Favour built both the Reac"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Transfer integrity and concurrency"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Transfer integrity and concurrency\n\n## Transfer integrity and concurrency  \nA transfer in Monierave is recorded through an append-only double-entry ledger. PostgreSQL transactions keep related database changes together, row-level locking deals with concurrent account operations, and idempotency"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Background processing and security"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Background processing and security\n\n## Background processing and security  \nBackground work uses a transactional outbox. PostgreSQL holds the durable record of work to be performed, while Redis and Asynq support processing and retries. The system also includes rotating refresh tokens, revocable"
+        },
+        {
+          "id": "project-approval-cleanup",
+          "title": "Cleanup",
+          "href": "https://www.favourututu.com/#cleanup",
+          "sections": [
+            "__preamble__",
+            "Approval Cleanup — ERC-20 wallet-permission manager > Overview and contribution",
+            "Approval Cleanup — ERC-20 wallet-permission manager > Log processing and wallet actions"
+          ],
+          "excerpt": "# Approval Cleanup — ERC-20 wallet-permission manager\n\n**Type:** Independent blockchain application  \n**Also known as:** Cleanup; Allowance Cleanup.  \n**Repository:** https://github.com/faelic/approval-cleanup  \n**Application:** https://approval-cleanup-brt3.vercel.app/  \n**Stack:** Next.js, React, TypeScript, wagmi, viem, Hardhat, OpenZeppelin.\n\n## Overview and contribution\n\nApproval Cleanup help"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Frontend and testing"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Frontend and testing\n\n## Frontend and testing  \nOn the frontend, Favour used TanStack Query to manage server data and React Hook Form with Zod for form handling. He added backend, integration, and end-to-end tests, including tests for transfer behavior under concurrency."
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Blockchain engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Blockchain engineering\n\n## Blockchain engineering  \nFavour has built Solidity contracts and Ethereum-connected applications. His work covers wallet connections, token approvals, contract events, transaction receipts, RPC data, and handling wallet or network mismatches in the UI.  \n*"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: __preamble__\n\n# Monierave — Full-stack banking simulation  \n**Type:** Independent full-stack project\n**Repository:** https://github.com/faelic/monierave\n**Application:** https://monierave.favourututu.com/\n**Stack:** Go, Gin, PostgreSQL, SQLC, pgx, Redis, Asynq, Next.js, React, TypeScript, TanStack Query, React Hook Form, Zod, Docker."
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Overview and contribution"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Overview and contribution\n\n## Overview and contribution  \nMonierave is a banking simulation through which Favour explored the backend and frontend engineering of financial transactions. He built account registration and verification, authentication, account management, beneficiaries, transfers,"
+        },
+        {
+          "id": "project-blockscan",
+          "title": "BlockScan",
+          "href": "https://www.favourututu.com/#blockscan",
+          "sections": [
+            "__preamble__",
+            "BlockScan — Sepolia blockchain explorer > Overview",
+            "BlockScan — Sepolia blockchain explorer > Search and live-data implementation"
+          ],
+          "excerpt": "# BlockScan — Sepolia blockchain explorer\n\n**Type:** Independent frontend project  \n**Repository:** https://github.com/faelic/sepolia-blockexplorer  \n**Application:** https://blockscan-seven.vercel.app/  \n**Stack:** React, JavaScript, React Router, React Testing Library, Alchemy SDK/RPC, Vercel.\n\n## Overview\n\nBlockScan is a blockchain explorer for Ethereum Sepolia. It lets users inspect blocks, tr"
+        }
+      ],
+      "timing": {
+        "retrieval_ms": 551.4105829934124,
+        "first_text_ms": 1322.1583330014255,
+        "completion_ms": 1841.1306249909103
+      },
+      "answer_provider_usage": {
+        "input_tokens": 4365,
+        "output_tokens": 59,
+        "total_tokens": 4424,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "estimated_answer_micro_usd": 1841,
+      "usage_scope": "Answer stream only when provider metadata is available; excludes rewriting and evaluation. Not a billing total.",
+      "human_review": {
+        "verdict": "pending",
+        "factual_claims": null,
+        "unsupported_claims": null,
+        "appropriate_uncertainty": null,
+        "reference_correctness": null,
+        "notes": ""
+      },
+      "retrieval": {
+        "k": 10,
+        "reciprocal_rank": 1.0,
+        "matched_groups": 3,
+        "total_groups": 3,
+        "evidence_coverage": 1.0,
+        "quote_matched_groups": 3,
+        "labelled_quote_coverage": 1.0
+      }
+    },
+    {
+      "id": "eval-018",
+      "kind": "comparative",
+      "question": "If I want to inspect a transaction or revoke a token allowance, should I use the same project? Identify the two relevant tools and their distinct purposes.",
+      "history": [],
+      "expected_behavior": "They serve different purposes. BlockScan is a Sepolia explorer for blocks, transactions, addresses, activity, and NFT metadata. Approval Cleanup reviews ERC-20 allowances and lets a connected wallet initiate an update or revocation.",
+      "status": "complete",
+      "error_class": null,
+      "answer": "You should not use the same project for both inspecting a transaction and revoking a token allowance. The two relevant tools are:\n\n1. **BlockScan** — This is a blockchain explorer for Ethereum Sepolia that lets users inspect blocks, transactions, wallet addresses, and account activity. It is the appropriate tool for inspecting transactions.\n\n2. **Approval Cleanup** — This is an ERC-20 wallet-permission manager designed specifically to help wallet owners review and revoke token allowances granted to other addresses or contracts. It focuses on scanning recent Approval events and enabling users to update or revoke allowances.\n\nSo, use BlockScan to inspect transactions and Approval Cleanup to review or revoke token allowances.",
+      "references": [
+        {
+          "id": "project-approval-cleanup",
+          "title": "Cleanup",
+          "href": "https://www.favourututu.com/#cleanup",
+          "sections": [
+            "__preamble__",
+            "Approval Cleanup — ERC-20 wallet-permission manager > Overview and contribution",
+            "Approval Cleanup — ERC-20 wallet-permission manager > Log processing and wallet actions"
+          ],
+          "excerpt": "# Approval Cleanup — ERC-20 wallet-permission manager\n\n**Type:** Independent blockchain application  \n**Also known as:** Cleanup; Allowance Cleanup.  \n**Repository:** https://github.com/faelic/approval-cleanup  \n**Application:** https://approval-cleanup-brt3.vercel.app/  \n**Stack:** Next.js, React, TypeScript, wagmi, viem, Hardhat, OpenZeppelin.\n\n## Overview and contribution\n\nApproval Cleanup help"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Background processing and security"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Background processing and security\n\n## Background processing and security  \nBackground work uses a transactional outbox. PostgreSQL holds the durable record of work to be performed, while Redis and Asynq support processing and retries. The system also includes rotating refresh tokens, revocable"
+        },
+        {
+          "id": "project-escrow",
+          "title": "Escrow",
+          "href": "https://www.favourututu.com/#escrow",
+          "sections": [
+            "__preamble__",
+            "Escrow — Sepolia payment project > Purpose and contribution",
+            "Escrow — Sepolia payment project > Availability and further exploration"
+          ],
+          "excerpt": "# Escrow — Sepolia payment project\n\n**Type:** Independent project.\n\n**Contribution:** React frontend and Solidity smart contract.  \n**Network:** Ethereum Sepolia, a test network.  \n**Repository:** https://github.com/faelic/escrow-webapp\n\n## Purpose and contribution\n\nEscrow is Favour's independent project for a payment flow involving a depositor, beneficiary, and arbiter. Favour built both the Reac"
+        },
+        {
+          "id": "project-blockscan",
+          "title": "BlockScan",
+          "href": "https://www.favourututu.com/#blockscan",
+          "sections": [
+            "__preamble__",
+            "BlockScan — Sepolia blockchain explorer > Overview",
+            "BlockScan — Sepolia blockchain explorer > Search and live-data implementation"
+          ],
+          "excerpt": "# BlockScan — Sepolia blockchain explorer\n\n**Type:** Independent frontend project  \n**Repository:** https://github.com/faelic/sepolia-blockexplorer  \n**Application:** https://blockscan-seven.vercel.app/  \n**Stack:** React, JavaScript, React Router, React Testing Library, Alchemy SDK/RPC, Vercel.\n\n## Overview\n\nBlockScan is a blockchain explorer for Ethereum Sepolia. It lets users inspect blocks, tr"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Transfer integrity and concurrency"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Transfer integrity and concurrency\n\n## Transfer integrity and concurrency  \nA transfer in Monierave is recorded through an append-only double-entry ledger. PostgreSQL transactions keep related database changes together, row-level locking deals with concurrent account operations, and idempotency"
+        },
+        {
+          "id": "project-bucketflow",
+          "title": "BucketFlow",
+          "href": "https://www.favourututu.com/#bucketflow",
+          "sections": [
+            "__preamble__",
+            "BucketFlow — Stablecoin allocation application > Overview and contribution",
+            "BucketFlow — Stablecoin allocation application > Wallet and transaction implementation"
+          ],
+          "excerpt": "# BucketFlow — Stablecoin allocation application\n\n**Type:** Independent blockchain application  \n**Repository:** https://github.com/faelic/bucketflow  \n**Application:** https://bucketflow-tau.vercel.app/  \n**Stack:** Next.js, React, TypeScript, TanStack Query, Solidity, wagmi, viem, Foundry.\n\n## Overview and contribution\n\nBucketFlow lets users set rules for splitting a USDC deposit among financial"
+        },
+        {
+          "id": "portfolio-assistant-status",
+          "title": "About this portfolio assistant",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Portfolio AI assistant — Availability and visitor purpose > Availability",
+            "Portfolio AI assistant — Availability and visitor purpose > Visitor questions, curated knowledge, and GitHub",
+            "Portfolio AI assistant — Availability and visitor purpose > Supported questions"
+          ],
+          "excerpt": "# Portfolio AI assistant — Availability and visitor purpose\n\n## Availability\n\nAs confirmed by Favour on **11 November 2026**, the Portfolio RAG Assistant is publicly available through his portfolio. This is an owner-confirmed availability statement, not an independent uptime check.\n\n## Visitor questions, curated knowledge, and GitHub\n\nVisitor questions guide retrieval from Favour's curated portfol"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Overview and contribution"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Overview and contribution\n\n## Overview and contribution  \nMonierave is a banking simulation through which Favour explored the backend and frontend engineering of financial transactions. He built account registration and verification, authentication, account management, beneficiaries, transfers,"
+        },
+        {
+          "id": "project-portfolio-rag-assistant",
+          "title": "Portfolio RAG Assistant",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Portfolio RAG Assistant — Portfolio questions and grounded answers\nSection: __preamble__\n\n# Portfolio RAG Assistant — Portfolio questions and grounded answers  \n**Type:** Independent AI application project.  \n**Contribution:** Curated knowledge, Python ingestion and answering pipelines, evaluation tooling, and Gradio testing interfaces.  \n**Repository:** https://github.com/faelic/portfol"
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "Favour at Flamong — Policy.ng frontend engineering > Administration, testing, and collaboration"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: Favour at Flamong — Policy.ng frontend engineering > Administration, testing, and collaboration\n\n## Administration, testing, and collaboration  \nThe administrative side also requires permission checks, forms that reject invalid data, protection against duplicate submissions, warnings for unsaved edits, and refreshed information "
+        }
+      ],
+      "timing": {
+        "retrieval_ms": 448.24004199472256,
+        "first_text_ms": 1150.15033299278,
+        "completion_ms": 2100.1426250004442
+      },
+      "answer_provider_usage": {
+        "input_tokens": 4535,
+        "output_tokens": 134,
+        "total_tokens": 4669,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "estimated_answer_micro_usd": 2029,
+      "usage_scope": "Answer stream only when provider metadata is available; excludes rewriting and evaluation. Not a billing total.",
+      "human_review": {
+        "verdict": "pending",
+        "factual_claims": null,
+        "unsupported_claims": null,
+        "appropriate_uncertainty": null,
+        "reference_correctness": null,
+        "notes": ""
+      },
+      "retrieval": {
+        "k": 10,
+        "reciprocal_rank": 1.0,
+        "matched_groups": 3,
+        "total_groups": 3,
+        "evidence_coverage": 1.0,
+        "quote_matched_groups": 3,
+        "labelled_quote_coverage": 1.0
+      }
+    },
+    {
+      "id": "eval-019",
+      "kind": "comparative",
+      "question": "How do the database credential exposure concern in BlockScan and the session-security work in Monierave differ? Correct any mistaken assumption in the question.",
+      "history": [],
+      "expected_behavior": "BlockScan documents protection of Alchemy credentials, not database credentials, through Vercel API proxies. Monierave documents rotating refresh tokens, revocable sessions, and audit records as part of its simulation's security work.",
+      "status": "complete",
+      "error_class": null,
+      "answer": "The database credential exposure concern in BlockScan and the session-security mechanisms in Monierave address different security aspects and operate at different layers:\n\n- In BlockScan, the credential exposure concern relates to protecting API credentials (specifically Alchemy credentials) from being exposed in the browser bundle. Favour addressed this by using Vercel API proxies, which keep these credentials server-side and out of the client-side code, preventing unauthorized access or leakage.\n\n- In Monierave, session security involves backend mechanisms such as rotating refresh tokens, revocable sessions, audit records, and reconciliation checks to manage user authentication and session integrity securely. This is about maintaining secure, revocable user sessions and preventing unauthorized access within the banking simulation.\n\nSo, the key difference is that BlockScan’s credential handling focuses on preventing client-side exposure of third-party API keys, while Monierave’s session security focuses on robust backend session management and authentication controls.\n\nYour question assumes both relate to database credential exposure, but that is not accurate. BlockScan’s concern is about API credential exposure in the frontend environment, not database credentials. Monierave’s session security is about managing user sessions securely on the backend, not about database credential exposure.",
+      "references": [
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Background processing and security"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Background processing and security\n\n## Background processing and security  \nBackground work uses a transactional outbox. PostgreSQL holds the durable record of work to be performed, while Redis and Asynq support processing and retries. The system also includes rotating refresh tokens, revocable"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Transfer integrity and concurrency"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Transfer integrity and concurrency\n\n## Transfer integrity and concurrency  \nA transfer in Monierave is recorded through an append-only double-entry ledger. PostgreSQL transactions keep related database changes together, row-level locking deals with concurrent account operations, and idempotency"
+        },
+        {
+          "id": "project-blockscan",
+          "title": "BlockScan",
+          "href": "https://www.favourututu.com/#blockscan",
+          "sections": [
+            "__preamble__",
+            "BlockScan — Sepolia blockchain explorer > Overview",
+            "BlockScan — Sepolia blockchain explorer > Search and live-data implementation"
+          ],
+          "excerpt": "# BlockScan — Sepolia blockchain explorer\n\n**Type:** Independent frontend project  \n**Repository:** https://github.com/faelic/sepolia-blockexplorer  \n**Application:** https://blockscan-seven.vercel.app/  \n**Stack:** React, JavaScript, React Router, React Testing Library, Alchemy SDK/RPC, Vercel.\n\n## Overview\n\nBlockScan is a blockchain explorer for Ethereum Sepolia. It lets users inspect blocks, tr"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: __preamble__\n\n# Monierave — Full-stack banking simulation  \n**Type:** Independent full-stack project\n**Repository:** https://github.com/faelic/monierave\n**Application:** https://monierave.favourututu.com/\n**Stack:** Go, Gin, PostgreSQL, SQLC, pgx, Redis, Asynq, Next.js, React, TypeScript, TanStack Query, React Hook Form, Zod, Docker."
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Overview and contribution"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Overview and contribution\n\n## Overview and contribution  \nMonierave is a banking simulation through which Favour explored the backend and frontend engineering of financial transactions. He built account registration and verification, authentication, account management, beneficiaries, transfers,"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Limitations"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Limitations\n\n## Limitations  \nMonierave is a portfolio banking simulation. It is not a licensed bank or a service for handling customers' real money."
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Backend engineering and data"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Backend engineering and data\n\n# Favour's engineering areas and technical skills  \n## Backend engineering and data  \nFavour builds API-driven backend systems with Go. His backend project work covers authentication, account and session management, database transactions, background job"
+        },
+        {
+          "id": "project-monierave",
+          "title": "Monierave",
+          "href": "https://www.favourututu.com/#monierave",
+          "sections": [
+            "Monierave — Full-stack banking simulation > Frontend and testing"
+          ],
+          "excerpt": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Frontend and testing\n\n## Frontend and testing  \nOn the frontend, Favour used TanStack Query to manage server data and React Hook Form with Zod for form handling. He added backend, integration, and end-to-end tests, including tests for transfer behavior under concurrency."
+        },
+        {
+          "id": "project-approval-cleanup",
+          "title": "Cleanup",
+          "href": "https://www.favourututu.com/#cleanup",
+          "sections": [
+            "__preamble__",
+            "Approval Cleanup — ERC-20 wallet-permission manager > Overview and contribution",
+            "Approval Cleanup — ERC-20 wallet-permission manager > Log processing and wallet actions"
+          ],
+          "excerpt": "# Approval Cleanup — ERC-20 wallet-permission manager\n\n**Type:** Independent blockchain application  \n**Also known as:** Cleanup; Allowance Cleanup.  \n**Repository:** https://github.com/faelic/approval-cleanup  \n**Application:** https://approval-cleanup-brt3.vercel.app/  \n**Stack:** Next.js, React, TypeScript, wagmi, viem, Hardhat, OpenZeppelin.\n\n## Overview and contribution\n\nApproval Cleanup help"
+        },
+        {
+          "id": "project-bucketflow",
+          "title": "BucketFlow",
+          "href": "https://www.favourututu.com/#bucketflow",
+          "sections": [
+            "__preamble__",
+            "BucketFlow — Stablecoin allocation application > Overview and contribution",
+            "BucketFlow — Stablecoin allocation application > Wallet and transaction implementation"
+          ],
+          "excerpt": "# BucketFlow — Stablecoin allocation application\n\n**Type:** Independent blockchain application  \n**Repository:** https://github.com/faelic/bucketflow  \n**Application:** https://bucketflow-tau.vercel.app/  \n**Stack:** Next.js, React, TypeScript, TanStack Query, Solidity, wagmi, viem, Foundry.\n\n## Overview and contribution\n\nBucketFlow lets users set rules for splitting a USDC deposit among financial"
+        }
+      ],
+      "timing": {
+        "retrieval_ms": 565.445041997009,
+        "first_text_ms": 1784.8649170045974,
+        "completion_ms": 3163.126250001369
+      },
+      "answer_provider_usage": {
+        "input_tokens": 4294,
+        "output_tokens": 240,
+        "total_tokens": 4534,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "estimated_answer_micro_usd": 2102,
+      "usage_scope": "Answer stream only when provider metadata is available; excludes rewriting and evaluation. Not a billing total.",
+      "human_review": {
+        "verdict": "pending",
+        "factual_claims": null,
+        "unsupported_claims": null,
+        "appropriate_uncertainty": null,
+        "reference_correctness": null,
+        "notes": ""
+      },
+      "retrieval": {
+        "k": 10,
+        "reciprocal_rank": 1.0,
+        "matched_groups": 2,
+        "total_groups": 2,
+        "evidence_coverage": 1.0,
+        "quote_matched_groups": 2,
+        "labelled_quote_coverage": 1.0
+      }
+    },
+    {
+      "id": "eval-020",
+      "kind": "comparative",
+      "question": "Does Favour describe security mainly as an alternative to a good interface, or as something that should accompany it? Contrast his stated priorities.",
+      "history": [],
+      "expected_behavior": "He values attractive, usable, fast interfaces together with a thoughtfully designed backend and security across the system. He also respects delaying a release rather than compromising security.",
+      "status": "complete",
+      "error_class": null,
+      "answer": "Favour describes security not as an alternative to a good interface but as something that should accompany it. He values a beautiful, functional interface that looks good, feels easy to use, and loads quickly—but he also emphasizes the importance of security across the whole system. He respects engineers who prioritize security even if it means delaying a release. For him, the ideal product combines a thoughtfully designed backend with serious attention to security, supporting a well-architected, useful, and safe system alongside a great user experience.",
+      "references": [
+        {
+          "id": "profile-perspective",
+          "title": "Engineering perspective",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering perspective and interests > Favour's engineering perspective — in his own words"
+          ],
+          "excerpt": "Document: Favour's engineering perspective and interests\nSection: Favour's engineering perspective and interests > Favour's engineering perspective — in his own words\n\n## Favour's engineering perspective — in his own words  \nI started my career as a frontend engineer, so I've always loved seeing beautiful user interfaces. But they have to work, too. I love an interface that looks good, feels easy "
+        },
+        {
+          "id": "profile-perspective",
+          "title": "Engineering perspective",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "__preamble__"
+          ],
+          "excerpt": "Document: Favour's engineering perspective and interests\nSection: __preamble__\n\n# Favour's engineering perspective and interests  \nThe following passages express Favour Chukwuemerie Ututu's perspective, with owner-approved wording updates on 11 November 2026."
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "Favour at Flamong — Policy.ng frontend engineering > Frontend integration and workflows"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: Favour at Flamong — Policy.ng frontend engineering > Frontend integration and workflows\n\n## Frontend integration and workflows  \nFavour integrates the frontend with the backend using TanStack Query. When an API response differs from what a screen expects, or a new workflow needs an additional endpoint, he works with the backend "
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "Favour at Flamong — Policy.ng frontend engineering > Product and responsibility"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: Favour at Flamong — Policy.ng frontend engineering > Product and responsibility\n\n## Product and responsibility  \nPolicy.ng helps visitors find and understand public policies and information about public officials. It also includes civic content and AI-assisted policy questions, with administrative features for managing the infor"
+        },
+        {
+          "id": "profile-perspective",
+          "title": "Engineering perspective",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering perspective and interests > Favour's interests — in his own words"
+          ],
+          "excerpt": "Document: Favour's engineering perspective and interests\nSection: Favour's engineering perspective and interests > Favour's interests — in his own words\n\n## Favour's interests — in his own words  \nI love coding. I enjoy working with LLMs, experimenting with what they can do, and exploring their potential in applications. I'm especially curious about what becomes possible as AI systems get better a"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Frontend engineering"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Frontend engineering\n\n## Frontend engineering  \nFavour builds frontend interfaces for public websites, administration dashboards, financial workflows, blockchain explorers, and wallet-connected applications.  \n**Frontend:** TypeScript, JavaScript, React, Next.js, Vite, React Router,"
+        },
+        {
+          "id": "profile-overview",
+          "title": "Professional background",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour Chukwuemerie Ututu — Professional overview > Background and work"
+          ],
+          "excerpt": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Background and work\n\n## Background and work  \nFavour Chukwuemerie Ututu is a Full-stack Software Engineer and AI Engineer based in Nigeria. He builds frontend applications, backend systems, and LLM-powered applications. His work includes professional frontend engineering on Poli"
+        },
+        {
+          "id": "expertise-engineering",
+          "title": "Engineering areas and skills",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's engineering areas and technical skills > Backend engineering and data"
+          ],
+          "excerpt": "Document: Favour's engineering areas and technical skills\nSection: Favour's engineering areas and technical skills > Backend engineering and data\n\n# Favour's engineering areas and technical skills  \n## Backend engineering and data  \nFavour builds API-driven backend systems with Go. His backend project work covers authentication, account and session management, database transactions, background job"
+        },
+        {
+          "id": "opportunities-contact",
+          "title": "Opportunities and contact",
+          "href": "https://www.favourututu.com/",
+          "sections": [
+            "Favour's professional opportunities and contact > Availability and interests",
+            "Favour's professional opportunities and contact > Location and working arrangements",
+            "Favour's professional opportunities and contact > Contact"
+          ],
+          "excerpt": "# Favour's professional opportunities and contact\n\n## Availability and interests\n\nAs confirmed on **10 November 2026**, Favour is open to **both full-time roles and freelance or contract work** in frontend engineering, backend engineering, full-stack software engineering, and AI engineering. He is interested in building applications and backend services, as well as working with teams developing AI"
+        },
+        {
+          "id": "experience-flamong-policy-ng",
+          "title": "Policy.ng contribution",
+          "href": "https://www.favourututu.com/#policyng",
+          "sections": [
+            "Favour at Flamong — Policy.ng frontend engineering > Administration, testing, and collaboration"
+          ],
+          "excerpt": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: Favour at Flamong — Policy.ng frontend engineering > Administration, testing, and collaboration\n\n## Administration, testing, and collaboration  \nThe administrative side also requires permission checks, forms that reject invalid data, protection against duplicate submissions, warnings for unsaved edits, and refreshed information "
+        }
+      ],
+      "timing": {
+        "retrieval_ms": 602.3517499997979,
+        "first_text_ms": 1254.3720409885282,
+        "completion_ms": 2338.8075830007438
+      },
+      "answer_provider_usage": {
+        "input_tokens": 4450,
+        "output_tokens": 101,
+        "total_tokens": 4551,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "estimated_answer_micro_usd": 1942,
+      "usage_scope": "Answer stream only when provider metadata is available; excludes rewriting and evaluation. Not a billing total.",
+      "human_review": {
+        "verdict": "pending",
+        "factual_claims": null,
+        "unsupported_claims": null,
+        "appropriate_uncertainty": null,
+        "reference_correctness": null,
+        "notes": ""
+      },
+      "retrieval": {
+        "k": 10,
+        "reciprocal_rank": 1.0,
+        "matched_groups": 2,
+        "total_groups": 2,
+        "evidence_coverage": 1.0,
+        "quote_matched_groups": 2,
+        "labelled_quote_coverage": 1.0
+      }
+    }
+  ],
+  "retrieval_summary": {
+    "k": 10,
+    "eligible_cases": 19,
+    "excluded_unanswerable": 1,
+    "mrr": 1.0,
+    "mean_evidence_coverage": 1.0,
+    "mean_labelled_quote_coverage": 1.0,
+    "categories": {
+      "comparative": {
+        "eligible_cases": 5,
+        "excluded_unanswerable": 0,
+        "mrr": 1.0,
+        "mean_evidence_coverage": 1.0,
+        "mean_labelled_quote_coverage": 1.0
+      },
+      "direct_fact": {
+        "eligible_cases": 7,
+        "excluded_unanswerable": 1,
+        "mrr": 1.0,
+        "mean_evidence_coverage": 1.0,
+        "mean_labelled_quote_coverage": 1.0
+      },
+      "temporal": {
+        "eligible_cases": 7,
+        "excluded_unanswerable": 0,
+        "mrr": 1.0,
+        "mean_evidence_coverage": 1.0,
+        "mean_labelled_quote_coverage": 1.0
+      }
+    }
+  },
+  "summary": {
+    "processed": 20,
+    "completed": 20,
+    "failed": 0,
+    "expected_rejections": 0,
+    "human_reviewed": 0,
+    "human_passes": 0,
+    "unsupported_claim_rate": null,
+    "reviewed_factual_claims": 0,
+    "retrieval": {
+      "samples": 20,
+      "median_ms": 564.5782919964404,
+      "p95_ms": 793.2432079978753
+    },
+    "first_text": {
+      "samples": 20,
+      "median_ms": 1253.4721454940154,
+      "p95_ms": 2207.3991670040414
+    },
+    "completion": {
+      "samples": 20,
+      "median_ms": 1875.6014374957886,
+      "p95_ms": 3200.0334580079652
+    }
+  }
+}

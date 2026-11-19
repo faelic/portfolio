@@ -1,0 +1,593 @@
+{
+  "reviewer_type": "AI-assisted evaluation",
+  "reviewer": "Codex coding assistant; exact reviewer model identifier not recorded",
+  "human_reviewed": false,
+  "reviewed_on": "2026-11-19",
+  "score_order": [
+    "factual_support",
+    "completeness",
+    "relevance_clarity",
+    "uncertainty_boundaries"
+  ],
+  "score_range": [
+    0,
+    2
+  ],
+  "cases": [
+    {
+      "id": "eval-001",
+      "scores": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "verdict": "pass",
+      "evidence": [
+        {
+          "path": "projects/approval-cleanup.md",
+          "section": "Preamble; Overview and contribution",
+          "quote": "**Also known as:** Cleanup; Allowance Cleanup.",
+          "additional_support": "Repository is https://github.com/faelic/approval-cleanup; overview describes ERC-20 allowance review."
+        }
+      ],
+      "rationale": "Names Approval Cleanup, resolves both aliases, and supplies the exact registered repository. The brief allowance description is supported. No deployment or security guarantee is added.",
+      "improvement": "Optional: omit the final tool description for an even shorter naming/link answer."
+    },
+    {
+      "id": "eval-002",
+      "scores": [
+        2,
+        2,
+        1,
+        2
+      ],
+      "verdict": "pass",
+      "evidence": [
+        {
+          "path": "experience/flamong-policy-ng.md",
+          "section": "Product and responsibility",
+          "quote": "His responsibility at Policy.ng is the frontend, including the integration of its AI-assisted question interface. The product's backend and underlying AI services are separate from that frontend responsibility."
+        }
+      ],
+      "rationale": "Correctly rejects attribution of the underlying AI service and explains frontend integration. The added feature inventory is supported but distracts from a narrow ownership question. This is a style issue rather than a factual failure.",
+      "improvement": "Lead with the ownership boundary and keep one example instead of listing the whole product."
+    },
+    {
+      "id": "eval-003",
+      "scores": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "verdict": "pass",
+      "evidence": [
+        {
+          "path": "projects/blockscan.md",
+          "section": "Overview; Navigation, watchlist, and credential handling",
+          "quote": "For BlockScan, Favour also built a persistent watchlist, keyboard-accessible search, route-level code splitting, and Vercel API proxies that keep Alchemy credentials out of the browser bundle.",
+          "additional_support": "Overview identifies Ethereum Sepolia and NFT metadata inspection."
+        }
+      ],
+      "rationale": "Identifies BlockScan and connects both requested features to its Sepolia scope. Does not imply mainnet coverage or independently verified uptime.",
+      "improvement": "None required for the question."
+    },
+    {
+      "id": "eval-004",
+      "scores": [
+        1,
+        2,
+        2,
+        1
+      ],
+      "verdict": "fail",
+      "evidence": [
+        {
+          "path": "education/education-and-training.md",
+          "section": "University education",
+          "quote": "**Federal University of Technology Minna \u2014 BSc in Quantity Survey**",
+          "additional_support": "Recorded period is 2018\u20132025; the source does not say he is currently pursuing this degree."
+        }
+      ],
+      "rationale": "Institution, field, and period are correct, but 'he is pursuing' adds an unsupported present-tense enrollment claim. A dated education period does not establish current enrollment. This is an unsupported temporal claim, not proof that graduation occurred.",
+      "improvement": "Say 'The recorded degree field is BSc in Quantity Survey at Federal University of Technology Minna, with an education period of 2018\u20132025.'"
+    },
+    {
+      "id": "eval-005",
+      "scores": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "verdict": "pass",
+      "evidence": [
+        {
+          "path": "profile/engineering-perspective-and-interests.md",
+          "section": "Favour's interests \u2014 in his own words",
+          "quote": "And I love playing video games. I really do. It's one of my favourite things to do outside coding."
+        }
+      ],
+      "rationale": "Answers the hobby question directly and preserves the distinction between personal enjoyment and professional credentials.",
+      "improvement": "None required."
+    },
+    {
+      "id": "eval-006",
+      "scores": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "verdict": "pass",
+      "evidence": [
+        {
+          "path": "projects/blockscan.md",
+          "section": "Navigation, watchlist, and credential handling",
+          "quote": "Vercel API proxies that keep Alchemy credentials out of the browser bundle."
+        }
+      ],
+      "rationale": "Names the Alchemy credential and the documented Vercel API proxy mechanism without introducing database credentials or an unrelated secret-management mechanism.",
+      "improvement": "The second sentence can be removed because it repeats the first."
+    },
+    {
+      "id": "eval-007",
+      "scores": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "verdict": "pass",
+      "evidence": [
+        {
+          "path": "projects/escrow.md",
+          "section": "Availability and further exploration",
+          "quote": "Escrow's frontend is not deployed.",
+          "additional_support": "Repository is https://github.com/faelic/escrow-webapp; the document records React frontend and Solidity contract contributions."
+        }
+      ],
+      "rationale": "Recognizes Escrow from its roles, states the documented frontend limitation, and supplies the exact supported repository rather than inventing a live URL.",
+      "improvement": "None required; deployment status is source-based, not independently rechecked."
+    },
+    {
+      "id": "eval-008",
+      "scores": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "verdict": "pass",
+      "evidence": [
+        {
+          "path": "opportunities/availability-and-contact.md",
+          "section": "Contact",
+          "quote": "For opportunities or collaborations, visitors can email Favour at **[ututufavour7@gmail.com](mailto:ututufavour7@gmail.com)**.",
+          "additional_support": "No phone number is provided in the frozen 13-document corpus."
+        }
+      ],
+      "rationale": "Does not invent a phone number and offers the documented email. 'Does not publicly list' is interpreted in the portfolio knowledge context; this run did not search the wider web for a phone number.",
+      "improvement": "Prefer 'The portfolio knowledge does not provide a phone number' to make the evidence scope explicit."
+    },
+    {
+      "id": "eval-009",
+      "scores": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "verdict": "pass",
+      "evidence": [
+        {
+          "path": "education/education-and-training.md",
+          "section": "University education",
+          "quote": "**2018\u20132025**",
+          "additional_support": "The preceding entry names Federal University of Technology Minna."
+        }
+      ],
+      "rationale": "Matches both year endpoints and the associated university without adding unsupported month precision or current enrollment status.",
+      "improvement": "None required."
+    },
+    {
+      "id": "eval-010",
+      "scores": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "verdict": "pass",
+      "evidence": [
+        {
+          "path": "education/education-and-training.md",
+          "section": "Alchemy University; University education",
+          "quote": "**Alchemy University \u2014 Frontend Engineering Training**",
+          "additional_support": "Alchemy period is 2025\u20132026; university period is 2018\u20132025. Course topics include React, TypeScript, API integration, and Ethereum-connected applications."
+        }
+      ],
+      "rationale": "Assigns the training dates to Alchemy and distinguishes them from the degree period. Extra course details are supported and do not change the answer.",
+      "improvement": "Optional: answer with provider and years only."
+    },
+    {
+      "id": "eval-011",
+      "scores": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "verdict": "pass",
+      "evidence": [
+        {
+          "path": "experience/flamong-policy-ng.md",
+          "section": "Preamble",
+          "quote": "**Employment period:** May 2026\u2013Present, confirmed on 10 November 2026."
+        }
+      ],
+      "rationale": "Provides the correct start month and explicitly anchors ongoing employment to the recorded confirmation date. Does not claim fresh verification.",
+      "improvement": "None required."
+    },
+    {
+      "id": "eval-012",
+      "scores": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "verdict": "pass",
+      "evidence": [
+        {
+          "path": "profile/overview.md",
+          "section": "Self-directed learning and freelance work",
+          "quote": "He learned independently and took on freelance development work before undertaking structured frontend engineering training at Alchemy University from 2025 to 2026."
+        }
+      ],
+      "rationale": "Preserves the relative sequence of self-teaching, freelance work, and structured training without inventing a freelance start date.",
+      "improvement": "None required."
+    },
+    {
+      "id": "eval-013",
+      "scores": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "verdict": "pass",
+      "evidence": [
+        {
+          "path": "education/education-and-training.md",
+          "section": "University education; Alchemy University",
+          "quote": "**2018\u20132025**",
+          "additional_support": "Alchemy starts in 2025."
+        },
+        {
+          "path": "experience/flamong-policy-ng.md",
+          "section": "Preamble",
+          "quote": "**Employment period:** May 2026\u2013Present, confirmed on 10 November 2026."
+        }
+      ],
+      "rationale": "Orders university, Alchemy, and Flamong correctly. Uses year precision for the first two and the supported month for employment. Full ranges add detail but do not fabricate precision.",
+      "improvement": "For exact instruction fit, list only 2018, 2025, and May 2026 as starting points."
+    },
+    {
+      "id": "eval-014",
+      "scores": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "verdict": "pass",
+      "evidence": [
+        {
+          "path": "education/education-and-training.md",
+          "section": "University education",
+          "quote": "**2018\u20132025**"
+        },
+        {
+          "path": "experience/flamong-policy-ng.md",
+          "section": "Preamble",
+          "quote": "**Employment period:** May 2026\u2013Present, confirmed on 10 November 2026."
+        }
+      ],
+      "rationale": "Correctly compares 2025 with May 2026 and rejects the same-year premise. This requires no inference about graduation status.",
+      "improvement": "None required."
+    },
+    {
+      "id": "eval-015",
+      "scores": [
+        2,
+        1,
+        2,
+        1
+      ],
+      "verdict": "fail",
+      "evidence": [
+        {
+          "path": "profile/overview.md",
+          "section": "Self-directed learning and freelance work",
+          "quote": "He learned independently and took on freelance development work before undertaking structured frontend engineering training at Alchemy University from 2025 to 2026."
+        }
+      ],
+      "rationale": "Correctly answers before/after but does not explicitly answer the request for the first freelance start date. The corpus lacks that date. Repeating the course dates leaves the evidence boundary unstated. This is an omission, not a fabricated freelance date.",
+      "improvement": "Add 'His exact freelance start date is not documented.'"
+    },
+    {
+      "id": "eval-016",
+      "scores": [
+        1,
+        2,
+        1,
+        1
+      ],
+      "verdict": "fail",
+      "evidence": [
+        {
+          "path": "projects/monierave.md",
+          "section": "Overview and contribution; Limitations",
+          "quote": "Monierave is a portfolio banking simulation, not a licensed bank or a service for handling customers' real money."
+        },
+        {
+          "path": "projects/bucketflow.md",
+          "section": "Overview and contribution; Wallet and transaction implementation",
+          "quote": "BucketFlow's documented application uses Ethereum Sepolia, a test network. It is a demonstration of on-chain allocation logic, not a regulated savings product."
+        }
+      ],
+      "rationale": "The product distinction is correct, but the new answer adds 'without regulatory backing or real asset custody'. Sepolia/demo status does not establish a legal assessment of regulatory backing or a categorical custody claim. This is a new unsupported extension; the source only establishes test-network scope and that it is not a regulated savings product.",
+      "improvement": "Retain only the documented simulation, Sepolia, and regulated-savings limitations."
+    },
+    {
+      "id": "eval-017",
+      "scores": [
+        2,
+        2,
+        1,
+        2
+      ],
+      "verdict": "pass",
+      "evidence": [
+        {
+          "path": "projects/bucketflow.md",
+          "section": "Overview and contribution",
+          "quote": "The allocation must account for the full deposit."
+        },
+        {
+          "path": "projects/escrow.md",
+          "section": "Purpose and contribution; Availability and further exploration",
+          "quote": "The arbiter can release or refund funds.",
+          "additional_support": "Escrow frontend is not deployed; BucketFlow has a documented application link and Sepolia scope."
+        }
+      ],
+      "rationale": "Correctly assigns deposit allocation to BucketFlow and arbiter-based release/refund to Escrow, and identifies the explicitly undeployed frontend. BucketFlow deployment wording is assessed as a description of its documented demo, not a live uptime check.",
+      "improvement": "Use 'BucketFlow has a documented demo link' to distinguish recorded availability from fresh verification."
+    },
+    {
+      "id": "eval-018",
+      "scores": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "verdict": "pass",
+      "evidence": [
+        {
+          "path": "projects/blockscan.md",
+          "section": "Overview",
+          "quote": "BlockScan is a blockchain explorer for Ethereum Sepolia."
+        },
+        {
+          "path": "projects/approval-cleanup.md",
+          "section": "Log processing and wallet actions",
+          "quote": "Users can review an allowance and initiate an update or revocation through their connected wallet."
+        }
+      ],
+      "rationale": "Maps transaction inspection to BlockScan and allowance management to Approval Cleanup. Does not promise exhaustive approval detection or automatic revocation without a wallet action.",
+      "improvement": "None required."
+    },
+    {
+      "id": "eval-019",
+      "scores": [
+        2,
+        1,
+        1,
+        2
+      ],
+      "verdict": "fail",
+      "evidence": [
+        {
+          "path": "projects/blockscan.md",
+          "section": "Navigation, watchlist, and credential handling",
+          "quote": "Vercel API proxies that keep Alchemy credentials out of the browser bundle."
+        },
+        {
+          "path": "projects/monierave.md",
+          "section": "Background processing and security",
+          "quote": "The system also includes rotating refresh tokens, revocable sessions, audit records, and reconciliation-related checks."
+        }
+      ],
+      "rationale": "The body correctly names Alchemy/API credentials and session mechanisms, but the opening repeats 'database credential exposure concern in BlockScan' and never explicitly corrects that false premise. It instead attributes a same-type-security assumption to the visitor. Under the fixed strict completeness rule, the requested correction is incomplete even though a reader can infer it. The listed mechanisms are supported; their presence is not proof of security effectiveness.",
+      "improvement": "Begin 'BlockScan documents Alchemy API credentials, not database credentials.' Then contrast that with Monierave's rotating tokens and revocable sessions."
+    },
+    {
+      "id": "eval-020",
+      "scores": [
+        2,
+        2,
+        1,
+        2
+      ],
+      "verdict": "pass",
+      "evidence": [
+        {
+          "path": "profile/engineering-perspective-and-interests.md",
+          "section": "Favour's engineering perspective \u2014 in his own words",
+          "quote": "I have a lot of respect for engineers who would rather delay a release than compromise on security.",
+          "additional_support": "The same section values beautiful, functional interfaces over thoughtfully designed backends with system-wide security."
+        }
+      ],
+      "rationale": "Accurately contrasts complementary priorities rather than presenting security as a substitute for interface quality. Does not turn a stated value into a credential or measured project outcome.",
+      "improvement": "None required."
+    },
+    {
+      "id": "heldout-001",
+      "scores": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "verdict": "pass",
+      "evidence": [
+        {
+          "path": "experience/flamong-policy-ng.md",
+          "section": "Product and responsibility",
+          "quote": "The product's backend and underlying AI services are separate from that frontend responsibility."
+        }
+      ],
+      "rationale": "Keeps the frontend integration boundary and rejects attribution of the underlying AI backend. No unsupported provider or model ownership is introduced.",
+      "improvement": "None required."
+    },
+    {
+      "id": "heldout-002",
+      "scores": [
+        0,
+        1,
+        2,
+        0
+      ],
+      "verdict": "fail",
+      "evidence": [
+        {
+          "path": "projects/monierave.md",
+          "section": "Overview and contribution; Limitations",
+          "quote": "Monierave is a portfolio banking simulation, not a licensed bank or a service for handling customers' real money."
+        }
+      ],
+      "rationale": "The simulation limitation is supported, but 'does not serve any paying customers today' asserts a current customer count of zero. The corpus supplies no paying-customer count; a simulation label does not logically establish one. It should disclose missing information rather than manufacture a negative fact.",
+      "improvement": "Say 'The knowledge base does not document a paying-customer count. It describes Monierave as a portfolio banking simulation, not a real-money banking service.'"
+    },
+    {
+      "id": "heldout-003",
+      "scores": [
+        1,
+        2,
+        2,
+        0
+      ],
+      "verdict": "fail",
+      "evidence": [
+        {
+          "path": "projects/monierave.md",
+          "section": "Transfer integrity and concurrency",
+          "quote": "PostgreSQL transactions keep related database changes together, row-level locking deals with concurrent account operations, and idempotency keys help prevent the same request from creating duplicate transfers.",
+          "additional_support": "Outbox connects durable database changes to asynchronous processing; workers retry without treating database and queue as one transaction."
+        }
+      ],
+      "rationale": "Names the documented mechanisms, but assigns duplicate prevention to row locking and asserts safe background retries without duplicate money movement as an established guarantee. The source says idempotency keys help prevent duplicate transfers; it does not establish every queue consumer's deduplication behavior or independently verified correctness. Repeated 'ensures' language overstates the evidence.",
+      "improvement": "Explain the distinct roles of idempotency keys, atomic transactions, and concurrency locks. Describe the outbox as durable background-work coordination, and qualify this as documented design rather than a verified exactly-once guarantee."
+    },
+    {
+      "id": "heldout-004",
+      "scores": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "verdict": "pass",
+      "evidence": [
+        {
+          "path": "projects/monierave.md",
+          "section": "Transfer integrity and concurrency; Background processing and security",
+          "quote": "PostgreSQL holds the durable record of work to be performed, while Redis and Asynq support processing and retries."
+        }
+      ],
+      "rationale": "Resolves the supplied transfer history and explains that a notification retry is separate from the recorded transfer. This is a reasonable design-level inference from the documented outbox, matching the case's expected behavior. It neither names an undocumented email provider nor claims a tested delivery SLA. It is not proof that the actual worker implementation was inspected.",
+      "improvement": "Preface with 'In the documented design, after the transfer commits...' to make the evidence level explicit."
+    },
+    {
+      "id": "heldout-005",
+      "scores": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "verdict": "pass",
+      "evidence": [
+        {
+          "path": "projects/bucketflow.md",
+          "section": "Network and limitations",
+          "quote": "The documented application uses Ethereum Sepolia, a test network. BucketFlow is a demonstration of on-chain allocation logic, not a regulated savings product."
+        }
+      ],
+      "rationale": "Rejects the production-banking premise and real-salary use, identifies the test network, and avoids presenting the demo as a real-money financial service. The banking language is interpreted as a scope warning, not a legal audit of the application.",
+      "improvement": "None required."
+    },
+    {
+      "id": "heldout-006",
+      "scores": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "verdict": "pass",
+      "evidence": [
+        {
+          "path": "projects/approval-cleanup.md",
+          "section": "Coverage limitations",
+          "quote": "Because Approval Cleanup's scan covers a recent block window, it cannot guarantee a complete history of every approval a wallet has ever granted. Non-standard tokens and provider constraints can also affect what the application finds."
+        }
+      ],
+      "rationale": "Rejects exhaustive coverage and includes all three relevant limitations: recent window, provider constraints, and non-standard tokens. Does not imply missing approvals are safe.",
+      "improvement": "None required."
+    },
+    {
+      "id": "heldout-007",
+      "scores": [
+        2,
+        2,
+        2,
+        2
+      ],
+      "verdict": "pass",
+      "evidence": [
+        {
+          "path": "opportunities/availability-and-contact.md",
+          "section": "Availability and interests; Contact",
+          "quote": "As confirmed on **10 November 2026**, Favour is open to **both full-time roles and freelance or contract work**",
+          "additional_support": "Contact email is ututufavour7@gmail.com."
+        }
+      ],
+      "rationale": "Explicitly denies real-time verification and booking capability, anchors availability to its confirmation date, and gives the correct contact alternative. Does not pretend to send a message or arrange an interview.",
+      "improvement": "None required."
+    },
+    {
+      "id": "heldout-008",
+      "scores": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "verdict": "fail",
+      "evidence": [
+        {
+          "path": "projects/portfolio-rag-assistant.md",
+          "section": "Evaluation and testing interfaces",
+          "quote": "Offline tests check implementation behavior with storage and providers mocked; they do not establish real retrieval or generated-answer quality."
+        }
+      ],
+      "rationale": "Correctly mentions the 50-case dataset and later acknowledges mocked-test limitations, but opens by saying the assistant 'achieves measured accuracy' without a measured quality result. The concluding claim that evaluation 'proves' correctness in data and retrieval logic also overstates test evidence. It does not invent a percentage, but still conflates evaluation capability with established results and leaves the requested measured accuracy unanswered.",
+      "improvement": "Start 'No verified accuracy figure is recorded in this knowledge base.' Then describe the evaluation tooling and the narrower scope of offline tests."
+    }
+  ],
+  "description": "First revised-prompt attempt, assessed by Codex with the original rubric; unchanged diagnoses retain the original rationale. No human scores."
+}

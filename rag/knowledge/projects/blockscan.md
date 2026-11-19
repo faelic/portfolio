@@ -22,6 +22,7 @@ provenance:
   - About Favour
 - path: rag/sources/confirmed-portfolio-details.md
   sections:
+  - Evaluation-driven evidence boundaries — 19 November 2026
   - Project links and names
 ---
 
@@ -45,3 +46,7 @@ BlockScan's live-block feed also avoids updates that overwrite valid information
 ## Navigation, watchlist, and credential handling
 
 For BlockScan, Favour also built a persistent watchlist, keyboard-accessible search, route-level code splitting, and Vercel API proxies that keep Alchemy credentials out of the browser bundle.
+
+The credentials described here are Alchemy provider API credentials, not
+database credentials. This documents a credential-exposure control, not
+proof that the application prevents every form of unauthorized access.

@@ -20,10 +20,10 @@ class ConversationTests(unittest.IsolatedAsyncioTestCase):
         self.network.stop()
 
     def test_supplied_prompt_is_preserved_verbatim(self):
-        # Reviewed 15 Nov 2026: current identity, evidence and untrusted-history
-        # rules. Behavioral cases below remain independent of this snapshot.
+        # Reviewed 19 Nov 2026: evidence boundaries clarified after the recorded
+        # AI-assisted baseline. This snapshot is not a live-quality assertion.
         self.assertEqual(hashlib.sha256(answer.SYSTEM_PROMPT.encode()).hexdigest(),
-                         'a963e71b7e18283b21cda89f01ade4b4172a2d372429e4dfdb555cf9dbb219b3')
+                         '1a6c3dd2cca3a0dd04c77e13641727c4468fc66e0e43e38acea26d5708dcb914')
 
     async def test_conversation_cases_reach_both_answer_paths_without_canned_shortcuts(self):
         cases = [json.loads(line) for line in (config.RAG_DIR / 'evaluation/conversation-cases.jsonl').read_text().splitlines()]

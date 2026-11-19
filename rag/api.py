@@ -22,6 +22,7 @@ from implementation.guardrails import IndexNotReadyError, bounded_output, public
 from implementation.settings import Settings
 from implementation.protection import create_ledger, ProtectionError, budget_guard, call_ledger
 from implementation.identity import COOKIE_NAME, visitor_identity, cookie_header, client_ip, digest
+from implementation.followups import suggest_followup
 
 logger = logging.getLogger(__name__)
 BACKEND_SOURCE = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()[:12]
@@ -268,8 +269,13 @@ async def chat(body: ChatRequest, request: Request):
         first = True
         references = None
         sent_references = False
+        # Accept is CORS-safelisted, so a new frontend still works with an old
+        # API that ignores this optional extension (no new preflight header).
+        suggestion_requested = request.headers.get('accept') == 'application/x-ndjson; suggestions=1'
+        selected_documents = []
         def receive_context(documents):
             nonlocal references
+            selected_documents.extend(documents)
             references = public_references(documents)
         started = request.state.started_at
         try:
@@ -277,11 +283,11 @@ async def chat(body: ChatRequest, request: Request):
             async with asyncio.timeout(max(0, REQUEST_DEADLINE-(time.perf_counter()-started))):
                 options = {'reserve': budget_guard(ledger, request.state.request_id), 'request_id': request.state.request_id} if settings.production else {}
                 # Old deployed clients retain the original text-only protocol.
-                if request.headers.get('x-portfolio-references') == '1':
+                if request.headers.get('x-portfolio-references') == '1' or suggestion_requested:
                     options['on_context'] = receive_context
                 async with aclosing(stream_answer(question, history, **options)) as stream:
                     async for delta in stream:
-                        if references is not None and not sent_references:
+                        if references is not None and not sent_references and request.headers.get('x-portfolio-references') == '1':
                             sent_references = True
                             yield event('references', items=references)
                         if await request.is_disconnected():
@@ -292,7 +298,12 @@ async def chat(body: ChatRequest, request: Request):
                             first = False
                         text += delta
                         yield event('delta', text=delta)
-                yield event('done', text=bounded_output(text, ANSWER_OUTPUT_TOKENS))
+                completed = bounded_output(text, ANSWER_OUTPUT_TOKENS)
+                if suggestion_requested and not await request.is_disconnected():
+                    suggestion = suggest_followup(question, completed, history, selected_documents)
+                    if suggestion:
+                        yield event('suggestion', question=suggestion)
+                yield event('done', text=completed)
         except ProtectionError as exc:
             logger.info('chat_denied request_id=%s code=%s', request.state.request_id, exc.code)
             yield event('error', code=exc.code, message=MESSAGES[exc.code], retry_after=exc.retry_after)

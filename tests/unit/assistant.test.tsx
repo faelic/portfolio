@@ -30,6 +30,24 @@ it("decodes split JSON and Unicode, and uses the authoritative terminal answer",
   expect(seen).toEqual([" Hi 👋 ", "Hi 👋"]);
 });
 
+it("delivers optional suggestions only after a valid completed stream", async () => {
+  const suggested = vi.fn();
+  const metadata = JSON.stringify({ type: "suggestion", question: "What happens if a notification fails?" }) + "\n";
+  vi.mocked(fetch).mockResolvedValue(response(metadata + done("Monierave uses idempotency."), 1));
+  await streamChat("Monierave?", [], new AbortController().signal, () => {}, undefined, suggested);
+  expect(suggested).toHaveBeenCalledExactlyOnceWith("What happens if a notification fails?");
+  expect(vi.mocked(fetch).mock.calls[0][1]?.headers).toHaveProperty("Accept", "application/x-ndjson; suggestions=1");
+  suggested.mockClear();
+  vi.mocked(fetch).mockResolvedValue(response(metadata + '{"type":"delta","text":"partial"}\n'));
+  await expect(streamChat("Monierave?", [], new AbortController().signal, () => {}, undefined, suggested)).rejects.toThrow();
+  expect(suggested).not.toHaveBeenCalled();
+  for (const question of ["x".repeat(121), "Bad\nquestion", ""]) {
+    vi.mocked(fetch).mockResolvedValue(response(JSON.stringify({ type: "suggestion", question }) + "\n" + done("Valid answer.")));
+    await streamChat("Question", [], new AbortController().signal, () => {}, undefined, suggested);
+    expect(suggested).not.toHaveBeenCalled();
+  }
+});
+
 it("rejects truncated, malformed, oversized, and failed streams without leaking payloads", async () => {
   for (const text of ['{"type":"delta","text":"partial"}\n', 'PRIVATE invalid JSON\n', done("x".repeat(2001))]) {
     vi.mocked(fetch).mockResolvedValue(response(text));

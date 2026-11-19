@@ -31,6 +31,32 @@ class ApiTests(unittest.TestCase):
     def events(self, response):
         return [json.loads(line) for line in response.text.splitlines()]
 
+    def test_suggestion_extension_is_opt_in_and_uses_selected_context(self):
+        calls = []
+        async def generate(question, history, **options):
+            calls.append(question)
+            if callback := options.get('on_context'):
+                callback([Document(page_content='Monierave uses idempotency and a transactional outbox.', metadata={'document_id':'project-monierave'})])
+            yield 'Monierave uses idempotency keys.'
+        body = {'question': 'How does Monierave prevent duplicates?'}
+        with patch.object(api, 'stream_answer', generate):
+            old = self.client.post('/api/chat', json=body)
+            new = self.client.post('/api/chat', json=body, headers={'Accept':'application/x-ndjson; suggestions=1'})
+        self.assertEqual([e['type'] for e in self.events(old)], ['delta', 'done'])
+        self.assertEqual([e['type'] for e in self.events(new)], ['delta', 'suggestion', 'done'])
+        self.assertEqual(self.events(new)[1]['question'], 'What happens if a notification fails?')
+        self.assertEqual(len(calls), 2)  # One generation per request, not per suggestion.
+
+    def test_partial_answer_does_not_emit_suggestions(self):
+        async def fail(question, history, **options):
+            options['on_context']([Document(page_content='Monierave uses an outbox.', metadata={'document_id':'project-monierave'})])
+            yield 'Monierave uses idempotency.'
+            raise RuntimeError('private')
+        with patch.object(api, 'stream_answer', fail):
+            result = self.client.post('/api/chat', json={'question':'Monierave?'}, headers={'Accept':'application/x-ndjson; suggestions=1'})
+        self.assertEqual([e['type'] for e in self.events(result)], ['delta', 'error'])
+        self.assertEqual(api.active_requests, 0)
+
     def test_stream_contract_context_and_no_source_disclosure(self):
         received = []
         async def stream(question, history, **_options):

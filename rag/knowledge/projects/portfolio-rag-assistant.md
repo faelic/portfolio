@@ -23,6 +23,7 @@ aliases:
 provenance:
 - path: rag/sources/confirmed-portfolio-details.md
   sections:
+  - Evaluation-driven evidence boundaries — 19 November 2026
   - Professional positioning and portfolio RAG implementation
 ---
 
@@ -49,6 +50,13 @@ The answering pipeline performs semantic retrieval and constructs a grounded ans
 Favour implemented a 50-question evaluation dataset with reference answers, answerability labels, and document-and-section evidence groups. Retrieval metrics include mean reciprocal rank (MRR) and section-based evidence-group coverage. Structured answer judging scores accuracy, completeness, relevance, and grounding.
 
 Gradio interfaces support chat with retrieved-passage inspection, single-case evaluation, and sequential batch evaluation with category charts and individual feedback. Offline tests check implementation behavior with storage and providers mocked; they do not establish real retrieval or generated-answer quality.
+
+This knowledge entry does not supply a verified overall answer-accuracy
+figure. A dataset, judge, metric implementation, or passing mocked test is
+not a measured quality result and does not prove overall correctness.
+No verified numeric quality figure is supplied here. A separate AI-assisted
+assessment is AI-assisted evidence, not independent human validation or
+production accuracy.
 
 ## Availability and limitations
 

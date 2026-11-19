@@ -34,6 +34,7 @@ provenance:
   - About Favour
 - path: rag/sources/confirmed-portfolio-details.md
   sections:
+  - Evaluation-driven evidence boundaries — 19 November 2026
   - Escrow
   - Public location
   - AI application experience
@@ -53,6 +54,10 @@ provenance:
 ## Self-directed learning and freelance work
 
 Favour began his software development journey as a self-taught developer. He learned independently and took on freelance development work before undertaking structured frontend engineering training at Alchemy University from 2025 to 2026.
+
+His first freelance start date is not documented. Only the relative sequence
+is established: freelance work preceded the Alchemy training. The course
+dates must not be presented as the start date of his freelance work.
 
 ## Background and work
 

@@ -1,0 +1,32 @@
+{
+  "evaluation_type": "AI-assisted evaluation",
+  "sha256": {
+    "COMPARISON.md": "aabcb372696e9267e920fb71a350be2d52a9160f06f88fd941b3bd1c24c85e32",
+    "after/ai-reviews.json": "3c54296374c6bb928643bf8e56b7e7321edf94ea546d19c6192a695fa7e131f2",
+    "after/baseline.json": "a27717d0b6e5697793774ffb16a0cb5d12241c3dfcf9f2fda296add40eb841c8",
+    "after/heldout.json": "f528e918972a81e8083e7c8fe86930ddfcb610d5d241fa468b1016740c386db4",
+    "after/implementation.patch": "97e00b7af4d4e04947d593cf5b5e9d39b47ef2cae3fea1627025e1c779ffaeb0",
+    "after/source-evidence.json": "1fef34ce2387ff9519d0384935376e63f0bcbfacd563dd6dbad6405174c54ebf",
+    "after/summary.json": "5cf12d59ca90c64cf777c00efc45530661acaa40c24b90ddc40e5bba72159c88",
+    "after/system-prompt.txt": "1a6c3dd2cca3a0dd04c77e13641727c4468fc66e0e43e38acea26d5708dcb914",
+    "ai-reviews.json": "64650cb3ae6c30ab563d75d66dfdcdbf0546cde6d8d5ba7f4607fef1518fd0cb",
+    "attempt-1/ai-reviews.json": "2fcfa0d0f1a6554f569fc59f167865bd130d53e18e7783498735af19003650a9",
+    "attempt-1/baseline.json": "ede7d510f1f8d23d3fe28cd7082476e04ae23c912dacfbfb8e0de2d2d1132628",
+    "attempt-1/heldout.json": "871849ee80aae90696ccdfc50fcb5aa51916733cfd693adc9ff297d711902749",
+    "attempt-1/system-prompt.txt": "da6390a413ed93d741c3af8d1ddc8e64c81e069bd67eb27d732e113cf4ad994c",
+    "attempt-2/ai-reviews.json": "840963166a4fe055011552ccaf6469e51180500246fbcbd3d532e4da18b71575",
+    "attempt-2/baseline.json": "f733042498e9018d95f5bd848176f34c5d7e2a7cf0fb4e45c2fc7cd7d9719c88",
+    "attempt-2/heldout.json": "f6f9c0f1df1f17942345a9f39b61c029680849b0ecc823d3fef70e51c48f31e0",
+    "attempt-2/system-prompt.txt": "1a6c3dd2cca3a0dd04c77e13641727c4468fc66e0e43e38acea26d5708dcb914",
+    "attempt-3/ai-reviews.json": "e85f4e965eef07befc3e61aa40b600ab1c21b7614cf66d19354a7e420f4d4987",
+    "attempt-3/baseline.json": "823cf0c919cd653691928703930aecaf63484c19264a4158791528ed09267d2f",
+    "attempt-3/heldout.json": "8091f76442dc4080c9255890be63a41ea193c9420aac2649b5ce7d0ba09af356",
+    "attempt-3/source-evidence.json": "811899e9482325f7003f8d041ec28255c568f053a25dbf15f5f76a1e6accebd0",
+    "attempt-3/system-prompt.txt": "1a6c3dd2cca3a0dd04c77e13641727c4468fc66e0e43e38acea26d5708dcb914",
+    "baseline.json": "ab43e62a8e2ffadefc6bd455d07c5071449c5da8dbcf43ba81716b7d97c99e84",
+    "compare.py": "c3a483bb7ce15107c724ea3c63664e3467ab0048043321e5fcecb636a3d878cf",
+    "heldout.json": "8b67daa6115ac23c4ed8b498688aaffc98de0d17a7a2779a6bb7854c672d6729",
+    "manifest.json": "cb3a4c9047ccd9316475381b7f36aa3ad00ca53f6898a6f19deb8a21f2b42adf",
+    "source-evidence.json": "5f31510df802ea505d2928f123d311222f5621d9c2b9e0738e55a4a869b46c8b"
+  }
+}

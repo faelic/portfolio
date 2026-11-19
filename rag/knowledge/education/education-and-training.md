@@ -19,6 +19,7 @@ provenance:
   - Education and training
 - path: rag/sources/confirmed-portfolio-details.md
   sections:
+  - Evaluation-driven evidence boundaries — 19 November 2026
   - Education dates
 ---
 
@@ -29,6 +30,11 @@ provenance:
 **Federal University of Technology Minna — BSc in Quantity Survey**
 
 **2018–2025**
+
+These are the recorded university education years. This knowledge base does
+not establish current enrollment, an ongoing degree, or independently
+verified graduation status. The recorded period is not evidence that
+Favour is currently pursuing the degree.
 
 ## Alchemy University
 

@@ -4,6 +4,8 @@ Documented: 19 November 2026.
 
 Subsequent work: a new [28-response AI-assisted evaluation](evaluations/2026-11-19/REPORT.md) was executed and documented on 19 November 2026. It preserves new actual outputs and AI-authored scores/rationales. It does not reconstruct missing historical grades or turn AI review into personal human evaluation. The evidence status below describes the retrospective record, separately from that new run.
 
+The later [before/after correction experiment](evaluations/2026-11-19/COMPARISON.md) records 22/28 to 27/28 AI-assisted strict passes on reused questions, with an unresolved new regression. Human review remains pending; no personal scores or independent agreement are inferred from either experiment.
+
 ## Evidence status and attribution
 
 Favour reports having personally evaluated approximately 20–30 actual assistant responses in an earlier session without documenting the exercise. That is an owner-reported activity, not a recovered 20–30-case scored study.

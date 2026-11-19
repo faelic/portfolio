@@ -1,0 +1,285 @@
+diff --git a/rag/SOURCE_MAP.md b/rag/SOURCE_MAP.md
+index 5ad3411..3a02caa 100644
+--- a/rag/SOURCE_MAP.md
++++ b/rag/SOURCE_MAP.md
+@@ -91,3 +91,7 @@ The corpus now contains 13 documents. The first-person perspective is owner-appr
+ | Currency of mutable claims | Employment, opportunities, public location, and selected links were confirmed on 10 November 2026; revised positioning, AI implementation, and public assistant availability were confirmed on 11 November 2026. Other original claims remain undated. Confirmation does not establish indefinite freshness or external uptime. |
+ 
+ Close remaining gaps only through individually approved evidence. Missing-information and partial-answer evaluation cases exercise these limits. Escrow and Flamong's start date are now answerable; their old missing-information expectations have been updated.
++
++## Evaluation-driven evidence boundaries — 19 November 2026
++
++Six documents (education, professional overview, BlockScan, Monierave, BucketFlow, and Portfolio RAG Assistant) now explicitly state existing evidence limits after the AI-assisted diagnostic runs. Their provenance points to the new section in the confirmation record. These are AI-authored clarifications under the owner’s correction request, not newly verified personal or production facts. Original benchmark questions, reference answers, and evidence labels remain unchanged.
+diff --git a/rag/implementation/answer.py b/rag/implementation/answer.py
+index 850fc81..556505f 100644
+--- a/rag/implementation/answer.py
++++ b/rag/implementation/answer.py
+@@ -271,6 +271,43 @@ from history when clear, and answer from the excerpts.
+ Visitor: Which model powers you?
+ Expected behavior: Answer only if the excerpts establish the deployed
+ model. Otherwise state that the available information does not confirm it.
++
++## Evidence-boundary examples
++
++These hypothetical examples teach evidence handling, not portfolio facts.
++
++Evidence: Education is recorded as 2016–2020.
++Say: The recorded education period is 2016–2020.
++Do not say: He is currently pursuing that degree. A range alone does not
++establish present enrollment, completion, or graduation.
++
++Evidence: Freelancing preceded a course; no freelance start date is given.
++Question: When did freelancing start, and was it before the course?
++Say: The start date is not documented; freelancing preceded the course.
++Likewise, an undocumented customer count is unknown, not zero. A demo
++label does not establish a current customer count or legal/custody status.
++
++Evidence: A proxy protects provider API keys; no database keys are named.
++Question: How are database keys protected?
++Say: The documented protection concerns provider API keys, not database
++keys. Correct the specific false premise first, then explain the proxy.
++
++Evidence: A design uses locks, request identifiers, and background jobs.
++Describe each mechanism's documented role. Do not infer exactly-once
++delivery, retry deduplication, or independently verified correctness from
++the existence of locks or a job queue. Describe intent, not guarantees.
++
++Evidence: An evaluation dataset and mocked tests exist; no measured
++answer-quality result is supplied.
++Say: No verified accuracy figure is documented. The dataset enables
++evaluation; mocked tests check the exercised implementation behavior.
++Do not say the system achieves measured accuracy or that tests prove
++correctness. A scoring capability is not a measured result.
++
++Before responding, silently check every requested date, count, result,
++premise and guarantee against the excerpts. Explicitly state each missing
++answer, preserve qualifiers, and remove unsupported extensions. Return
++only the concise visitor-facing answer, not this checking process.
+ """
+ 
+ REWRITE_PROMPT = """Turn the latest visitor question into a concise standalone
+diff --git a/rag/knowledge/education/education-and-training.md b/rag/knowledge/education/education-and-training.md
+index 7f2bea9..bd9113e 100644
+--- a/rag/knowledge/education/education-and-training.md
++++ b/rag/knowledge/education/education-and-training.md
+@@ -19,6 +19,7 @@ provenance:
+   - Education and training
+ - path: rag/sources/confirmed-portfolio-details.md
+   sections:
++  - Evaluation-driven evidence boundaries — 19 November 2026
+   - Education dates
+ ---
+ 
+@@ -30,6 +31,11 @@ provenance:
+ 
+ **2018–2025**
+ 
++These are the recorded university education years. This knowledge base does
++not establish current enrollment, an ongoing degree, or independently
++verified graduation status. The recorded period is not evidence that
++Favour is currently pursuing the degree.
++
+ ## Alchemy University
+ 
+ **Alchemy University — Frontend Engineering Training**
+diff --git a/rag/knowledge/profile/overview.md b/rag/knowledge/profile/overview.md
+index e6b9345..57ee40e 100644
+--- a/rag/knowledge/profile/overview.md
++++ b/rag/knowledge/profile/overview.md
+@@ -34,6 +34,7 @@ provenance:
+   - About Favour
+ - path: rag/sources/confirmed-portfolio-details.md
+   sections:
++  - Evaluation-driven evidence boundaries — 19 November 2026
+   - Escrow
+   - Public location
+   - AI application experience
+@@ -54,6 +55,10 @@ provenance:
+ 
+ Favour began his software development journey as a self-taught developer. He learned independently and took on freelance development work before undertaking structured frontend engineering training at Alchemy University from 2025 to 2026.
+ 
++His first freelance start date is not documented. Only the relative sequence
++is established: freelance work preceded the Alchemy training. The course
++dates must not be presented as the start date of his freelance work.
++
+ ## Background and work
+ 
+ Favour Chukwuemerie Ututu is a Full-stack Software Engineer and AI Engineer based in Nigeria. He builds frontend applications, backend systems, and LLM-powered applications. His work includes professional frontend engineering on Policy.ng, independent full-stack and blockchain projects, and a Python-based portfolio assistant using retrieval-augmented generation (RAG).
+diff --git a/rag/knowledge/projects/blockscan.md b/rag/knowledge/projects/blockscan.md
+index c177caa..078d596 100644
+--- a/rag/knowledge/projects/blockscan.md
++++ b/rag/knowledge/projects/blockscan.md
+@@ -22,6 +22,7 @@ provenance:
+   - About Favour
+ - path: rag/sources/confirmed-portfolio-details.md
+   sections:
++  - Evaluation-driven evidence boundaries — 19 November 2026
+   - Project links and names
+ ---
+ 
+@@ -45,3 +46,7 @@ BlockScan's live-block feed also avoids updates that overwrite valid information
+ ## Navigation, watchlist, and credential handling
+ 
+ For BlockScan, Favour also built a persistent watchlist, keyboard-accessible search, route-level code splitting, and Vercel API proxies that keep Alchemy credentials out of the browser bundle.
++
++The credentials described here are Alchemy provider API credentials, not
++database credentials. This documents a credential-exposure control, not
++proof that the application prevents every form of unauthorized access.
+diff --git a/rag/knowledge/projects/bucketflow.md b/rag/knowledge/projects/bucketflow.md
+index ab797d8..9d88486 100644
+--- a/rag/knowledge/projects/bucketflow.md
++++ b/rag/knowledge/projects/bucketflow.md
+@@ -20,6 +20,9 @@ provenance:
+   - Independent projects > BucketFlow — Stablecoin allocation application
+   - What Favour works on > Blockchain engineering
+   - About Favour
++- path: rag/sources/confirmed-portfolio-details.md
++  sections:
++  - Evaluation-driven evidence boundaries — 19 November 2026
+ ---
+ 
+ # BucketFlow — Stablecoin allocation application
+@@ -35,6 +38,10 @@ BucketFlow lets users set rules for splitting a USDC deposit among financial buc
+ 
+ BucketFlow's documented application uses Ethereum Sepolia, a test network. It is a demonstration of on-chain allocation logic, not a regulated savings product.
+ 
++That scope statement is not a legal assessment of regulatory status or
++backing, and does not establish a general custody guarantee. No legal or
++regulatory review is recorded in this knowledge base.
++
+ ## Wallet and transaction implementation
+ 
+ BucketFlow handles wallet connection, token spending approvals, deposits, transaction receipts, bucket balances, and withdrawals. It also shows network and transaction states so a pending on-chain action is not presented as confirmed. The contract enforces a 30-day withdrawal cooldown for its savings bucket.
+diff --git a/rag/knowledge/projects/monierave.md b/rag/knowledge/projects/monierave.md
+index 54e66b9..155b936 100644
+--- a/rag/knowledge/projects/monierave.md
++++ b/rag/knowledge/projects/monierave.md
+@@ -24,6 +24,7 @@ provenance:
+   - About Favour
+ - path: rag/sources/confirmed-portfolio-details.md
+   sections:
++  - Evaluation-driven evidence boundaries — 19 November 2026
+   - Professional positioning and portfolio RAG implementation
+ ---
+ 
+@@ -36,22 +37,44 @@ provenance:
+ 
+ ## Overview and contribution
+ 
++The paying-customer count is not documented. The knowledge base cannot
++establish how many paying customers Monierave has, either currently or
++historically. Its simulation label establishes product scope, not a
++customer-usage measurement.
++
+ Monierave is a banking simulation through which Favour explored the backend and frontend engineering of financial transactions. He built account registration and verification, authentication, account management, beneficiaries, transfers, transaction history, statements, and profile and security features.
+ 
+ Monierave is a portfolio banking simulation, not a licensed bank or a service for handling customers' real money.
+ 
+ ## Transfer integrity and concurrency
+ 
++The following describes intended transfer behavior, not independently
++verified exactly-once execution. The portfolio evidence does not establish
++that every retry under every failure condition records money movement only
++once. The guarantees of a running deployment have not been verified here.
++
+ A transfer in Monierave is recorded through an append-only double-entry ledger. PostgreSQL transactions keep related database changes together, row-level locking deals with concurrent account operations, and idempotency keys help prevent the same request from creating duplicate transfers. Business rules are enforced by the backend.
+ 
+ Monierave's transactional outbox connects durable database changes to asynchronous processing. Workers can retry tasks without treating the database and the job queue as a single transaction.
+ 
++These mechanisms have distinct roles: idempotency keys address repeated
++transfer requests; transactions keep related writes atomic; row locks
++coordinate concurrent account operations; the outbox records background
++work durably. This is a description of the implementation's design, not an
++independently verified guarantee of exactly-once transfers or job delivery.
++
+ ## Background processing and security
+ 
+ Background work uses a transactional outbox. PostgreSQL holds the durable record of work to be performed, while Redis and Asynq support processing and retries. The system also includes rotating refresh tokens, revocable sessions, audit records, and reconciliation-related checks.
+ 
+ These Monierave features were built into a banking simulation and demonstrate the backend design problems Favour addressed in its implementation.
+ 
++For notification failures after a committed transfer, the outbox permits
++background retry without making successful notification delivery a
++condition of that already committed transfer. The documented material does
++not specify an email retry limit or guarantee eventual delivery. It does
++not establish retries forever or until successful.
++
+ ## Frontend and testing
+ 
+ On the frontend, Favour used TanStack Query to manage server data and React Hook Form with Zod for form handling. He added backend, integration, and end-to-end tests, including tests for transfer behavior under concurrency.
+@@ -59,3 +82,5 @@ On the frontend, Favour used TanStack Query to manage server data and React Hook
+ ## Limitations
+ 
+ Monierave is a portfolio banking simulation. It is not a licensed bank or a service for handling customers' real money.
++
++The current paying-customer count is unknown in the supplied knowledge.
+diff --git a/rag/knowledge/projects/portfolio-rag-assistant.md b/rag/knowledge/projects/portfolio-rag-assistant.md
+index 9f2c35b..b321a57 100644
+--- a/rag/knowledge/projects/portfolio-rag-assistant.md
++++ b/rag/knowledge/projects/portfolio-rag-assistant.md
+@@ -23,6 +23,7 @@ aliases:
+ provenance:
+ - path: rag/sources/confirmed-portfolio-details.md
+   sections:
++  - Evaluation-driven evidence boundaries — 19 November 2026
+   - Professional positioning and portfolio RAG implementation
+ ---
+ 
+@@ -50,6 +51,13 @@ Favour implemented a 50-question evaluation dataset with reference answers, answ
+ 
+ Gradio interfaces support chat with retrieved-passage inspection, single-case evaluation, and sequential batch evaluation with category charts and individual feedback. Offline tests check implementation behavior with storage and providers mocked; they do not establish real retrieval or generated-answer quality.
+ 
++This knowledge entry does not supply a verified overall answer-accuracy
++figure. A dataset, judge, metric implementation, or passing mocked test is
++not a measured quality result and does not prove overall correctness.
++No verified numeric quality figure is supplied here. A separate AI-assisted
++assessment is AI-assisted evidence, not independent human validation or
++production accuracy.
++
+ ## Availability and limitations
+ 
+ Public availability through Favour's portfolio was confirmed by Favour on 11 November 2026. The approved code link is https://github.com/faelic/portfolio; public availability has not been independently verified by the corpus authoring process.
+diff --git a/rag/sources/confirmed-portfolio-details.md b/rag/sources/confirmed-portfolio-details.md
+index 4ba1865..6421ec2 100644
+--- a/rag/sources/confirmed-portfolio-details.md
++++ b/rag/sources/confirmed-portfolio-details.md
+@@ -1,5 +1,21 @@
+ # Confirmed portfolio details
+ 
++## Evaluation-driven evidence boundaries — 19 November 2026
++
++Under Favour's instruction to correct the documented evaluation failures,
++the coding assistant clarified existing evidence boundaries in six
++knowledge documents. These clarifications add no new biographical facts,
++customer numbers, legal conclusions, or independently verified guarantees.
++The recorded education range establishes neither current enrollment nor
++graduation; the first freelance start date and paying-customer count are
++not documented. BlockScan describes Alchemy API credentials, not database
++credentials. Monierave's described mechanisms have distinct roles and do
++not establish exactly-once execution or an indefinite email retry policy.
++BucketFlow's test-network scope is not a legal/regulatory or custody assessment.
++Evaluation tooling is not a verified numeric answer-quality result. These
++are AI-authored evidence-boundary clarifications, not new owner-confirmed
++claims about external events.
++
+ Favour confirmed the original entries below individually in this chat on **10 November 2026**. The education dates and development beginnings sections were added with his approval on **11 November 2026**. This record supplements the original portfolio knowledge; it is excluded from ingestion. The professional-positioning and RAG-implementation correction on 11 November 2026 is recorded in the final section and supersedes conflicting historical status wording. These are owner-confirmed statements, not an independent audit of project code, external links, employment, or education.
+ 
+ ## Current role and start date
+diff --git a/rag/tests/test_conversation.py b/rag/tests/test_conversation.py
+index 071bf32..d4905f5 100644
+--- a/rag/tests/test_conversation.py
++++ b/rag/tests/test_conversation.py
+@@ -20,10 +20,10 @@ class ConversationTests(unittest.IsolatedAsyncioTestCase):
+         self.network.stop()
+ 
+     def test_supplied_prompt_is_preserved_verbatim(self):
+-        # Reviewed 15 Nov 2026: current identity, evidence and untrusted-history
+-        # rules. Behavioral cases below remain independent of this snapshot.
++        # Reviewed 19 Nov 2026: evidence boundaries clarified after the recorded
++        # AI-assisted baseline. This snapshot is not a live-quality assertion.
+         self.assertEqual(hashlib.sha256(answer.SYSTEM_PROMPT.encode()).hexdigest(),
+-                         'a963e71b7e18283b21cda89f01ade4b4172a2d372429e4dfdb555cf9dbb219b3')
++                         '1a6c3dd2cca3a0dd04c77e13641727c4468fc66e0e43e38acea26d5708dcb914')
+ 
+     async def test_conversation_cases_reach_both_answer_paths_without_canned_shortcuts(self):
+         cases = [json.loads(line) for line in (config.RAG_DIR / 'evaluation/conversation-cases.jsonl').read_text().splitlines()]

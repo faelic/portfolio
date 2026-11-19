@@ -2,7 +2,7 @@ import { AnimatedIcon } from "../icons/AnimatedIcon";
 import { createPortal } from "react-dom";
 import { useEffect, useRef, useState, type ComponentProps, type ReactNode } from "react";
 import {
-  AssistantRuntimeProvider, ComposerPrimitive, MessagePrimitive, ThreadPrimitive,
+  AssistantRuntimeProvider, MessagePrimitive, ThreadPrimitive,
   useExternalStoreRuntime, useAuiState, useAuiEvent, type AppendMessage, type ThreadMessageLike,
 } from "@assistant-ui/react";
 import Markdown from "react-markdown";
@@ -13,6 +13,7 @@ import { PortraitAvatar } from "../shared/PortraitAvatar";
 import { storage } from "../../utils/storage";
 import { completedMessages, HISTORY_KEY, KEEP_HISTORY_KEY, loadChat, modelHistory, validSentAt, type ChatMessage } from "./history";
 import { streamChat } from "./stream";
+import { FollowupComposer } from "./FollowupComposer";
 import "./assistant.css";
 
 export type AssistantFrameProps = Omit<ComponentProps<typeof WindowFrame>, "children">;
@@ -110,14 +111,15 @@ export default function AssistantFeature({ frame, mount }: { frame?: AssistantFr
   const [running, setRunning] = useState(false);
   const [error, setError] = useState("");
   const [announcement, setAnnouncement] = useState("");
+  const [suggestion, setSuggestion] = useState("");
   const controller = useRef<AbortController | null>(null);
   const surface = useRef<HTMLDivElement>(null);
   const runtimeRef = useRef<ReturnType<typeof useExternalStoreRuntime<ChatMessage>> | null>(null);
   const mobileOpen = !!frame?.mobile;
   const ConversationViewport = mobileOpen ? MobileAssistantViewport : DesktopAssistantViewport;
 
-  const stop = () => { controller.current?.abort(); };
-  useEffect(() => { if (!frame) controller.current?.abort(); }, [frame]);
+  const stop = () => { controller.current?.abort(); setSuggestion(""); };
+  useEffect(() => { if (!frame) { controller.current?.abort(); setSuggestion(""); } }, [frame]);
   useEffect(() => () => controller.current?.abort(), []);
   useEffect(() => {
     const viewport = window.visualViewport;
@@ -161,7 +163,7 @@ export default function AssistantFeature({ frame, mount }: { frame?: AssistantFr
     const history = modelHistory(messages);
     const submittedAt = new Date().toISOString();
     let responseSentAt: string | undefined;
-    setError(""); setRunning(true); setAnnouncement(`${AVARTAR_NAME} is thinking…`);
+    setError(""); setSuggestion(""); setRunning(true); setAnnouncement(`${AVARTAR_NAME} is thinking…`);
     setMessages(current => [...current.slice(-100),
       { id: `${id}-user`, role: "user", text: question, status: "complete", sentAt: submittedAt },
       { id, role: "assistant", text: "", status: "running" },
@@ -175,11 +177,14 @@ export default function AssistantFeature({ frame, mount }: { frame?: AssistantFr
       } : item));
     };
     try {
+      let nextSuggestion = "";
       const text = await streamChat(question, history, request.signal, update, references => {
         if (!request.signal.aborted && controller.current === request) setMessages(current => current.map(item => item.id === id ? { ...item, references } : item));
-      });
+      }, question => { nextSuggestion = question; });
+      if (request.signal.aborted || controller.current !== request) return;
       update(text, "complete");
-      setAnnouncement("Answer complete.");
+      setSuggestion(nextSuggestion);
+      setAnnouncement(nextSuggestion ? "Answer complete. A suggested question is available in the message box." : "Answer complete.");
     } catch (failure) {
       if (controller.current !== request) return;
       const interrupted = request.signal.aborted;
@@ -202,7 +207,7 @@ export default function AssistantFeature({ frame, mount }: { frame?: AssistantFr
   runtimeRef.current = runtime;
   const clear = () => {
     stop(); controller.current = null;
-    setMessages([]); setRunning(false); setError(""); setAnnouncement("Conversation cleared.");
+    setMessages([]); setRunning(false); setError(""); setSuggestion(""); setAnnouncement("Conversation cleared.");
     runtime.thread.composer.setText("");
     storage.remove(HISTORY_KEY);
   };
@@ -226,11 +231,8 @@ export default function AssistantFeature({ frame, mount }: { frame?: AssistantFr
         <div className="assistant-bottom">
           {error && <p className="assistant-error" role="alert">{error}</p>}
           <p className="sr-only" role="status">{announcement}</p>
-          <ComposerPrimitive.Root className="assistant-composer">
-            <ComposerPrimitive.Input aria-label="Message Avartar" placeholder="Ask about Favour…" maxLength={2000} rows={1} maxRows={5} autoFocus={false} cancelOnEscape={false} />
-            {running ? <ComposerPrimitive.Cancel className="assistant-send" aria-label="Stop response"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="2" fill="currentColor" /></svg></ComposerPrimitive.Cancel>
-              : <ComposerPrimitive.Send className="assistant-send" aria-label="Send message"><AnimatedIcon name="send"/></ComposerPrimitive.Send>}
-          </ComposerPrimitive.Root>
+          <FollowupComposer suggestion={suggestion} running={running} dismiss={() => setSuggestion("")}
+            setText={text => runtime.thread.composer.setText(text)} />
           <p className="assistant-privacy">{keep
             ? storageUnavailable ? "This browser couldn’t save your history. Messages stay for this visit." : "Saved in this browser. You can clear it anytime."
             : "History saving is off. Messages stay for this visit."}</p>

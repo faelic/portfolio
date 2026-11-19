@@ -91,6 +91,12 @@
 .assistant-composer textarea { flex: 1; min-width: 0; min-height: 40px; padding: 8px 7px; resize: none; border: 0; background: none; outline: none; color: #f1f2ed; caret-color: var(--assistant-accent); font: inherit; line-height: 1.5; scrollbar-width: thin; }
 .assistant-composer textarea:focus-visible { outline: none; }
 .assistant-composer textarea::placeholder { color: #a4a8a1; }
+.assistant-composer-field { flex: 1; min-width: 0; display: grid; }
+.assistant-composer-field textarea { grid-area: 1 / 1; width: 100%; }
+.assistant-followup { grid-area: 1 / 1; z-index: 1; display: flex; align-items: flex-start; gap: 8px; min-width: 0; min-height: 44px; padding: 8px 7px; border: 0; border-radius: 6px; background: #202223; color: #d1dce2; font: inherit; line-height: 1.5; text-align: left; cursor: pointer; }
+.assistant-followup-text { min-width: 0; overflow-wrap: anywhere; background: #b9d7e812; border-radius: 3px; }
+.assistant-followup kbd { flex: 0 0 auto; margin-top: 2px; padding: 0 5px; border: 1px solid #ffffff30; border-radius: 4px; color: #c3cbd0; font: inherit; font-size: 10px; line-height: 20px; }
+@media (hover: none) and (pointer: coarse) { .assistant-followup kbd { display: none; } }
 .assistant-send { display: grid; place-items: center; flex: 0 0 44px; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 10px; background: var(--assistant-accent); color: var(--assistant-accent-ink); cursor: pointer; transition: background 150ms ease; }
 .assistant-send:hover:not(:disabled) { background: var(--assistant-accent); filter: brightness(1.08); }
 .assistant-send:disabled { background: #353832; color: #858b7c; cursor: default; }

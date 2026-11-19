@@ -1,5 +1,21 @@
 # Confirmed portfolio details
 
+## Evaluation-driven evidence boundaries — 19 November 2026
+
+Under Favour's instruction to correct the documented evaluation failures,
+the coding assistant clarified existing evidence boundaries in six
+knowledge documents. These clarifications add no new biographical facts,
+customer numbers, legal conclusions, or independently verified guarantees.
+The recorded education range establishes neither current enrollment nor
+graduation; the first freelance start date and paying-customer count are
+not documented. BlockScan describes Alchemy API credentials, not database
+credentials. Monierave's described mechanisms have distinct roles and do
+not establish exactly-once execution or an indefinite email retry policy.
+BucketFlow's test-network scope is not a legal/regulatory or custody assessment.
+Evaluation tooling is not a verified numeric answer-quality result. These
+are AI-authored evidence-boundary clarifications, not new owner-confirmed
+claims about external events.
+
 Favour confirmed the original entries below individually in this chat on **10 November 2026**. The education dates and development beginnings sections were added with his approval on **11 November 2026**. This record supplements the original portfolio knowledge; it is excluded from ingestion. The professional-positioning and RAG-implementation correction on 11 November 2026 is recorded in the final section and supersedes conflicting historical status wording. These are owner-confirmed statements, not an independent audit of project code, external links, employment, or education.
 
 ## Current role and start date

@@ -1,5 +1,5 @@
 import { validReferences, type PublicReference } from "./references";
-type ChatEvent = { type: "references"; items: PublicReference[] } | { type: "delta" | "done"; text: string } | { type: "error"; message: string };
+type ChatEvent = { type: "suggestion"; question: string } | { type: "references"; items: PublicReference[] } | { type: "delta" | "done"; text: string } | { type: "error"; message: string };
 const INTERRUPTED = "The connection ended before the answer finished. Please try again.";
 
 function retryHint(seconds: unknown) {
@@ -24,6 +24,11 @@ function parseEvent(line: string): ChatEvent {
   let event: unknown;
   try { event = JSON.parse(line); } catch { throw new Error(INTERRUPTED); }
   if (event && typeof event === "object" && "type" in event) {
+    if (event.type === "suggestion") {
+      const question = "question" in event && typeof event.question === "string" ? event.question.trim() : "";
+      const controls = [...question].some(character => character.charCodeAt(0) < 32 || character.charCodeAt(0) === 127);
+      return { type: "suggestion", question: question.length <= 120 && !controls ? question : "" };
+    }
     if (event.type === "references" && "items" in event) return { type: "references", items: validReferences(event.items) };
     if ((event.type === "delta" || event.type === "done") && "text" in event && typeof event.text === "string" && event.text.length <= 2000) return event as ChatEvent;
     if (event.type === "error" && "message" in event && typeof event.message === "string") {
@@ -39,11 +44,12 @@ export async function streamChat(
   signal: AbortSignal,
   onText: (text: string) => void,
   onReferences?: (references: PublicReference[]) => void,
+  onSuggestion?: (question: string) => void,
 ): Promise<string> {
   let response: Response;
   try {
     response = await fetch(chatUrl(), {
-      method: "POST", credentials: "include", headers: { "Content-Type": "application/json", "X-Portfolio-References": "1" },
+      method: "POST", credentials: "include", headers: { "Content-Type": "application/json", "X-Portfolio-References": "1", "Accept": "application/x-ndjson; suggestions=1" },
       body: JSON.stringify({ question, history }), signal,
     });
   } catch {
@@ -78,7 +84,7 @@ export async function streamChat(
   if (!response.headers.get("content-type")?.includes("application/x-ndjson")) throw new Error(INTERRUPTED);
   const reader = response.body.getReader();
   const decoder = new TextDecoder();
-  let buffer = "", text = "";
+  let buffer = "", text = "", suggestion = "";
   try {
     while (true) {
       const { value, done } = await reader.read();
@@ -90,11 +96,13 @@ export async function streamChat(
         buffer = boundary >= 0 ? buffer.slice(boundary + 1) : "";
         if (!line.trim()) continue;
         const event = parseEvent(line);
+        if (event.type === "suggestion") { suggestion = event.question; continue; }
         if (event.type === "references") { onReferences?.(event.items); continue; }
         if (event.type === "error") throw new Error(event.message);
         if (event.type === "done") {
           if (!event.text.trim()) throw new Error(INTERRUPTED);
           onText(event.text);
+          if (suggestion && !signal.aborted) onSuggestion?.(suggestion);
           return event.text;
         }
         text += event.text;

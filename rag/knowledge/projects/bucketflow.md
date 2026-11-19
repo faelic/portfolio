@@ -20,6 +20,9 @@ provenance:
   - Independent projects > BucketFlow — Stablecoin allocation application
   - What Favour works on > Blockchain engineering
   - About Favour
+- path: rag/sources/confirmed-portfolio-details.md
+  sections:
+  - Evaluation-driven evidence boundaries — 19 November 2026
 ---
 
 # BucketFlow — Stablecoin allocation application
@@ -34,6 +37,10 @@ provenance:
 BucketFlow lets users set rules for splitting a USDC deposit among financial buckets, such as savings and other planned expenses. The allocation must account for the full deposit. Favour built the interface and connected it to a Solidity vault that applies the allocation and withdrawal rules.
 
 BucketFlow's documented application uses Ethereum Sepolia, a test network. It is a demonstration of on-chain allocation logic, not a regulated savings product.
+
+That scope statement is not a legal assessment of regulatory status or
+backing, and does not establish a general custody guarantee. No legal or
+regulatory review is recorded in this knowledge base.
 
 ## Wallet and transaction implementation
 

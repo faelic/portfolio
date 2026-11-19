@@ -91,3 +91,7 @@ The corpus now contains 13 documents. The first-person perspective is owner-appr
 | Currency of mutable claims | Employment, opportunities, public location, and selected links were confirmed on 10 November 2026; revised positioning, AI implementation, and public assistant availability were confirmed on 11 November 2026. Other original claims remain undated. Confirmation does not establish indefinite freshness or external uptime. |
 
 Close remaining gaps only through individually approved evidence. Missing-information and partial-answer evaluation cases exercise these limits. Escrow and Flamong's start date are now answerable; their old missing-information expectations have been updated.
+
+## Evaluation-driven evidence boundaries — 19 November 2026
+
+Six documents (education, professional overview, BlockScan, Monierave, BucketFlow, and Portfolio RAG Assistant) now explicitly state existing evidence limits after the AI-assisted diagnostic runs. Their provenance points to the new section in the confirmation record. These are AI-authored clarifications under the owner’s correction request, not newly verified personal or production facts. Original benchmark questions, reference answers, and evidence labels remain unchanged.

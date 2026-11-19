@@ -1,5 +1,9 @@
 # Portfolio Assistant Evaluation
 
+## Before/after correction experiment — 19 November 2026
+
+The [before/after comparison](evaluations/2026-11-19/COMPARISON.md) preserves the original evaluation committed as ee12446, three intermediate attempts, and a final rerun of the exact same 28 questions. The candidate adds general prompt examples and evidence-boundary clarifications to six knowledge documents, with a refreshed 33-chunk index. AI-assisted strict passes changed from 22/28 to 27/28; all six original failure cases now pass, but eval-016 regressed with unsupported legal/regulatory statements. MRR@10 on 19 eligible baseline cases decreased from 1.0 to 0.9474 while section/quote coverage remained 1.0. These are unblinded AI judgments on reused development cases, not independent human accuracy, fresh held-out validation, or proof of generalization. Four new 28-case rounds were generated; unsuccessful attempts remain visible. The fixes and comparison are local and uncommitted; no deployment is claimed.
+
 ## Recorded AI-assisted run — 19 November 2026
 
 The [28-response evaluation report](evaluations/2026-11-19/REPORT.md) records actual paid generation through the local packaged-index pipeline: the first 20 baseline cases and all eight existing held-out cases. All 28 completed; direct AI-assisted review assigned 22 strict-rubric passes and six failures. These are AI judgments, not Favour's personal grades, independent human validation, or a before/after quality improvement. Raw generation reports retain pending human-review fields; separate AI reviews preserve scores, source evidence, and written rationales. The eligible 19-case baseline subset achieved MRR@10, section coverage, and labelled-quote coverage of 1.0, which did not prevent answer-level failures. The remaining baseline cases and the conversation/security suites were not run in this exercise. See the report for sampling, timing, provenance, artifacts, and limitations.
