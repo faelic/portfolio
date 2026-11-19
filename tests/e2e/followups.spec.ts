@@ -1,4 +1,12 @@
 import { expect, test, type Page } from "@playwright/test";
+import { readFileSync } from "node:fs";
+
+const conversation = JSON.parse(readFileSync(new URL("../fixtures/followup-conversation.json", import.meta.url), "utf8")) as {
+  turns: Array<{ question: string; answer: string; suggestion: string }>;
+};
+const generatedConversation = JSON.parse(readFileSync(new URL("../fixtures/model-followup-conversation.json", import.meta.url), "utf8")) as {
+  turns: Array<{ question: string; answer: string; follow_up: { question: string } }>;
+};
 
 const question = "What happens if a notification fails?";
 const reply = [
@@ -19,7 +27,68 @@ async function send(page: Page) {
   await page.getByRole("button", { name: "Send message" }).click();
 }
 
-test("Tab accepts the whole preview once, selects it, and then resumes normal navigation", async ({ page, browserName }, testInfo) => {
+test("suggestions keep renewing through eight turns instead of disappearing after the first", async ({ page }) => {
+  const requests: Array<{ question: string; history: unknown[]; recent_suggestions?: string[] }> = [];
+  await page.route("**/api/chat", route => {
+    const turn = conversation.turns[requests.length];
+    const body = route.request().postDataJSON();
+    requests.push(body);
+    expect(body.question).toBe(turn.question);
+    expect(body.recent_suggestions ?? []).toHaveLength(Math.min(requests.length - 1, 12));
+    return route.fulfill({ contentType: "application/x-ndjson", body: [
+      { type: "delta", text: turn.answer }, { type: "suggestion", question: turn.suggestion }, { type: "done", text: turn.answer },
+    ].map(event => JSON.stringify(event) + "\n").join("") });
+  });
+  await open(page);
+  const input = page.getByRole("textbox");
+  await input.fill(conversation.turns[0].question);
+  await page.getByRole("button", { name: "Send message" }).click();
+  for (const [index, turn] of conversation.turns.entries()) {
+    await expect(input).toHaveAttribute("placeholder", turn.suggestion);
+    await expect(input).toHaveValue("");
+    await expect(page.locator(".assistant-followup")).toBeVisible();
+    await input.focus();
+    await input.press("Tab");
+    await expect(input).toHaveValue(turn.suggestion);
+    expect(await input.evaluate((el: HTMLTextAreaElement) => [el.selectionStart, el.selectionEnd])).toEqual([turn.suggestion.length, turn.suggestion.length]);
+    if (index < conversation.turns.length - 1) await input.press("Enter");
+  }
+  expect(requests).toHaveLength(8);
+  expect(requests.map(request => request.history.length)).toEqual([0, 2, 4, 6, 8, 10, 12, 12]);
+});
+
+test("twelve model-generated suggestions renew without leaking internal metadata", async ({ page }) => {
+  const requests: Array<{ question: string; history: unknown[]; recent_suggestions?: string[] }> = [];
+  await page.route("**/api/chat", route => {
+    const turn = generatedConversation.turns[requests.length];
+    const body = route.request().postDataJSON();
+    requests.push(body);
+    expect(body.question).toBe(turn.question);
+    expect(body.recent_suggestions ?? []).toHaveLength(Math.min(requests.length - 1, 12));
+    return route.fulfill({ contentType: "application/x-ndjson", body: [
+      { type: "delta", text: turn.answer }, { type: "suggestion", question: turn.follow_up.question }, { type: "done", text: turn.answer },
+    ].map(event => JSON.stringify(event) + "\n").join("") });
+  });
+  await open(page);
+  const input = page.getByRole("textbox");
+  await input.fill(generatedConversation.turns[0].question);
+  await page.getByRole("button", { name: "Send message" }).click();
+  for (const [index, turn] of generatedConversation.turns.entries()) {
+    await expect(input).toHaveAttribute("placeholder", turn.follow_up.question);
+    await expect(input).toHaveValue("");
+    await input.focus();
+    await input.press("Tab");
+    await expect(input).toHaveValue(turn.follow_up.question);
+    expect(await input.evaluate((el: HTMLTextAreaElement) => [el.selectionStart, el.selectionEnd])).toEqual([turn.follow_up.question.length, turn.follow_up.question.length]);
+    if (index < generatedConversation.turns.length - 1) await input.press("Enter");
+  }
+  expect(requests).toHaveLength(12);
+  expect(requests.every(request => request.history.length <= 12)).toBe(true);
+  await expect(page.locator(".assistant")).not.toContainText("evidence_quote");
+  await expect(page.locator(".assistant")).not.toContainText("follow_up");
+});
+
+test("Tab accepts the whole preview once, leaves the caret at the end, and then resumes normal navigation", async ({ page, browserName }, testInfo) => {
   let calls = 0;
   await page.route("**/api/chat", route => {
     calls++;
@@ -46,7 +115,9 @@ test("Tab accepts the whole preview once, selects it, and then resumes normal na
   await input.press("Tab");
   await expect(input).toBeFocused();
   await expect(input).toHaveValue(question);
-  expect(await input.evaluate((el: HTMLTextAreaElement) => [el.selectionStart, el.selectionEnd])).toEqual([0, question.length]);
+  expect(await input.evaluate((el: HTMLTextAreaElement) => [el.selectionStart, el.selectionEnd])).toEqual([question.length, question.length]);
+  await page.keyboard.type(" Please.");
+  await expect(input).toHaveValue(question + " Please.");
   await expect(preview).toHaveCount(0);
   expect(calls).toBe(1);
   await input.press("Tab");
@@ -135,7 +206,7 @@ test.describe("compact touch interaction", () => {
     await preview.tap();
     await expect(input).toHaveValue(question);
     await expect(input).toBeFocused();
-    expect(await input.evaluate((el: HTMLTextAreaElement) => [el.selectionStart, el.selectionEnd])).toEqual([0, question.length]);
+    expect(await input.evaluate((el: HTMLTextAreaElement) => [el.selectionStart, el.selectionEnd])).toEqual([question.length, question.length]);
     expect(calls).toBe(1);
     await page.evaluate(() => {
       Object.defineProperty(window.visualViewport, "height", { configurable: true, value: 360 });

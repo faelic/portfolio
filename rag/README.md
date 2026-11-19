@@ -1,5 +1,9 @@
 # Portfolio knowledge base
 
+## Model-generated follow-ups — 19 November 2026
+
+CHAT_MODEL_FOLLOWUPS defaults true locally and false in production. Enabled mode uses the existing answer request for a structured answer plus one optional question; IDs and literal supporting quotes are validated internally, not exposed in chat events. The visible answer remains 512 tokens/2,000 characters; generation reserves up to 768 tokens plus schema/instruction input. False restores the plain-text/curated path. No new model, package, retrieval call, index rebuild or database migration is needed. See the [integration guide](../docs/ASSISTANT.md) for validation and rollback, and the [single 12-turn live check](../docs/evaluations/2026-11-19/model-followups/REPORT.md) for observed limitations. Dry owner check: `uv run python -m evaluation.followup_check`; explicit `--run-live --output evaluation/reports/new-run.json` makes paid calls with retries disabled and a maximum conservative owner reservation of $0.25. It stops on the first failed turn and never consumes the public ledger allowance.
+
 Production now uses a verified packaged embedding index and a Neon PostgreSQL protection ledger on Pxxl Free. No persistent application disk or startup ingestion is required. See [the deployment runbook](../docs/PXXL_DEPLOYMENT.md), [release index](index/README.md), and [owner-only initialization SQL](implementation/ledger_schema.sql). Local development retains Chroma/SQLite.
 
 Current backend/CI hardening (15 November 2026): see the [security and release contract](../docs/RAG_SECURITY.md). It covers reproducible tokenizer/signing-secret setup, 5 global / 1 visitor / 2 IP active requests, approved generated links, read-only readiness and evaluation evidence boundaries. Earlier dated results remain historical.

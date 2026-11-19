@@ -177,6 +177,9 @@ class RetrievalTests(unittest.TestCase):
 
 class AnswerJudgeTests(unittest.TestCase):
     def setUp(self):
+        legacy = patch.object(answer, 'model_followups_enabled', return_value=False)
+        legacy.start()
+        self.addCleanup(legacy.stop)
         self.scores = evaluator.AnswerEval(feedback='Supported', accuracy=5, completeness=4,
                                          relevance=5, grounding=5)
 

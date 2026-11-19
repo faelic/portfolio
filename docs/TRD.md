@@ -1,5 +1,9 @@
 # Portfolio Technical Requirements
 
+## Model-generated follow-ups — 19 November 2026
+
+The shared synchronous/streaming pipeline can generate the answer and one optional follow-up in a single structured generation call. The browser receives only decoded answer text and the existing opt-in suggestion event, never the internal JSON envelope or evidence quote. Invalid optional metadata falls back without discarding a fully completed answer; refusals, incomplete answers and cancellations retain safe error behavior. CHAT_MODEL_FOLLOWUPS defaults true locally and false in production; false restores plain generation and curated selection. Visible text remains capped at 512 tokens/2,000 characters, with a separately reserved 768-token envelope and bounded schema input. No new provider, retrieval/index change, frontend design change, API request field, or database migration is introduced. See [assistant behavior](ASSISTANT.md) and the [single live check](evaluations/2026-11-19/model-followups/REPORT.md).
+
 ## Current contract — 15 November 2026
 
 The backend remains one worker/container on Pxxl Free with a packaged embedding index and Neon PostgreSQL ledger. Initialization is explicit owner SQL; startup and routine readiness are bounded/read-only. CI prewarms tokenizer assets and uses a disposable signing secret for offline image startup. Generated links require an exact approved destination. Earlier dated UI/performance details retain historical scope.

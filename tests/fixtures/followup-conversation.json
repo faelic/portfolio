@@ -1,0 +1,13 @@
+{
+  "purpose": "Mock protocol regression fixture, not generated answers or a quality evaluation",
+  "turns": [
+    {"question":"Who is Favour?","answer":"Favour builds Policy.ng, Monierave and the Portfolio RAG Assistant.","suggestion":"What did Favour contribute to Policy.ng?"},
+    {"question":"What did Favour contribute to Policy.ng?","answer":"His frontend responsibility covers the public website.","suggestion":"How does Policy.ng handle administrative workflows?"},
+    {"question":"How does Policy.ng handle administrative workflows?","answer":"It uses permissions, moderation and forms to protect the administration experience.","suggestion":"How did Favour collaborate on Policy.ng's backend integration?"},
+    {"question":"How did Favour collaborate on Policy.ng's backend integration?","answer":"He works with the backend engineer to adapt endpoints and API responses.","suggestion":"How does Policy.ng handle forms and failed submissions?"},
+    {"question":"How does Policy.ng handle forms and failed submissions?","answer":"Forms use React Hook Form and Zod; failed submissions preserve the visitor's work.","suggestion":"How is the Portfolio RAG Assistant evaluated?"},
+    {"question":"How is the Portfolio RAG Assistant evaluated?","answer":"It uses a factual evaluation dataset with MRR and evidence coverage.","suggestion":"How does the Portfolio RAG Assistant use retrieved evidence?"},
+    {"question":"How does the Portfolio RAG Assistant use retrieved evidence?","answer":"It retrieves supporting passages from the curated knowledge base to ground the answer.","suggestion":"What happens if a notification fails in Monierave?"},
+    {"question":"What happens if a notification fails in Monierave?","answer":"It records background notification work in an outbox so workers can retry without changing the committed transfer.","suggestion":"How does Monierave handle repeated transfers?"}
+  ]
+}

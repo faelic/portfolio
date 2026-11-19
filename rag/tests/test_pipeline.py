@@ -30,6 +30,11 @@ _network_guards = []
 
 
 def setUpModule():
+    # Existing tests exercise the plain-text rollback path. Structured mode
+    # has dedicated streaming/security tests in test_structured_answer.py.
+    legacy = patch.object(answer, 'model_followups_enabled', return_value=False)
+    legacy.start()
+    _network_guards.append(legacy)
     for name in ['socket.create_connection', 'socket.socket.connect']:
         guard = patch(name, side_effect=forbidden_network)
         guard.start()

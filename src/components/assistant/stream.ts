@@ -45,12 +45,13 @@ export async function streamChat(
   onText: (text: string) => void,
   onReferences?: (references: PublicReference[]) => void,
   onSuggestion?: (question: string) => void,
+  recentSuggestions: string[] = [],
 ): Promise<string> {
   let response: Response;
   try {
     response = await fetch(chatUrl(), {
       method: "POST", credentials: "include", headers: { "Content-Type": "application/json", "X-Portfolio-References": "1", "Accept": "application/x-ndjson; suggestions=1" },
-      body: JSON.stringify({ question, history }), signal,
+      body: JSON.stringify({ question, history, ...(recentSuggestions.length ? { recent_suggestions: recentSuggestions.slice(-12) } : {}) }), signal,
     });
   } catch {
     if (signal.aborted) throw new DOMException("Aborted", "AbortError");

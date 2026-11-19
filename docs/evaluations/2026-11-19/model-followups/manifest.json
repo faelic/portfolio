@@ -1,0 +1,36 @@
+{
+  "evaluation_type": "AI-assisted evaluation",
+  "raw_run_sha256": "efa13d7bcf95f396b9f57c4748e7f0c25a3c91ac18bf563c34e394e528751612",
+  "artifact_sha256": {
+    "REPORT.md": "7037b2d382fa959d8174dd229ba9d42973ac435e3cc748b00b63559f16ce5cdd",
+    "outputs.json": "e34c835db0c26f56b4c37dfd849fe157be5e7cca31c12741f8c505287c39a8fb",
+    "ai-review.json": "a526f774a7cba672fe6910e209efbdd8f56190745193a0b4cbe1de8d12415c75",
+    "live-runner.py.txt": "e47e853a75e01685f6f439b8f73a48356be5b40c476f329df71e141358bd0929",
+    "live-validator.py.txt": "20c5e18885e9a2a91459127ada132fff6941d767127a0b531f5d7b03f0ec7f65"
+  },
+  "final_implementation_sha256": {
+    "answer.py": "bec8251dc3ae42b359cca5533c569d71f21121e8e46640d4855bd943d4ff5dc8",
+    "structured_answer.py": "93c44941127055872ce3e336d6564c86ff1568dbe19bd2ad6799fa0b813bcd81",
+    "config.py": "267e3ca9ea03da829f4ffb5550c75b8d11815fb42f65832db684221f80db6145",
+    "protection.py": "a77d0c152b54a899863318fdf9c46011143d227780b635cccad52d5b0c1b226e",
+    "followups.py": "a4ebd6e1b3a9ea82c981bdf06880266906c5fc225a0dd20f10526fdd162dbc62",
+    "api.py": "1bbe34142fd5cce8eb021f8b4af827f5820c01f669bdc7861c25799d020d44b2",
+    "implementation/settings.py": "7dd29d500c2bd139dc052cff49fe1587128ec45fe220f36b41f3f5975015e7cc",
+    "evaluation/report.py": "dce6c6342b91ad2f57a881a3945245cd0e234467681a8676460bdc64764ec1ff",
+    "evaluation/followup_check.py": "e1ac85fb20a7ff79397d8dd792786b821b947039fa51c6cfe26b79025f3ee15b"
+  },
+  "live_implementation_sha256": {
+    "implementation/answer.py": "bec8251dc3ae42b359cca5533c569d71f21121e8e46640d4855bd943d4ff5dc8",
+    "implementation/structured_answer.py": "20c5e18885e9a2a91459127ada132fff6941d767127a0b531f5d7b03f0ec7f65",
+    "implementation/followups.py": "a4ebd6e1b3a9ea82c981bdf06880266906c5fc225a0dd20f10526fdd162dbc62",
+    "implementation/config.py": "267e3ca9ea03da829f4ffb5550c75b8d11815fb42f65832db684221f80db6145",
+    "implementation/ingest.py": "3b5792023496c82a9169eef2f77d11d2f4afab237ecd964922b4a95e17aca486",
+    "implementation/packaged_index.py": "8d084743b152f48d788f332d3c7af1159e6c92296443f291e16ca35d3c440345",
+    "implementation/fingerprint.py": "11ab37590bbf36bb039d4a7d7beaf293ebd5c4dc7e8454de388dafd66fc2b5eb",
+    "implementation/guardrails.py": "793b1d96e9ec41a42355462e78db94f7ff402a108e78adbf580d9da8d100ebc3",
+    "implementation/references.py": "32f4840d63543f0bd9b47ec0b11ab6953d95f7c14952c68d2ffd4f16a46c787d",
+    "implementation/public_sources.json": "d993f25dd346b2b3814e509cf037682814deb0d6d62a2006a0a03696d78c46cd",
+    "implementation/approved_links.json": "3eced477d35d38bb19ca34aead22fbb874fe6c1b943dfa8cdc3db264899a82f5",
+    "evaluation/report.py": "dce6c6342b91ad2f57a881a3945245cd0e234467681a8676460bdc64764ec1ff"
+  }
+}

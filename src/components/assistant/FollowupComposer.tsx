@@ -12,7 +12,7 @@ export function FollowupComposer({ suggestion, running, dismiss, setText }: {
   const visible = !!suggestion && !text && !running;
   useLayoutEffect(() => {
     if (accepted.current !== null) {
-      if (text === accepted.current) input.current?.setSelectionRange(0, text.length);
+      if (text === accepted.current) input.current?.setSelectionRange(text.length, text.length);
       accepted.current = null;
     }
   }, [text]);

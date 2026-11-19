@@ -1,0 +1,81 @@
+{
+  "type": "Offline replay; AI-assisted relevance assessment, not independent human grading",
+  "provider_calls": 0,
+  "new_answers_generated": 0,
+  "fixture_sha256": "e39b0f26fd9d6351671a2ef71ab26333d4f16109e387d68173152b6de7e8d583",
+  "implementation_sha256": {
+    "rag/implementation/followups.py": "f9c47f463f45f737d4d4f96c74914ed8b5d8d9dd2f919486ff831537dcbd6457",
+    "rag/implementation/structured_answer.py": "12d1453735717db1226745b3d0057504aaebf5f4cffa261a76add3ddb4a54ec6",
+    "rag/implementation/answer.py": "e1e4345b617a9f6677e3b1f011ab0dc962ea1cfd8018b258d7e724d7b136dde7",
+    "rag/api.py": "59e9e616a7dff84998e722619a35d01c12bb572c706e4592cb8f63be6fb8488b",
+    "rag/evaluation/followup_check.py": "649ec5b7f7e230d5e6be531f7e6e1b4e71691b533b7f654c4bdf443b7a4f56de",
+    "src/components/assistant/AssistantFeature.tsx": "435d0cd083c204dcb8bfadf2fb2f010c87b04ed926018c534a0a1d0e6092e8f1",
+    "src/components/assistant/stream.ts": "38c8eff75df0cb2b29e42a102848f07cb2880e4e41f6b8ba38aeb58d28162dc9"
+  },
+  "cases": [
+    {
+      "id": "followup-04",
+      "question": "Can you tell me more about Favour's blockchain engineering experience?",
+      "before": {
+        "question": "What did Favour contribute to Policy.ng?",
+        "source": "curated"
+      },
+      "recent_suggestions": [],
+      "after": {
+        "question": "What can the arbiter do in Escrow?",
+        "source": "curated"
+      }
+    },
+    {
+      "id": "followup-07",
+      "question": "What happens if a notification fails?",
+      "before": {
+        "question": "How does Monierave manage login sessions?",
+        "source": "curated"
+      },
+      "recent_suggestions": [
+        "How does Monierave manage login sessions?"
+      ],
+      "after": {
+        "question": "How did Favour build Monierave's frontend?",
+        "source": "curated"
+      }
+    },
+    {
+      "id": "followup-09",
+      "question": "How do BlockScan and Cleanup differ?",
+      "before": null,
+      "recent_suggestions": [],
+      "after": {
+        "question": "How does BlockScan handle failed live updates?",
+        "source": "curated"
+      }
+    },
+    {
+      "id": "followup-11",
+      "question": "How is the Portfolio RAG Assistant evaluated?",
+      "before": {
+        "question": "How does Policy.ng handle administrative workflows?",
+        "source": "curated"
+      },
+      "recent_suggestions": [],
+      "after": {
+        "question": "How does the Portfolio RAG Assistant resolve conversation follow-ups?",
+        "source": "curated"
+      }
+    },
+    {
+      "id": "followup-12",
+      "question": "How does Policy.ng handle administrative workflows?",
+      "before": {
+        "question": "What technologies does Favour use for frontend integration at Policy.ng?",
+        "source": "model"
+      },
+      "recent_suggestions": [],
+      "after": {
+        "question": "What did Favour own on Policy.ng?",
+        "source": "curated"
+      }
+    }
+  ]
+}

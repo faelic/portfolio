@@ -112,6 +112,7 @@ export default function AssistantFeature({ frame, mount }: { frame?: AssistantFr
   const [error, setError] = useState("");
   const [announcement, setAnnouncement] = useState("");
   const [suggestion, setSuggestion] = useState("");
+  const recentSuggestions = useRef<string[]>([]);
   const controller = useRef<AbortController | null>(null);
   const surface = useRef<HTMLDivElement>(null);
   const runtimeRef = useRef<ReturnType<typeof useExternalStoreRuntime<ChatMessage>> | null>(null);
@@ -180,10 +181,11 @@ export default function AssistantFeature({ frame, mount }: { frame?: AssistantFr
       let nextSuggestion = "";
       const text = await streamChat(question, history, request.signal, update, references => {
         if (!request.signal.aborted && controller.current === request) setMessages(current => current.map(item => item.id === id ? { ...item, references } : item));
-      }, question => { nextSuggestion = question; });
+      }, question => { nextSuggestion = question; }, recentSuggestions.current);
       if (request.signal.aborted || controller.current !== request) return;
       update(text, "complete");
       setSuggestion(nextSuggestion);
+      if (nextSuggestion) recentSuggestions.current = [...recentSuggestions.current, nextSuggestion].slice(-12);
       setAnnouncement(nextSuggestion ? "Answer complete. A suggested question is available in the message box." : "Answer complete.");
     } catch (failure) {
       if (controller.current !== request) return;
@@ -206,7 +208,7 @@ export default function AssistantFeature({ frame, mount }: { frame?: AssistantFr
   });
   runtimeRef.current = runtime;
   const clear = () => {
-    stop(); controller.current = null;
+    stop(); controller.current = null; recentSuggestions.current = [];
     setMessages([]); setRunning(false); setError(""); setSuggestion(""); setAnnouncement("Conversation cleared.");
     runtime.thread.composer.setText("");
     storage.remove(HISTORY_KEY);

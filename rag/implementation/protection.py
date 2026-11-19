@@ -12,7 +12,7 @@ from contextlib import closing, contextmanager
 from datetime import datetime, timezone
 from pathlib import Path
 
-from .config import ANSWER_MODEL, EMBEDDING_MODEL
+from .config import ANSWER_MODEL, EMBEDDING_MODEL, GENERATION_OUTPUT_TOKENS
 
 logger = logging.getLogger(__name__)
 PRICE_VERSION = 'openai-standard-2026-11-12'
@@ -36,7 +36,7 @@ def debit_quote(stage, model, payload, maximum_output, now=None):
     if model not in PRICES or stage not in ('rewrite', 'embedding', 'answer'):
         raise ProtectionError()
     expected_model = EMBEDDING_MODEL if stage == 'embedding' else ANSWER_MODEL
-    output_limit = {'embedding': 0, 'rewrite': 128, 'answer': 512}[stage]
+    output_limit = {'embedding': 0, 'rewrite': 128, 'answer': GENERATION_OUTPUT_TOKENS}[stage]
     if model != expected_model or type(maximum_output) is not int or not 0 <= maximum_output <= output_limit:
         raise ProtectionError()
     now = time.time() if now is None else now

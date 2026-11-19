@@ -68,7 +68,16 @@ HISTORY_TOKEN_LIMIT = 1500
 CONTEXT_TOKEN_LIMIT = 4000
 REWRITE_OUTPUT_TOKENS = 128
 ANSWER_OUTPUT_TOKENS = 512
+GENERATION_OUTPUT_TOKENS = 768
 JUDGE_OUTPUT_TOKENS = 768
 QUEUE_SIZE = 16
 MARKDOWN_BYTE_LIMIT = 64 * 1024
 CORPUS_BYTE_LIMIT = 1024 * 1024
+
+
+def model_followups_enabled():
+    load_environment()
+    value = os.getenv('CHAT_MODEL_FOLLOWUPS', 'false' if PRODUCTION else 'true')
+    if value not in ('true', 'false'):
+        raise ValueError('CHAT_MODEL_FOLLOWUPS must be true or false')
+    return value == 'true'

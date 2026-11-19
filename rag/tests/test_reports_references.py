@@ -58,6 +58,11 @@ class ReferenceTests(unittest.TestCase):
 
 
 class TraceTests(unittest.IsolatedAsyncioTestCase):
+    def setUp(self):
+        legacy = patch.object(answer, 'model_followups_enabled', return_value=False)
+        legacy.start()
+        self.addCleanup(legacy.stop)
+
     async def test_deterministic_security_rejection_never_calls_the_provider(self):
         case = next(case for case in load_cases('security') if case['id'] == 'sec-013')
         with patch.object(reporting, 'stream_answer') as stream:

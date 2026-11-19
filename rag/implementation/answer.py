@@ -18,11 +18,14 @@ if __package__:
         DB_NAME, COLLECTION_NAME, ANSWER_MODEL, RETRIEVAL_K,
         REQUEST_TIMEOUT, MAX_RETRIES, ANSWER_OUTPUT_TOKENS, REWRITE_OUTPUT_TOKENS,
         EMBEDDING_MODEL, get_embeddings, load_environment, PRODUCTION, register_provider, INDEX_MODE,
+        GENERATION_OUTPUT_TOKENS, model_followups_enabled,
     )
     from .guardrails import (
         IndexNotReadyError, validate_request, bounded_output, select_context,
         json_text, context_records, token_count, get_tokenizer,
     )
+    from .followups import bounded_suggestions
+    from .structured_answer import AnswerEnvelope, GenerationError, RESPONSE_FORMAT, GENERATION_RULES, choose_followup
 else:
     from guardrails import (
         IndexNotReadyError, validate_request, bounded_output, select_context,
@@ -32,7 +35,10 @@ else:
         DB_NAME, COLLECTION_NAME, ANSWER_MODEL, RETRIEVAL_K,
         REQUEST_TIMEOUT, MAX_RETRIES, ANSWER_OUTPUT_TOKENS, REWRITE_OUTPUT_TOKENS,
         EMBEDDING_MODEL, get_embeddings, load_environment, PRODUCTION, register_provider, INDEX_MODE,
+        GENERATION_OUTPUT_TOKENS, model_followups_enabled,
     )
+    from followups import bounded_suggestions
+    from structured_answer import AnswerEnvelope, GenerationError, RESPONSE_FORMAT, GENERATION_RULES, choose_followup
 
 logger = logging.getLogger(__name__)
 
@@ -358,7 +364,7 @@ def get_vectorstore() -> Chroma:
     return store
 
 
-@lru_cache(maxsize=2)
+@lru_cache(maxsize=3)
 def get_chat_model(max_tokens=ANSWER_OUTPUT_TOKENS):
     load_environment()
     return register_provider(ChatOpenAI(
@@ -402,9 +408,14 @@ def format_context(documents: list[Document]) -> str:
     return json_text(context_records(documents))
 
 
-def answer_prompt():
+def response_system_prompt(structured=None):
+    structured = model_followups_enabled() if structured is None else structured
+    return SYSTEM_PROMPT + ('\n\n' + GENERATION_RULES if structured else '')
+
+
+def answer_prompt(structured=False):
     return ChatPromptTemplate.from_messages([
-        SystemMessage(content=SYSTEM_PROMPT), ("human", "{payload}"),
+        SystemMessage(content=response_system_prompt(structured)), ("human", "{payload}"),
     ])
 
 
@@ -412,30 +423,47 @@ def answer_chain():
     return answer_prompt() | get_chat_model() | StrOutputParser()
 
 
-def answer_payload(question, history, documents):
+def answer_payload(question, history, documents, recent_suggestions=None):
     return {"payload": json_text({
         "question": question, "history": history, "excerpts": context_records(documents),
+        **({"recent_suggestions": recent_suggestions} if recent_suggestions else {}),
     })}
 
 
-def answer_question(question: str, history=None) -> tuple[str, list[Document]]:
+def answer_question(question: str, history=None, *, on_suggestion=None, recent_suggestions=None) -> tuple[str, list[Document]]:
     started = perf_counter()
     question, history = validate_request(question, history)
+    recent_suggestions = bounded_suggestions(recent_suggestions)
+    structured = model_followups_enabled()
     documents = fetch_context(question, history)
-    payload = answer_payload(question, history, documents)
-    answer = answer_chain().invoke(payload)
+    payload = answer_payload(question, history, documents, recent_suggestions)
+    metadata = None
+    if structured:
+        response = get_chat_model(GENERATION_OUTPUT_TOKENS).bind(response_format=RESPONSE_FORMAT).invoke(answer_prompt(True).invoke(payload))
+        if getattr(response, 'additional_kwargs', {}).get('refusal'):
+            raise GenerationError('The answer was declined')
+        decoder = AnswerEnvelope()
+        answer = decoder.feed(response if isinstance(response, str) else response.text)
+        metadata = decoder.finish()
+    else:
+        answer = answer_chain().invoke(payload)
     logger.info('rag_answer_completed duration_ms=%.1f payload_tokens=%d passage_count=%d',
                 (perf_counter() - started) * 1000, token_count(payload['payload']), len(documents))
+    if on_suggestion:
+        clipped = len(answer) > 2000 or token_count(answer) > ANSWER_OUTPUT_TOKENS
+        on_suggestion(None if clipped else choose_followup(metadata, question, answer, history, documents, recent_suggestions))
     return bounded_output(answer, ANSWER_OUTPUT_TOKENS), documents
 
 
-async def stream_answer(question: str, history=None, *, reserve=None, request_id='local', on_context=None, on_metrics=None, on_usage=None, context_transform=None):
+async def stream_answer(question: str, history=None, *, reserve=None, request_id='local', on_context=None, on_metrics=None, on_usage=None, context_transform=None, on_suggestion=None, recent_suggestions=None):
     """Yield bounded text deltas; evidence remains inside the Python pipeline.
 
     Async provider calls can be cancelled on disconnect. Only local Chroma work
     runs in a worker thread; cancelling cannot interrupt an already-running disk read.
     """
     question, history = validate_request(question, history)
+    recent_suggestions = bounded_suggestions(recent_suggestions)
+    structured = model_followups_enabled()
     retrieval_started = perf_counter()
     store = await asyncio.to_thread(get_vectorstore)
     query = question
@@ -460,21 +488,31 @@ async def stream_answer(question: str, history=None, *, reserve=None, request_id
                 request_id, (perf_counter()-retrieval_started)*1000, len(documents))
     text = ''
     encoding = get_tokenizer()
-    payload = answer_payload(question, history, documents)
+    payload = answer_payload(question, history, documents, recent_suggestions)
+    maximum = GENERATION_OUTPUT_TOKENS if structured else ANSWER_OUTPUT_TOKENS
     if reserve:
-        await reserve('answer', ANSWER_MODEL, SYSTEM_PROMPT + payload['payload'], ANSWER_OUTPUT_TOKENS)
-    prompt = answer_prompt().invoke(payload)
+        reservation_payload = response_system_prompt(structured) + payload['payload']
+        if structured:
+            reservation_payload += json_text(RESPONSE_FORMAT)
+        await reserve('answer', ANSWER_MODEL, reservation_payload, maximum)
+    prompt = answer_prompt(structured).invoke(payload)
     # Own the model iterator directly so close/cancellation reaches it without
     # a chain of parser/transform iterators buffering or deferring cleanup.
-    stream = get_chat_model().astream(prompt)
+    model = get_chat_model(maximum) if structured else get_chat_model()
+    if structured:
+        model = model.bind(response_format=RESPONSE_FORMAT, stream_usage=True)
+    stream = model.astream(prompt)
+    decoder = AnswerEnvelope() if structured else None
     first_text = True
     try:
         async for chunk in stream:
+            if structured and getattr(chunk, 'additional_kwargs', {}).get('refusal'):
+                raise GenerationError('The answer was declined')
             if on_usage and getattr(chunk, 'usage_metadata', None):
                 on_usage(chunk.usage_metadata)
             delta = chunk if isinstance(chunk, str) else chunk.text
             # Bound before emitting. Preserve whitespace until the final API event.
-            candidate = text + delta
+            candidate = decoder.feed(delta) if decoder else text + delta
             tokens = encoding.encode(candidate[:2000], disallowed_special=())
             bounded = encoding.decode(tokens[:ANSWER_OUTPUT_TOKENS], errors='ignore')
             if bounded.startswith(text):
@@ -486,8 +524,13 @@ async def stream_answer(question: str, history=None, *, reserve=None, request_id
                             on_metrics({'first_text_ms': (perf_counter() - retrieval_started) * 1000})
                     yield suffix
                 text = bounded
-            if len(candidate) >= 2000 or len(tokens) >= ANSWER_OUTPUT_TOKENS:
+            if not structured and (len(candidate) >= 2000 or len(tokens) >= ANSWER_OUTPUT_TOKENS):
                 break
+        metadata = decoder.finish() if decoder else None
+        if on_suggestion:
+            raw_answer = decoder.text if decoder else text
+            clipped = len(raw_answer) > 2000 or token_count(raw_answer) > ANSWER_OUTPUT_TOKENS
+            on_suggestion(None if clipped else choose_followup(metadata, question, raw_answer, history, documents, recent_suggestions))
     finally:
         await stream.aclose()
         if on_metrics:

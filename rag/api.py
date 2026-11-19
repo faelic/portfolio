@@ -17,12 +17,12 @@ from pydantic import BaseModel, ConfigDict, Field, StrictStr
 
 from implementation.answer import stream_answer, get_vectorstore, get_chat_model
 from implementation.references import public_references
-from implementation.config import ANSWER_OUTPUT_TOKENS, HISTORY_MESSAGE_LIMIT, close_providers
+from implementation.followups import bounded_suggestions
+from implementation.config import ANSWER_OUTPUT_TOKENS, HISTORY_MESSAGE_LIMIT, close_providers, model_followups_enabled
 from implementation.guardrails import IndexNotReadyError, bounded_output, public_error, validate_request, get_tokenizer
 from implementation.settings import Settings
 from implementation.protection import create_ledger, ProtectionError, budget_guard, call_ledger
 from implementation.identity import COOKIE_NAME, visitor_identity, cookie_header, client_ip, digest
-from implementation.followups import suggest_followup
 
 logger = logging.getLogger(__name__)
 BACKEND_SOURCE = hashlib.sha256(Path(__file__).read_bytes()).hexdigest()[:12]
@@ -89,6 +89,7 @@ async def lifespan(_app):
         'source': BACKEND_SOURCE,
         'production': settings.production,
         'chat_enabled': settings.chat_enabled,
+        'model_followups_enabled': model_followups_enabled(),
         'ledger_configured': bool(settings.database_url),
         'health_routes': sorted(route.path for route in _app.routes if route.path in HEALTH_PATHS),
     }), flush=True)
@@ -222,6 +223,7 @@ class ChatRequest(BaseModel):
     model_config = ConfigDict(extra='forbid')
     question: StrictStr = Field(min_length=1, max_length=2000)
     history: list[dict] = Field(default_factory=list, max_length=HISTORY_MESSAGE_LIMIT)
+    recent_suggestions: list[StrictStr] = Field(default_factory=list, max_length=12)
 
 
 app = FastAPI(title='Portfolio chat', docs_url=None, redoc_url=None,
@@ -261,6 +263,7 @@ def event(kind, **fields):
 async def chat(body: ChatRequest, request: Request):
     try:
         question, history = validate_request(body.question, body.history)
+        recent_suggestions = bounded_suggestions(body.recent_suggestions)
     except ValueError as exc:
         return JSONResponse({'message': public_error(exc)}, 422)
 
@@ -269,13 +272,15 @@ async def chat(body: ChatRequest, request: Request):
         first = True
         references = None
         sent_references = False
-        # Accept is CORS-safelisted, so a new frontend still works with an old
-        # API that ignores this optional extension (no new preflight header).
+        # Accept is CORS-safelisted: the event extension adds no new header.
+        # Deploy the optional recent_suggestions schema before its frontend.
         suggestion_requested = request.headers.get('accept') == 'application/x-ndjson; suggestions=1'
-        selected_documents = []
+        generated_suggestion = None
+        def receive_suggestion(value):
+            nonlocal generated_suggestion
+            generated_suggestion = value['question'] if value else None
         def receive_context(documents):
             nonlocal references
-            selected_documents.extend(documents)
             references = public_references(documents)
         started = request.state.started_at
         try:
@@ -285,6 +290,9 @@ async def chat(body: ChatRequest, request: Request):
                 # Old deployed clients retain the original text-only protocol.
                 if request.headers.get('x-portfolio-references') == '1' or suggestion_requested:
                     options['on_context'] = receive_context
+                if suggestion_requested:
+                    options['on_suggestion'] = receive_suggestion
+                    options['recent_suggestions'] = recent_suggestions
                 async with aclosing(stream_answer(question, history, **options)) as stream:
                     async for delta in stream:
                         if references is not None and not sent_references and request.headers.get('x-portfolio-references') == '1':
@@ -300,9 +308,8 @@ async def chat(body: ChatRequest, request: Request):
                         yield event('delta', text=delta)
                 completed = bounded_output(text, ANSWER_OUTPUT_TOKENS)
                 if suggestion_requested and not await request.is_disconnected():
-                    suggestion = suggest_followup(question, completed, history, selected_documents)
-                    if suggestion:
-                        yield event('suggestion', question=suggestion)
+                    if generated_suggestion:
+                        yield event('suggestion', question=generated_suggestion)
                 yield event('done', text=completed)
         except ProtectionError as exc:
             logger.info('chat_denied request_id=%s code=%s', request.state.request_id, exc.code)

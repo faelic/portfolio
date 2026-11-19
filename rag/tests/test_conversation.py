@@ -13,6 +13,9 @@ from implementation import answer, config
 
 class ConversationTests(unittest.IsolatedAsyncioTestCase):
     def setUp(self):
+        legacy = patch.object(answer, 'model_followups_enabled', return_value=False)
+        legacy.start()
+        self.addCleanup(legacy.stop)
         self.network = patch.object(socket.socket, 'connect', side_effect=AssertionError('Network forbidden'))
         self.network.start()
 

@@ -298,3 +298,25 @@ it("distinguishes connection denials from validation errors without echoing serv
     await expect(streamChat('What did Favour contribute to Policy.ng?', [], new AbortController().signal, () => {})).rejects.toThrow(expected);
   }
 });
+
+
+it("remembers displayed follow-ups for this visit and forgets them on clear", async () => {
+  const suggested = "How does Monierave manage login sessions?";
+  vi.mocked(fetch)
+    .mockResolvedValueOnce(response(done("First answer.").replace('{"type":"done"', `${JSON.stringify({ type: "suggestion", question: suggested })}\n{"type":"done"`)))
+    .mockResolvedValueOnce(response(done("Second answer.")))
+    .mockResolvedValueOnce(response(done("Fresh answer.")));
+  render(<AssistantFeature frame={frame} />);
+  const send = async (text: string, answer: string) => {
+    fireEvent.change(screen.getByRole("textbox"), { target: { value: text } });
+    fireEvent.click(screen.getByRole("button", { name: "Send message" }));
+    await screen.findByText(answer);
+    await waitFor(() => expect(screen.queryByRole("button", { name: "Stop response" })).not.toBeInTheDocument());
+  };
+  await send("First question", "First answer.");
+  await send("A different question", "Second answer.");
+  expect(JSON.parse(vi.mocked(fetch).mock.calls[1][1]!.body as string).recent_suggestions).toEqual([suggested]);
+  fireEvent.click(screen.getByRole("button", { name: "Clear conversation" }));
+  await send("Fresh question", "Fresh answer.");
+  expect(JSON.parse(vi.mocked(fetch).mock.calls[2][1]!.body as string).recent_suggestions).toBeUndefined();
+});

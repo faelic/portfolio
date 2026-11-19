@@ -1,5 +1,9 @@
 # Backend Schema and Current Data Model
 
+## Structured answer metadata — 19 November 2026
+
+`CHAT_MODEL_FOLLOWUPS` enables an internal answer/follow-up JSON envelope, defaulting true locally and false in production. Only decoded answer text and the validated question cross the existing NDJSON API. Internal document IDs/quotes are not sent in suggestion events. The POST body, browser history schema, public event shape, Neon tables and ledger stages are unchanged. Visible answers remain 512 tokens/2,000 characters; structured generation may reserve 768 output tokens plus schema/instruction input overhead. No database migration or reset is required. See [assistant behavior](ASSISTANT.md) and the [live check](evaluations/2026-11-19/model-followups/REPORT.md).
+
 ## Current contract — 15 November 2026
 
 Conversation history remains browser-owned, but the backend now has durable Neon PostgreSQL metadata, admissions, client_admissions and debits tables in the portfolio_rag schema. Signed browser identity and HMAC IP keys support atomic quotas; process-local concurrency is 5 global / 1 visitor / 2 IP by default. See the current protection schema below.
@@ -157,3 +161,6 @@ The HttpOnly signed visitor cookie is separate from localStorage history. genera
 
 
 The owner-applied ledger_runtime_grants.sql preserves admissions pruning but makes debit rows append-only for the non-owner runtime role (SELECT/INSERT only). Reapply it to repair earlier DELETE grants. Sync owner CLI and async API operations share price calculation and client-window policy; both serialize mutations on metadata. API operations close their connection on cancellation and never refund uncertain committed work.
+
+
+The optional chat request field `recent_suggestions` accepts at most 12 strings of 1–120 characters without Unicode control, format or surrogate characters. It carries browser-session display history, not trusted evidence or instructions, and has no database column. Legacy clients may omit it. Both generation modes use it to suppress reoffered questions; malformed values are rejected before provider calls. The existing request-size and rate limits still apply.

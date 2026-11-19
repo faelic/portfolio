@@ -51,6 +51,7 @@ Set these in Pxxl Project Secrets (not build args or frontend variables):
 ```dotenv
 APP_ENV=production
 CHAT_ENABLED=false
+CHAT_MODEL_FOLLOWUPS=false
 OPENAI_API_KEY=<dedicated backend-only production key>
 CHAT_IDENTITY_SECRET=<stable cryptographically random value of at least 32 bytes>
 DATABASE_URL=<runtime Neon PostgreSQL URL with sslmode=verify-full>
@@ -62,6 +63,8 @@ CHAT_DAILY_MICRO_USD=1000000
 CHAT_MONTHLY_MICRO_USD=10000000
 CHAT_MAX_ACTIVE_PER_IP=2
 ```
+
+`CHAT_MODEL_FOLLOWUPS` defaults false in production. Keep it false for the existing plain-text answer and curated follow-up path. To enable the structured model-generated question after review, set it true on the backend and redeploy; the frontend protocol is already compatible. Disabling it is the feature rollback and does not reset Neon or disable chat. Structured mode retains the 512-token/2,000-character visible answer but reserves up to 768 generated envelope tokens and includes schema/instruction input in spend accounting. No migration or ingestion is required. The [single live check](evaluations/2026-11-19/model-followups/REPORT.md) records remaining relevance issues; it is not hosted security or throughput validation.
 
 Use Neon's pooled endpoint and preserve any channel-binding parameter it supplies. Change `sslmode=require` to `sslmode=verify-full`: production requires certificate/hostname verification. The driver explicitly supplies the maintained certifi CA bundle, so no user-home root.crt file is needed. Keep credentials URL-encoded. The connection string is server-only and must never have a `VITE_` prefix. Credential changes require a redeploy.
 
@@ -156,3 +159,6 @@ Ledger failures now emit `postgres_failed phase=<phase> category=<category>` in 
 | `unknown` | Unclassified failure; do not assume credentials are wrong |
 
 The outer ledger deadline emits `ledger_failed category=operation_timeout`. All failures retain the existing fail-closed behavior and connection cleanup. Public readiness still returns only `{"status":"unavailable"}` with HTTP 503. After deploying, check readiness once and inspect the corresponding category in Pxxl runtime logs; do not share the connection string or reset the database.
+
+
+For the follow-up continuity correction, deploy the backend accepting optional `recent_suggestions` before deploying its frontend. Existing clients may omit this bounded field; older strict backend schemas reject it. No deployment is performed by local implementation/testing. The feature flag still defaults false in production.

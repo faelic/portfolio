@@ -1,0 +1,616 @@
+{
+  "schema_version": 2,
+  "run_id": "fcbcc73fab5248f1b4c9911ed5d17a1c",
+  "suite": "followup-live-12",
+  "created_at": "2026-11-19T11:11:33.173109+00:00",
+  "source_revision": "05780ce165d30f07abc1f119d1b201968429d6d9",
+  "working_tree_dirty": true,
+  "answer_model": "gpt-4.1-mini",
+  "embedding_model": "text-embedding-3-large",
+  "corpus_fingerprint": "afc3f85d526ac8d99ae673d1b9ecf600e89ea628b26eb6391a7dff4bed082e99",
+  "prompt_sha256": "49b7b5f83a38024603fabb8d29307a12794872c95c23959c7dbfda3163404e4f",
+  "model_followups_enabled": true,
+  "generation_output_tokens": 768,
+  "retrieval_k": 10,
+  "chunk_size": 350,
+  "chunk_overlap": 40,
+  "chunker_version": 1,
+  "pricing_version": "openai-standard-2026-11-12",
+  "retrieval_index": {
+    "mode": "packaged",
+    "artifact_sha256": {
+      "index/knowledge.json": "1ddfbfcbc6b8869fab62c08e4caf0b94591be1e8e5c1d41603100a8e3f673901",
+      "index/knowledge.sha256": "fac5a8611d9f40fcaea89b6dbc2ba4413c80767511e29d8318338525ef325b69"
+    }
+  },
+  "implementation_sha256": {
+    "implementation/answer.py": "bec8251dc3ae42b359cca5533c569d71f21121e8e46640d4855bd943d4ff5dc8",
+    "implementation/structured_answer.py": "20c5e18885e9a2a91459127ada132fff6941d767127a0b531f5d7b03f0ec7f65",
+    "implementation/followups.py": "a4ebd6e1b3a9ea82c981bdf06880266906c5fc225a0dd20f10526fdd162dbc62",
+    "implementation/config.py": "267e3ca9ea03da829f4ffb5550c75b8d11815fb42f65832db684221f80db6145",
+    "implementation/ingest.py": "3b5792023496c82a9169eef2f77d11d2f4afab237ecd964922b4a95e17aca486",
+    "implementation/packaged_index.py": "8d084743b152f48d788f332d3c7af1159e6c92296443f291e16ca35d3c440345",
+    "implementation/fingerprint.py": "11ab37590bbf36bb039d4a7d7beaf293ebd5c4dc7e8454de388dafd66fc2b5eb",
+    "implementation/guardrails.py": "793b1d96e9ec41a42355462e78db94f7ff402a108e78adbf580d9da8d100ebc3",
+    "implementation/references.py": "32f4840d63543f0bd9b47ec0b11ab6953d95f7c14952c68d2ffd4f16a46c787d",
+    "implementation/public_sources.json": "d993f25dd346b2b3814e509cf037682814deb0d6d62a2006a0a03696d78c46cd",
+    "implementation/approved_links.json": "3eced477d35d38bb19ca34aead22fbb874fe6c1b943dfa8cdc3db264899a82f5",
+    "evaluation/report.py": "dce6c6342b91ad2f57a881a3945245cd0e234467681a8676460bdc64764ec1ff"
+  },
+  "requested_cases": 12,
+  "status": "complete",
+  "automatic_retries": 0,
+  "owner_budget_micro_usd": 250000,
+  "reserved_micro_usd": 172549,
+  "reservation_scope": "Conservative local estimate, not public ledger debits or actual billing.",
+  "runner_sha256": "e47e853a75e01685f6f439b8f73a48356be5b40c476f329df71e141358bd0929",
+  "human_reviewed": 0,
+  "private_run_sha256": "efa13d7bcf95f396b9f57c4748e7f0c25a3c91ac18bf563c34e394e528751612",
+  "cases": [
+    {
+      "id": "followup-01",
+      "question": "Who is Favour?",
+      "question_selection": "seed",
+      "answer": "Favour Chukwuemerie Ututu is a Full-stack Software Engineer and AI Engineer based in Nigeria. He specializes in building frontend applications, backend systems, and AI-powered solutions, including blockchain applications and smart contracts. His professional work includes frontend engineering for Policy.ng and various independent projects involving Python, Go, React, TypeScript, Solidity, and Ethereum tooling. He is open to full-time and freelance roles worldwide, including remote work.",
+      "status": "complete",
+      "timing": {
+        "retrieval_ms": 3022.766499998397,
+        "first_text_ms": 5833.99366599042,
+        "completion_ms": 6968.029540992575
+      },
+      "generation_usage": {
+        "input_tokens": 4518,
+        "output_tokens": 151,
+        "total_tokens": 4669,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "stages": [
+        {
+          "stage": "embedding",
+          "maximum_output_tokens": 0,
+          "reserved_micro_usd": 2
+        },
+        {
+          "stage": "answer",
+          "maximum_output_tokens": 768,
+          "reserved_micro_usd": 10483
+        }
+      ],
+      "history_messages": 0,
+      "followup": {
+        "question": "What are some of Favour's notable projects?",
+        "source": "model",
+        "document_id": "profile-overview"
+      }
+    },
+    {
+      "id": "followup-02",
+      "question": "What are some of Favour's notable projects?",
+      "question_selection": "model",
+      "answer": "Favour's notable projects include Policy.ng, where he owns the frontend engineering for both the public website and administrative tools. He developed Monierave, a banking simulation focusing on transaction integrity and reliable background processing. BucketFlow is a project applying allocation rules through a Solidity smart contract. BlockScan is a live blockchain data explorer. Approval Cleanup helps users inspect token-spending permissions, and Escrow is a Sepolia payment project with both frontend and smart contract components. Additionally, he built a Python-based Portfolio RAG Assistant that uses retrieval-augmented generation to answer questions about his portfolio.",
+      "status": "complete",
+      "timing": {
+        "retrieval_ms": 2055.0307079975028,
+        "first_text_ms": 3087.4445410008775,
+        "completion_ms": 4910.04766599508
+      },
+      "generation_usage": {
+        "input_tokens": 4813,
+        "output_tokens": 181,
+        "total_tokens": 4994,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "stages": [
+        {
+          "stage": "rewrite",
+          "maximum_output_tokens": 128,
+          "reserved_micro_usd": 748
+        },
+        {
+          "stage": "embedding",
+          "maximum_output_tokens": 0,
+          "reserved_micro_usd": 7
+        },
+        {
+          "stage": "answer",
+          "maximum_output_tokens": 768,
+          "reserved_micro_usd": 11144
+        }
+      ],
+      "history_messages": 2,
+      "followup": {
+        "question": "What did Favour contribute to Policy.ng?",
+        "source": "curated"
+      }
+    },
+    {
+      "id": "followup-03",
+      "question": "What's his experience?",
+      "question_selection": "seed",
+      "answer": "Favour has experience as a Full-stack Software Engineer and AI Engineer based in Nigeria. He has professional frontend engineering experience on Policy.ng, handling both the public website and administrative tools. His backend expertise includes building API-driven systems with Go, focusing on authentication, session management, database transactions, and background jobs, exemplified by his Monierave banking simulation project. He also develops blockchain applications and smart contracts using Solidity and Ethereum tooling. Additionally, Favour builds AI-powered applications, including a Python-based Portfolio RAG Assistant that uses retrieval-augmented generation. His learning journey began with self-directed freelance work, followed by structured frontend engineering training at Alchemy University and blockchain training at Cyfrin.",
+      "status": "complete",
+      "timing": {
+        "retrieval_ms": 1498.5972499998752,
+        "first_text_ms": 2507.5493339973036,
+        "completion_ms": 4801.830708995112
+      },
+      "generation_usage": {
+        "input_tokens": 4956,
+        "output_tokens": 214,
+        "total_tokens": 5170,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "stages": [
+        {
+          "stage": "rewrite",
+          "maximum_output_tokens": 128,
+          "reserved_micro_usd": 1058
+        },
+        {
+          "stage": "embedding",
+          "maximum_output_tokens": 0,
+          "reserved_micro_usd": 10
+        },
+        {
+          "stage": "answer",
+          "maximum_output_tokens": 768,
+          "reserved_micro_usd": 11454
+        }
+      ],
+      "history_messages": 4,
+      "followup": {
+        "question": "Can you tell me more about Favour's blockchain engineering experience?",
+        "source": "model",
+        "document_id": "expertise-engineering"
+      }
+    },
+    {
+      "id": "followup-04",
+      "question": "Can you tell me more about Favour's blockchain engineering experience?",
+      "question_selection": "model",
+      "answer": "Favour has solid blockchain engineering experience focused on Solidity smart contracts and Ethereum-connected applications. His work includes developing wallet connections, managing token approvals, handling contract events and transaction receipts, and dealing with wallet or network mismatches in user interfaces. He uses tools and frameworks such as Solidity, Ethereum, Foundry, Hardhat, OpenZeppelin, wagmi, viem, Ethers.js, and Alchemy SDK/RPC. Notable projects demonstrating this expertise include BucketFlow, which applies allocation rules through a Solidity contract, and Approval Cleanup, which helps users inspect token-spending permissions. Additionally, he built Escrow, a Sepolia payment project involving both frontend React components and Solidity smart contracts.",
+      "status": "complete",
+      "timing": {
+        "retrieval_ms": 1813.6063749989262,
+        "first_text_ms": 2824.038999999175,
+        "completion_ms": 4832.209290994797
+      },
+      "generation_usage": {
+        "input_tokens": 5185,
+        "output_tokens": 209,
+        "total_tokens": 5394,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "stages": [
+        {
+          "stage": "rewrite",
+          "maximum_output_tokens": 128,
+          "reserved_micro_usd": 1452
+        },
+        {
+          "stage": "embedding",
+          "maximum_output_tokens": 0,
+          "reserved_micro_usd": 21
+        },
+        {
+          "stage": "answer",
+          "maximum_output_tokens": 768,
+          "reserved_micro_usd": 11918
+        }
+      ],
+      "history_messages": 6,
+      "followup": {
+        "question": "What did Favour contribute to Policy.ng?",
+        "source": "curated"
+      }
+    },
+    {
+      "id": "followup-05",
+      "question": "How does Monierave work?",
+      "question_selection": "seed",
+      "answer": "Monierave is a full-stack banking simulation developed by Favour to explore backend and frontend engineering of financial transactions. It includes features like account registration and verification, authentication, account management, beneficiaries, transfers, transaction history, statements, and profile and security settings. On the backend, it uses a transactional outbox with PostgreSQL, Redis, and Asynq to handle reliable background processing and retries without making notification delivery a condition of a committed transfer. Transfers are recorded through an append-only double-entry ledger with PostgreSQL transactions, row-level locking for concurrency, and idempotency keys to prevent duplicate transfers. The frontend uses React with TanStack Query and React Hook Form for data management and form handling. Importantly, Monierave is a simulation and not a licensed bank or a service handling real money.",
+      "status": "complete",
+      "timing": {
+        "retrieval_ms": 1716.2563749880064,
+        "first_text_ms": 2441.858249992947,
+        "completion_ms": 5058.915708999848
+      },
+      "generation_usage": {
+        "input_tokens": 5354,
+        "output_tokens": 239,
+        "total_tokens": 5593,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "stages": [
+        {
+          "stage": "rewrite",
+          "maximum_output_tokens": 128,
+          "reserved_micro_usd": 1802
+        },
+        {
+          "stage": "embedding",
+          "maximum_output_tokens": 0,
+          "reserved_micro_usd": 12
+        },
+        {
+          "stage": "answer",
+          "maximum_output_tokens": 768,
+          "reserved_micro_usd": 12352
+        }
+      ],
+      "history_messages": 8,
+      "followup": {
+        "question": "How does Monierave handle concurrent transfers?",
+        "source": "curated"
+      }
+    },
+    {
+      "id": "followup-06",
+      "question": "How does Monierave handle concurrent transfers?",
+      "question_selection": "curated",
+      "answer": "Monierave handles concurrent transfers using several coordinated backend mechanisms to ensure transaction integrity. Transfers are recorded through an append-only double-entry ledger within PostgreSQL transactions, which keep related database changes atomic. Row-level locking is used to coordinate concurrent operations on accounts, preventing conflicts. Additionally, idempotency keys help prevent duplicate transfers from repeated requests. Monierave employs a transactional outbox pattern that connects durable database changes to asynchronous background processing, allowing retries without requiring notification delivery to be part of the committed transfer. These mechanisms together aim to maintain transfer integrity and concurrency control, though exact once-only execution under all failure conditions is not independently verified.",
+      "status": "complete",
+      "timing": {
+        "retrieval_ms": 1246.7653339990648,
+        "first_text_ms": 2419.9349590053316,
+        "completion_ms": 4383.395750002819
+      },
+      "generation_usage": {
+        "input_tokens": 5598,
+        "output_tokens": 212,
+        "total_tokens": 5810,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "stages": [
+        {
+          "stage": "rewrite",
+          "maximum_output_tokens": 128,
+          "reserved_micro_usd": 2218
+        },
+        {
+          "stage": "embedding",
+          "maximum_output_tokens": 0,
+          "reserved_micro_usd": 13
+        },
+        {
+          "stage": "answer",
+          "maximum_output_tokens": 768,
+          "reserved_micro_usd": 12825
+        }
+      ],
+      "history_messages": 10,
+      "followup": {
+        "question": "How does Monierave manage login sessions?",
+        "source": "curated"
+      }
+    },
+    {
+      "id": "followup-07",
+      "question": "What happens if a notification fails?",
+      "question_selection": "seed",
+      "answer": "If a notification fails in Monierave after a transfer has been committed, the system uses a transactional outbox pattern that allows background retries of the notification. This means the notification delivery is retried asynchronously without making successful notification delivery a condition for the transfer to be considered complete. However, the documentation does not specify any retry limits or guarantees of eventual delivery, so it is unclear how many retries occur or if delivery is assured indefinitely.",
+      "status": "complete",
+      "timing": {
+        "retrieval_ms": 1438.3385830005864,
+        "first_text_ms": 2220.015458005946,
+        "completion_ms": 3451.7201249982463
+      },
+      "generation_usage": {
+        "input_tokens": 5582,
+        "output_tokens": 154,
+        "total_tokens": 5736,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "stages": [
+        {
+          "stage": "rewrite",
+          "maximum_output_tokens": 128,
+          "reserved_micro_usd": 2598
+        },
+        {
+          "stage": "embedding",
+          "maximum_output_tokens": 0,
+          "reserved_micro_usd": 11
+        },
+        {
+          "stage": "answer",
+          "maximum_output_tokens": 768,
+          "reserved_micro_usd": 12948
+        }
+      ],
+      "history_messages": 12,
+      "followup": {
+        "question": "How does Monierave manage login sessions?",
+        "source": "curated"
+      }
+    },
+    {
+      "id": "followup-08",
+      "question": "How does Monierave manage login sessions?",
+      "question_selection": "curated",
+      "answer": "Monierave manages login sessions using rotating refresh tokens and revocable sessions as part of its backend security design. This approach helps maintain secure session management by allowing sessions to be invalidated or refreshed as needed. The system also includes audit records and reconciliation checks to support security and integrity. These features are implemented within the backend architecture that uses Go, PostgreSQL, Redis, and Asynq for reliable processing and session handling.",
+      "status": "complete",
+      "timing": {
+        "retrieval_ms": 1197.3197920015082,
+        "first_text_ms": 1839.1082080052001,
+        "completion_ms": 3330.4653329978464
+      },
+      "generation_usage": {
+        "input_tokens": 5460,
+        "output_tokens": 164,
+        "total_tokens": 5624,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "stages": [
+        {
+          "stage": "rewrite",
+          "maximum_output_tokens": 128,
+          "reserved_micro_usd": 2619
+        },
+        {
+          "stage": "embedding",
+          "maximum_output_tokens": 0,
+          "reserved_micro_usd": 8
+        },
+        {
+          "stage": "answer",
+          "maximum_output_tokens": 768,
+          "reserved_micro_usd": 12594
+        }
+      ],
+      "history_messages": 12,
+      "followup": {
+        "question": "How did Favour build Monierave's frontend?",
+        "source": "curated"
+      }
+    },
+    {
+      "id": "followup-09",
+      "question": "How do BlockScan and Cleanup differ?",
+      "question_selection": "seed",
+      "answer": "BlockScan and Approval Cleanup differ primarily in their purpose and functionality within the blockchain ecosystem. BlockScan is a blockchain explorer for the Ethereum Sepolia test network, allowing users to inspect blocks, transactions, wallet addresses, account activity, and NFT metadata. It features live data feeds, global search distinguishing block numbers, transactions, and addresses, and includes a persistent watchlist and credential handling to protect API keys. In contrast, Approval Cleanup is an ERC-20 wallet-permission manager that helps users review and manage token allowances granted to other addresses or contracts. It scans recent Approval events to identify current token-spender permissions, highlighting risky or unlimited approvals, and allows users to update or revoke these permissions through their connected wallets. While BlockScan focuses on data exploration and monitoring, Approval Cleanup centers on permission management and security for token spending.",
+      "status": "complete",
+      "timing": {
+        "retrieval_ms": 1073.3053750009276,
+        "first_text_ms": 1724.742749996949,
+        "completion_ms": 3742.767792005907
+      },
+      "generation_usage": {
+        "input_tokens": 6130,
+        "output_tokens": 233,
+        "total_tokens": 6363,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "stages": [
+        {
+          "stage": "rewrite",
+          "maximum_output_tokens": 128,
+          "reserved_micro_usd": 2542
+        },
+        {
+          "stage": "embedding",
+          "maximum_output_tokens": 0,
+          "reserved_micro_usd": 10
+        },
+        {
+          "stage": "answer",
+          "maximum_output_tokens": 768,
+          "reserved_micro_usd": 14013
+        }
+      ],
+      "history_messages": 12,
+      "followup": null
+    },
+    {
+      "id": "followup-10",
+      "question": "What limits apply to Cleanup scans?",
+      "question_selection": "planned-fallback",
+      "answer": "Cleanup scans apply limits because they cover only a recent block window rather than the entire blockchain history. This means they cannot guarantee a complete history of every approval a wallet has ever granted. Additionally, provider constraints and non-standard tokens can affect the scan results, potentially missing some approvals or permissions. Therefore, Cleanup is best understood as a recent snapshot rather than a comprehensive audit of all token allowances.",
+      "status": "complete",
+      "timing": {
+        "retrieval_ms": 1086.384458001703,
+        "first_text_ms": 1904.3767499970272,
+        "completion_ms": 3253.941458009649
+      },
+      "generation_usage": {
+        "input_tokens": 5869,
+        "output_tokens": 154,
+        "total_tokens": 6023,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 0
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "stages": [
+        {
+          "stage": "rewrite",
+          "maximum_output_tokens": 128,
+          "reserved_micro_usd": 2604
+        },
+        {
+          "stage": "embedding",
+          "maximum_output_tokens": 0,
+          "reserved_micro_usd": 8
+        },
+        {
+          "stage": "answer",
+          "maximum_output_tokens": 768,
+          "reserved_micro_usd": 13564
+        }
+      ],
+      "history_messages": 12,
+      "followup": {
+        "question": "How does Approval Cleanup identify risky or unlimited token approvals?",
+        "source": "model",
+        "document_id": "project-approval-cleanup"
+      }
+    },
+    {
+      "id": "followup-11",
+      "question": "How is the Portfolio RAG Assistant evaluated?",
+      "question_selection": "seed",
+      "answer": "The Portfolio RAG Assistant is evaluated using a 50-question dataset with reference answers, answerability labels, and document-and-section evidence groups. Evaluation metrics include mean reciprocal rank (MRR) for retrieval and section-based evidence-group coverage. Structured answer judging assesses accuracy, completeness, relevance, and grounding of responses. Gradio interfaces support interactive chat with retrieved passage inspection, single-case evaluation, and batch evaluation with category charts and feedback. Offline tests with mocked storage and providers check implementation behavior but do not establish real retrieval or answer quality. No verified overall accuracy figure is supplied, and the evaluation tooling itself does not prove correctness or production readiness.",
+      "status": "complete",
+      "timing": {
+        "retrieval_ms": 1718.312666998827,
+        "first_text_ms": 2477.470750003704,
+        "completion_ms": 4342.001041994081
+      },
+      "generation_usage": {
+        "input_tokens": 5654,
+        "output_tokens": 208,
+        "total_tokens": 5862,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "stages": [
+        {
+          "stage": "rewrite",
+          "maximum_output_tokens": 128,
+          "reserved_micro_usd": 2470
+        },
+        {
+          "stage": "embedding",
+          "maximum_output_tokens": 0,
+          "reserved_micro_usd": 9
+        },
+        {
+          "stage": "answer",
+          "maximum_output_tokens": 768,
+          "reserved_micro_usd": 13403
+        }
+      ],
+      "history_messages": 12,
+      "followup": {
+        "question": "How does Policy.ng handle administrative workflows?",
+        "source": "curated"
+      }
+    },
+    {
+      "id": "followup-12",
+      "question": "How does Policy.ng handle administrative workflows?",
+      "question_selection": "curated",
+      "answer": "Policy.ng handles administrative workflows on the frontend with features such as permission checks, form validation that rejects invalid data, protection against duplicate submissions, warnings for unsaved edits, and refreshing information after updates. Favour integrates these workflows using tools like React Hook Form and Zod for validation, and TanStack Query for frontend-backend data synchronization. The administrative UI supports nested replies and updates UI states accordingly, ensuring smooth and reliable management of administrative tasks without losing user work.",
+      "status": "complete",
+      "timing": {
+        "retrieval_ms": 1157.6132089976454,
+        "first_text_ms": 2152.1787919919007,
+        "completion_ms": 3681.867416991736
+      },
+      "generation_usage": {
+        "input_tokens": 5661,
+        "output_tokens": 171,
+        "total_tokens": 5832,
+        "input_token_details": {
+          "audio": 0,
+          "cache_read": 1920
+        },
+        "output_token_details": {
+          "audio": 0,
+          "reasoning": 0
+        }
+      },
+      "stages": [
+        {
+          "stage": "rewrite",
+          "maximum_output_tokens": 128,
+          "reserved_micro_usd": 2429
+        },
+        {
+          "stage": "embedding",
+          "maximum_output_tokens": 0,
+          "reserved_micro_usd": 9
+        },
+        {
+          "stage": "answer",
+          "maximum_output_tokens": 768,
+          "reserved_micro_usd": 13191
+        }
+      ],
+      "history_messages": 12,
+      "followup": {
+        "question": "What technologies does Favour use for frontend integration at Policy.ng?",
+        "source": "model",
+        "document_id": "experience-flamong-policy-ng"
+      }
+    }
+  ],
+  "legacy_baseline_fixture_sha256": "6d0d2f4d3b6012e2db67822e14e3a63b57e3667be360525c01b9195acee27e3d",
+  "question_schedule_sha256": "6caec718e43b6f550f80cf601d343538e3f41e1931aa922f8deb42771172e386",
+  "actual_questions_sha256": "45e014970089fef5aaf3294e65021c15e442fa465ef22db47600a2194defcf56",
+  "provenance_note": "The original raw runner inherited a baseline fixture hash while borrowing pipeline metadata. That hash is relabeled here; schedule and actual-question hashes are separately recorded. Raw answers and the original raw report remain unchanged. The reusable runner now records the correct schedule directly.",
+  "post_run_hardening": "Additional private-solicitation verb patterns were added after this live run and checked offline. All four accepted model suggestions still validate. No second live run was performed."
+}

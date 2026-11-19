@@ -1,0 +1,361 @@
+{
+  "purpose": "Offline replay of five saved live outputs and their supplied public excerpts; no new provider answers or human quality scores.",
+  "cases": [
+    {
+      "id": "followup-04",
+      "question": "Can you tell me more about Favour's blockchain engineering experience?",
+      "answer": "Favour has solid blockchain engineering experience focused on Solidity smart contracts and Ethereum-connected applications. His work includes developing wallet connections, managing token approvals, handling contract events and transaction receipts, and dealing with wallet or network mismatches in user interfaces. He uses tools and frameworks such as Solidity, Ethereum, Foundry, Hardhat, OpenZeppelin, wagmi, viem, Ethers.js, and Alchemy SDK/RPC. Notable projects demonstrating this expertise include BucketFlow, which applies allocation rules through a Solidity contract, and Approval Cleanup, which helps users inspect token-spending permissions. Additionally, he built Escrow, a Sepolia payment project involving both frontend React components and Solidity smart contracts.",
+      "history": [
+        {
+          "role": "user",
+          "content": "Who is Favour?"
+        },
+        {
+          "role": "assistant",
+          "content": "Favour Chukwuemerie Ututu is a Full-stack Software Engineer and AI Engineer based in Nigeria. He specializes in building frontend applications, backend systems, and AI-powered solutions, including blockchain applications and smart contracts. His professional work includes frontend engineering for Policy.ng and various independent projects involving Python, Go, React, TypeScript, Solidity, and Ethereum tooling. He is open to full-time and freelance roles worldwide, including remote work."
+        },
+        {
+          "role": "user",
+          "content": "What are some of Favour's notable projects?"
+        },
+        {
+          "role": "assistant",
+          "content": "Favour's notable projects include Policy.ng, where he owns the frontend engineering for both the public website and administrative tools. He developed Monierave, a banking simulation focusing on transaction integrity and reliable background processing. BucketFlow is a project applying allocation rules through a Solidity smart contract. BlockScan is a live blockchain data explorer. Approval Cleanup helps users inspect token-spending permissions, and Escrow is a Sepolia payment project with both frontend and smart contract components. Additionally, he built a Python-based Portfolio RAG Assistant that uses retrieval-augmented generation to answer questions about his portfolio."
+        },
+        {
+          "role": "user",
+          "content": "What's his experience?"
+        },
+        {
+          "role": "assistant",
+          "content": "Favour has experience as a Full-stack Software Engineer and AI Engineer based in Nigeria. He has professional frontend engineering experience on Policy.ng, handling both the public website and administrative tools. His backend expertise includes building API-driven systems with Go, focusing on authentication, session management, database transactions, and background jobs, exemplified by his Monierave banking simulation project. He also develops blockchain applications and smart contracts using Solidity and Ethereum tooling. Additionally, Favour builds AI-powered applications, including a Python-based Portfolio RAG Assistant that uses retrieval-augmented generation. His learning journey began with self-directed freelance work, followed by structured frontend engineering training at Alchemy University and blockchain training at Cyfrin."
+        }
+      ],
+      "followup": {
+        "question": "What did Favour contribute to Policy.ng?",
+        "source": "curated"
+      },
+      "selected_context": [
+        {
+          "document_id": "profile-overview",
+          "text": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: Favour Chukwuemerie Ututu — Professional overview > Background and work\n\n## Background and work  \nFavour Chukwuemerie Ututu is a Full-stack Software Engineer and AI Engineer based in Nigeria. He builds frontend applications, backend systems, and LLM-powered applications. His work includes professional frontend engineering on Policy.ng, independent full-stack and blockchain projects, and a Python-based portfolio assistant using retrieval-augmented generation (RAG).  \nFavour works with Python, Go, PostgreSQL, Redis, React, Next.js, and TypeScript, alongside Solidity and Ethereum tooling for blockchain applications.  \nAt Flamong, he owns the frontend of [Policy.ng](https://policy.ng/), working on both the public website and the administrative tools behind it. His independent projects cover a wider range of engineering problems: Monierave is a banking simulation built around transaction integrity and reliable background processing; BucketFlow applies allocation rules through a Solidity contract; BlockScan explores live blockchain data; Approval Cleanup helps people inspect token-spending permissions; and Escrow is a Sepolia payment project for which he built the frontend and smart contract.  \nFavour's Portfolio RAG Assistant connects visitor questions to curated knowledge about his background, experience, contributions, and projects. He implemented its Python ingestion, retrieval, grounded-answering, evaluation tooling, and Gradio testing interfaces. Public availability on his portfolio was confirmed by Favour on 11 November 2026; the project code is available in his [portfolio repository](https://github.com/faelic/portfolio)."
+        },
+        {
+          "document_id": "profile-overview",
+          "text": "Document: Favour Chukwuemerie Ututu — Professional overview\nSection: __preamble__\n\n# Favour Chukwuemerie Ututu — Professional overview  \n**Role:** Full-stack Software Engineer and AI Engineer.  \n**Professional focus:** Backend systems, frontend applications, and AI systems.\n**Other work:** Blockchain applications and smart contracts.\n**Country of residence:** Nigeria."
+        },
+        {
+          "document_id": "project-escrow",
+          "text": "# Escrow — Sepolia payment project\n\n**Type:** Independent project.\n\n**Contribution:** React frontend and Solidity smart contract.  \n**Network:** Ethereum Sepolia, a test network.  \n**Repository:** https://github.com/faelic/escrow-webapp\n\n## Purpose and contribution\n\nEscrow is Favour's independent project for a payment flow involving a depositor, beneficiary, and arbiter. Favour built both the React frontend and the Solidity smart contract. The arbiter can release or refund funds.\n\n## Availability and further exploration\n\nEscrow's frontend is not deployed. Visitors can explore its code and implementation in the [Escrow repository](https://github.com/faelic/escrow-webapp)."
+        }
+      ]
+    },
+    {
+      "id": "followup-07",
+      "question": "What happens if a notification fails?",
+      "answer": "If a notification fails in Monierave after a transfer has been committed, the system uses a transactional outbox pattern that allows background retries of the notification. This means the notification delivery is retried asynchronously without making successful notification delivery a condition for the transfer to be considered complete. However, the documentation does not specify any retry limits or guarantees of eventual delivery, so it is unclear how many retries occur or if delivery is assured indefinitely.",
+      "history": [
+        {
+          "role": "user",
+          "content": "Who is Favour?"
+        },
+        {
+          "role": "assistant",
+          "content": "Favour Chukwuemerie Ututu is a Full-stack Software Engineer and AI Engineer based in Nigeria. He specializes in building frontend applications, backend systems, and AI-powered solutions, including blockchain applications and smart contracts. His professional work includes frontend engineering for Policy.ng and various independent projects involving Python, Go, React, TypeScript, Solidity, and Ethereum tooling. He is open to full-time and freelance roles worldwide, including remote work."
+        },
+        {
+          "role": "user",
+          "content": "What are some of Favour's notable projects?"
+        },
+        {
+          "role": "assistant",
+          "content": "Favour's notable projects include Policy.ng, where he owns the frontend engineering for both the public website and administrative tools. He developed Monierave, a banking simulation focusing on transaction integrity and reliable background processing. BucketFlow is a project applying allocation rules through a Solidity smart contract. BlockScan is a live blockchain data explorer. Approval Cleanup helps users inspect token-spending permissions, and Escrow is a Sepolia payment project with both frontend and smart contract components. Additionally, he built a Python-based Portfolio RAG Assistant that uses retrieval-augmented generation to answer questions about his portfolio."
+        },
+        {
+          "role": "user",
+          "content": "What's his experience?"
+        },
+        {
+          "role": "assistant",
+          "content": "Favour has experience as a Full-stack Software Engineer and AI Engineer based in Nigeria. He has professional frontend engineering experience on Policy.ng, handling both the public website and administrative tools. His backend expertise includes building API-driven systems with Go, focusing on authentication, session management, database transactions, and background jobs, exemplified by his Monierave banking simulation project. He also develops blockchain applications and smart contracts using Solidity and Ethereum tooling. Additionally, Favour builds AI-powered applications, including a Python-based Portfolio RAG Assistant that uses retrieval-augmented generation. His learning journey began with self-directed freelance work, followed by structured frontend engineering training at Alchemy University and blockchain training at Cyfrin."
+        },
+        {
+          "role": "user",
+          "content": "Can you tell me more about Favour's blockchain engineering experience?"
+        },
+        {
+          "role": "assistant",
+          "content": "Favour has solid blockchain engineering experience focused on Solidity smart contracts and Ethereum-connected applications. His work includes developing wallet connections, managing token approvals, handling contract events and transaction receipts, and dealing with wallet or network mismatches in user interfaces. He uses tools and frameworks such as Solidity, Ethereum, Foundry, Hardhat, OpenZeppelin, wagmi, viem, Ethers.js, and Alchemy SDK/RPC. Notable projects demonstrating this expertise include BucketFlow, which applies allocation rules through a Solidity contract, and Approval Cleanup, which helps users inspect token-spending permissions. Additionally, he built Escrow, a Sepolia payment project involving both frontend React components and Solidity smart contracts."
+        },
+        {
+          "role": "user",
+          "content": "How does Monierave work?"
+        },
+        {
+          "role": "assistant",
+          "content": "Monierave is a full-stack banking simulation developed by Favour to explore backend and frontend engineering of financial transactions. It includes features like account registration and verification, authentication, account management, beneficiaries, transfers, transaction history, statements, and profile and security settings. On the backend, it uses a transactional outbox with PostgreSQL, Redis, and Asynq to handle reliable background processing and retries without making notification delivery a condition of a committed transfer. Transfers are recorded through an append-only double-entry ledger with PostgreSQL transactions, row-level locking for concurrency, and idempotency keys to prevent duplicate transfers. The frontend uses React with TanStack Query and React Hook Form for data management and form handling. Importantly, Monierave is a simulation and not a licensed bank or a service handling real money."
+        },
+        {
+          "role": "user",
+          "content": "How does Monierave handle concurrent transfers?"
+        },
+        {
+          "role": "assistant",
+          "content": "Monierave handles concurrent transfers using several coordinated backend mechanisms to ensure transaction integrity. Transfers are recorded through an append-only double-entry ledger within PostgreSQL transactions, which keep related database changes atomic. Row-level locking is used to coordinate concurrent operations on accounts, preventing conflicts. Additionally, idempotency keys help prevent duplicate transfers from repeated requests. Monierave employs a transactional outbox pattern that connects durable database changes to asynchronous background processing, allowing retries without requiring notification delivery to be part of the committed transfer. These mechanisms together aim to maintain transfer integrity and concurrency control, though exact once-only execution under all failure conditions is not independently verified."
+        }
+      ],
+      "followup": {
+        "question": "How does Monierave manage login sessions?",
+        "source": "curated"
+      },
+      "selected_context": [
+        {
+          "document_id": "project-monierave",
+          "text": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Background processing and security\n\n## Background processing and security  \nBackground work uses a transactional outbox. PostgreSQL holds the durable record of work to be performed, while Redis and Asynq support processing and retries. The system also includes rotating refresh tokens, revocable sessions, audit records, and reconciliation-related checks.  \nThese Monierave features were built into a banking simulation and demonstrate the backend design problems Favour addressed in its implementation.  \nFor notification failures after a committed transfer, the outbox permits\nbackground retry without making successful notification delivery a\ncondition of that already committed transfer. The documented material does\nnot specify an email retry limit or guarantee eventual delivery. It does\nnot establish retries forever or until successful."
+        },
+        {
+          "document_id": "project-monierave",
+          "text": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Overview and contribution\n\n## Overview and contribution  \nThe paying-customer count is not documented. The knowledge base cannot\nestablish how many paying customers Monierave has, either currently or\nhistorically. Its simulation label establishes product scope, not a\ncustomer-usage measurement.  \nMonierave is a banking simulation through which Favour explored the backend and frontend engineering of financial transactions. He built account registration and verification, authentication, account management, beneficiaries, transfers, transaction history, statements, and profile and security features.  \nMonierave is a portfolio banking simulation, not a licensed bank or a service for handling customers' real money."
+        },
+        {
+          "document_id": "project-monierave",
+          "text": "Document: Monierave — Full-stack banking simulation\nSection: __preamble__\n\n# Monierave — Full-stack banking simulation  \n**Type:** Independent full-stack project\n**Repository:** https://github.com/faelic/monierave\n**Application:** https://monierave.favourututu.com/\n**Stack:** Go, Gin, PostgreSQL, SQLC, pgx, Redis, Asynq, Next.js, React, TypeScript, TanStack Query, React Hook Form, Zod, Docker."
+        },
+        {
+          "document_id": "project-monierave",
+          "text": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Limitations\n\n## Limitations  \nMonierave is a portfolio banking simulation. It is not a licensed bank or a service for handling customers' real money.  \nThe current paying-customer count is unknown in the supplied knowledge."
+        },
+        {
+          "document_id": "project-monierave",
+          "text": "Document: Monierave — Full-stack banking simulation\nSection: Monierave — Full-stack banking simulation > Frontend and testing\n\n## Frontend and testing  \nOn the frontend, Favour used TanStack Query to manage server data and React Hook Form with Zod for form handling. He added backend, integration, and end-to-end tests, including tests for transfer behavior under concurrency."
+        }
+      ]
+    },
+    {
+      "id": "followup-09",
+      "question": "How do BlockScan and Cleanup differ?",
+      "answer": "BlockScan and Approval Cleanup differ primarily in their purpose and functionality within the blockchain ecosystem. BlockScan is a blockchain explorer for the Ethereum Sepolia test network, allowing users to inspect blocks, transactions, wallet addresses, account activity, and NFT metadata. It features live data feeds, global search distinguishing block numbers, transactions, and addresses, and includes a persistent watchlist and credential handling to protect API keys. In contrast, Approval Cleanup is an ERC-20 wallet-permission manager that helps users review and manage token allowances granted to other addresses or contracts. It scans recent Approval events to identify current token-spender permissions, highlighting risky or unlimited approvals, and allows users to update or revoke these permissions through their connected wallets. While BlockScan focuses on data exploration and monitoring, Approval Cleanup centers on permission management and security for token spending.",
+      "history": [
+        {
+          "role": "user",
+          "content": "What's his experience?"
+        },
+        {
+          "role": "assistant",
+          "content": "Favour has experience as a Full-stack Software Engineer and AI Engineer based in Nigeria. He has professional frontend engineering experience on Policy.ng, handling both the public website and administrative tools. His backend expertise includes building API-driven systems with Go, focusing on authentication, session management, database transactions, and background jobs, exemplified by his Monierave banking simulation project. He also develops blockchain applications and smart contracts using Solidity and Ethereum tooling. Additionally, Favour builds AI-powered applications, including a Python-based Portfolio RAG Assistant that uses retrieval-augmented generation. His learning journey began with self-directed freelance work, followed by structured frontend engineering training at Alchemy University and blockchain training at Cyfrin."
+        },
+        {
+          "role": "user",
+          "content": "Can you tell me more about Favour's blockchain engineering experience?"
+        },
+        {
+          "role": "assistant",
+          "content": "Favour has solid blockchain engineering experience focused on Solidity smart contracts and Ethereum-connected applications. His work includes developing wallet connections, managing token approvals, handling contract events and transaction receipts, and dealing with wallet or network mismatches in user interfaces. He uses tools and frameworks such as Solidity, Ethereum, Foundry, Hardhat, OpenZeppelin, wagmi, viem, Ethers.js, and Alchemy SDK/RPC. Notable projects demonstrating this expertise include BucketFlow, which applies allocation rules through a Solidity contract, and Approval Cleanup, which helps users inspect token-spending permissions. Additionally, he built Escrow, a Sepolia payment project involving both frontend React components and Solidity smart contracts."
+        },
+        {
+          "role": "user",
+          "content": "How does Monierave work?"
+        },
+        {
+          "role": "assistant",
+          "content": "Monierave is a full-stack banking simulation developed by Favour to explore backend and frontend engineering of financial transactions. It includes features like account registration and verification, authentication, account management, beneficiaries, transfers, transaction history, statements, and profile and security settings. On the backend, it uses a transactional outbox with PostgreSQL, Redis, and Asynq to handle reliable background processing and retries without making notification delivery a condition of a committed transfer. Transfers are recorded through an append-only double-entry ledger with PostgreSQL transactions, row-level locking for concurrency, and idempotency keys to prevent duplicate transfers. The frontend uses React with TanStack Query and React Hook Form for data management and form handling. Importantly, Monierave is a simulation and not a licensed bank or a service handling real money."
+        },
+        {
+          "role": "user",
+          "content": "How does Monierave handle concurrent transfers?"
+        },
+        {
+          "role": "assistant",
+          "content": "Monierave handles concurrent transfers using several coordinated backend mechanisms to ensure transaction integrity. Transfers are recorded through an append-only double-entry ledger within PostgreSQL transactions, which keep related database changes atomic. Row-level locking is used to coordinate concurrent operations on accounts, preventing conflicts. Additionally, idempotency keys help prevent duplicate transfers from repeated requests. Monierave employs a transactional outbox pattern that connects durable database changes to asynchronous background processing, allowing retries without requiring notification delivery to be part of the committed transfer. These mechanisms together aim to maintain transfer integrity and concurrency control, though exact once-only execution under all failure conditions is not independently verified."
+        },
+        {
+          "role": "user",
+          "content": "What happens if a notification fails?"
+        },
+        {
+          "role": "assistant",
+          "content": "If a notification fails in Monierave after a transfer has been committed, the system uses a transactional outbox pattern that allows background retries of the notification. This means the notification delivery is retried asynchronously without making successful notification delivery a condition for the transfer to be considered complete. However, the documentation does not specify any retry limits or guarantees of eventual delivery, so it is unclear how many retries occur or if delivery is assured indefinitely."
+        },
+        {
+          "role": "user",
+          "content": "How does Monierave manage login sessions?"
+        },
+        {
+          "role": "assistant",
+          "content": "Monierave manages login sessions using rotating refresh tokens and revocable sessions as part of its backend security design. This approach helps maintain secure session management by allowing sessions to be invalidated or refreshed as needed. The system also includes audit records and reconciliation checks to support security and integrity. These features are implemented within the backend architecture that uses Go, PostgreSQL, Redis, and Asynq for reliable processing and session handling."
+        }
+      ],
+      "followup": null,
+      "selected_context": [
+        {
+          "document_id": "project-blockscan",
+          "text": "# BlockScan — Sepolia blockchain explorer\n\n**Type:** Independent frontend project  \n**Repository:** https://github.com/faelic/sepolia-blockexplorer  \n**Application:** https://blockscan-seven.vercel.app/  \n**Stack:** React, JavaScript, React Router, React Testing Library, Alchemy SDK/RPC, Vercel.\n\n## Overview\n\nBlockScan is a blockchain explorer for Ethereum Sepolia. It lets users inspect blocks, transactions, wallet addresses, account activity, and NFT metadata.\n\n## Search and live-data implementation\n\nFavour built a global search feature that distinguishes block numbers, transaction hashes, and wallet addresses and opens the appropriate result. The live-block feed checks for new data while preventing overlapping requests and duplicate results. It preserves the existing results if a refresh fails and avoids unnecessary polling when the page is not visible.\n\nBlockScan's live-block feed also avoids updates that overwrite valid information.\n\n## Navigation, watchlist, and credential handling\n\nFor BlockScan, Favour also built a persistent watchlist, keyboard-accessible search, route-level code splitting, and Vercel API proxies that keep Alchemy credentials out of the browser bundle.\n\nThe credentials described here are Alchemy provider API credentials, not\ndatabase credentials. This documents a credential-exposure control, not\nproof that the application prevents every form of unauthorized access."
+        },
+        {
+          "document_id": "project-approval-cleanup",
+          "text": "# Approval Cleanup — ERC-20 wallet-permission manager\n\n**Type:** Independent blockchain application  \n**Also known as:** Cleanup; Allowance Cleanup.  \n**Repository:** https://github.com/faelic/approval-cleanup  \n**Application:** https://approval-cleanup-brt3.vercel.app/  \n**Stack:** Next.js, React, TypeScript, wagmi, viem, Hardhat, OpenZeppelin.\n\n## Overview and contribution\n\nApproval Cleanup helps wallet owners review ERC-20 token allowances granted to other addresses or contracts. Favour built the interface for scanning recent Approval events, identifying the latest observed token-and-spender allowances, and calling attention to permissions that deserve a closer look, including unlimited and older approvals.\n\nApproval Cleanup scans a recent block window and cannot guarantee a complete history of every approval a wallet has ever granted.\n\n## Log processing and wallet actions\n\nApproval Cleanup retrieves logs in batches that work within RPC provider limits, then separates normalization and risk checks from the interface. Users can review an allowance and initiate an update or revocation through their connected wallet.\n\nApproval Cleanup's scan covers a recent block window; provider constraints and non-standard tokens can affect the results.\n\n## Coverage limitations\n\nBecause Approval Cleanup's scan covers a recent block window, it cannot guarantee a complete history of every approval a wallet has ever granted. Non-standard tokens and provider constraints can also affect what the application finds."
+        }
+      ]
+    },
+    {
+      "id": "followup-11",
+      "question": "How is the Portfolio RAG Assistant evaluated?",
+      "answer": "The Portfolio RAG Assistant is evaluated using a 50-question dataset with reference answers, answerability labels, and document-and-section evidence groups. Evaluation metrics include mean reciprocal rank (MRR) for retrieval and section-based evidence-group coverage. Structured answer judging assesses accuracy, completeness, relevance, and grounding of responses. Gradio interfaces support interactive chat with retrieved passage inspection, single-case evaluation, and batch evaluation with category charts and feedback. Offline tests with mocked storage and providers check implementation behavior but do not establish real retrieval or answer quality. No verified overall accuracy figure is supplied, and the evaluation tooling itself does not prove correctness or production readiness.",
+      "history": [
+        {
+          "role": "user",
+          "content": "How does Monierave work?"
+        },
+        {
+          "role": "assistant",
+          "content": "Monierave is a full-stack banking simulation developed by Favour to explore backend and frontend engineering of financial transactions. It includes features like account registration and verification, authentication, account management, beneficiaries, transfers, transaction history, statements, and profile and security settings. On the backend, it uses a transactional outbox with PostgreSQL, Redis, and Asynq to handle reliable background processing and retries without making notification delivery a condition of a committed transfer. Transfers are recorded through an append-only double-entry ledger with PostgreSQL transactions, row-level locking for concurrency, and idempotency keys to prevent duplicate transfers. The frontend uses React with TanStack Query and React Hook Form for data management and form handling. Importantly, Monierave is a simulation and not a licensed bank or a service handling real money."
+        },
+        {
+          "role": "user",
+          "content": "How does Monierave handle concurrent transfers?"
+        },
+        {
+          "role": "assistant",
+          "content": "Monierave handles concurrent transfers using several coordinated backend mechanisms to ensure transaction integrity. Transfers are recorded through an append-only double-entry ledger within PostgreSQL transactions, which keep related database changes atomic. Row-level locking is used to coordinate concurrent operations on accounts, preventing conflicts. Additionally, idempotency keys help prevent duplicate transfers from repeated requests. Monierave employs a transactional outbox pattern that connects durable database changes to asynchronous background processing, allowing retries without requiring notification delivery to be part of the committed transfer. These mechanisms together aim to maintain transfer integrity and concurrency control, though exact once-only execution under all failure conditions is not independently verified."
+        },
+        {
+          "role": "user",
+          "content": "What happens if a notification fails?"
+        },
+        {
+          "role": "assistant",
+          "content": "If a notification fails in Monierave after a transfer has been committed, the system uses a transactional outbox pattern that allows background retries of the notification. This means the notification delivery is retried asynchronously without making successful notification delivery a condition for the transfer to be considered complete. However, the documentation does not specify any retry limits or guarantees of eventual delivery, so it is unclear how many retries occur or if delivery is assured indefinitely."
+        },
+        {
+          "role": "user",
+          "content": "How does Monierave manage login sessions?"
+        },
+        {
+          "role": "assistant",
+          "content": "Monierave manages login sessions using rotating refresh tokens and revocable sessions as part of its backend security design. This approach helps maintain secure session management by allowing sessions to be invalidated or refreshed as needed. The system also includes audit records and reconciliation checks to support security and integrity. These features are implemented within the backend architecture that uses Go, PostgreSQL, Redis, and Asynq for reliable processing and session handling."
+        },
+        {
+          "role": "user",
+          "content": "How do BlockScan and Cleanup differ?"
+        },
+        {
+          "role": "assistant",
+          "content": "BlockScan and Approval Cleanup differ primarily in their purpose and functionality within the blockchain ecosystem. BlockScan is a blockchain explorer for the Ethereum Sepolia test network, allowing users to inspect blocks, transactions, wallet addresses, account activity, and NFT metadata. It features live data feeds, global search distinguishing block numbers, transactions, and addresses, and includes a persistent watchlist and credential handling to protect API keys. In contrast, Approval Cleanup is an ERC-20 wallet-permission manager that helps users review and manage token allowances granted to other addresses or contracts. It scans recent Approval events to identify current token-spender permissions, highlighting risky or unlimited approvals, and allows users to update or revoke these permissions through their connected wallets. While BlockScan focuses on data exploration and monitoring, Approval Cleanup centers on permission management and security for token spending."
+        },
+        {
+          "role": "user",
+          "content": "What limits apply to Cleanup scans?"
+        },
+        {
+          "role": "assistant",
+          "content": "Cleanup scans apply limits because they cover only a recent block window rather than the entire blockchain history. This means they cannot guarantee a complete history of every approval a wallet has ever granted. Additionally, provider constraints and non-standard tokens can affect the scan results, potentially missing some approvals or permissions. Therefore, Cleanup is best understood as a recent snapshot rather than a comprehensive audit of all token allowances."
+        }
+      ],
+      "followup": {
+        "question": "How does Policy.ng handle administrative workflows?",
+        "source": "curated"
+      },
+      "selected_context": [
+        {
+          "document_id": "project-portfolio-rag-assistant",
+          "text": "Document: Portfolio RAG Assistant — Portfolio questions and grounded answers\nSection: __preamble__\n\n# Portfolio RAG Assistant — Portfolio questions and grounded answers  \n**Type:** Independent AI application project.  \n**Contribution:** Curated knowledge, Python ingestion and answering pipelines, evaluation tooling, and Gradio testing interfaces.  \n**Repository:** https://github.com/faelic/portfolio"
+        },
+        {
+          "document_id": "project-portfolio-rag-assistant",
+          "text": "Document: Portfolio RAG Assistant — Portfolio questions and grounded answers\nSection: Portfolio RAG Assistant — Portfolio questions and grounded answers > Overview and contribution\n\n## Overview and contribution  \nFavour built the Portfolio RAG Assistant to answer visitor questions about his background, professional experience, contributions, and projects. He organized the portfolio knowledge into topic documents and implemented the Python pipelines that retrieve supporting passages and generate grounded answers. Relevant repository links direct visitors to deeper implementation explanations."
+        },
+        {
+          "document_id": "project-portfolio-rag-assistant",
+          "text": "Document: Portfolio RAG Assistant — Portfolio questions and grounded answers\nSection: Portfolio RAG Assistant — Portfolio questions and grounded answers > Availability and limitations\n\n## Availability and limitations  \nPublic availability through Favour's portfolio was confirmed by Favour on 11 November 2026. The approved code link is https://github.com/faelic/portfolio; public availability has not been independently verified by the corpus authoring process.  \nThe assistant is bounded by its curated evidence. It does not automatically browse GitHub, and the corpus provides no measured retrieval-quality, production-scale, or uptime guarantees. The RAG implementation does not establish deployment of autonomous agents, model training, or fine-tuning."
+        },
+        {
+          "document_id": "project-portfolio-rag-assistant",
+          "text": "Document: Portfolio RAG Assistant — Portfolio questions and grounded answers\nSection: Portfolio RAG Assistant — Portfolio questions and grounded answers > Evaluation and testing interfaces\n\n## Evaluation and testing interfaces  \nFavour implemented a 50-question evaluation dataset with reference answers, answerability labels, and document-and-section evidence groups. Retrieval metrics include mean reciprocal rank (MRR) and section-based evidence-group coverage. Structured answer judging scores accuracy, completeness, relevance, and grounding.  \nGradio interfaces support chat with retrieved-passage inspection, single-case evaluation, and sequential batch evaluation with category charts and individual feedback. Offline tests check implementation behavior with storage and providers mocked; they do not establish real retrieval or generated-answer quality.  \nThis knowledge entry does not supply a verified overall answer-accuracy\nfigure. A dataset, judge, metric implementation, or passing mocked test is\nnot a measured quality result and does not prove overall correctness.\nNo verified numeric quality figure is supplied here. A separate AI-assisted\nassessment is AI-assisted evidence, not independent human validation or\nproduction accuracy."
+        },
+        {
+          "document_id": "project-portfolio-rag-assistant",
+          "text": "Document: Portfolio RAG Assistant — Portfolio questions and grounded answers\nSection: Portfolio RAG Assistant — Portfolio questions and grounded answers > Python implementation and retrieval\n\n## Python implementation and retrieval  \nThe Portfolio RAG Assistant uses Python, LangChain, OpenAI embeddings and chat models, Chroma, and Gradio. Its ingestion pipeline loads curated Markdown, extracts YAML metadata separately from searchable text, preserves document identity and section metadata, and creates deterministic heading-aware chunks. The local synchronization workflow upserts current chunks before deleting obsolete records.  \nThe answering pipeline performs semantic retrieval and constructs a grounded answer from the retrieved passages. For conversation follow-ups, it rewrites the question into a standalone retrieval query while preserving the original question for answering. The documented configuration uses text-embedding-3-large for embeddings and gpt-4.1-mini for answering."
+        }
+      ]
+    },
+    {
+      "id": "followup-12",
+      "question": "How does Policy.ng handle administrative workflows?",
+      "answer": "Policy.ng handles administrative workflows on the frontend with features such as permission checks, form validation that rejects invalid data, protection against duplicate submissions, warnings for unsaved edits, and refreshing information after updates. Favour integrates these workflows using tools like React Hook Form and Zod for validation, and TanStack Query for frontend-backend data synchronization. The administrative UI supports nested replies and updates UI states accordingly, ensuring smooth and reliable management of administrative tasks without losing user work.",
+      "history": [
+        {
+          "role": "user",
+          "content": "How does Monierave handle concurrent transfers?"
+        },
+        {
+          "role": "assistant",
+          "content": "Monierave handles concurrent transfers using several coordinated backend mechanisms to ensure transaction integrity. Transfers are recorded through an append-only double-entry ledger within PostgreSQL transactions, which keep related database changes atomic. Row-level locking is used to coordinate concurrent operations on accounts, preventing conflicts. Additionally, idempotency keys help prevent duplicate transfers from repeated requests. Monierave employs a transactional outbox pattern that connects durable database changes to asynchronous background processing, allowing retries without requiring notification delivery to be part of the committed transfer. These mechanisms together aim to maintain transfer integrity and concurrency control, though exact once-only execution under all failure conditions is not independently verified."
+        },
+        {
+          "role": "user",
+          "content": "What happens if a notification fails?"
+        },
+        {
+          "role": "assistant",
+          "content": "If a notification fails in Monierave after a transfer has been committed, the system uses a transactional outbox pattern that allows background retries of the notification. This means the notification delivery is retried asynchronously without making successful notification delivery a condition for the transfer to be considered complete. However, the documentation does not specify any retry limits or guarantees of eventual delivery, so it is unclear how many retries occur or if delivery is assured indefinitely."
+        },
+        {
+          "role": "user",
+          "content": "How does Monierave manage login sessions?"
+        },
+        {
+          "role": "assistant",
+          "content": "Monierave manages login sessions using rotating refresh tokens and revocable sessions as part of its backend security design. This approach helps maintain secure session management by allowing sessions to be invalidated or refreshed as needed. The system also includes audit records and reconciliation checks to support security and integrity. These features are implemented within the backend architecture that uses Go, PostgreSQL, Redis, and Asynq for reliable processing and session handling."
+        },
+        {
+          "role": "user",
+          "content": "How do BlockScan and Cleanup differ?"
+        },
+        {
+          "role": "assistant",
+          "content": "BlockScan and Approval Cleanup differ primarily in their purpose and functionality within the blockchain ecosystem. BlockScan is a blockchain explorer for the Ethereum Sepolia test network, allowing users to inspect blocks, transactions, wallet addresses, account activity, and NFT metadata. It features live data feeds, global search distinguishing block numbers, transactions, and addresses, and includes a persistent watchlist and credential handling to protect API keys. In contrast, Approval Cleanup is an ERC-20 wallet-permission manager that helps users review and manage token allowances granted to other addresses or contracts. It scans recent Approval events to identify current token-spender permissions, highlighting risky or unlimited approvals, and allows users to update or revoke these permissions through their connected wallets. While BlockScan focuses on data exploration and monitoring, Approval Cleanup centers on permission management and security for token spending."
+        },
+        {
+          "role": "user",
+          "content": "What limits apply to Cleanup scans?"
+        },
+        {
+          "role": "assistant",
+          "content": "Cleanup scans apply limits because they cover only a recent block window rather than the entire blockchain history. This means they cannot guarantee a complete history of every approval a wallet has ever granted. Additionally, provider constraints and non-standard tokens can affect the scan results, potentially missing some approvals or permissions. Therefore, Cleanup is best understood as a recent snapshot rather than a comprehensive audit of all token allowances."
+        },
+        {
+          "role": "user",
+          "content": "How is the Portfolio RAG Assistant evaluated?"
+        },
+        {
+          "role": "assistant",
+          "content": "The Portfolio RAG Assistant is evaluated using a 50-question dataset with reference answers, answerability labels, and document-and-section evidence groups. Evaluation metrics include mean reciprocal rank (MRR) for retrieval and section-based evidence-group coverage. Structured answer judging assesses accuracy, completeness, relevance, and grounding of responses. Gradio interfaces support interactive chat with retrieved passage inspection, single-case evaluation, and batch evaluation with category charts and feedback. Offline tests with mocked storage and providers check implementation behavior but do not establish real retrieval or answer quality. No verified overall accuracy figure is supplied, and the evaluation tooling itself does not prove correctness or production readiness."
+        }
+      ],
+      "followup": {
+        "question": "What technologies does Favour use for frontend integration at Policy.ng?",
+        "source": "model",
+        "document_id": "experience-flamong-policy-ng",
+        "evidence_quote": "Favour integrates the frontend with the backend using TanStack Query. When an API response differs from what a screen expects, or a new workflow needs an additional endpoint, he works with the backend engineer to resolve it."
+      },
+      "selected_context": [
+        {
+          "document_id": "experience-flamong-policy-ng",
+          "text": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: Favour at Flamong — Policy.ng frontend engineering > Frontend integration and workflows\n\n## Frontend integration and workflows  \nFavour integrates the frontend with the backend using TanStack Query. When an API response differs from what a screen expects, or a new workflow needs an additional endpoint, he works with the backend engineer to resolve it. He has adapted the comments experience to support nested administrative replies and updated the affected UI states.  \nFavour's Policy.ng frontend work includes form validation with React Hook Form and Zod, authenticated navigation, role and permission checks, state updates after administrative actions, and handling failures without losing the user's work."
+        },
+        {
+          "document_id": "experience-flamong-policy-ng",
+          "text": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: Favour at Flamong — Policy.ng frontend engineering > Administration, testing, and collaboration\n\n## Administration, testing, and collaboration  \nThe administrative side also requires permission checks, forms that reject invalid data, protection against duplicate submissions, warnings for unsaved edits, and refreshed information after updates. Favour has added automated coverage for selected workflows with Vitest and Playwright. He collaborates with the product manager, backend engineer, mobile engineer, and company leadership during development and release."
+        },
+        {
+          "document_id": "experience-flamong-policy-ng",
+          "text": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: Favour at Flamong — Policy.ng frontend engineering > Product and responsibility\n\n## Product and responsibility  \nPolicy.ng helps visitors find and understand public policies and information about public officials. It also includes civic content and AI-assisted policy questions, with administrative features for managing the information and interactions on the site.  \nFavour is the sole frontend engineer on the product. He builds and maintains the public-facing pages and authenticated administration tools using React and TypeScript. His work includes policy search and detail views, public-official directories, AI-assisted question interfaces, comments and administrative replies, moderation, content editing, and subscriber management.  \nHis responsibility at Policy.ng is the frontend, including the integration of its AI-assisted question interface. The product's backend and underlying AI services are separate from that frontend responsibility."
+        },
+        {
+          "document_id": "experience-flamong-policy-ng",
+          "text": "Document: Favour at Flamong — Policy.ng frontend engineering\nSection: __preamble__\n\n# Favour at Flamong — Policy.ng frontend engineering  \n**Position:** Frontend Developer Intern at Flamong.\n**Employment period:** May 2026–Present, confirmed on 10 November 2026.\n**Product:** [Policy.ng](https://policy.ng/)\n**Role:** Frontend engineering for the public website and administrative dashboard."
+        }
+      ]
+    }
+  ]
+}

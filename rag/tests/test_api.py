@@ -1,6 +1,7 @@
 """Offline transport and real streaming-path coverage; never call providers."""
 import asyncio
 import json
+from pathlib import Path
 import socket
 import unittest
 from unittest.mock import AsyncMock, Mock, patch
@@ -14,10 +15,14 @@ from langchain_core.runnables import RunnableLambda
 import api
 from implementation import answer
 from implementation.guardrails import IndexNotReadyError, token_count
+from implementation.structured_answer import choose_followup
 
 
 class ApiTests(unittest.TestCase):
     def setUp(self):
+        legacy = patch.object(answer, 'model_followups_enabled', return_value=False)
+        legacy.start()
+        self.addCleanup(legacy.stop)
         self.network = patch.object(socket.socket, 'connect', side_effect=AssertionError('Network forbidden'))
         self.network.start()
         self.client = TestClient(api.app, base_url='http://localhost')
@@ -35,17 +40,35 @@ class ApiTests(unittest.TestCase):
         calls = []
         async def generate(question, history, **options):
             calls.append(question)
+            docs = [Document(page_content='Monierave uses idempotency and a transactional outbox.', metadata={'document_id':'project-monierave'})]
             if callback := options.get('on_context'):
-                callback([Document(page_content='Monierave uses idempotency and a transactional outbox.', metadata={'document_id':'project-monierave'})])
+                callback(docs)
             yield 'Monierave uses idempotency keys.'
+            if callback := options.get('on_suggestion'):
+                callback(choose_followup(None, question, 'Monierave uses idempotency keys.', history, docs))
         body = {'question': 'How does Monierave prevent duplicates?'}
         with patch.object(api, 'stream_answer', generate):
             old = self.client.post('/api/chat', json=body)
             new = self.client.post('/api/chat', json=body, headers={'Accept':'application/x-ndjson; suggestions=1'})
         self.assertEqual([e['type'] for e in self.events(old)], ['delta', 'done'])
         self.assertEqual([e['type'] for e in self.events(new)], ['delta', 'suggestion', 'done'])
-        self.assertEqual(self.events(new)[1]['question'], 'What happens if a notification fails?')
+        self.assertEqual(self.events(new)[1]['question'], 'What happens if a notification fails in Monierave?')
         self.assertEqual(len(calls), 2)  # One generation per request, not per suggestion.
+
+    def test_recent_suggestions_are_validated_before_generation_and_forwarded(self):
+        async def generate(question, history, **options):
+            self.assertEqual(options['recent_suggestions'], ['How does Monierave manage login sessions?'])
+            yield 'Complete answer.'
+        headers = {'Accept':'application/x-ndjson; suggestions=1'}
+        with patch.object(api, 'stream_answer', generate):
+            result = self.client.post('/api/chat', json={'question':'Monierave?',
+                'recent_suggestions':['How does Monierave manage login sessions?']}, headers=headers)
+            self.assertEqual(self.events(result)[-1], {'type':'done','text':'Complete answer.'})
+        with patch.object(api, 'stream_answer') as generate:
+            for recent in (['x' * 121], ['x'] * 13, ['bad\ncontrol'], [123], 'text'):
+                result = self.client.post('/api/chat', json={'question':'Monierave?', 'recent_suggestions':recent}, headers=headers)
+                self.assertIn(result.status_code, (400, 422))
+            generate.assert_not_called()
 
     def test_partial_answer_does_not_emit_suggestions(self):
         async def fail(question, history, **options):
@@ -55,6 +78,39 @@ class ApiTests(unittest.TestCase):
         with patch.object(api, 'stream_answer', fail):
             result = self.client.post('/api/chat', json={'question':'Monierave?'}, headers={'Accept':'application/x-ndjson; suggestions=1'})
         self.assertEqual([e['type'] for e in self.events(result)], ['delta', 'error'])
+        self.assertEqual(api.active_requests, 0)
+
+    def test_eight_turns_allow_topic_exhaustion_without_discarding_answers(self):
+        root = Path(__file__).resolve().parents[2]
+        turns = json.loads((root / 'tests/fixtures/followup-conversation.json').read_text())['turns']
+        documents = [Document(page_content=(root / 'rag/knowledge' / path).read_text(), metadata={'document_id':key})
+                     for path, key in (
+                         ('profile/overview.md', 'profile-overview'),
+                         ('projects/monierave.md', 'project-monierave'),
+                         ('experience/flamong-policy-ng.md', 'experience-flamong-policy-ng'),
+                         ('projects/portfolio-rag-assistant.md', 'project-portfolio-rag-assistant'))]
+        calls = []
+        async def generate(question, history, **options):
+            turn = turns[len(calls)]
+            self.assertEqual(question, turn['question'])
+            calls.append(question)
+            options['on_context'](documents)
+            yield turn['answer']
+            options['on_suggestion'](choose_followup(None, question, turn['answer'], history, documents))
+        history = []
+        with patch.object(api, 'stream_answer', generate):
+            for turn in turns:
+                response = self.client.post('/api/chat', json={'question':turn['question'], 'history':history[-12:]},
+                                            headers={'Accept':'application/x-ndjson; suggestions=1'})
+                self.assertEqual(response.status_code, 200)
+                events = self.events(response)
+                expected = ([] if 'forms and failed' in turn['question'] else
+                            ['How does the Portfolio RAG Assistant resolve conversation follow-ups?']
+                            if 'use retrieved evidence' in turn['question'] else [turn['suggestion']])
+                self.assertEqual([event['question'] for event in events if event['type'] == 'suggestion'], expected)
+                self.assertEqual(events[-1], {'type':'done', 'text':turn['answer']})
+                history += [{'role':'user','content':turn['question']}, {'role':'assistant','content':turn['answer']}]
+        self.assertEqual(len(calls), 8)
         self.assertEqual(api.active_requests, 0)
 
     def test_stream_contract_context_and_no_source_disclosure(self):
@@ -173,6 +229,11 @@ class ApiTests(unittest.TestCase):
 
 
 class StreamingPipelineTests(unittest.IsolatedAsyncioTestCase):
+    def setUp(self):
+        legacy = patch.object(answer, 'model_followups_enabled', return_value=False)
+        legacy.start()
+        self.addCleanup(legacy.stop)
+
     async def test_failed_embedding_connection_does_not_poison_the_next_request(self):
         store = Mock()
         store.similarity_search_by_vector.return_value = [Document(page_content='Evidence')]

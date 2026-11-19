@@ -1,5 +1,9 @@
 # Portfolio RAG security and release contract
 
+## Structured follow-up boundary — 19 November 2026
+
+Enabled model-follow-up mode is a single structured generation, not a tool or agent. The backend bounds the raw envelope, emits decoded answer text only, and validates the optional question against registered, actually selected source identity and a literal supporting quote. Link/control/markup checks, recent exact-question matching, credential-solicitation filtering and numeric-token checks are conservative checks, not a semantic proof or comprehensive injection detector. A complete answer survives invalid optional metadata without a second paid attempt; incomplete/refused/failed generation remains an error with no suggestion. Only the final plain question crosses the public stream. Quotes and raw envelopes are excluded from routine logs, browser history and Neon. The server-side CHAT_MODEL_FOLLOWUPS flag defaults false in production and permits rollback without changing CHAT_ENABLED or resetting ledgers. The answer-stage output reservation accepts 768 envelope tokens while displayed text remains 512 tokens/2,000 characters; schema/instruction bytes are included before the call. See [live observations and limits](evaluations/2026-11-19/model-followups/REPORT.md); no live adversarial or hosted capacity claim is made.
+
 Updated 15 November 2026. This is the current backend/API security contract. Earlier dated delivery and design records describe historical snapshots. Local tests establish implementation behavior; public hosting and real-model quality require separate evidence.
 
 ## Small-system architecture
@@ -27,7 +31,7 @@ Use one non-root Pxxl Free container and one Python worker, a packaged public em
 | IP concurrency | 2 by default; `CHAT_MAX_ACTIVE_PER_IP` accepts 1–5 |
 | Entire worker | 30 admitted POSTs per rolling 60 seconds; 5 active requests |
 | Spending | Default ceilings $1 per UTC day and $10 per UTC month, using conservative reservations |
-| Request processing | 90-second stream-processing deadline; provider timeout 30 seconds; output at most 512 configured tokens and 2,000 characters |
+| Request processing | 90-second stream-processing deadline; provider timeout 30 seconds; visible answer at most 512 tokens and 2,000 characters. Opt-in model-follow-up mode reserves up to 768 generated envelope tokens, including answer and suggestion metadata; schema/instruction input tokens are reserved separately. |
 
 Visitor/IP/global admission is one atomic PostgreSQL transaction serialized by the singleton metadata row lock. Process-local capacity is acquired before database/index preparation. Each chat performs admission without an extra readiness probe; a busy visitor/IP/global request makes no database call. Quota and busy rejections consume no admission allowance. Admitted invalid input still counts. Concurrency is acquired without intervening awaits and released in ASGI cleanup, including failure, cancellation and disconnect. Fresh cookies do not bypass the IP concurrency cap. Local development skips persistent client/spend limits and retains the five-request global cap.
 

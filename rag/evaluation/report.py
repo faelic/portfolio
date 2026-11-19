@@ -15,8 +15,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from langchain_core.documents import Document
-from implementation.answer import SYSTEM_PROMPT, stream_answer
-from implementation.config import ANSWER_MODEL, EMBEDDING_MODEL, RETRIEVAL_K, CHUNK_SIZE, CHUNK_OVERLAP, CHUNKER_VERSION, INDEX_MODE, DB_NAME
+from implementation.answer import SYSTEM_PROMPT, stream_answer, response_system_prompt
+from implementation.config import ANSWER_MODEL, EMBEDDING_MODEL, RETRIEVAL_K, CHUNK_SIZE, CHUNK_OVERLAP, CHUNKER_VERSION, INDEX_MODE, DB_NAME, model_followups_enabled, GENERATION_OUTPUT_TOKENS, ANSWER_OUTPUT_TOKENS
 from implementation.fingerprint import corpus_fingerprint
 from implementation.references import public_references
 from implementation.protection import PRICES, PRICE_VERSION
@@ -65,12 +65,14 @@ def metadata(suite):
             'created_at': datetime.now(timezone.utc).isoformat(),
             'source_revision': revision.stdout.strip() or None, 'working_tree_dirty': bool(dirty.stdout.strip()),
             'answer_model': ANSWER_MODEL, 'embedding_model': EMBEDDING_MODEL,
-            'corpus_fingerprint': corpus_fingerprint(), 'prompt_sha256': hashlib.sha256(SYSTEM_PROMPT.encode()).hexdigest(),
+            'corpus_fingerprint': corpus_fingerprint(), 'prompt_sha256': hashlib.sha256(response_system_prompt().encode()).hexdigest(),
+            'model_followups_enabled': model_followups_enabled(),
+            'generation_output_tokens': GENERATION_OUTPUT_TOKENS if model_followups_enabled() else ANSWER_OUTPUT_TOKENS,
             'retrieval_k': RETRIEVAL_K, 'chunk_size': CHUNK_SIZE, 'chunk_overlap': CHUNK_OVERLAP,
             'chunker_version': CHUNKER_VERSION,
             'pricing_version': PRICE_VERSION,
             'retrieval_index': index_provenance(),
-            'implementation_sha256': {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest() for path in [ROOT / 'implementation' / name for name in ('answer.py', 'config.py', 'ingest.py', 'packaged_index.py', 'fingerprint.py', 'guardrails.py', 'references.py', 'public_sources.json', 'approved_links.json')] + [Path(__file__)]},
+            'implementation_sha256': {str(path.relative_to(ROOT)): hashlib.sha256(path.read_bytes()).hexdigest() for path in [ROOT / 'implementation' / name for name in ('answer.py', 'structured_answer.py', 'followups.py', 'config.py', 'ingest.py', 'packaged_index.py', 'fingerprint.py', 'guardrails.py', 'references.py', 'public_sources.json', 'approved_links.json')] + [Path(__file__)]},
             'dataset_sha256': hashlib.sha256(json.dumps(load_cases(suite), sort_keys=True).encode()).hexdigest()}
 
 
@@ -91,6 +93,10 @@ def summarize(rows):
 
 async def run_case(case):
     documents, timing, usage = [], {}, {}
+    suggestion = None
+    def receive_suggestion(value):
+        nonlocal suggestion
+        suggestion = value
     def context(selected):
         documents.extend(selected)
     def transform(selected):
@@ -108,7 +114,7 @@ async def run_case(case):
                 status, error = 'failed', 'ExpectedInputRejectionMissing'
         else:
             async for delta in stream_answer(case['question'], case.get('history', []), on_context=context,
-                                             on_metrics=timing.update, on_usage=usage.update, context_transform=transform):
+                                             on_metrics=timing.update, on_usage=usage.update, context_transform=transform, on_suggestion=receive_suggestion):
                 answer += delta
             status = 'complete' if answer.strip() else 'empty'
             error = None
@@ -122,8 +128,9 @@ async def run_case(case):
            'history': case.get('history', []), 'expected_behavior': case.get('expected_behavior', case.get('reference_answer')),
            'status': status, 'error_class': error, 'answer': answer,
            'references': public_references(documents), 'timing': timing,
+           'followup': suggestion if status == 'complete' else None,
            'answer_provider_usage': usage or None, 'estimated_answer_micro_usd': estimate,
-           'usage_scope': 'Answer stream only when provider metadata is available; excludes rewriting and evaluation. Not a billing total.',
+           'usage_scope': 'Generation stream when metadata is available; includes structured answer and follow-up when enabled. Excludes embeddings, rewriting and judging. Not a billing total.',
            'human_review': {'verdict': 'pending', 'factual_claims': None, 'unsupported_claims': None,
                             'appropriate_uncertainty': None, 'reference_correctness': None, 'notes': ''}}
     return row, documents
@@ -143,7 +150,7 @@ def write_report(path, report):
              f"Run: {report['run_id']} · Suite: {report['suite']} · Status: {report['status']}", '',
              f"Completed {summary['completed']} of {report['requested_cases']} requested cases; {summary['failed']} failed; {summary['expected_rejections']} expected input rejections; {summary['human_reviewed']} human reviewed.", '',
              'Section coverage measures metadata matches; labelled-quote coverage separately checks normalized literal quotes inside retrieved passages. Neither establishes semantic entailment or support for every generated claim. Human review is required for factual support, uncertainty and reference correctness.', '',
-             'Provider usage, when present, covers the answer stream only. No actual total bill or quality pass rate is inferred from missing metadata. p95 is omitted for fewer than 20 measurements.', '']
+             'Provider usage, when present, covers the generation stream, including structured suggestion metadata when enabled; embeddings, rewriting and judging are excluded. No total bill or quality pass rate is inferred from missing metadata. p95 is omitted for fewer than 20 measurements.', '']
     index = report.get('retrieval_index')
     if index:
         lines += [f"Retrieval index: {index['mode']}", '',
@@ -156,6 +163,9 @@ def write_report(path, report):
         lines += [f"## {row['id']}", '', row['question'], '', f"Status: {row['status']} · Human verdict: {row['human_review']['verdict']}", '',
                   'Expected behavior: ' + str(row['expected_behavior']), '', row['answer'] or '(No completed answer)', '',
                   f"Timing: {json.dumps(row['timing'])}", '', 'Human notes: ' + row['human_review']['notes'], '']
+        if row.get('followup'):
+            lines += ['Suggested question: ' + row['followup']['question'],
+                      'Suggestion source: ' + row['followup']['source'], '']
     markdown = path.with_suffix('.md')
     temporary = markdown.with_suffix('.md.tmp')
     temporary.write_text('\n'.join(lines))

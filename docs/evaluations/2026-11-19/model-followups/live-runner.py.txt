@@ -1,0 +1,119 @@
+"""Owner-only 12-turn live check. Dry by default; no judging or ingestion."""
+import argparse
+import asyncio
+import hashlib
+import json
+from pathlib import Path
+
+from implementation import answer, config
+from implementation.guardrails import bounded_history
+from implementation.protection import debit_quote
+from .report import metadata
+
+SEEDS = (
+    'Who is Favour?', None, "What's his experience?", None,
+    'How does Monierave work?', None, 'What happens if a notification fails?', None,
+    'How do BlockScan and Cleanup differ?', None,
+    'How is the Portfolio RAG Assistant evaluated?', None,
+)
+FALLBACKS = {
+    1: 'What did Favour contribute to Policy.ng?',
+    3: 'How did he work with the backend engineer?',
+    5: 'How does Monierave handle duplicate transfers?',
+    7: 'How are concurrent transfers handled?',
+    9: 'What limits apply to Cleanup scans?',
+    11: 'What do mocked implementation tests establish?',
+}
+
+
+class OwnerBudgetExceeded(RuntimeError):
+    pass
+
+
+def write(path, report):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_suffix('.json.tmp')
+    temporary.write_text(json.dumps(report, indent=2, ensure_ascii=False) + '\n')
+    temporary.replace(path)
+
+
+async def run(path, budget):
+    if not config.model_followups_enabled():
+        raise ValueError('Enable CHAT_MODEL_FOLLOWUPS for the structured live check')
+    # Owner checks never silently retry a failed request or reserve public money.
+    answer.MAX_RETRIES = config.MAX_RETRIES = 0
+    report = {**metadata('baseline'), 'suite': 'followup-live-12', 'requested_cases': 12,
+              'status': 'running', 'automatic_retries': 0, 'owner_budget_micro_usd': budget,
+              'reserved_micro_usd': 0, 'reservation_scope': 'Conservative local estimate, not public ledger debits or actual billing.',
+              'runner_sha256': hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+              'cases': [], 'human_reviewed': 0}
+    history, previous = [], None
+    write(path, report)
+    try:
+        for index, seed in enumerate(SEEDS):
+            question = seed or (previous['question'] if previous else FALLBACKS[index])
+            selection = 'seed' if seed else (previous['source'] if previous else 'planned-fallback')
+            selected, metrics, usage, stages = [], {}, {}, []
+            suggestion = None
+            async def reserve(stage, model, payload, maximum):
+                quoted = debit_quote(stage, model, payload, maximum)[-1]
+                if report['reserved_micro_usd'] + quoted > budget:
+                    raise OwnerBudgetExceeded('Owner check budget reached')
+                report['reserved_micro_usd'] += quoted
+                stages.append({'stage': stage, 'maximum_output_tokens': maximum, 'reserved_micro_usd': quoted})
+            def receive_suggestion(value):
+                nonlocal suggestion
+                suggestion = value
+            effective_history = bounded_history(history[-12:])
+            row = {'id': f'followup-{index+1:02d}', 'question': question, 'question_selection': selection,
+                   'history': effective_history, 'answer': '', 'status': 'running', 'followup': None,
+                   'timing': metrics, 'generation_usage': usage, 'stages': stages}
+            try:
+                async for delta in answer.stream_answer(question, effective_history, reserve=reserve,
+                        on_context=selected.extend, on_metrics=metrics.update, on_usage=usage.update,
+                        on_suggestion=receive_suggestion):
+                    row['answer'] += delta
+                row.update(status='complete', followup=suggestion)
+            except Exception as exc:
+                row.update(status='failed', error_class=type(exc).__name__)
+            row['selected_context'] = [{'document_id':doc.metadata.get('document_id'), 'text':doc.page_content} for doc in selected]
+            report['cases'].append(row)
+            write(path, report)
+            print(json.dumps({'case':row['id'], 'status':row['status'], 'suggestion_source':suggestion['source'] if suggestion else None,
+                              'reserved_micro_usd': report['reserved_micro_usd']}), flush=True)
+            if row['status'] != 'complete':
+                report['status'] = 'partial'
+                break
+            history += [{'role':'user','content':question}, {'role':'assistant','content':row['answer']}]
+            previous = suggestion
+        else:
+            report['status'] = 'complete'
+    except BaseException:
+        report['status'] = 'interrupted'
+        raise
+    finally:
+        write(path, report)
+        await config.close_providers()
+        answer.get_chat_model.cache_clear()
+        answer.get_vectorstore.cache_clear()
+    return 0 if report['status'] == 'complete' else 1
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--run-live', action='store_true')
+    parser.add_argument('--output', type=Path)
+    parser.add_argument('--budget-micro-usd', type=int, default=250_000)
+    args = parser.parse_args()
+    if not args.run_live:
+        print(json.dumps({'cases':12, 'provider_calls':0, 'next_step':'Use --run-live with a new --output file for an intentional paid check.'}))
+        return 0
+    if not args.output or args.output.suffix != '.json' or args.output.exists():
+        parser.error('Use a new output path ending in .json')
+    if not 1 <= args.budget_micro_usd <= 250_000:
+        parser.error('Owner budget must be positive and at most 250000 micro-USD')
+    return asyncio.run(run(args.output, args.budget_micro_usd))
+
+
+if __name__ == '__main__':
+    raise SystemExit(main())

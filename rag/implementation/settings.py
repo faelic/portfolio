@@ -46,6 +46,8 @@ class Settings:
         enabled = os.getenv('CHAT_ENABLED', 'false' if production else 'true')
         if enabled not in ('true', 'false'):
             raise ValueError('CHAT_ENABLED must be true or false')
+        if os.getenv('CHAT_MODEL_FOLLOWUPS', 'false' if production else 'true') not in ('true', 'false'):
+            raise ValueError('CHAT_MODEL_FOLLOWUPS must be true or false')
         hosts = tuple(filter(None, (v.strip() for v in os.getenv('ALLOWED_HOSTS', '').split(',')))) if production else cls.hosts
         origins = tuple(filter(None, (v.strip() for v in os.getenv('ALLOWED_ORIGINS', '').split(',')))) if production else cls.origins
         data = Path(os.getenv('RAG_DATA_DIR', '/data' if production else str(cls.data_dir)))
